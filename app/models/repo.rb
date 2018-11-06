@@ -30,9 +30,6 @@ class Repo < ApplicationRecord
   has_many :pulls, dependent: :destroy
   has_many :skillings, dependent: :destroy, as: :resource
   has_many :skills, through: :skillings
-  has_many :contents, dependent: :destroy
-  has_many :issues, dependent: :destroy
-  has_many :wikis, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
