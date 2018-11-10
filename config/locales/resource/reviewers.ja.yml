@@ -70,13 +70,6 @@ ja:
         body_helper: 全体的な評価を入力してください。必要であればあなたのレビューの前提条件（○○を中心にチェックを行いました）を記載してください。この投稿をレビュイーは見ることができます。
       create:
         success: レビューしました
-    skillings:
-      edit:
-        alert: スキルを登録しましょう
-        title: スキルの登録
-        show_related_selected_skills: 登録されたスキルに一致するプルリクエストがダッシュボードに表示されます。
-      update:
-        success: スキルを登録しました
     views:
       reviews: レビューする
       cancels: キャンセルする

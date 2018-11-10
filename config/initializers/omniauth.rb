@@ -3,8 +3,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   provider :github,
    ENV['GITHUB_CLIENT_ID'],
-   ENV['GITHUB_CLIENT_SECRET'],
-   setup: true
+   ENV['GITHUB_CLIENT_SECRET']
 
   on_failure do |env|
     # we need to setup env
@@ -12,7 +11,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       env["devise.mapping"] = Devise.mappings[:reviewee]
     end
 
-    ConnectsController.action(:failure).call(env)
+    AuthenticationsController.action(:failure).call(env)
   end
 
   configure do |config|
