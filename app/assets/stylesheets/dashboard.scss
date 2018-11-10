@@ -5,6 +5,20 @@
   }
 }
 
+.reviewee-dashboard-wrapper {
+  table {
+    .repo_list td {
+    height: 70px;
+    }
+    &.table thead tr th {
+     text-align: left;
+    }
+    .repo_list_header {
+      color: $color-literal-gray;
+    }
+  }
+}
+
 .reviewer-dashboard-wrapper {
   margin-top: $base-margin * 2;
   font-family: $font-dashboard;

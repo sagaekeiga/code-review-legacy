@@ -1,35 +1,19 @@
 .col-xs-12
   .container
     .reviewee-dashboard-wrapper
-      .greet
-        - if @reviewee.ok_git && @reviewee.ok_repo && @reviewee.ok_req
-          %h1.text-center= "Great!   #{current_reviewee.github_account.nickname}"
-          %p.text-center 準備が整いました。しばらくするとあなたのPullrequestにコメントがつきます
-        - else
-          %h1.text-center= "Hello!   #{current_reviewee.github_account.nickname}"
-          %p.text-center
-            コードレビューを受ける前に以下のチェックをしてください。
-            全ての準備を整えればあなたはコードレビューを受けることができます。
-        .col-xs-6.col-xs-offset-3
-          %table.table
-            %tbody
-              %tr
-                %th
-                  %i.fas.fa-check-circle{ class: @reviewee.ok_git }
-                %td GitHubアカウントを取り込む
-                %td= link_to '設定する', :reviewees_settings_integrations
-              %tr
-                %th
-                  %i.fas.fa-check-circle{ class: @reviewee.ok_repo }
-                %td PushRequestのGitHub Appをインストールする
-                %td= link_to '設定する', ENV['GITHUB_APP_URL']
-              %tr
-                %th
-                  %i.fas.fa-check-circle{ class: @reviewee.ok_repo }
-                %td Repository, Pullrequestを同期する
-                %td= link_to '設定する', ENV['GITHUB_APP_URL']
-              %tr
-                %th
-                  %i.fas.fa-check-circle{ class: @reviewee.ok_req }
-                %td 同期したPullRequestの公開
-                %td= link_to '設定する', :reviewees_pulls
+      %h2
+        %i.fab.fa-github
+        = @reviewee.nickname
+      = link_to ENV['GITHUB_APP_URL'], class: 'btn btn-outline-primary m-t-4', target: '_blank' do
+        %i.fas.fa-plus-circle
+        = t('.add_project')
+      %table.table.table-hover.m-t-4
+        %thead
+          %tr.repo_list_header
+            %th PROJECT
+            %th STATUS
+        - @reviewee.repos.each do |repo|
+          %tbody
+            %tr.repo_list
+              %td= repo.name
+              %td= repo.status_i18n

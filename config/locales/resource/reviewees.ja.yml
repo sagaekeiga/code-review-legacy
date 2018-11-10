@@ -16,6 +16,7 @@ ja:
   reviewees:
     dashboard:
       title: ダッシュボード
+      add_project: プロジェクトの追加
     repos:
       update:
         showing: 公開しました
