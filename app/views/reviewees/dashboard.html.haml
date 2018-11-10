@@ -9,11 +9,11 @@
         = t('.add_project')
       %table.table.table-hover.m-t-4
         %thead
-          %tr.repo_list_header
-            %th PROJECT
-            %th STATUS
+          %tr.repo-list-header
+            %th= t('.project')
+            %th= t('.repo_status')
         - @reviewee.repos.each do |repo|
           %tbody
-            %tr.repo_list
+            %tr.repo-list
               %td= repo.name
               %td= repo.status_i18n

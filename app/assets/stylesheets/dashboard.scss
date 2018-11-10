@@ -7,13 +7,13 @@
 
 .reviewee-dashboard-wrapper {
   table {
-    .repo_list td {
-    height: $base-height + 20;
+    .repo-list td {
+      height: $base-height + 20;
     }
     &.table thead tr th {
-     text-align: left;
+      text-align: left;
     }
-    .repo_list_header {
+    .repo-list-header {
       color: $color-literal-gray;
     }
   }
