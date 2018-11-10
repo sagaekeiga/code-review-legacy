@@ -41,6 +41,7 @@ class Reviewees::GithubAccount < ApplicationRecord
   # ClassMethods
   # -------------------------------------------------------------------------------
   def self.find_for_oauth(auth)
+    Rails.logger.debug auth
     github_account = find_or_initialize_by(owner_id: auth['extra']['raw_info']['id'])
     github_account.assign_attributes(
       login: auth['extra']['raw_info']['login'],
