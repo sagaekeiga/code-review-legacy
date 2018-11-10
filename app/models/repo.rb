@@ -95,9 +95,7 @@ class Repo < ApplicationRecord
                 params
               )
             )
-            repo.import_contents!
             Pull.fetch!(repo)
-            Issue.fetch!(repo)
           end
           true
         rescue => e
@@ -106,12 +104,6 @@ class Repo < ApplicationRecord
           false
         end
       end
-    end
-
-    # レビュワーのスキルに合致するPRを取得する
-    def pulls_suitable_for reviewer
-      repos = joins(:skillings).where(skillings: { skill_id: reviewer.skillings.pluck(:skill_id) })
-      Pull.includes(:repo).request_reviewed.where(repo_id: repos&.pluck(:id))
     end
 
     private
@@ -158,45 +150,6 @@ class Repo < ApplicationRecord
             wiki.save!
             file.close!
           end
-        end
-      end
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
-
-
-  def import_contents!
-    ActiveRecord::Base.transaction do
-      # リモートZIPファイルの作成
-      zipfile = Tempfile.new('file')
-      zipfile.binmode
-      reviewee = set_resource_for_content
-      remote_zip = Github::Request.github_exec_fetch_repo_zip!(self, reviewee.github_account)
-      zipfile.write(remote_zip.body)
-      zipfile.close
-      # リモートZIPファイルの取り込み
-      Zip::File.open(zipfile.path) do |zip|
-        # トップディレクトリ
-        zip.each_with_index do |entry, index|
-          break unless index.eql?(0)
-          zip.glob(entry.name + '*').each do |top_dir|
-            next if Settings.contents.prohibited_folders.include?(File.basename(top_dir.to_s))
-            file_type = _set_symbol_file_type(top_dir)
-            @parent = Content.new(_content_params(top_dir, file_type, self))
-            @parent.save
-          end
-        end
-        # トップディレクトリの一個下のサブディレクリ
-        self.contents.dir.each { |top_dir| _expand_and_create_contents(zip, top_dir, self) }
-        loop do
-          parents = self.contents.dir.select(&:is_sub_dir?)
-          break if parents.blank?
-          # サブディレクトリ・ファイルの取得
-          parents.each { |parent| _expand_and_create_contents(zip, parent, self) }
         end
       end
     end

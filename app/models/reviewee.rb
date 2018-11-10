@@ -59,19 +59,13 @@ class Reviewee < ApplicationRecord
   end
 
   def viewable_repos
-    owner_org_ids = owners.map{ |owner| owner.orgs.pluck(:id) }.flatten!
     repos.
-      or(Repo.where(resource_type: 'Reviewee', resource_id: owners.pluck(:id))).
-      or(Repo.where(resource_type: 'Org', resource_id: owner_org_ids)).
       or(Repo.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       order(updated_at: :desc)
   end
 
   def viewable_pulls
-    owner_org_ids = owners.map{ |owner| owner.orgs.pluck(:id) }.flatten!
     pulls.
-      or(Pull.where(resource_type: 'Reviewee', resource_id: owners.pluck(:id))).
-      or(Pull.where(resource_type: 'Org', resource_id: owner_org_ids)).
       or(Pull.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       includes(:repo, :changed_files).
       order(updated_at: :desc)
