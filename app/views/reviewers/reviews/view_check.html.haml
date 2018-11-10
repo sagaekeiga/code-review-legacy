@@ -14,4 +14,4 @@
                 = markdown(@pull.body)
           %hr
           .text-center
-            = link_to 'レビューを作成する', file_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary'
+            = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary'

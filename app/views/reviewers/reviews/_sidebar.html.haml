@@ -2,25 +2,25 @@
   %li
     = link_to '#', class: is_same_action_name?('view_check') do
       %i.fas.fa-check-circle
-      動作確認
+      = I18n.t('reviewers.reviews.sidebars.titles.view_check')
   %li
     = link_to file_reviewers_pull_reviews_path(@pull), class: is_same_action_name?('new') do
       %i.fas.fa-check-circle
-      レビューの作成
+      = I18n.t('reviewers.reviews.sidebars.titles.new')
   %li
     = link_to '#', class: is_same_action_name?('show') do
       %i.fas.fa-check-circle
-      審査
+      = I18n.t('reviewers.reviews.sidebars.titles.show')
   %li
     = link_to '#', class: is_same_action_name?('edit') do
       %i.fas.fa-check-circle
-      レビューの修正
+      = I18n.t('reviewers.reviews.sidebars.titles.edit')
   %li
     = link_to '#', class: is_same_action_name?('replies') do
       %i.fas.fa-check-circle
-      リプライ対応
+      = I18n.t('reviewers.reviews.sidebars.titles.replies')
   %li
     = link_to '#', class: is_same_action_name?('complete') do
       %i.fas.fa-check-circle
-      完了
+      = I18n.t('reviewers.reviews.sidebars.titles.complete')
 
