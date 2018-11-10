@@ -3,11 +3,13 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_changed_files, only: %i(new create)
   before_action :check_pending_review, only: %i(new create)
 
+  def view_check
+  end
+
   # GET /reviewers/pulls/:pull_id/reviews/file
   def new
     @review = Review.new
     numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
-    @issues = @pull.repo.issues.where(number: numbers)
   end
 
   # POST /reviewers/pulls/:pull_id/reviews

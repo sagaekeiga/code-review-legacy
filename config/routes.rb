@@ -64,9 +64,6 @@ Rails.application.routes.draw do
         resources :contents, only: %i(index show update)
         resources :issues, only: %i(index show update)
         resources :pulls, only: %i(update)
-        resources :wikis do
-          post :import, on: :collection
-        end
       end
     end
 
@@ -87,6 +84,7 @@ Rails.application.routes.draw do
       resources :pulls, only: %i(show update), param: :token do
         get :files
         resources :reviews, only: %i(create) do
+          get :view_check, on: :collection
           get :file, to: 'reviews#new', on: :collection
         end
         resources :comments, only: %i(create update destroy)
@@ -99,7 +97,6 @@ Rails.application.routes.draw do
           post :search, on: :collection
         end
         resources :issues, only: %i(index show)
-        resources :wikis, only: %i(index show)
       end
     end
 

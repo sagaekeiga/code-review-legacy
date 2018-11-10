@@ -1,7 +1,7 @@
 .reviewers-shared-pulls-tab-wrapper
   %ul.nav.nav-tabs.nav-justified
     - unless @pending_review
-      .text-right= link_to 'Review', file_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary everywhere'
+      .text-right= link_to 'Review', view_check_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary everywhere'
     %li{ class: is_same_controller_and_action_name?('pulls', 'show') }
       = link_to reviewers_pull_path(pull), class: 'nav-link' do
         %i.glyphicon.glyphicon-comment

@@ -5,5 +5,6 @@
 //= require bootstrap
 //= require bootstrap-sprockets
 //= require marked
+//= require sticky-sidebar/dist/sticky-sidebar
 //= require_tree .
 'use strict';

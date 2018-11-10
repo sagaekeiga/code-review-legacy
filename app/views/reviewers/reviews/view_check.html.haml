@@ -1,0 +1,10 @@
+.container-fluid
+  .row
+    .review-wrapper
+      .sidebar.col-sm-3.hidden-xs
+        %p sidebar
+        = render 'sidebar'
+      .col-sm-9.col-sm-offset-3
+        %div
+          %p main content
+= javascript_pack_tag 'reviews-simple-sidebar'
