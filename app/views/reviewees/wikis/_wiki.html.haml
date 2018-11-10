@@ -1,8 +1,0 @@
-%tr
-  %td.file-name.col-sm-11
-    = link_to wiki.title, [:reviewees, repo, wiki]
-  %td.col-sm-1.text-right
-    %button{ type: 'button',
-      class: "btn #{t("views.statuses.buttons.#{wiki.status}")} update-wiki-button",
-      'wiki-id': wiki.id,
-      'repo-id': repo.id }= t "views.statuses.text.#{wiki.status}"

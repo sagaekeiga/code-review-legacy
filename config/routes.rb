@@ -84,9 +84,6 @@ Rails.application.routes.draw do
       get :dashboard, :my_page
       get 'settings/integrations'
       get :pending
-      resource :skillings, only: %i(update) do
-        get :skills, to: 'skillings#edit'
-      end
       resources :pulls, only: %i(show update), param: :token do
         get :files
         resources :reviews, only: %i(create) do

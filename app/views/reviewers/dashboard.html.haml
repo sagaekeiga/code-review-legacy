@@ -5,14 +5,11 @@
         %thead
           %tr
             %th.col-sm-6= t 'activerecord.models.pull'
-            %th.col-sm-3= t 'activerecord.models.skill'
             %th.col-sm-1
         %tbody
           - @pulls.each do |pull|
             %tr
               %td= link_to pull.title&.truncate(40), reviewers_pull_path(pull)
-              %td.text-center
-                %span.label.label-warning= pull.repo.skillings.first.skill.name
               %td.text-center
                 = link_to reviewers_pull_path(pull), class: 'btn btn-block btn-outline-primary' do
                   %i.fas.fa-eye

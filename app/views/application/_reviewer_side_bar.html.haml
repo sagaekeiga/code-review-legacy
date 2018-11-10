@@ -15,18 +15,6 @@
           %small{ class: is_same_action_name?('my_page') }= t('reviewers.my_page.title')
       %hr
       %li.list-group-item
-        = link_to :skills_reviewers_skillings do
-          %i.fas.fa-rocket{ class: is_same_action_name?('edit') }
-          %br
-          %small{ class: is_same_action_name?('edit') }= t 'reviewers.dashboard.skill'
-      %hr
-      %li.list-group-item
-        = link_to 'https://qiita.com/k_s/private/7389692e39b5bea8177a', target: '_blank' do
-          %i.fas.fa-info-circle
-          %br
-          %small= t 'reviewers.dashboard.use'
-      %hr
-      %li.list-group-item
         = link_to destroy_reviewer_session_path, method: :delete do
           %i.fas.fa-sign-out-alt
           %br

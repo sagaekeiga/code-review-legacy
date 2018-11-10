@@ -21,13 +21,4 @@ class AuthenticationsController < ApplicationController
       return redirect_to :reviewers_dashboard
     end
   end
-
-  def setup
-    if params[:scope].eql?('repo')
-      request.env['omniauth.strategy'].options[:scope] = 'user,repo'
-    else
-      request.env['omniauth.strategy'].options[:scope] = 'user'
-    end
-    render json: 'Setup complete.', status: 404
-  end
 end
