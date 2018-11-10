@@ -8,7 +8,7 @@
 .reviewee-dashboard-wrapper {
   table {
     .repo_list td {
-    height: 70px;
+    height: $base-height + 20;
     }
     &.table thead tr th {
      text-align: left;
