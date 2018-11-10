@@ -44,8 +44,6 @@
         - @pulls.each do |pull|
           %tr
             %td= link_to pull.title&.truncate(40), [:reviewers, pull]
-            %td.text-center
-              %span.label.label-warning= pull.repo.skillings.first.skill.name
             %td.text-center= link_to t('helpers.links.confirm'), [:reviewers, pull], class: 'btn btn-block btn-outline-primary'
 
 //

@@ -36,11 +36,8 @@ class Reviewer < ApplicationRecord
   # -------------------------------------------------------------------------------
   has_many :reviews
   has_many :review_comments
-  has_many :skillings, dependent: :destroy, as: :resource
-  has_many :skills, through: :skillings
   has_many :pulls
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
-  accepts_nested_attributes_for :skillings, allow_destroy: true
 
   # -------------------------------------------------------------------------------
   # Enumerables

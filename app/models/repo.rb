@@ -28,8 +28,6 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :resource, polymorphic: true
   has_many :pulls, dependent: :destroy
-  has_many :skillings, dependent: :destroy, as: :resource
-  has_many :skills, through: :skillings
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------

@@ -5,8 +5,8 @@ class ReviewersController < Reviewers::BaseController
   end
 
   def my_page
-    @reviewed_pulls = Pull.includes(repo: :skilling).where(id: current_reviewer.reviews.comment.pluck(:pull_id)).page(params[:pages])
-    @pending_reviews = current_reviewer.reviews.includes(pull: [repo: [skillings: :skill]]).pending
+    @reviewed_pulls = Pull.where(id: current_reviewer.reviews.comment.pluck(:pull_id)).page(params[:pages])
+    @pending_reviews = current_reviewer.reviews.pending
   end
 
   def pending
