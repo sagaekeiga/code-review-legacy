@@ -1,5 +1,5 @@
 .reviewee-session-new-wrapper
-  .col-xs-8.col-xs-offset-2
+  .col-xs-6.col-xs-offset-3
     %h3.text-center
       %b Reviewee Sign In
     %hr
@@ -7,16 +7,20 @@
       .panel-body
         = form_for(resource, as: resource_name, url: session_path(resource_name, html: { class: 'form-horizontal' })) do |f|
           .form-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control'
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-at
+              = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: 'E-mail'
           .form-group
-            = f.label :password
-            = f.password_field :password, autocomplete: 'off', class: 'form-control'
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-lock
+              = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'Password'
           - if devise_mapping.rememberable?
             .form-group
               = f.check_box :remember_me
               = f.label :remember_me
           .form-group.text-center
-            = f.submit t('helpers.links.sign_in'), class: 'btn btn-outline-primary'
+            = f.submit t('helpers.links.sign_in'), class: 'btn btn-primary'
           .form-group.text-center
             = render 'reviewees/shared/links'

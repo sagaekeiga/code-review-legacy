@@ -838,12 +838,12 @@ $badge-border-radius:         0px !default;
   padding-right: ($spacer * .5) !important;
 }
 
-.btn.btn-primary {
-  color: $color-white;
-  background-color: $github-primary-color;
-  background-image: linear-gradient(-180deg, #34d058 0%, $github-primary-color 90%);
-  border-color: $github-primary-color;
-  font-weight: 600;
+.btn.btn-theme {
+  color: $color-theme;
+  background-color: $color-theme;
+  background-image: linear-gradient(-180deg, #fafbfc 0%, $color-theme 90%);
+  border-color: $color-theme;
+  font-weight: 800;
   border-radius: 0.25em;
 }
 

@@ -1,15 +1,19 @@
-.col-xs-8.col-xs-offset-2
+.col-xs-6.col-xs-offset-3
   %h3= t('helpers.links.sign_in')
   %hr
   .panel.panel-default
     .panel-body
       = form_for(resource, as: resource_name, url: session_path(resource_name, html: { class: 'form-horizontal' })) do |f|
         .form-group
-          = f.label :email
-          = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control'
+          .input-group
+            %span.input-group-addon
+              %i.fas.fa-at
+            = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: 'E-mail'
         .form-group
-          = f.label :password
-          = f.password_field :password, autocomplete: 'off', class: 'form-control'
+          .input-group
+            %span.input-group-addon
+              %i.fas.fa-lock
+            = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'Password'
         - if devise_mapping.rememberable?
           .form-group
             = f.check_box :remember_me
