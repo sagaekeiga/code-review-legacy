@@ -12,12 +12,12 @@
           .text-center
             .target レビューを受けたい方
             %br
-            = link_to 'GitHubログイン', '/auth/github?model_type=reviewee&scope=repo, user', method: :post, class: 'btn btn-block btn-primary'
+            = link_to 'GitHubログイン', '/auth/github?model_type=reviewee', method: :post, class: 'btn btn-block btn-primary'
         .col-xs-6
           .text-center
             .target レビューをしたい方
             %br
-            = link_to 'GitHubログイン', '/auth/github?model_type=reviewer&scope=repo, user', class: 'btn btn-block btn-primary'
+            = link_to 'GitHubログイン', '/auth/github?model_type=reviewer', class: 'btn btn-block btn-primary'
 
 //
 // Live
@@ -44,8 +44,6 @@
         - @pulls.each do |pull|
           %tr
             %td= link_to pull.title&.truncate(40), [:reviewers, pull]
-            %td.text-center
-              %span.label.label-warning= pull.repo.skillings.first.skill.name
             %td.text-center= link_to t('helpers.links.confirm'), [:reviewers, pull], class: 'btn btn-block btn-outline-primary'
 
 //

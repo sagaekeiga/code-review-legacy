@@ -1,7 +1,7 @@
 class Reviewers::ContentsController < Reviewers::BaseController
   before_action :set_repo, only: %i(index show)
   before_action :set_content, only: %i(show)
-  skip_before_action *%i(verify_authenticity_token set_skill! authenticate_reviewer!), only: %i(search)
+  skip_before_action *%i(verify_authenticity_token authenticate_reviewer!), only: %i(search)
 
   def index
     @dir_or_files = @repo.contents.top
