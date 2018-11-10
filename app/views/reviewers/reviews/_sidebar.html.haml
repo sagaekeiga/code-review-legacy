@@ -1,2 +1,26 @@
-%p Sidebar
-%ul#list
+.side-menu
+	%li
+		= link_to '#', class: is_same_action_name?('view_check') do
+			%i.fas.fa-check-circle
+			動作確認
+	%li
+		= link_to file_reviewers_pull_reviews_path(@pull), class: is_same_action_name?('new') do
+			%i.fas.fa-check-circle
+			レビューの作成
+	%li
+		= link_to '#', class: is_same_action_name?('show') do
+			%i.fas.fa-check-circle
+			審査
+	%li
+		= link_to '#', class: is_same_action_name?('edit') do
+			%i.fas.fa-check-circle
+			レビューの修正
+	%li
+		= link_to '#', class: is_same_action_name?('replies') do
+			%i.fas.fa-check-circle
+			リプライ対応
+	%li
+		= link_to '#', class: is_same_action_name?('complete') do
+			%i.fas.fa-check-circle
+			完了
+
