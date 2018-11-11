@@ -44,10 +44,12 @@
 .m-t-1 { margin-top: $padding-base-vertical; }
 .m-t-2 { margin-top: $padding-base-vertical * 2; }
 .m-t-4 { margin-top: $padding-base-vertical * 4; }
+.m-t-10 { margin-top: $padding-base-vertical * 10; }
 
 .m-b-0 { margin-bottom: 0; }
 .m-b-1 { margin-bottom: $padding-base-vertical; }
 .m-b-2 { margin-bottom: $padding-base-vertical * 2; }
+.m-b-4 { margin-bottom: $padding-base-vertical * 4; }
 
 .p-l-1 { padding-left: $padding-base-horizontal; }
 .p-r-1 { padding-right: $padding-base-horizontal; }

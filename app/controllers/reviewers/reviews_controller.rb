@@ -1,6 +1,6 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_pull, only: %i(view_check)
-  before_action :set_pull_includes_cf, only: %i(new create)
+  before_action :set_pull, only: %i(view_check new)
+  before_action :set_pull_includes_cf, only: %i(create)
   before_action :set_changed_files, only: %i(new create)
   before_action :check_pending_review, only: %i(new create)
 
@@ -11,6 +11,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   def new
     @review = Review.new
     numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
+    @commits = @pull.commits.decorate
   end
 
   # POST /reviewers/pulls/:pull_id/reviews

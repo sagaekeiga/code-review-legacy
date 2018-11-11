@@ -340,6 +340,7 @@
 
 .review {
   margin-top: $base-margin;
+  margin-bottom: $base-margin;
   .left-sidebar, .right-sidebar {
     display: none;
   }
@@ -377,7 +378,7 @@
     }
     .right-sidebar {
       position: fixed;
-      top: 50px;
+      top: 35px;
       bottom: 0;
       right: 0;
       display: block;
@@ -385,17 +386,27 @@
       overflow-y: auto;
       background-color: $color-sub-blue;
       .side-menu {
+        margin-top: $base-margin;
         li {
           list-style: none;
-          padding: $base-padding * 3;
+          padding: $base-padding * 4;
+          &.active{
+            background-color: $color-dark-gray;
+          }
           a {
             text-decoration: none;
-            color: $color-dark-gray;
             font-weight: bold;
             letter-spacing: 5px;
             font-size: $base-font-size * 1.5;
+            color: $color-dark-gray;
             &.active{
-              color: $color-black;
+              background-color: $color-dark-gray;
+              color: $color-sub-blue;
+            }
+            i {
+              position:relative;
+              float:left;
+              left: 23px;
             }
             small {
               font-size: $base-font-size;
