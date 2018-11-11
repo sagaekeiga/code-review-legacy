@@ -20,6 +20,6 @@
               - if current_reviewee.github_account&.owner_id
                 .authorized= t('reviewees.settings.integrations.authorized')
               - else
-                = link_to '/auth/github?scope=repo', class: 'btn btn-block btn-outline-primary' do
+                = link_to '/auth/github?model_type=reviewee', method: :post, class: 'btn btn-block btn-outline-primary' do
                   %i.github.icon
                   = t('reviewees.settings.integrations.authorize')
