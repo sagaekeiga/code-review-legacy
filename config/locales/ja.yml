@@ -20,6 +20,10 @@ ja:
       more: もっと見る
       review: Review
       confirm: 確認する
+      password: パスワード
+      password_confirm: パスワード (確認用)
+      email: メールアドレス
+      agreement: 利用規約
     label:
       log_out: ログアウト
       reviewer:

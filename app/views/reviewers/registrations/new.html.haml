@@ -9,17 +9,23 @@
           .input-group
             %span.input-group-addon
               %i.fas.fa-at
-            = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'E-mail'
+            = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('helpers.links.email')
         .form-group
           .input-group
             %span.input-group-addon
               %i.fas.fa-lock
-            = f.password_field :password, class: 'form-control', placeholder: 'Password'
+            = f.password_field :password, class: 'form-control', placeholder: t('helpers.links.password')
         .form-group
           .input-group
             %span.input-group-addon
               %i.fas.fa-check
-            = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password(Confirm)'
+            = f.password_field :password_confirmation, class: 'form-control', placeholder: t('helpers.links.password_confirm')
+        .form-group
+          = f.check_box :agreement, as: :boolean, checked: false
+          = link_to 'https://hackmd.ioagreement/s/BkrUv3BLQ' do
+            = t('helpers.links.agreement')
+          %span に同意する
+          
         .form-group.text-center
           = f.submit '新規登録', class: 'btn btn-primary'
         .form-group.text-center

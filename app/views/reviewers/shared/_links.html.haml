@@ -1,8 +1,10 @@
 - if controller_name != 'sessions'
+  %span ログインは
   = link_to t('helpers.links.sign_in'), new_session_path(resource_name), class: 'btn btn-outline-primary'
   %br/
 - if devise_mapping.registerable? && controller_name != 'registrations'
-  = link_to t('helpers.links.sign_up'), new_registration_path(resource_name), class: 'btn btn-outline-primary'
+  %span 登録は
+  = link_to t('helpers.links.sign_up'), new_registration_path(resource_name)
   %br/
 - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
   .m-t-4= link_to t('reviewees.sessions.new.forgot_password'), new_password_path(resource_name)

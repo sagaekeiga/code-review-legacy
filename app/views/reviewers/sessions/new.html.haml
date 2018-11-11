@@ -8,12 +8,12 @@
           .input-group
             %span.input-group-addon
               %i.fas.fa-at
-            = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: 'E-mail'
+            = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.email')
         .form-group
           .input-group
             %span.input-group-addon
               %i.fas.fa-lock
-            = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'Password'
+            = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.password')
         - if devise_mapping.rememberable?
           .form-group
             = f.check_box :remember_me
