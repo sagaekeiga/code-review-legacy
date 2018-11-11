@@ -11,16 +11,4 @@
 
 .reviewer-registration-new-wrapper, .reviewer-session-new-wrapper {
   margin-top: $base-margin * 2;
-  .col-xs-8.col-xs-offset-2 {
-    .card {
-      border: 1px solid $color-github-label-border-white;
-      box-shadow: none;
-      h4 {
-        margin-top: $base-margin / 2;
-        font-weight: bold;
-      }
-      .card-body {
-      }
-    }
-  }
 }
