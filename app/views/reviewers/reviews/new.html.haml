@@ -42,7 +42,7 @@
                     = render @changed_files.decorate
                     = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
                     .pull-right.col-sm-3.p-r-0.m-t-1
-                      %button#reviewSubmit.btn.btn-outline-primary{ type: 'button', 'data-toggle': 'modal' } チェックする
+                      %button#reviewSubmit.btn.btn-outline-primary{ type: 'button' } チェックする
                       #reviewSubmitModal.modal.fade
                         .modal-dialog
                           .modal-content
