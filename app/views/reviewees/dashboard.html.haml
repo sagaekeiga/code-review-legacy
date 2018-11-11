@@ -15,5 +15,5 @@
         - @reviewee.repos.each do |repo|
           %tbody
             %tr.repo-list
-              %td= repo.name
+              %td= link_to repo.full_name, reviewees_repo_contents_path(repo)
               %td= repo.status_i18n
