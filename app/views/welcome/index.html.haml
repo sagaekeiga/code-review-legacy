@@ -12,12 +12,12 @@
           .text-center
             .target レビューを受けたい方
             %br
-            = link_to 'GitHubログイン', '/auth/github?model_type=reviewee', method: :post, class: 'btn btn-block btn-primary'
+            = link_to '新規登録/ログイン', new_reviewee_session_path, class: 'btn btn-block btn-primary'
         .col-xs-6
           .text-center
             .target レビューをしたい方
             %br
-            = link_to 'GitHubログイン', '/auth/github?model_type=reviewer', class: 'btn btn-block btn-primary'
+            = link_to '新規登録/ログイン', new_reviewer_session_path, class: 'btn btn-block btn-primary'
 
 //
 // Live
