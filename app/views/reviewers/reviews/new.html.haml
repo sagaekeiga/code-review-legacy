@@ -1,22 +1,61 @@
-.review
-  .col-xs-12
-    .container-fluid.p-r-0.p-l-0
-      .page-header{ 'pull-id': @pull.id, 'repo-id': @pull.repo.id }= @pull.title
-      - unless @pending_review
-        .col-sm-4.p-l-0
-          %i.fa.fa-chevron-circle-left.close-left-side
-          %ul.nav.nav-tabs
-            %li.active
-              %a{ 'data-toggle': 'tab', href: '#bodyTab'} チェック項目
-            %li
-              %a{ 'data-toggle': 'tab', href: '#issueTab' } issue
-            %li
-              %a{ 'data-toggle': 'tab', href: '#analiticsTab' } 解析
-            %li
-              %a{ 'data-toggle': 'tab', href: '#commitsTab' } Commits
-          / タブ内容
+.container-fluid
+  .row
+    .review
+      .left-sidebar.col-sm-2.hidden-xs
+        = render 'sidebar'
+      .col-sm-10.col-sm-offset-2
+        .col-sm-8.col-sm-offset-2
+          .right-sidebar
+            .side-menu
+              %li.active
+                = link_to '#codeTab', 'data-toggle': 'tab', class: "#{is_same_action_name?('view_check')} active" do
+                  .text-center
+                    %i.fas.fa-code
+                    %br
+                    %small code
+              %li
+                = link_to '#bodyTab', 'data-toggle': 'tab', class: is_same_action_name?('view_check') do
+                  .text-center
+                    %i.glyphicon.glyphicon-comment
+                    %br
+                    %small pullrequest
+              %li
+                = link_to '#issueTab', 'data-toggle': 'tab', class: is_same_action_name?('view_check') do
+                  .text-center
+                    %i.fas.fa-exclamation-circle
+                    %br
+                    %small issues
+              %li
+                = link_to '#commitsTab', 'data-toggle': 'tab', class: is_same_action_name?('view_check') do
+                  .text-center.center-block
+                    %i.fas.fa-history
+                    %br
+                    %small commits
           .tab-content
-            #bodyTab.tab-pane.active
+            / code
+            #codeTab.tab-pane.active
+              = form_for [:reviewers, @pull, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
+                %i.fa.fa-chevron-circle-right.hidden.open-left-side
+                .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
+                .reviews-form-wrapper
+                  .reviews-form-card-wrapper.editor
+                    = render @changed_files.decorate
+                    = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
+                    .pull-right.col-sm-3.p-r-0.m-t-1
+                      %button#reviewSubmit.btn.btn-outline-primary{ type: 'button', 'data-toggle': 'modal' } チェックする
+                      #reviewSubmitModal.modal.fade
+                        .modal-dialog
+                          .modal-content
+                            .modal-body
+                              .review-footer-wrapper
+                                = f.label :body, for: 'review_body'
+                                = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
+                                .text-center.m-t-1
+                                  = f.submit t('helpers.links.review'), id: 'submit_review_button', class: 'btn btn-block btn-outline-primary'
+                            .modal-footer
+                              %button.btn.btn-outline-default{ 'data-dismiss': 'modal', type: 'button' } レビューを作成する
+            / pullrequest
+            #bodyTab.tab-pane
               .pulls-body-wrapper
                 .panel.h-550
                   - if @pull.body.present?
@@ -25,6 +64,7 @@
                         = markdown(@pull.body)
                   - else
                     チェック項目はありません。
+            / issue
             #issueTab.tab-pane
               .panel.h-550
                 - if @issues.blank?
@@ -36,30 +76,10 @@
                       %h4= issue.title
                     .panel-body
                       .md-wrapper= markdown(issue.body)
+            / commits
             #commitsTab.tab-pane.h-550
               .panel.h-550
                 .all-center Comming Soon
-            #analiticsTab.tab-pane.h-550
-              .panel.h-550
-                .all-center Comming Soon
-            #commitsTab.tab-pane.h-550
-              .panel.h-550
-                .all-center Comming Soon
-        #code_note.col-sm-8.p-r-0
-          = form_for [:reviewers, @pull, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
-            %i.fa.fa-chevron-circle-right.hidden.open-left-side
-            .m-b-1.text-right= render 'submit', f: f
-            .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
-            .reviews-form-wrapper
-              .reviews-form-card-wrapper.editor
-                = render @changed_files.decorate
-        .col-sm-3.p-r-0.hidden
-          = render 'comment', changed_files: @changed_files
-          = render 'comment_modal'
-
-      - else
-        %h1.text-center 審査中
-        %p.text-center 審査が通るまで少々お待ちください
 
 = javascript_pack_tag 'reviews'
 = javascript_pack_tag 'modal'

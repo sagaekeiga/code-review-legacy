@@ -340,12 +340,12 @@
 
 .review {
   margin-top: $base-margin;
-  .sidebar {
+  .left-sidebar, .right-sidebar {
     display: none;
   }
 
   @media screen and (min-width: 768px) {
-    .sidebar {
+    .left-sidebar {
       position: fixed;
       top: 50px;
       bottom: 0;
@@ -370,6 +370,36 @@
             }
             i {
               color: $color-line;
+            }
+          }
+        }
+      }
+    }
+    .right-sidebar {
+      position: fixed;
+      top: 50px;
+      bottom: 0;
+      right: 0;
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: $color-sub-blue;
+      .side-menu {
+        li {
+          list-style: none;
+          padding: $base-padding * 3;
+          a {
+            text-decoration: none;
+            color: $color-dark-gray;
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-size: $base-font-size * 1.5;
+            &.active{
+              color: $color-black;
+            }
+            small {
+              font-size: $base-font-size;
+              letter-spacing: 0;
             }
           }
         }
