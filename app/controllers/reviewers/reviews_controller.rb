@@ -12,6 +12,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     @review = Review.new
     numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
     @commits = @pull.commits.decorate
+    # @TODO issueの取得
   end
 
   # POST /reviewers/pulls/:pull_id/reviews
