@@ -59,7 +59,7 @@ class Reviewers::RegistrationsController < Devise::RegistrationsController
   # アカウント登録時に許可するパラメータの設定
   #
   def sign_up_params
-    params.require(:reviewee).permit(:email, :password, :password_confirmation, :agreement)
+    params.require(:reviewer).permit(:email, :password, :password_confirmation, :agreement)
   end
 
   # The path used after sign up for inactive accounts.
