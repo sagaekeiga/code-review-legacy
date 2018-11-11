@@ -1,7 +1,7 @@
 .reviewee-registration-new-wrapper
   .col-xs-6.col-xs-offset-3
     %h3.text-center
-      %b Reviewee Sign Up
+      %b 新規登録
     %hr
     .panel.panel-default
       .panel-body
@@ -24,7 +24,7 @@
               = f.password_field :password_confirmation, class: 'form-control', placeholder: t('helpers.links.password_confirm')
           .form-group
             = f.check_box :agreement, as: :boolean, checked: false
-            = link_to 'https://hackmd.ioagreement/s/BkrUv3BLQ' do
+            = link_to 'https://hackmd.io/s/BkrUv3BLQ' do
               = t('helpers.links.agreement')
             %span に同意する
 
