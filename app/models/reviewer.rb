@@ -62,6 +62,11 @@ class Reviewer < ApplicationRecord
   attribute :status, default: statuses[:active]
 
   # -------------------------------------------------------------------------------
+  # Validations
+  # -------------------------------------------------------------------------------
+  validates_acceptance_of :agreement, allow_nil: true, on: :create
+
+  # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
   def self.find_for_oauth(github_account)

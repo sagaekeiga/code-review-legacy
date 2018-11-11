@@ -54,6 +54,14 @@ class Reviewees::RegistrationsController < Devise::RegistrationsController
   # def after_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  #
+  # アカウント登録時に許可するパラメータの設定
+  #
+  def sign_up_params
+    params.require(:reviewee).permit(:email, :password, :password_confirmation, :agreement)
+  end
+
   #
   # アカウント情報の更新時にはパスワードは不要
   #

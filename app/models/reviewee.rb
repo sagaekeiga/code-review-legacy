@@ -46,6 +46,11 @@ class Reviewee < ApplicationRecord
   delegate :login, to: :github_account
   delegate :nickname, to: :github_account
 
+  # -------------------------------------------------------------------------------
+  # Validations
+  # -------------------------------------------------------------------------------
+  validates_acceptance_of :agreement, allow_nil: true, on: :create
+
   def self.find_for_oauth(github_account)
     reviewee = find_or_initialize_by(email: github_account.email)
     if reviewee.persisted?
