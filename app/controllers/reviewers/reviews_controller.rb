@@ -1,6 +1,8 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_pull, only: %i(view_check new)
+  before_action :set_review, only: %i(show)
+  before_action :set_pull, only: %i(view_check new show)
   before_action :set_pull_includes_cf, only: %i(create)
+  before_action :set_commits, only: %i(new show)
   before_action :set_changed_files, only: %i(new create)
   before_action :check_pending_review, only: %i(new create)
 
@@ -11,7 +13,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   def new
     @review = Review.new
     numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
-    @commits = @pull.commits.decorate
     # @TODO issueの取得
   end
 
@@ -30,6 +31,10 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     render :new
   end
 
+  def show
+    @changed_files = @review.pull.files_changed.decorate
+  end
+
   private
 
   def set_pull
@@ -42,6 +47,14 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_changed_files
     @changed_files = @pull.files_changed
+  end
+
+  def set_review
+    @review = current_reviewer.reviews.find(params[:id])
+  end
+
+  def set_commits
+    @commits = @pull.commits.decorate
   end
 
   def check_pending_review

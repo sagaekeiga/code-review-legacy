@@ -9,6 +9,10 @@ ja:
         event: イベント
         state: ステート
         reason: 理由
+  enums:
+    review:
+      event:
+        pending: 審査中
   reviewers:
     reviews:
       sidebars:
