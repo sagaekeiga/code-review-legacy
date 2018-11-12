@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     #
     namespace :reviewees do
       get :dashboard
+      get :integrations
       get 'settings/integrations'
       resources :memberships, only: %i(index create destroy update) do
         collection do

@@ -1,10 +1,16 @@
 .setting-integrations-wrapper {
   margin-top: $base-margin * 4;
-  border: 1px solid $color-github-label-border-white;
   box-shadow: none;
   h4 {
     margin-top: $base-margin / 2;
     font-weight: bold;
+  }
+  h3 {
+    color: $color-literal-gray;
+    margin-top: 40px;
+  }
+  h2 {
+    margin-top: 13px;
   }
   .authorized {
     margin-top: $base-margin;
@@ -16,14 +22,11 @@
     // margin-bottom: $base-margin * 2;
   }
   .page-header {
-    margin: 50px 0 0;
+    margin: 0;
+    width: 66%;
   }
   small {
     display: block;
-  }
-  h3 {
-    color: $color-literal-gray;
-    margin-top: 40px;
   }
   table.table-borderless {
     margin-bottom: 40px;
