@@ -1,22 +1,42 @@
 .setting-integrations-wrapper {
   margin-top: $base-margin * 4;
-  .panel.panel-default {
-    border: 1px solid $color-github-label-border-white;
-    box-shadow: none;
-    h4 {
-      margin-top: $base-margin / 2;
-      font-weight: bold;
-    }
-    .panel-body {
-      .authorized {
-        margin-top: $base-margin;
-        margin-bottom: $base-margin / 2;
-      }
-      .btn-outline-primary {
-        margin-top: $base-margin * 2;
-        margin-bottom: $base-margin * 2;
-      }
-    }
+  border: 1px solid $color-github-label-border-white;
+  box-shadow: none;
+  h4 {
+    margin-top: $base-margin / 2;
+    font-weight: bold;
+  }
+  .authorized {
+    margin-top: $base-margin;
+    margin-bottom: $base-margin / 2;
+  }
+  .btn-primary {
+    padding: 12px 40px;
+    margin-top: $base-margin * 2;
+    // margin-bottom: $base-margin * 2;
+  }
+  .page-header {
+    margin: 50px 0 0;
+  }
+  small {
+    display: block;
+  }
+  h3 {
+    color: $color-literal-gray;
+    margin-top: 40px;
+  }
+  table.table-borderless {
+    margin-bottom: 40px;
+  }
+  .table > tbody > tr > td {
+    width: 50%;
+    text-align: left;
+    border-top: none;
+  }
+  .table > thead > tr > th {
+    width: 50%;
+    border-bottom: none;
+    text-align: left;
   }
   .color-red {
     color: $color-cancel;
