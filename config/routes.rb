@@ -28,6 +28,12 @@ Rails.application.routes.draw do
 
     devise_scope :reviewee do
       post '/auth/:action/callback',
+        controller: 'authentications',
+        constraints: { action: /github/ }
+    end
+
+    devise_scope :reviewer do
+      get '/auth/:action/callback',
         controller: 'connects',
         constraints: { action: /github/ }
     end
