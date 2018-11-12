@@ -1,7 +1,6 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show)
-  before_action :set_pull, only: %i(view_check new show)
-  before_action :set_pull_includes_cf, only: %i(create)
+  before_action :set_pull, only: %i(view_check new create show)
   before_action :set_commits, only: %i(new show)
   before_action :set_changed_files, only: %i(new create)
   before_action :check_pending_review, only: %i(new create)
@@ -39,10 +38,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_pull
     @pull = Pull.friendly.find(params[:pull_token])
-  end
-
-  def set_pull_includes_cf
-    @pull = Pull.includes(:changed_files).friendly.find(params[:pull_token]).decorate
   end
 
   def set_changed_files
