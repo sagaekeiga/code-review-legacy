@@ -1,8 +1,8 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_review, only: %i(show)
-  before_action :set_pull, only: %i(view_check new create show)
-  before_action :set_commits, only: %i(new show)
-  before_action :set_changed_files, only: %i(new create show)
+  before_action :set_review, only: %i(show edit)
+  before_action :set_pull, only: %i(view_check new create show edit)
+  before_action :set_commits, only: %i(new show edit)
+  before_action :set_changed_files, only: %i(new create show edit)
 
   def view_check
   end
@@ -30,6 +30,9 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def show
+  end
+
+  def edit
   end
 
   private
