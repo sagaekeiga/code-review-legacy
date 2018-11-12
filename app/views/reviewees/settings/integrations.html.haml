@@ -9,22 +9,18 @@
           %h2
             %i.fab.fa-github
             = t('views.integrations.github')
-        .text-center
+        .text-left
           - if current_reviewee.github_account&.owner_id
             .authorized= t('reviewees.settings.integrations.authorized')
           - else
             = link_to '/auth/github?model_type=reviewee', method: :post, class: 'btn btn-primary' do
               %i.fas.fa-plug
               = t('reviewees.settings.integrations.authorize')
-        %small.text-muted.text-center.m-t-2
-          GitHubアカウント連携の設定をします。以下のアクセス権限をGithub Appに付与します
+            %small.text-muted.text-left.m-t-2
+              GitHubアカウント連携の設定をします。以下のアクセス権限をGithub Appに付与します
         .col-xs-12.text-center
           %h3.text-left 権限
           %table.table.table-borderless
-            %thead
-              %tr
-                %th 項目
-                %th 権限
             %tbody
               %tr
                 %td Repository contents
@@ -44,10 +40,6 @@
 
           %h3.text-left ユーザー権限
           %table.table.table-borderless
-            %thead
-              %tr
-                %th 項目
-                %th 権限
             %tbody
               %tr
                 %td メールアドレス
