@@ -20,7 +20,7 @@
                 .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
                 .reviews-form-wrapper
                   .reviews-form-card-wrapper.editor
-                    = render @changed_files.decorate
+                    = render @changed_files
                     = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
                     .text-right.p-r-0.m-t-1
                       %button#reviewSubmit.btn.btn-outline-primary{ type: 'button' } チェックする

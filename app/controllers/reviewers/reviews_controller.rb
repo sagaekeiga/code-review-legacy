@@ -2,8 +2,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show)
   before_action :set_pull, only: %i(view_check new create show)
   before_action :set_commits, only: %i(new show)
-  before_action :set_changed_files, only: %i(new create)
-  before_action :check_pending_review, only: %i(new create)
+  before_action :set_changed_files, only: %i(new create show)
 
   def view_check
   end
@@ -31,7 +30,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def show
-    @changed_files = @review.pull.files_changed.decorate
   end
 
   private
@@ -41,7 +39,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = @pull.files_changed
+    @changed_files = @pull.files_changed.decorate
   end
 
   def set_review
@@ -50,9 +48,5 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_commits
     @commits = @pull.commits.decorate
-  end
-
-  def check_pending_review
-    @pending_review = @pull.reviews.pending.first if @pull.reviews
   end
 end
