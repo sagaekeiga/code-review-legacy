@@ -21,7 +21,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     ActiveRecord::Base.transaction do
       @review = current_reviewer.reviews.ready_to_review!(@pull, params[:review][:body])
     end
-    redirect_to [:reviewers, @pull], success: t('.success')
+    redirect_to [:reviewers, @pull, @review], success: t('.success')
   rescue => e
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")

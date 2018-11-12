@@ -1,5 +1,3 @@
-review_comments:
-  max_working_hours: 30
 reviews:
   body: PullRequestへようこそ！私はあなたにインラインでいくつかのコメントを残しました。
     ほとんどはスタイルを改善するコメントですが、コメントをさらに主観的にするため開発中です。

@@ -9,12 +9,10 @@
         %tr
           %th= t 'activerecord.attributes.review.id'
           %th= t 'activerecord.attributes.review.body'
-          %th= t 'activerecord.attributes.review.working_hours'
           %th
       %tbody
         - @pending_reviews.each do |pending_review|
           %tr
             %td= pending_review.id
             %td= pending_review.body&.truncate(55)
-            %td= pending_review.working_hours
             %td= link_to '詳細', [:admins, pending_review]

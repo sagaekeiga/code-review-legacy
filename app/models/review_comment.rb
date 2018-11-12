@@ -95,14 +95,6 @@ class ReviewComment < ApplicationRecord
     )
   }
 
-  def self.calc_working_hours
-    return 0 if self.first.nil?
-    start_time = self.first.created_at
-    end_time = Time.zone.now
-    working_hours = ((end_time - start_time).to_i / 60).floor
-    working_hours > Settings.review_comments.max_working_hours ? Settings.review_comments.max_working_hours : working_hours
-  end
-
   def self.fetch_on_installing_repo!(changed_file)
     ActiveRecord::Base.transaction do
       res_pull_comments = Github::Request.github_exec_fetch_pull_review_comment_contents!(changed_file.pull)
