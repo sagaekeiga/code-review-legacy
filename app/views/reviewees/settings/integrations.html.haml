@@ -4,43 +4,5 @@
       %h3 Settings
     .setting-integrations-wrapper
       = render 'reviewees/shared/settings/side_nav'
-      .col-sm-8.p-r-0
-        .page-header
-          %h2
-            %i.fab.fa-github
-            = t('views.integrations.github')
-        .text-left
-          - if current_reviewee.github_account&.owner_id
-            .authorized= t('reviewees.settings.integrations.authorized')
-          - else
-            = link_to '/auth/github?model_type=reviewee', method: :post, class: 'btn btn-primary' do
-              %i.fas.fa-plug
-              = t('reviewees.settings.integrations.authorize')
-            %small.text-muted.text-left.m-t-2
-              GitHubアカウント連携の設定をします。以下のアクセス権限をGithub Appに付与します
-        .col-xs-12.text-center
-          %h3.text-left 権限
-          %table.table.table-borderless
-            %tbody
-              %tr
-                %td Repository contents
-                %td 読み取り&書き込み
-              %tr
-                %td Issues
-                %td 読み取り&書き込み
-              %tr
-                %td Repository metadata
-                %td 読み取り
-              %tr
-                %td Pull requests
-                %td 読み取り&書き込み
-              %tr
-                %td Commit statuses
-                %td 読み取り&書き込み
-
-          %h3.text-left ユーザー権限
-          %table.table.table-borderless
-            %tbody
-              %tr
-                %td メールアドレス
-                %td 読み取り
+      .col-sm-7.p-r-0
+        = render 'reviewees/github_certification'
