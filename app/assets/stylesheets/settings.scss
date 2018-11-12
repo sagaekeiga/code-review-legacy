@@ -10,14 +10,14 @@
     margin-top: $base-padding * 10;
   }
   h2 {
-    margin-top: 13px;
+    margin-top: $base-font-size + 1;
   }
   .authorized {
     margin-top: $base-margin;
     margin-bottom: $base-margin / 2;
   }
   .btn-primary {
-    padding: 12px 40px;
+    padding: $base-font-size $base-height - 10;
     margin-top: $base-margin * 2;
   }
   .page-header {

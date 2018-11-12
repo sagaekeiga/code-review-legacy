@@ -2,28 +2,20 @@
 #
 # Table name: reviewees_github_accounts
 #
-#  id                  :bigint(8)        not null, primary key
-#  access_token        :string
-#  avatar_url          :string
-#  company             :string
-#  deleted_at          :datetime
-#  email               :string
-#  html_url            :string
-#  location            :string
-#  login               :string
-#  name                :string
-#  nickname            :string
-#  public_gists        :integer
-#  public_repos        :integer
-#  reviewee_created_at :datetime
-#  reviewee_updated_at :datetime
-#  url                 :string
-#  user_type           :string
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  gravatar_id         :string
-#  owner_id            :bigint(8)
-#  reviewee_id         :bigint(8)
+#  id           :bigint(8)        not null, primary key
+#  access_token :string
+#  avatar_url   :string
+#  company      :string
+#  deleted_at   :datetime
+#  email        :string
+#  login        :string
+#  name         :string
+#  nickname     :string
+#  user_type    :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  owner_id     :bigint(8)
+#  reviewee_id  :bigint(8)
 #
 # Indexes
 #

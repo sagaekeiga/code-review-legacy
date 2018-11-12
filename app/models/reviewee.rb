@@ -51,27 +51,15 @@ class Reviewee < ApplicationRecord
   # -------------------------------------------------------------------------------
   validates_acceptance_of :agreement, allow_nil: true, on: :create
 
-  def connect_to_github(auth)
-    github_account = build_github_account(
-      login: auth['extra']['raw_info']['login'],
-      access_token: auth['credentials']['token'],
-      owner_id: auth['extra']['raw_info']['id'],
-      avatar_url: auth['extra']['raw_info']['avatar_url'],
-      gravatar_id: auth['extra']['raw_info']['gravatar_id'],
-      email: auth['info']['email'],
-      url: auth['info']['url'],
-      html_url: auth['extra']['raw_info']['html_url'],
-      user_type: auth['extra']['raw_info']['type'],
-      nickname: auth['info']['nickname'],
-      name: auth['info']['name'],
-      company: auth['info']['company'],
-      location: auth['extra']['raw_info']['location'],
-      public_gists: auth['extra']['raw_info']['public_gists'],
-      public_repos: auth['extra']['raw_info']['public_repos'],
-      reviewee_created_at: auth['extra']['raw_info']['created_at'],
-      reviewee_updated_at: auth['extra']['raw_info']['updated_at']
-    )
-    github_account.save!
+  def self.find_for_oauth(github_account, current_reviewee)
+    reviewee = find_or_initialize_by(email: github_account.email)
+    if reviewee.persisted?
+      reviewee.update_attributes!(last_sign_in_at: Time.zone.now)
+      github_account.save
+    else
+      github_account.update_attributes(reviewee: current_reviewee)
+    end
+    reviewee
   end
 
   def viewable_repos
