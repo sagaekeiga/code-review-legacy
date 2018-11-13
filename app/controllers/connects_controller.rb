@@ -13,7 +13,6 @@ class ConnectsController < ApplicationController
       when 'reviewee' then Reviewees
       when 'reviewer' then Reviewers
       end
-      
     github_account = clazz::GithubAccount.find_for_oauth(request.env['omniauth.auth'])
     case model_type
     when 'reviewee'
