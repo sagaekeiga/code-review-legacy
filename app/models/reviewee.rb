@@ -55,9 +55,9 @@ class Reviewee < ApplicationRecord
     reviewee = find_or_initialize_by(email: github_account.email)
     if reviewee.persisted?
       reviewee.update_attributes!(last_sign_in_at: Time.zone.now)
-      github_account.save
+      github_account.update_attributes!(reviewee: current_reviewee)
     else
-      github_account.update_attributes(reviewee: current_reviewee)
+      github_account.update_attributes!(reviewee: current_reviewee)
     end
     reviewee
   end

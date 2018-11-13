@@ -73,9 +73,9 @@ class Reviewer < ApplicationRecord
     reviewer = find_or_initialize_by(email: github_account.email)
     if reviewer.persisted?
       reviewer.update_attributes(last_sign_in_at: Time.zone.now)
-      github_account.save
+      github_account.update_attributes!(reviewer: current_reviewer)
     else
-      github_account.update_attributes(reviewer: current_reviewer)
+      github_account.update_attributes!(reviewer: current_reviewer)
     end
     reviewer
   end
