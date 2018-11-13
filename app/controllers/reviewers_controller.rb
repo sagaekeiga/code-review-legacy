@@ -1,4 +1,5 @@
 class ReviewersController < Reviewers::BaseController
+  skip_before_action :connect_github!, only: %i(integrations)
 
   def dashboard
     @pulls = Pull.order(created_at: :desc).page(params[:page])
@@ -11,5 +12,8 @@ class ReviewersController < Reviewers::BaseController
 
   def pending
     redirect_to :reviewers_dashboard unless current_reviewer.pending?
+  end
+
+  def integrations
   end
 end

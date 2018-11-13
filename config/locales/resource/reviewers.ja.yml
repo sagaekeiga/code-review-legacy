@@ -51,6 +51,9 @@ ja:
       unit_minutes: "%{working_hours} 分"
       unit_hour_and_minutes: "%{working_hours} 時間 %{working_minutes} 分"
       remaining_time: 残り時間
+    integrations:
+      alert:
+        danger: Githubに接続してください
     pulls:
       show:
         conversation: Conversation
