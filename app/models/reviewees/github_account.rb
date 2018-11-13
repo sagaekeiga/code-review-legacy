@@ -33,6 +33,7 @@ class Reviewees::GithubAccount < ApplicationRecord
   # Validations
   # -------------------------------------------------------------------------------
   validates :owner_id, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
