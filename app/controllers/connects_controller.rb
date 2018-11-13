@@ -20,7 +20,7 @@ class ConnectsController < ApplicationController
       return redirect_to :reviewees_dashboard
     when 'reviewer'
       Reviewer.find_for_oauth(github_account, current_reviewer)
-      return redirect_to :reviewers_dashboard
+      return redirect_to :reviewers_pending
     end
   end
 end
