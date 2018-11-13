@@ -51,14 +51,13 @@ class Reviewee < ApplicationRecord
   # -------------------------------------------------------------------------------
   validates_acceptance_of :agreement, allow_nil: true, on: :create
 
-  def self.find_for_oauth(github_account)
+  def self.find_for_oauth(github_account, current_reviewee)
     reviewee = find_or_initialize_by(email: github_account.email)
     if reviewee.persisted?
       reviewee.update_attributes!(last_sign_in_at: Time.zone.now)
       github_account.save
     else
-      reviewee.update_attributes!(password: Devise.friendly_token.first(8))
-      github_account.update_attributes(reviewee: reviewee)
+      github_account.update_attributes(reviewee: current_reviewee)
     end
     reviewee
   end
