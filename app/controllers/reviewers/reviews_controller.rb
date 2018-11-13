@@ -1,6 +1,6 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_review, only: %i(show edit)
-  before_action :set_pull, only: %i(view_check new create show edit)
+  before_action :set_review, only: %i(show edit update)
+  before_action :set_pull, only: %i(view_check new create show edit update)
   before_action :set_commits, only: %i(new show edit)
   before_action :set_changed_files, only: %i(new create show edit)
 
@@ -35,6 +35,14 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   def edit
   end
 
+  def update
+    if @review.update(review_params)
+      redirect_to [:reviewers, @pull, @review], success: '更新しました。'
+    else
+      render :edit
+    end
+  end
+
   private
 
   def set_pull
@@ -51,5 +59,9 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_commits
     @commits = @pull.commits.decorate
+  end
+
+  def review_params
+    params.require(:review).permit(:body)
   end
 end

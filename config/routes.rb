@@ -82,7 +82,7 @@ Rails.application.routes.draw do
       get 'settings/integrations'
       resources :pulls, only: %i(show update), param: :token do
         get :files
-        resources :reviews, only: %i(create show edit) do
+        resources :reviews, only: %i(create show edit update) do
           collection do
             get :view_check
             get :file, to: 'reviews#new'
