@@ -56,7 +56,7 @@ class Reviewers::RegistrationsController < Devise::RegistrationsController
   # end
 
   #
-  # レビュイー登録完了後に遷移するパスを指定する
+  # レビュワー登録完了後に遷移するパスを指定する
   #
   def after_sign_up_path_for(_resource)
     reviewers_integrations_url
