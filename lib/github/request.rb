@@ -93,7 +93,7 @@ module Github
       #
       def _post(sub_url, installation_id, event, params)
         headers = {
-          'User-Agent': 'PushRequest',
+          'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(installation_id)}",
           'Accept': set_accept(event)
         }

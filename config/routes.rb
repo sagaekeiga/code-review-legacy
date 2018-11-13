@@ -86,6 +86,7 @@ Rails.application.routes.draw do
           collection do
             get :view_check
             get :file, to: 'reviews#new'
+            get :replies
           end
         end
         resources :comments, only: %i(create update destroy)

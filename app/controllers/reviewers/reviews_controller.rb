@@ -43,6 +43,9 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     end
   end
 
+  def replies
+  end
+
   private
 
   def set_pull
