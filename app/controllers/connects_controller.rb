@@ -14,14 +14,8 @@ class ConnectsController < ApplicationController
       when 'reviewer'
         [Reviewers, current_reviewer]
       end
-
-    clazz::GithubAccount.find_for_oauth(request.env['omniauth.auth'], resource) if _provider.eql?(:github)
-
-    case model_type
-    when 'reviewee'
-      return redirect_to :reviewees_dashboard
-    when 'reviewer'
-      return redirect_to :reviewers_pending
-    end
+    auth = ActiveSupport::HashWithIndifferentAccess.new(request.env['omniauth.auth'])
+    clazz::GithubAccount.find_for_oauth(auth, resource)
+    redirect_to :root
   end
 end
