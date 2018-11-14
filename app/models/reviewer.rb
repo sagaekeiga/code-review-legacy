@@ -67,20 +67,6 @@ class Reviewer < ApplicationRecord
   validates_acceptance_of :agreement, allow_nil: true, on: :create
 
   # -------------------------------------------------------------------------------
-  # ClassMethods
-  # -------------------------------------------------------------------------------
-  def self.find_for_oauth(github_account, current_reviewer)
-    reviewer = find_or_initialize_by(email: github_account.email)
-    if reviewer.persisted?
-      reviewer.update_attributes(last_sign_in_at: Time.zone.now)
-      github_account.update_attributes!(reviewer: current_reviewer)
-    else
-      github_account.update_attributes!(reviewer: current_reviewer)
-    end
-    reviewer
-  end
-
-  # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
   # pullのレビューコメントを返す

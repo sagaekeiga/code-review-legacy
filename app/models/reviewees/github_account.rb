@@ -42,7 +42,7 @@ class Reviewees::GithubAccount < ApplicationRecord
   # ClassMethods
   # -------------------------------------------------------------------------------
 
-  def self.find_for_oauth(auth)
+  def self.find_for_oauth(auth, reviewee)
     github_account = find_or_initialize_by(owner_id: auth['extra']['raw_info']['id'])
     github_account.assign_attributes(
       login: auth['extra']['raw_info']['login'],
@@ -52,8 +52,9 @@ class Reviewees::GithubAccount < ApplicationRecord
       user_type: auth['extra']['raw_info']['type'],
       nickname: auth['info']['nickname'],
       name: auth['info']['name'],
-      company: auth['info']['company']
+      company: auth['info']['company'],
+      reviewee: reviewee
     )
-    github_account
+    github_account.save
   end
 end
