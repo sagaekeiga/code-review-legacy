@@ -41,6 +41,12 @@ class ReviewComment < ApplicationRecord
   belongs_to :changed_file
   belongs_to :reviewer, optional: true
 
+  has_one :comment_tree, class_name: 'ReviewCommentTree', foreign_key: :reply_id, dependent: :destroy
+  has_one :comment, through: :comment_tree, source: :comment
+
+  has_many :reply_trees, class_name: 'ReviewCommentTree', foreign_key: :comment_id, dependent: :destroy
+  has_many :replies, through: :reply_trees,  source: :reply
+
   # -------------------------------------------------------------------------------
   # Enumerables
   # -------------------------------------------------------------------------------
@@ -94,22 +100,6 @@ class ReviewComment < ApplicationRecord
       path: params[:comm_path]
     )
   }
-
-  def self.fetch_on_installing_repo!(changed_file)
-    ActiveRecord::Base.transaction do
-      res_pull_comments = Github::Request.github_exec_fetch_pull_review_comment_contents!(changed_file.pull)
-      res_pull_comments.each do |pull_comment|
-        params = ActiveSupport::HashWithIndifferentAccess.new(pull_comment)
-        review_comment = ReviewComment.find_or_initialize_by(_pull_comments_params(params, changed_file))
-        review_comment.update_attributes!(body: params[:body])
-      end
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
 
   def self.fetch!(params)
     pull = Pull.find_by(
