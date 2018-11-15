@@ -83,10 +83,10 @@ Rails.application.routes.draw do
       resources :pulls, only: %i(show update), param: :token do
         get :files
         resources :reviews, only: %i(create show edit update) do
+          get :replies
           collection do
             get :view_check
             get :file, to: 'reviews#new'
-            get :replies
           end
         end
         resources :comments, only: %i(create update destroy)
