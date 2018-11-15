@@ -1,4 +1,4 @@
-.replies-wrapper {
+.conversation-wrapper {
 	font-family: $font-static;
 	font-weight: $base-font-weight;
 	padding-left: 0;
@@ -30,12 +30,11 @@
 			margin-bottom: -$base-margin;
 			.panel {
 				max-width: 100%;
-				margin-bottom: $base-margin;
-				border-radius: 0;
-				border-color: #eee;
-				border: 1px solid #eee;
+				border-radius: 3px;
+				box-shadow: 0 0 2px gray;
 				.panel-body {
 					max-width: 100%;
+					border: 1px solid $color-sub-blue;
 					cursor: pointer;
 					&:hover {
 						background-color: #fafafa;
@@ -89,6 +88,7 @@
 				}
 				.panel-footer {
 					background-color: $color-white;
+					border-bottom: solid 1px $bg-color-github-panel;
 					.menu {
 							border-radius: 50%;
 							border: solid 1px #eee;
@@ -101,15 +101,79 @@
 							&:hover {
 								background-color: #fafafa;
 							}
+							&.active {
+								background-color: $color-dark-gray;
+							}
 						i {
 							font-size: $base-font-size;
 							color: $color-dark-gray;
+							&.active {
+								color: $color-white;
+							}
+						}
+				  }
+				}
+				.replies-wrapper {
+					.panel {
+						border-bottom: none;
+						border-left: none;
+						border: none;
+						border-radius: 0;
+						.panel-body {
+							padding: $base-padding * 3;
+							border: none;
+							.panel-text {
+								.image {
+									width: 50px;
+									height: 50px;
+									display: inline-block;
+									img {
+										border: solid 1px #eee;
+									}
+								}
+								.nickname {
+									padding-left: $base-padding;
+									display: inline-block;
+									vertical-align: top;
+									font-weight: bold;
+								}
+								.date {
+									padding-left: $base-padding;
+									display: inline-block;
+									vertical-align: top;
+								}
+								.replies-line {
+									border-left: solid 5px $bg-color-github-panel;
+									padding-left: ($base-padding * 5) + 10px;
+									margin-left: $base-margin * 1.5;
+									padding-top: $base-padding * 2;
+									padding-bottom: $base-padding * 2;
+									margin-top: -$base-margin;
+									margin-bottom: - ($base-margin * 2);
+									&.last {
+										border: none;
+									}
+									.body {
+										max-width: 100%;
+										margin-bottom: $base-margin;
+										border-radius: 0;
+										border-color: #eee;
+									}
+								}
+							}
+						}
+						.panel-footer {
+							background-color: #eee;
 						}
 				  }
 				}
 			}
 	  }
-  }
+	}
+	.bottom-line {
+		margin-top: $base-margin;
+		border: solid 2px $bg-color-github-panel;
+	}
 }
 
 
@@ -120,7 +184,6 @@
 		margin-bottom: $base-margin;
 		border: none;
 		box-shadow: none;
-		border-bottom: solid 5px $bg-color-github-panel;
 		.panel-heading {
 			background-color: $color-grey;
 			font-size: $base-font-size;

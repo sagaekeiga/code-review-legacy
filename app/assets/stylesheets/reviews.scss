@@ -355,6 +355,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       background-color: $color-blue;
+      box-shadow: 0 0 2px gray;
       .side-menu {
         margin-top: $base-margin;
         li {
@@ -385,6 +386,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       background-color: $color-sub-blue;
+      box-shadow: 0 0 2px gray;
       .side-menu {
         margin-top: $base-margin;
         li {
@@ -423,6 +425,7 @@
   }
   .panel {
     box-shadow: none;
+    margin-bottom: 0;
     .panel-body {
       padding: 0;
     }

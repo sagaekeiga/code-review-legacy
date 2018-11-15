@@ -5,13 +5,10 @@
         = render 'left_sidebar', pull: @pull
       .col-sm-10.col-sm-offset-2.p-l-0
         = render 'right_sidebar'
-        .col-sm-8.col-sm-offset-2.p-l-0.replies-wrapper
+        .col-sm-8.col-sm-offset-2.p-l-0.conversation-wrapper
           .page-header{ 'pull-id': @pull.id }
             %h1
               %strong= @pull.title
-              %small
-                = date_format(@review.updated_at)
-                に更新
           - @reviews.includes(:reviewer).each do |review|
             - if review.comment?
               -# 全体へのレビューコメント
@@ -48,10 +45,30 @@
                       .panel-text
                         = render review_comment.target_comments.includes(:reviewer)
                     .panel-footer
-                      .menu.code-button
-                        %i.fas.fa-code
-                      .menu.thread-button
-                        %i.far.fa-comments
-                  = review_comment.replies.count
+                      .text-right
+                        .menu.code-button
+                          %i.fas.fa-code
+                        .menu.thread-button
+                          %i.far.fa-comments
+                    
+                    // Reply
+                    .replies-wrapper.hidden
+                      .panel
+                        .panel-body
+                          - review.review_comments.reviewed.each do |review_comment|
+                            .panel-text
+                              .image
+                                = image_tag review_comment.reviewer.github_account.avatar_url, class: 'img-responsive img-circle'
+                              .nickname
+                                = review_comment.reviewer.github_account.nickname
+                              .date
+                                .text-muted= date_format(review_comment.updated_at)
+                              .replies-line{ class: review_comment.eql?(review.review_comments.reviewed.last) ? 'last' : '' }
+                                .body
+                                  = markdown(review_comment.body)
+                        .panel-footer
+                          %input{ type: 'text', class: 'form-control' }
+          .bottom-line
             -# = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits
 = javascript_pack_tag 'review-tab'
+= javascript_pack_tag 'reply'

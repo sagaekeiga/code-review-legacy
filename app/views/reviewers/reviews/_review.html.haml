@@ -1,21 +1,9 @@
 .col-xs-12
   .panel.panel-default
+    .panel-header
+      .panel-title
+        %h4 全体に対するコメント
+      %small.text-muted
+        = date_format(review.updated_at)
     .panel-body
-      .panel-text
-        .col-xs-1
-          - if review.reviewer.present?
-            = image_tag review.reviewer.github_account.avatar_url, class: 'review-comment-img avatar img-responsive rounded'
-          - else
-            = image_tag 'reviewer.jpg', class: 'review-comment-img avatar img-responsive rounded'
-        .col-xs-11.comment-body
-          .nickname
-            - if review.reviewer.present?
-              %strong= review.reviewer.github_account.nickname
-              さんによってレビューされました。
-            - else
-              Reviewee
-          %small.text-muted
-            = date_format(review.updated_at)
-            に更新
-          %hr
-          .col-xs-12= markdown(review.body)
+      .panel-text= markdown(review.body)

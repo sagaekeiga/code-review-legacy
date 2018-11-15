@@ -10,6 +10,21 @@ $(document).on('click', '.reply-submit-btn', function () {
   submitReply($(this));
 })
 
+$(document).on('click', '.thread-button', function () {
+  var menu = $(this)
+  var repliesWrapper = $(this).closest('.panel-footer').nextAll('.replies-wrapper')
+  var menuIcon = $(this).find('i')
+  if (repliesWrapper.hasClass('hidden')) {
+    menu.addClass('active')
+    menuIcon.addClass('active')
+    repliesWrapper.removeClass('hidden')
+  } else {
+    menu.removeClass('active')
+    menuIcon.removeClass('active')
+    repliesWrapper.addClass('hidden')
+  }
+})
+
 function switchTextarea(elem) {
   replyWrapper = elem.closest('.reply-wrapper');
   replyWrapper.find('.reply-hidden-target-element').addClass('hidden');
