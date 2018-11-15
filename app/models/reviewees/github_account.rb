@@ -33,6 +33,7 @@ class Reviewees::GithubAccount < ApplicationRecord
   # Validations
   # -------------------------------------------------------------------------------
   validates :owner_id, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
@@ -41,18 +42,19 @@ class Reviewees::GithubAccount < ApplicationRecord
   # ClassMethods
   # -------------------------------------------------------------------------------
 
-  def self.find_for_oauth(auth)
-    github_account = find_or_initialize_by(owner_id: auth['extra']['raw_info']['id'])
+  def self.find_for_oauth(auth, reviewee)
+    github_account = find_or_initialize_by(owner_id: auth[:extra][:raw_info][:id], reviewee: reviewee)
     github_account.assign_attributes(
-      login: auth['extra']['raw_info']['login'],
-      access_token: auth['credentials']['token'],
-      avatar_url: auth['extra']['raw_info']['avatar_url'],
-      email: auth['info']['email'],
-      user_type: auth['extra']['raw_info']['type'],
-      nickname: auth['info']['nickname'],
-      name: auth['info']['name'],
-      company: auth['info']['company']
+      login: auth[:extra][:raw_info][:login],
+      access_token: auth[:credentials][:token],
+      avatar_url: auth[:extra][:raw_info][:avatar_url],
+      email: auth[:info][:email],
+      user_type: auth[:extra][:raw_info][:type],
+      nickname: auth[:info][:nickname],
+      name: auth[:info][:name],
+      company: auth[:info][:company],
+      reviewee: reviewee
     )
-    github_account
+    github_account.save
   end
 end

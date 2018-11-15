@@ -59,27 +59,12 @@ class Reviewer < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attribute :status, default: statuses[:active]
+  attribute :status, default: statuses[:pending]
 
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
   validates_acceptance_of :agreement, allow_nil: true, on: :create
-
-  # -------------------------------------------------------------------------------
-  # ClassMethods
-  # -------------------------------------------------------------------------------
-  def self.find_for_oauth(github_account)
-    reviewer = find_or_initialize_by(email: github_account.email)
-    if reviewer.persisted?
-      reviewer.update_attributes(last_sign_in_at: Time.zone.now)
-      github_account.save
-    else
-      reviewer.update_attributes(password: Devise.friendly_token.first(8))
-      github_account.update_attributes(reviewer: reviewer)
-    end
-    reviewer
-  end
 
   # -------------------------------------------------------------------------------
   # InstanceMethods

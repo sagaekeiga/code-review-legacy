@@ -51,6 +51,14 @@ ja:
       unit_minutes: "%{working_hours} 分"
       unit_hour_and_minutes: "%{working_hours} 時間 %{working_minutes} 分"
       remaining_time: 残り時間
+    pending:
+      alert:
+        danger: 審査が終わるまで少々お待ちください
+    integrations:
+      authorize: 認証する
+      authorized: 認証済み
+      alert:
+        danger: Githubに接続してください
     pulls:
       show:
         conversation: Conversation

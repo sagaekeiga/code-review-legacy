@@ -6,6 +6,6 @@ class Reviewees::BaseController < ApplicationController
   end
 
   def connect_github!
-    redirect_to reviewees_integrations_url, danger: t('reviewees.settings.integrations.alert.danger') if current_reviewee.github_account.nil?
+    redirect_to reviewees_integrations_url, danger: t('reviewees.pending.alert.danger') if current_reviewee.github_account.nil?
   end
 end
