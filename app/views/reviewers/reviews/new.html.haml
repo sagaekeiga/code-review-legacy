@@ -1,31 +1,95 @@
-.review
-  .col-xs-12
-    .container-fluid.p-r-0.p-l-0
-      .page-header{ 'pull-id': @pull.id, 'repo-id': @pull.repo.id }= @pull.title
-      - unless @pending_review
-        .col-sm-4.p-l-0
-          %i.fa.fa-chevron-circle-left.close-left-side
-          %ul.nav.nav-tabs
-            %li.active
-              %a{ 'data-toggle': 'tab', href: '#bodyTab'} チェック項目
-            %li
-              %a{ 'data-toggle': 'tab', href: '#issueTab' } issue
-            %li
-              %a{ 'data-toggle': 'tab', href: '#analiticsTab' } 解析
-            %li
-              %a{ 'data-toggle': 'tab', href: '#commitsTab' } Commits
-          / タブ内容
-          .tab-content
-            #bodyTab.tab-pane.active
+// @see https://qiita.com/mikaku/items/2e19084dca4a5448194a
+%script{ src: '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' }
+%script{ src: '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js' }
+.container-fluid
+  .row
+    .review
+      .left-sidebar.col-sm-2.hidden-xs
+        = render 'sidebar'
+      .col-sm-10.col-sm-offset-2
+        .col-sm-9.col-sm-offset-1.m-b-2
+          .right-sidebar
+            .side-menu
+              %li.list.active
+                = link_to '#codeTab', class: "#{is_same_action_name?('view_check')} tab active" do
+                  .text-center
+                    %i.fas.fa-code
+                    %br
+                    %small code
+              %li.list
+                = link_to '#bodyTab', class: "#{is_same_action_name?('view_check')} tab" do
+                  .text-center
+                    %i.glyphicon.glyphicon-comment
+                    %br
+                    %small pullrequest
+              %li.list
+                = link_to '#issueTab', class: "#{is_same_action_name?('view_check')} tab" do
+                  .text-center
+                    %i.fas.fa-exclamation-circle
+                    %br
+                    %small issues
+              %li.list
+                = link_to '#commitsTab', class: "#{is_same_action_name?('view_check')} tab" do
+                  .text-center.center-block
+                    %i.fas.fa-history
+                    %br
+                    %small commits
+          .m-t-10.m-b-4
+            / code
+            #codeTab.tab-content
+              .page-header{ 'pull-id': @pull.id }
+                %h1
+                  %strong= @pull.title
+              = form_for [:reviewers, @pull, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
+                %i.fa.fa-chevron-circle-right.hidden.open-left-side
+                .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
+                .reviews-form-wrapper
+                  .reviews-form-card-wrapper.editor
+                    = render @changed_files.decorate
+                    = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
+                    .text-right.p-r-0.m-t-1
+                      %button#reviewSubmit.btn.btn-outline-primary{ type: 'button' } チェックする
+                      #reviewSubmitModal.modal.fade
+                        .modal-dialog
+                          .modal-content
+                            .modal-body
+                              .text-left
+                                // @TODO 後で変更するかもしれないので一旦localizeなし
+                                %label.check
+                                  = check_box_tag :syntax
+                                  誤字はないか。
+                                %br
+                                %label.check
+                                  = check_box_tag :expression
+                                  開発者が理解しにくい曖昧な表現はないか。
+                                %br
+                                %label.check
+                                  = check_box_tag :code
+                                  可能な限りソースコードを提示できているか。
+                                %br
+                                %label.check
+                                  = check_box_tag :link
+                                  伝え切れない内容は参考リンクを貼って補足できているか。
+                            .modal-footer
+                              = f.submit 'レビューを作成する', id: 'submit_review_button', class: 'btn btn-outline-primary', disabled: true
+                    %br
+                    %br
+                    %br
+            / pullrequest
+            #bodyTab.hidden.tab-content
               .pulls-body-wrapper
-                .panel.h-550
+                .page-header{ 'pull-id': @pull.id }
+                  %h1
+                    %strong= @pull.title
+                .panel
                   - if @pull.body.present?
                     .panel-body
                       .md-wrapper
                         = markdown(@pull.body)
                   - else
                     チェック項目はありません。
-            #issueTab.tab-pane
+            / issues
+            #issueTab.hidden.tab-content
               .panel.h-550
                 - if @issues.blank?
                   .all-center
@@ -36,30 +100,21 @@
                       %h4= issue.title
                     .panel-body
                       .md-wrapper= markdown(issue.body)
-            #commitsTab.tab-pane.h-550
-              .panel.h-550
-                .all-center Comming Soon
-            #analiticsTab.tab-pane.h-550
-              .panel.h-550
-                .all-center Comming Soon
-            #commitsTab.tab-pane.h-550
-              .panel.h-550
-                .all-center Comming Soon
-        #code_note.col-sm-8.p-r-0
-          = form_for [:reviewers, @pull, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
-            %i.fa.fa-chevron-circle-right.hidden.open-left-side
-            .m-b-1.text-right= render 'submit', f: f
-            .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
-            .reviews-form-wrapper
-              .reviews-form-card-wrapper.editor
-                = render @changed_files.decorate
-        .col-sm-3.p-r-0.hidden
-          = render 'comment', changed_files: @changed_files
-          = render 'comment_modal'
-
-      - else
-        %h1.text-center 審査中
-        %p.text-center 審査が通るまで少々お待ちください
-
+            / commits
+            #commitsTab.hidden.tab-content
+              .panel
+                %table.table.table-hover
+                  %tbody
+                    - @commits.each do |commit|
+                      %tr
+                        %td
+                          = link_to commit.message, [:reviewers, @pull, commit], class: 'commit_title'
+                          .break-line.owner_name
+                            = commit.committer_name
+                            = I18n.l(commit.committed_date.to_time, format: :default)
+                        %td.text-right
+                          = link_to commit.short_sha, [:reviewers, @pull, commit]
 = javascript_pack_tag 'reviews'
 = javascript_pack_tag 'modal'
+= javascript_pack_tag 'review-check-list'
+= javascript_pack_tag 'review-tab'
