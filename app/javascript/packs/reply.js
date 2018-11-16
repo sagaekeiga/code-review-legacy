@@ -52,23 +52,31 @@ function submitReply(elem) {
       commit_id: elem.nextAll('.commit_id').val()
     },
     element: elem,
-    success: function(data) {
+    success: function (data) {
+      console.log(data);
       if (data.status === 'success') {
-        replyWrapper = elem.closest('.reply-wrapper');
-        $(`<div class="col-xs-1 comment-img"><img class="review-comment-img avatar img-responsive rounded-circle" src="${data.img}"></div>`).insertAfter(replyWrapper.prev('.comment-body'));
-        $(`<div class="col-xs-11 comment-body">
-            <div class="nickname">${data.name}</div>
-            <small class="text-muted">${data.time}</small>
-            <div class="col-xs-12">
-              <p>
-                ${data.body}
-              </p>
+        replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body').find('.panel-text').filter(':last');
+        console.log(replyWrapper);
+        $(`
+          <div class='panel-text'>
+            <div class='image'>
+              <img class='img-responsive img-circle' src="${data.avatar}">
             </div>
-          </div>`).insertAfter(replyWrapper.prev('.comment-img'));
-        replyWrapper.find('.reply-hidden-target-element').removeClass('hidden');
-        replyWrapper.find('.reply-show-target-element').addClass('hidden')
-        replyWrapper.find('.reply-show-target-element').find('textarea').val('');
-        replyWrapper.find('.reply-show-target-element').find('.remote_id').val(data.remote_id);
+            <div class='nickname'>
+              ${data.nickname}
+            </div>
+            <div class='date'>
+              <div class='text-muted'>${data.time}</div>
+            </div>
+            <div class='replies-line last'>
+              <div class='body md-wrapper'>${data.body}</div>
+            </div>
+          </div>
+        `).insertAfter(replyWrapper);
+        // replyWrapper.find('.reply-hidden-target-element').removeClass('hidden');
+        // replyWrapper.find('.reply-show-target-element').addClass('hidden')
+        // replyWrapper.find('.reply-show-target-element').find('textarea').val('');
+        // replyWrapper.find('.reply-show-target-element').find('.remote_id').val(data.remote_id);
       }
       elem.prop('disabled', false);
     }

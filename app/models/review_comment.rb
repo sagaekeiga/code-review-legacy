@@ -99,7 +99,6 @@ class ReviewComment < ApplicationRecord
 
     # 編集時の取得
     if params[:changes].present?
-      Rails.logger.debug 'method_name: params[:changes].present?'
       return ReviewComment.fetch_changes!(params, pull, changed_file)
     end
 
@@ -146,7 +145,6 @@ class ReviewComment < ApplicationRecord
 
   # Edit
   def self.fetch_changes!(params, pull, changed_file)
-    Rails.logger.debug 'method_name: fetch_changes!'
     ActiveRecord::Base.transaction do
       review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
       review_comment.update_attributes!(body: params[:comment][:body])
@@ -200,7 +198,7 @@ class ReviewComment < ApplicationRecord
       path: path,
       position: position,
       in_reply_to_id: nil
-    ).includes(:reviewer)
+    )
   end
 
   def last_reply_remote_id

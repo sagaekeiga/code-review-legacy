@@ -1,7 +1,7 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show edit update replies)
   before_action :set_pull, only: %i(view_check new create show edit update replies)
-  before_action :set_commits, only: %i(new show edit)
+  before_action :set_commits, only: %i(new show edit replies)
   before_action :set_changed_files, only: %i(new create show edit replies)
 
   def view_check

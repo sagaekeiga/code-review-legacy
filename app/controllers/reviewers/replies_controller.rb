@@ -37,8 +37,8 @@ class Reviewers::RepliesController < Reviewers::BaseController
       status: 'success',
       review_comment_id: review_comment.id,
       body: review_comment.body,
-      img: review_comment.reviewer.github_account.avatar_url,
-      name: review_comment.reviewer.github_account.nickname,
+      avatar: review_comment.reviewer.github_account.avatar_url,
+      nickname: review_comment.reviewer.github_account.nickname,
       time: time_ago_in_words(review_comment.updated_at) + '前',
       remote_id: review_comment.remote_id,
       review_id: review_comment.review_id
