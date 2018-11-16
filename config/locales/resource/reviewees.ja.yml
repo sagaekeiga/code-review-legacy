@@ -8,6 +8,7 @@ ja:
         email: Eメール
         password: パスワード
         password_confirmation: パスワード（確認用）
+        agreement: 利用規約
   enums:
     reviewee:
       gender:

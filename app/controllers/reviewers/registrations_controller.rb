@@ -55,6 +55,20 @@ class Reviewers::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
+  #
+  # レビュワー登録完了後に遷移するパスを指定する
+  #
+  def after_sign_up_path_for(_resource)
+    reviewers_integrations_url
+  end
+
+  #
+  # アカウント登録時に許可するパラメータの設定
+  #
+  def sign_up_params
+    params.require(:reviewer).permit(:email, :password, :password_confirmation, :agreement)
+  end
+
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
