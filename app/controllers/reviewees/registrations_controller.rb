@@ -56,6 +56,13 @@ class Reviewees::RegistrationsController < Devise::RegistrationsController
   # end
 
   #
+  # レビュイー登録完了後に遷移するパスを指定する
+  #
+  def after_sign_up_path_for(_resource)
+    reviewees_integrations_url
+  end
+
+  #
   # アカウント登録時に許可するパラメータの設定
   #
   def sign_up_params
