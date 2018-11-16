@@ -336,3 +336,57 @@
     }
   }
 }
+
+
+.review {
+  margin-top: $base-margin;
+  .sidebar {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .sidebar {
+      position: fixed;
+      top: 50px;
+      bottom: 0;
+      left: 0;
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: $color-blue;
+      .side-menu {
+        margin-top: $base-margin;
+        li {
+          list-style: none;
+          padding: $base-padding;
+          a {
+            text-decoration: none;
+            color: $color-white;
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-size: $base-font-size * 1.5;
+            &.active{
+              color: $color-github-yellow;
+            }
+            i {
+              color: $color-line;
+            }
+          }
+        }
+      }
+    }
+  }
+  .page-header {
+    border-bottom: none;
+    margin-bottom: $base-margin * 2;
+  }
+  .panel {
+    box-shadow: none;
+    .panel-body {
+      padding: 0;
+    }
+  }
+  hr {
+    margin-top: 40px;
+  }
+}

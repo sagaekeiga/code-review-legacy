@@ -1,12 +1,11 @@
-- unless is_same_controller_name?('reviews')
-  %nav.navbar.navbar-default.navbar-fixed-top
-    .container-fluid.naved
-      .navbar-header
-        %button.navbar-toggle.collapsed{ type: 'button',
-          aria: { contorls: 'navbar', expanded: 'false' },
-          data: { target: '#navbar', toggle: 'collapse' } }
-          %span.sr-only Toggle navigation
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        = link_to Settings.meta.site, root_path, class: 'navbar-brand'
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid.naved
+    .navbar-header
+      %button.navbar-toggle.collapsed{ type: 'button',
+        aria: { contorls: 'navbar', expanded: 'false' },
+        data: { target: '#navbar', toggle: 'collapse' } }
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to Settings.meta.site, root_path, class: 'navbar-brand'

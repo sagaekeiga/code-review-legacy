@@ -14,8 +14,6 @@
               %a{ 'data-toggle': 'tab', href: '#analiticsTab' } 解析
             %li
               %a{ 'data-toggle': 'tab', href: '#commitsTab' } Commits
-            %li#searchList
-              %a{ 'data-toggle': 'tab', href: '#searchTab' } 検索
           / タブ内容
           .tab-content
             #bodyTab.tab-pane.active
@@ -47,16 +45,6 @@
             #commitsTab.tab-pane.h-550
               .panel.h-550
                 .all-center Comming Soon
-            #searchTab.tab-pane
-              .search-wrapper
-                .panel.h-550.m-t-1
-                  #result
-                    検索結果が表示されます
-                  #fileModal.modal.fade{ tabindex: '-1' }
-          .col-sm-12.m-t-1.p-r-0.p-l-0
-            .panel.panel-default
-              .panel-body
-                %input{ class: 'form-control search-input', 'repo-id': @pull.repo.id, placeholder: '検索' }
         #code_note.col-sm-8.p-r-0
           = form_for [:reviewers, @pull, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
             %i.fa.fa-chevron-circle-right.hidden.open-left-side
@@ -74,5 +62,4 @@
         %p.text-center 審査が通るまで少々お待ちください
 
 = javascript_pack_tag 'reviews'
-= javascript_pack_tag 'search'
 = javascript_pack_tag 'modal'
