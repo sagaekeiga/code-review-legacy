@@ -1,22 +1,35 @@
 .reviewee-registration-new-wrapper
-  .col-xs-8.col-xs-offset-2
+  .col-xs-6.col-xs-offset-3
     %h3.text-center
-      %b Reviewee Sign Up
+      %b 新規登録
     %hr
     .panel.panel-default
       .panel-body
         = form_for(resource, as: resource_name, url: registration_path(resource_name, html: { class: 'form-horizontal' })) do |f|
           = devise_error_messages!
           .form-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'form-control'
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-at
+              = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('helpers.links.email')
           .form-group
-            = f.label :password
-            = f.password_field :password, class: 'form-control'
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-lock
+              = f.password_field :password, class: 'form-control', placeholder: t('helpers.links.password')
           .form-group
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, class: 'form-control'
-          .form-group.text-center
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-check
+              = f.password_field :password_confirmation, class: 'form-control', placeholder: t('helpers.links.password_confirm')
+          .form-group
+            = f.check_box :agreement, as: :boolean, checked: false
+            = link_to 'https://hackmd.io/s/BkrUv3BLQ' do
+              = t('helpers.links.agreement')
+            %span に同意する
+
+
+          .form-group.text-left
             = f.submit t('helpers.links.sign_up'), class: 'btn btn-primary'
-          .form-group.text-center
+          .form-group.text-left
             = render 'reviewees/shared/links'
