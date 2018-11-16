@@ -10,7 +10,8 @@
 		i {
 			font-size: 50px;
 			color: #00e100;
-			display: inline-block;
+      display: inline-block;
+      border-radius: 50%;
 		}
 		.path {
 			font-weight: bold;
@@ -163,7 +164,16 @@
 							}
 						}
 						.panel-footer {
-							background-color: #eee;
+              background-color: #eee;
+              .input {
+                display: inline-block;
+                width: 90%;
+              }
+              .submit {
+                display: inline-block;
+                vertical-align: top;
+                width: 9%;
+              }
 						}
 				  }
 				}

@@ -1,13 +1,11 @@
-require 'action_view'
-require 'action_view/helpers'
-include ActionView::Helpers::DateHelper
-class Reviewers::ReviewCommentsController < Reviewers::BaseController
+class Reviewers::RepliesController < Reviewers::BaseController
   before_action :set_changed_file, only: %i(create)
   before_action :set_pull, only: %i(create)
   before_action :set_review_comment, only: %i(destroy update show)
-
   def create
     reviewer = Reviewer.find(params[:reviewer_id])
+    review = Review.find(params[:review_id])
+    review_comment = ReviewComment.find(params[:review_comment_id])
     @changed_file = ChangedFile.find(params[:changed_file_id])
 
     return render json: { status: 'failed' } if @changed_file.nil? || reviewer.nil?
@@ -17,7 +15,10 @@ class Reviewers::ReviewCommentsController < Reviewers::BaseController
       position: params[:position],
       path: params[:path]&.gsub('\n', ''),
       body: params[:body],
-      reviewer: reviewer
+      reviewer: reviewer,
+      review: review,
+      in_reply_to_id: review_comment.last_reply_remote_id,
+      status: :completed
     )
 
     if review_comment.save!
@@ -26,34 +27,15 @@ class Reviewers::ReviewCommentsController < Reviewers::BaseController
         status: 'success',
         review_comment_id: review_comment.id,
         body: params[:body],
-        remote_id: review_comment.remote_id
+        img: reviewer.github_account.avatar_url,
+        name: reviewer.github_account.nickname,
+        time: time_ago_in_words(review_comment.updated_at) + '前',
+        remote_id: review_comment.remote_id,
+        review_id: review_comment.review_id
       }
     else
       render json: { status: 'failed' }
     end
-  end
-
-  def update
-    if @review_comment.update(body: params[:body])
-      render json: {
-        status: 'success',
-        body: params[:body]
-      }
-    else
-      render json: { status: 'failed' }
-    end
-  end
-
-  def destroy
-    if @review_comment.destroy
-      render json: { status: 'success' }
-    else
-      render json: { status: 'failed' }
-    end
-  end
-
-  def show
-    render json: { body: @review_comment.body }
   end
 
   private

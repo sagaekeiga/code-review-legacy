@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(version: 20181115113017) do
     t.bigint "remote_id"
     t.integer "status"
     t.integer "event"
-    t.integer "root_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

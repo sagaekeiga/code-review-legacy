@@ -50,24 +50,24 @@
                           %i.fas.fa-code
                         .menu.thread-button
                           %i.far.fa-comments
-                    
                     // Reply
                     .replies-wrapper.hidden
                       .panel
                         .panel-body
-                          - review.review_comments.reviewed.each do |review_comment|
-                            .panel-text
-                              .image
-                                = image_tag review_comment.reviewer.github_account.avatar_url, class: 'img-responsive img-circle'
-                              .nickname
-                                = review_comment.reviewer.github_account.nickname
-                              .date
-                                .text-muted= date_format(review_comment.updated_at)
-                              .replies-line{ class: review_comment.eql?(review.review_comments.reviewed.last) ? 'last' : '' }
-                                .body
-                                  = markdown(review_comment.body)
+                          = render review_comment.replies&.decorate
                         .panel-footer
-                          %input{ type: 'text', class: 'form-control' }
+                          .input
+                            %input{ type: 'text', class: 'form-control' }
+                          .submit
+                            %button{ type: 'button', class: 'btn btn-primary reply-submit-btn' } 返信する
+                            %input{ type: 'hidden', value: @pull.token, class: 'pull_token' }
+                            %input{ type: 'hidden', value: review_comment.id, class: 'review_comment_id' }
+                            %input{ type: 'hidden', value: review_comment.review.id, class: 'review_id' }
+                            %input{ type: 'hidden', value: review_comment.path, class: 'path' }
+                            %input{ type: 'hidden', value: review_comment.position, class: 'position' }
+                            %input{ type: 'hidden', value: current_reviewer.id, class: 'reviewer_id' }
+                            %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
+                            %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
           .bottom-line
             -# = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits
 = javascript_pack_tag 'review-tab'

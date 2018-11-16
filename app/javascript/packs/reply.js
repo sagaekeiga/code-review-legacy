@@ -41,19 +41,16 @@ function submitReply(elem) {
   elem.prop('disabled', true);
   $.ajax({
     type: 'POST',
-    url: `/reviewers/review_comments`,
+    url: `/reviewers/pulls/${elem.nextAll('.pull_token').val()}/reviews/${elem.nextAll('.review_id').val()}/replies`,
     dataType: 'JSON',
     data: {
-      root_id: elem.nextAll('.root_id').val(),
+      review_comment_id: elem.nextAll('.review_comment_id').val(),
       path: elem.nextAll('.path').val(),
       position: elem.nextAll('.position').val(),
       changed_file_id: elem.nextAll('.changed_file_id').val(),
-      body: elem.closest('.text-right').prevAll('textarea').val(),
+      body: elem.closest('.submit').prevAll('.input').find('input').val(),
       reviewer_id: elem.nextAll('.reviewer_id').val(),
-      commit_id: elem.nextAll('.commit_id').val(),
-      status: 'commented',
-      remote_id: elem.nextAll('.remote_id').val(),
-      reply: true
+      commit_id: elem.nextAll('.commit_id').val()
     },
     element: elem,
     success: function(data) {
