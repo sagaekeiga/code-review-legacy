@@ -1,0 +1,20 @@
+.page-header
+  %h2
+    %i.fab.fa-github
+    = t('views.integrations.github')
+.text-left
+  - if current_reviewer.github_account&.owner_id
+    .authorized= t('reviewers.integrations.authorized')
+  - else
+    = link_to '/auth/github?model_type=reviewer', method: :post, class: 'btn btn-primary' do
+      %i.fas.fa-plug
+      = t('reviewers.integrations.authorize')
+    %small.text-muted.text-left.m-t-2
+      GitHubアカウント連携の設定をします。以下のアクセス権限をGithub Appに付与します
+.col-xs-12.text-center
+  %h3.text-left ユーザー権限
+  %table.table.table-borderless
+    %tbody
+      %tr
+        %td メールアドレス
+        %td 読み取り
