@@ -43,7 +43,7 @@
                                 - else
                                   %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
                       .panel-text
-                        = render review_comment.target_comments.includes(:reviewer)
+                        = render review_comment.target_comments
                     .panel-footer
                       .text-right
                         .menu.code-button
@@ -65,7 +65,6 @@
                             %input{ type: 'hidden', value: review_comment.review.id, class: 'review_id' }
                             %input{ type: 'hidden', value: review_comment.path, class: 'path' }
                             %input{ type: 'hidden', value: review_comment.position, class: 'position' }
-                            %input{ type: 'hidden', value: current_reviewer.id, class: 'reviewer_id' }
                             %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
                             %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
           .bottom-line

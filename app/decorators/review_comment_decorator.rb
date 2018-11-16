@@ -1,21 +1,14 @@
 class ReviewCommentDecorator < ApplicationDecorator
   delegate_all
   def avatar
-    if reviewer
-      reviewer.github_account.avatar_url
-    else
-      'reviewee.jpg'
-    end
+    reviewer.present? ? reviewer.github_account.avatar_url : 'reviewee.jpg'
   end
 
   def nickname
-    if reviewer
-      reviewer.github_account.nickname
-    else
-      'reviewee'
-    end
+    reviewer.present? ? reviewer.github_account.nickname : 'reviewee'
   end
 
+  # 最後のリプライであればlastクラスを返す。lastクラスはステップラインを非表示にする。
   def is_last?(review_comment)
     object.id&.eql?(review_comment.replies.last&.id) ? 'last' : ''
   end

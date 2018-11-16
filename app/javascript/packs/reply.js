@@ -49,7 +49,6 @@ function submitReply(elem) {
       position: elem.nextAll('.position').val(),
       changed_file_id: elem.nextAll('.changed_file_id').val(),
       body: elem.closest('.submit').prevAll('.input').find('input').val(),
-      reviewer_id: elem.nextAll('.reviewer_id').val(),
       commit_id: elem.nextAll('.commit_id').val()
     },
     element: elem,
