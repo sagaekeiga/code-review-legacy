@@ -10,6 +10,7 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認用）
         status: ステータス
+        agreement: 利用規約
       reviewer/github:
         login: ログイン名
         owner_id: オーナーID
@@ -46,6 +47,14 @@ ja:
     my_page:
       title: マイページ
       reviewed_pulls_count: 完了
+    pending:
+      alert:
+        danger: 審査が終わるまで少々お待ちください
+    integrations:
+      authorize: 認証する
+      authorized: 認証済み
+      alert:
+        danger: Githubに接続してください
     pulls:
       show:
         conversation: Conversation
