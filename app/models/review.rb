@@ -154,7 +154,7 @@ class Review < ApplicationRecord
       res = Github::Request.github_exec_review!(request_params, pull)
 
       fail res.body unless res.code == Settings.api.success.status.code
-      review_comments.where.not(reviewer: nil).pending.each(&:reviewed!)
+      review_comments.where.not(reviewer: nil).pending.each(&:reviewed!).each(&:completed!)
       comment!
       pull.reviewed!
     end

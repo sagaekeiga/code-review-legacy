@@ -54,8 +54,8 @@ function submitReply(elem) {
     element: elem,
     success: function (data) {
       if (data.status === 'success') {
-        replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body').find('.panel-text').filter(':last');
-        $(`
+        replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body');
+        reply = $(`
           <div class='panel-text'>
             <div class='image'>
               <img class='img-responsive img-circle' src="${data.avatar}">
@@ -70,7 +70,16 @@ function submitReply(elem) {
               <div class='body md-wrapper'>${data.body}</div>
             </div>
           </div>
-        `).insertAfter(replyWrapper);
+        `)
+        if (replyWrapper.hasClass('hidden')) {
+          reply.appendTo(replyWrapper);
+          replyWrapper.removeClass('hidden')
+        } else {
+          lastPanelText = replyWrapper.find('.panel-text').filter(':last')
+          reply.insertAfter(lastPanelText)
+        }
+        replyInput = elem.closest('.submit').prevAll('.input').find('input')
+        replyInput.val('')
       }
       elem.prop('disabled', false);
     }

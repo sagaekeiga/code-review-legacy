@@ -50,8 +50,8 @@
                       // Reply
                       .replies-wrapper.hidden
                         .panel
-                          - if review_comment.replies.present?
-                            .panel-body
+                          .panel-body{ class: review_comment.replies.present? ? '' : 'hidden' }
+                            - if review_comment.replies.present?
                               = render review_comment.replies.includes(:comment, :reviewer)&.decorate
                           .panel-footer
                             .input
