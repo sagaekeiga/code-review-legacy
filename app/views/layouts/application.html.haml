@@ -19,23 +19,19 @@
     .top-wrapper
       - if reviewee_signed_in?
         .container-fluid.body-container
-          .row.side-bar-wrapper
-            = render 'reviewee_side_bar'
-            .col-sm-11
+          .col-sm-12
+            - !content_for?(:flash) && flash && flash.each do |key, message|
+              .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+                %strong= message
+            = yield
+      - elsif reviewer_signed_in?
+        - unless current_reviewer.pending? || is_same_controller_name?('reviews')
+          .container-fluid.body-container
+            .col-sm-12
               - !content_for?(:flash) && flash && flash.each do |key, message|
                 .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
                   %strong= message
               = yield
-      - elsif reviewer_signed_in?
-        - unless current_reviewer.pending? || is_same_controller_name?('reviews')
-          .container-fluid.body-container
-            .row.side-bar-wrapper
-              = render 'reviewer_side_bar'
-              .col-sm-11
-                - !content_for?(:flash) && flash && flash.each do |key, message|
-                  .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-                    %strong= message
-                = yield
         - if current_reviewer.pending?
           .container-fluid.body-container
             .col-sm-12

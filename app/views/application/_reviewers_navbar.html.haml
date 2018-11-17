@@ -1,12 +1,25 @@
-- unless is_same_controller_name?('reviews')
+.reviewee-navbar-wrapper
   %nav.navbar.navbar-default.navbar-fixed-top
     .container-fluid.naved
       .navbar-header
-        %button.navbar-toggle.collapsed{ type: 'button',
-          aria: { contorls: 'navbar', expanded: 'false' },
-          data: { target: '#navbar', toggle: 'collapse' } }
-          %span.sr-only Toggle navigation
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        = link_to Settings.meta.site, root_path, class: 'navbar-brand'
+        %a.navbar-brand
+          = link_to Settings.meta.site, root_path, class: 'navbar-brand'
+        %ul.nav.navbar-nav
+
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          .dropdown
+            %button.setting-down.btn-sm.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+              - if current_reviewer.github_account
+                .right-drop
+                  %li
+                    = image_tag current_reviewer.avatar_url, class: 'user-image'
+                  %li.side-caret
+                    %span.caret
+              - else
+                %span.caret.uncertified
+            %ul.dropdown-menu
+              %li
+                = link_to :destroy_reviewee_session, method: :delete do
+                  %i.fa.fa-sign-out-alt
+                  = t('helpers.label.log_out')

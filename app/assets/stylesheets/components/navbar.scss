@@ -1,0 +1,81 @@
+.reviewee-navbar-wrapper {
+  .navbar-default .navbar-nav li a {
+    color: $color-darker-gray;
+  }
+  .navbar-default .navbar-nav li a:hover {
+    color: $color-white;
+  }
+  .naved {
+    .navbar-header {
+      height: $base-height + 10;
+      .navbar-brand {
+        font-size: $base-font-size * 2;
+        margin: $base-padding + 1 $base-font-size - 2 $base-padding + 1 -15px;
+      }
+    }
+  }
+  .add-repo-link a {
+    padding: $base-margin + 4;
+  }
+  .dropdown-menu > li > a:hover {
+    background-color: $color-hover-gray;
+    display: block;
+  }
+  .dropdown {
+    margin: 0;
+    .setting-down {
+      margin: $base-font-size - 2;
+      height: $base-height - 20;
+    }
+    .dropdown-menu {
+      background-color: $color-github-black;
+      font-size: $base-font-size + 2;
+      font-weight: lighter;
+      min-width: $base-font-weight;
+      .add-repo {
+        border-top: 1px solid $color-hover-gray;
+        a {
+          padding: $base-font-size + 1 1px $base-font-size + 3 $base-height - 16;
+        }
+      }
+      a {
+        height: $base-height - 10;
+        padding: $base-font-size - 2 0 $base-font-size - 2 $base-height - 16;
+        color: $color-white;
+      }
+    }
+    .btn-sm {
+      font-size: $base-font-size + 2;
+    }
+    .dropdown-toggle.btn-primary {
+      background-color: $color-github-black;
+      border-color: $color-github-black;
+      color: $color-darker-gray;
+      padding: $base-margin + 3;
+      .right-drop {
+        position: absolute;
+        right: $base-height - 16;
+        bottom: $base-font-size + 1;
+        .user-image {
+          height: $base-height - 20;
+          border-radius: $base-font-size + 1;
+        }
+        .side-caret {
+          position: absolute;
+          right: -15px;
+          bottom: $base-letter * 3;
+        }
+      }
+      .uncertified {
+        margin: 0 0 $base-margin 0;
+      }
+    }
+    .dropdown-toggle.btn-primary.dropdown-toggle:hover {
+      color: $color-white;
+    }
+  }
+  .btn-primary {
+    background-color: $color-github-black;
+    border-color: $color-github-black;
+  }
+}
