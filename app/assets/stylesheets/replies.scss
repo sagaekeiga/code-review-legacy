@@ -11,6 +11,7 @@
       font-size: 50px;
       color: #00e100;
       display: inline-block;
+      border-radius: 50%;
     }
     .path {
       font-weight: bold;
@@ -32,6 +33,7 @@
         max-width: 100%;
         border-radius: 3px;
         box-shadow: 0 0 2px gray;
+        margin-bottom: $base-margin;
         .panel-body {
           max-width: 100%;
           border: 1px solid $color-sub-blue;
@@ -119,6 +121,7 @@
             border-left: none;
             border: none;
             border-radius: 0;
+            margin-bottom: 0;
             .panel-body {
               padding: $base-padding * 3;
               border: none;
@@ -164,6 +167,17 @@
             }
             .panel-footer {
               background-color: #eee;
+              border: none;
+              border-top: 1px solid #eee;
+              .input {
+                display: inline-block;
+                width: 85%;
+              }
+              .submit {
+                display: inline-block;
+                vertical-align: top;
+                width: 10%;
+              }
             }
           }
         }

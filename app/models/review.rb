@@ -112,7 +112,7 @@ class Review < ApplicationRecord
   #
   def self.fetch_issue_comments!(params)
     ActiveRecord::Base.transaction do
-      return false if params[:sender][:type] == 'Bot'
+      return false if params[:sender][:type].eql?('Bot')
       repo = Repo.find_by(name: params[:repository][:name])
       return false unless repo
       # ① 該当するPRを取得
@@ -154,7 +154,7 @@ class Review < ApplicationRecord
       res = Github::Request.github_exec_review!(request_params, pull)
 
       fail res.body unless res.code == Settings.api.success.status.code
-      review_comments.where.not(reviewer: nil).pending.each(&:commented!)
+      review_comments.where.not(reviewer: nil).pending.each(&:reviewed!).each(&:completed!)
       comment!
       pull.reviewed!
     end

@@ -88,12 +88,13 @@ Rails.application.routes.draw do
             get :view_check
             get :file, to: 'reviews#new'
           end
+          resources :replies, only: %i(create)
         end
         resources :comments, only: %i(create update destroy)
         resources :changed_files, only: %i(index show)
         resources :commits, only: %i(index show)
       end
-      resources :review_comments, only: %i(index create update destroy show)
+      resources :review_comments, only: %i(create update destroy show)
       resources :repos do
         resources :contents, only: %i(index show) do
           post :search, on: :collection

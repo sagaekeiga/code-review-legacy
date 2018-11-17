@@ -2,22 +2,22 @@
   .row
     .review
       .left-sidebar.col-sm-2.hidden-xs
-        = render 'reviewers/reviews/left_sidebar', pull: @pull
+        = render 'reviewers/reviews/left_sidebar', pull: pull
       .col-sm-10.col-sm-offset-2
         .col-sm-9.col-sm-offset-1.m-b-2
           = render 'reviewers/reviews/right_sidebar'
           .m-t-10.m-b-4
             / code
             #codeTab.tab-content
-              .page-header{ 'pull-id': @pull.id }
+              .page-header{ 'pull-id': pull.id }
                 %h1
-                  %strong= @pull.title
-              = form_for [:reviewers, @pull, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
+                  %strong= pull.title
+              = form_for [:reviewers, pull, review], html: { class: 'form-horizontal', role: 'form' } do |f|
                 %i.fa.fa-chevron-circle-right.hidden.open-left-side
-                .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
+                .data_id{ 'pull-id': pull.id, 'reviewer-id': current_reviewer.id }
                 .reviews-form-wrapper
                   .reviews-form-card-wrapper.editor
-                    = render @changed_files
+                    = render changed_files
                     = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
                     .text-right.p-r-0.m-t-1
                       %button#reviewSubmit.btn.btn-outline-primary{ type: 'button' } チェックする
@@ -47,4 +47,4 @@
                     %br
                     %br
                     %br
-            = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits, issues: @issues
+            = render 'reviewers/reviews/tab_contents', pull: pull, commits: commits, issues: issues

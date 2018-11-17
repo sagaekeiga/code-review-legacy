@@ -27,7 +27,12 @@ class Api::V1::GithubAppsController < ApplicationController
       status = Review.update_by_commit_id!(params)
     when 'pull_request_review_comment'
       # コメント取得(レビュー時のコメント部分も含む)
-      status = ReviewComment.fetch!(params)
+      status = 
+        if params.dig(:comment, :in_reply_to_id)
+          status = ReviewComment.fetch_reply!(params)
+        else
+          status = ReviewComment.fetch!(params)
+        end
     when 'issue_comment'
       @github_account = Reviewees::GithubAccount.find_by(owner_id: params[:issue][:user][:id])
       status = Review.fetch_issue_comments!(params)

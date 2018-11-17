@@ -1,1 +1,14 @@
-= markdown(review_comment.body)
+- if review_comment.reviewed?
+  = markdown(review_comment.body)
+- if review_comment.replied?
+  .panel-text
+    .image
+      = image_tag review_comment.avatar, class: 'img-responsive img-circle'
+    .nickname
+      = review_comment.nickname
+    .date
+      .text-muted= date_format(review_comment.updated_at)
+    .replies-line{ class: review_comment.is_last?(review_comment.comment) }
+      .body
+        = markdown(review_comment.body)
+  = render review_comment.replies&.decorate

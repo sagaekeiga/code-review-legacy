@@ -16,7 +16,6 @@
 #  remote_id       :bigint(8)
 #  review_id       :bigint(8)
 #  reviewer_id     :bigint(8)
-#  root_id         :integer
 #
 # Indexes
 #
@@ -41,6 +40,12 @@ class ReviewComment < ApplicationRecord
   belongs_to :changed_file
   belongs_to :reviewer, optional: true
 
+  has_one :comment_tree, class_name: 'ReviewCommentTree', foreign_key: :reply_id, dependent: :destroy
+  has_one :comment, through: :comment_tree, source: :comment
+
+  has_many :reply_trees, class_name: 'ReviewCommentTree', foreign_key: :comment_id, dependent: :destroy
+  has_many :replies, through: :reply_trees,  source: :reply
+
   # -------------------------------------------------------------------------------
   # Enumerables
   # -------------------------------------------------------------------------------
@@ -52,17 +57,13 @@ class ReviewComment < ApplicationRecord
     pending:   1000,
     completed: 2000
   }
-
-  # - commented :conversationでのコメント
-  # - self_reviewed   : revieweeのセルフレビュー
+  #
   # - reviewed : reviewer(PR内)のコメント
-  # - replid : コメントに対する返信
+  # - replid : reviewer(PR内)のコメントに対する返信
   #
   enum event: {
-    commented: 1000,
-    self_reviewed:  2000,
-    reviewed: 3000,
-    replied: 4000
+    reviewed: 1000,
+    replied:  2000
   }
 
   # -------------------------------------------------------------------------------
@@ -80,41 +81,11 @@ class ReviewComment < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Scope
   # -------------------------------------------------------------------------------
-  # レビューされたレビューコメント
-  scope :reviewed, lambda {
-    where(in_reply_to_id: nil).
-      includes(:reviewer, :changed_file).
-        order(created_at: :asc)
-  }
-
-  scope :search_self_reviews, -> (params) {
-    where(
-      changed_file_id: params[:changed_file_id],
-      position: params[:position],
-      path: params[:comm_path]
-    )
-  }
-
-  def self.fetch_on_installing_repo!(changed_file)
-    ActiveRecord::Base.transaction do
-      res_pull_comments = Github::Request.github_exec_fetch_pull_review_comment_contents!(changed_file.pull)
-      res_pull_comments.each do |pull_comment|
-        params = ActiveSupport::HashWithIndifferentAccess.new(pull_comment)
-        review_comment = ReviewComment.find_or_initialize_by(_pull_comments_params(params, changed_file))
-        review_comment.update_attributes!(body: params[:body])
-      end
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
-
   def self.fetch!(params)
+
     pull = Pull.find_by(
       remote_id: params[:pull_request][:id],
-      number:    params[:pull_request][:number]
+      number: params[:pull_request][:number]
     )
 
     commit = pull.commits.find_by(
@@ -132,38 +103,38 @@ class ReviewComment < ApplicationRecord
     end
 
     review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
-    review_comment.update_attributes!(body: params[:comment][:body])
-
-    # レビュー時のレスポンス取得
-    # 返事の取得return
-    if params[:comment][:in_reply_to_id].nil?
-      return review_comment.fetch_remote_id!(params, pull)
-    else
-      return review_comment.fetch_reply!(params, pull)
-    end
-
-  end
-
-  # レビュー後にレビューコメントのremote_idを更新する
-  def fetch_remote_id!(params, pull)
-    ActiveRecord::Base.transaction do
-      update!(remote_id: params[:comment][:id])
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
+    review_comment.update_attributes!(
+      body: params[:comment][:body],
+      remote_id: params[:comment][:id]
+    )
   end
 
   # リプライレスポンスの取得
-  def fetch_reply!(params, pull)
+  def self.fetch_reply!(params)
     ActiveRecord::Base.transaction do
-      update_attributes!(
-        remote_id:      params[:comment][:id],
-        in_reply_to_id: params[:comment][:in_reply_to_id]
+
+      pull = Pull.find_by(
+        remote_id: params[:pull_request][:id],
+        number: params[:pull_request][:number]
       )
-      ReviewerMailer.comment(review_comment).deliver_later if params[:sender][:type] == 'Bot'
+
+      commit = pull.commits.find_by(
+        sha: params[:comment][:commit_id]
+      )
+
+      changed_file = commit.changed_files.find_by(
+        pull: pull,
+        filename:  params[:comment][:path]
+      )
+
+      review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
+
+      reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
+      reply.update_attributes!(_reply_params(params, changed_file, review_comment))
+
+      review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
+      review_comment_tree.save!
+      ReviewerMailer.comment(review_comment).deliver_later if params[:sender][:type].eql?('Bot')
     end
     true
   rescue => e
@@ -189,6 +160,7 @@ class ReviewComment < ApplicationRecord
     reviewer == current_reviewer
   end
 
+  # レビューコメント対象のコードを返す
   def target_lines
     if position > 3
       changed_file.patch&.lines[(position - 3)..position]
@@ -201,23 +173,22 @@ class ReviewComment < ApplicationRecord
     end
   end
 
-  def send_github!(commit_id)
-    comment = {
-      body: body,
-      in_reply_to: in_reply_to_id
-    }
+  def reply!
+    ActiveRecord::Base.transaction do
+      save!
+      comment = { body: body, in_reply_to: in_reply_to_id }
+      res = Github::Request.github_exec_review_comment!(comment.to_json, changed_file.pull)
 
-    Rails.logger.info comment.to_json
+      fail res.body unless res.code == Settings.api.created.status.code
 
-    res = Github::Request.github_exec_review_comment!(comment.to_json, changed_file.pull)
-
-    if res.code == Settings.api.created.status.code
-      res = JSON.load(res.body)
-      update!(remote_id: res['id'])
-      Rails.logger.info 'OK'
-    else
-      fail res.body
+      res = ActiveSupport::HashWithIndifferentAccess.new(JSON.load(res.body))
+      update!(remote_id: res[:id])
     end
+    true
+  rescue => e
+    Rails.logger.error e
+    Rails.logger.error e.backtrace.join("\n")
+    false
   end
 
   # 対象のレビューコメントを取得する
@@ -230,13 +201,8 @@ class ReviewComment < ApplicationRecord
     )
   end
 
-  # 返信コメントを返す
-  def replies
-    ReviewComment.where(
-      root_id: self,
-      changed_file: changed_file,
-      path: path,
-    )
+  def last_reply_remote_id
+    replies.present? ? replies.last.remote_id : remote_id
   end
 
   private
@@ -244,28 +210,26 @@ class ReviewComment < ApplicationRecord
   class << self
 
     def _comment_params(params, changed_file)
-      event = params[:comment][:in_reply_to_id] ? :replied : :self_reviewed
       {
         remote_id: nil,
         path: params[:comment][:path],
         position: params[:comment][:position],
-        in_reply_to_id: params[:comment][:in_reply_to_id],
-        changed_file: changed_file,
-        status: :pending,
-        event: event
+        changed_file: changed_file
       }
     end
 
-    def _pull_comments_params(params, changed_file)
-      event = params[:in_reply_to_id] ? :replied : :self_reviewed
+    def _reply_params(params, changed_file, review_comment)
       {
-        remote_id: nil,
-        path: params[:path],
-        position: params[:position],
         status: :completed,
-        event: event,
-        changed_file_id: changed_file.id,
-        in_reply_to_id: params[:in_reply_to_id]
+        event: :replied,
+        path: params[:comment][:path],
+        position: params[:comment][:position],
+        changed_file: changed_file,
+        body: params[:comment][:body],
+        reviewer: review_comment.reviewer,
+        review: review_comment.review,
+        remote_id: params[:comment][:id],
+        in_reply_to_id: params[:comment][:in_reply_to_id]
       }
     end
   end
