@@ -16,11 +16,16 @@
       %i.fas.fa-check-circle
       = I18n.t('reviewers.reviews.sidebars.titles.edit')
   %li
-    = link_to '#', class: is_same_action_name?('replies') do
+    = link_to pull.replies_path(params[:id] || params[:review_id]), class: is_same_action_name?('replies') do
       %i.fas.fa-check-circle
       = I18n.t('reviewers.reviews.sidebars.titles.replies')
   %li
     = link_to '#', class: is_same_action_name?('complete') do
       %i.fas.fa-check-circle
       = I18n.t('reviewers.reviews.sidebars.titles.complete')
-
+  %h3 Reviews
+  - pull.reviews.each do |review|
+    %li
+      = link_to view_check_reviewers_pull_reviews_path(pull, review_id: review.id), class: is_same_action_name?('complete') do
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.complete')

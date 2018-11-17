@@ -39,4 +39,8 @@ class PullDecorator < ApplicationDecorator
   def commits_count
     commits.count
   end
+
+  def replies_path(id_param)
+    id_param ? h.reviewers_pull_review_replies_path(pull, review_id: id_param) : '#'
+  end
 end

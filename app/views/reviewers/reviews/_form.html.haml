@@ -2,7 +2,7 @@
   .row
     .review
       .left-sidebar.col-sm-2.hidden-xs
-        = render 'reviewers/reviews/left_sidebar'
+        = render 'reviewers/reviews/left_sidebar', pull: @pull
       .col-sm-10.col-sm-offset-2
         .col-sm-9.col-sm-offset-1.m-b-2
           = render 'reviewers/reviews/right_sidebar'

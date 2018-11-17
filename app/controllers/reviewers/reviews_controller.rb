@@ -1,20 +1,18 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_review, only: %i(show edit update)
-  before_action :set_pull, only: %i(view_check new create show edit update)
+  before_action :set_review, only: %i(show edit update replies)
+  before_action :set_pull, only: %i(view_check new create show edit update replies)
   before_action :set_commits, only: %i(new show edit)
-  before_action :set_changed_files, only: %i(new create show edit)
+  before_action :set_changed_files, only: %i(new create show edit replies)
 
   def view_check
   end
 
-  # GET /reviewers/pulls/:pull_id/reviews/file
   def new
     @review = Review.new
     numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
     # @TODO issueの取得
   end
 
-  # POST /reviewers/pulls/:pull_id/reviews
   def create
     # データの作成とGHAへのリクエストを分離することで例外処理に対応する
     ActiveRecord::Base.transaction do
@@ -43,10 +41,14 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     end
   end
 
+  def replies
+    @reviews = @pull.reviews.where(event: %i(comment issue_comment))
+  end
+
   private
 
   def set_pull
-    @pull = Pull.friendly.find(params[:pull_token])
+    @pull = Pull.friendly.find(params[:pull_token]).decorate
   end
 
   def set_changed_files
@@ -54,7 +56,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_review
-    @review = current_reviewer.reviews.find(params[:id])
+    @review = current_reviewer.reviews.find(params[:id] || params[:review_id])
   end
 
   def set_commits
