@@ -12,7 +12,7 @@
           %tr.repo-list-header
             %th= t('.project')
             %th.status= t('.repo_status')
-        - @repos&.each do |repo|
+        - @repos.each do |repo|
           %tbody
             %tr.repo-list
               %td= link_to repo.full_name, reviewees_repo_contents_path(repo)
