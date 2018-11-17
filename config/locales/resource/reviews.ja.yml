@@ -8,8 +8,11 @@ ja:
         body: 全体へのレビューコメント
         event: イベント
         state: ステート
-        working_hours: 作業時間（分）
         reason: 理由
+  enums:
+    review:
+      event:
+        pending: 審査中
   reviewers:
     reviews:
       sidebars:

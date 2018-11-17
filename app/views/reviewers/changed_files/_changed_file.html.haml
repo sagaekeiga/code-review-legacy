@@ -35,7 +35,7 @@
                           .panel-body
                             .panel-text{ 'review-comment-id': changed_file.review_comment_id(index) }
                               = markdown(changed_file.review_comment_body(index))
-                            - if changed_file.reviewer?(index, current_reviewer) && review_comment.pending?
+                            - if changed_file.reviewer?(index, current_reviewer) && review_comment.pending? && controller.action_name.in?(%w(new edit))
                               .flex-row.text-right
                                 %button{ type: 'button', class: 'btn btn-danger card-link destroy-trigger', data: { confirm: '本当によろしいですか？' } }
                                   %span.glyphicon.glyphicon-trash

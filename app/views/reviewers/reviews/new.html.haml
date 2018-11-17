@@ -5,35 +5,10 @@
   .row
     .review
       .left-sidebar.col-sm-2.hidden-xs
-        = render 'sidebar'
+        = render 'left_sidebar'
       .col-sm-10.col-sm-offset-2
         .col-sm-9.col-sm-offset-1.m-b-2
-          .right-sidebar
-            .side-menu
-              %li.list.active
-                = link_to '#codeTab', class: "#{is_same_action_name?('view_check')} tab active" do
-                  .text-center
-                    %i.fas.fa-code
-                    %br
-                    %small code
-              %li.list
-                = link_to '#bodyTab', class: "#{is_same_action_name?('view_check')} tab" do
-                  .text-center
-                    %i.glyphicon.glyphicon-comment
-                    %br
-                    %small pullrequest
-              %li.list
-                = link_to '#issueTab', class: "#{is_same_action_name?('view_check')} tab" do
-                  .text-center
-                    %i.fas.fa-exclamation-circle
-                    %br
-                    %small issues
-              %li.list
-                = link_to '#commitsTab', class: "#{is_same_action_name?('view_check')} tab" do
-                  .text-center.center-block
-                    %i.fas.fa-history
-                    %br
-                    %small commits
+          = render 'right_sidebar'
           .m-t-10.m-b-4
             / code
             #codeTab.tab-content
@@ -45,7 +20,7 @@
                 .data_id{ 'pull-id': @pull.id, 'reviewer-id': current_reviewer.id }
                 .reviews-form-wrapper
                   .reviews-form-card-wrapper.editor
-                    = render @changed_files.decorate
+                    = render @changed_files
                     = f.text_area :body, id: 'review_body', class: 'form-control', rows: '3'
                     .text-right.p-r-0.m-t-1
                       %button#reviewSubmit.btn.btn-outline-primary{ type: 'button' } チェックする
@@ -75,45 +50,7 @@
                     %br
                     %br
                     %br
-            / pullrequest
-            #bodyTab.hidden.tab-content
-              .pulls-body-wrapper
-                .page-header{ 'pull-id': @pull.id }
-                  %h1
-                    %strong= @pull.title
-                .panel
-                  - if @pull.body.present?
-                    .panel-body
-                      .md-wrapper
-                        = markdown(@pull.body)
-                  - else
-                    チェック項目はありません。
-            / issues
-            #issueTab.hidden.tab-content
-              .panel.h-550
-                - if @issues.blank?
-                  .all-center
-                    issueはありません
-                - else
-                  - @issues.each do |issue|
-                    .page-header
-                      %h4= issue.title
-                    .panel-body
-                      .md-wrapper= markdown(issue.body)
-            / commits
-            #commitsTab.hidden.tab-content
-              .panel
-                %table.table.table-hover
-                  %tbody
-                    - @commits.each do |commit|
-                      %tr
-                        %td
-                          = link_to commit.message, [:reviewers, @pull, commit], class: 'commit_title'
-                          .break-line.owner_name
-                            = commit.committer_name
-                            = I18n.l(commit.committed_date.to_time, format: :default)
-                        %td.text-right
-                          = link_to commit.short_sha, [:reviewers, @pull, commit]
+            = render 'tab_contents'
 = javascript_pack_tag 'reviews'
 = javascript_pack_tag 'modal'
 = javascript_pack_tag 'review-check-list'
