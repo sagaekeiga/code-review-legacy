@@ -7,21 +7,20 @@
 
 .reviewee-dashboard-wrapper {
   h2 {
-    font-size: 25px;
+    font-size: $base-margin + 9;
   }
   table {
     th {
       font-weight: lighter;
       &.status {
         padding-left: 0;
-        font-weight: lighter;
       }
     }
     .repo-list {
       a {
         display: block;
-        height: 60px;
-        padding: 20px 7px;
+        height: $base-height + 10;
+        padding: $base-margin + 4 $base-padding + 3;
       }
       td {
         padding: 0;
