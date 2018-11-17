@@ -1,24 +1,50 @@
 .setting-integrations-wrapper {
   margin-top: $base-margin * 4;
-  .panel.panel-default {
-    border: 1px solid $color-github-label-border-white;
-    box-shadow: none;
-    h4 {
-      margin-top: $base-margin / 2;
-      font-weight: bold;
-    }
-    .panel-body {
-      .authorized {
-        margin-top: $base-margin;
-        margin-bottom: $base-margin / 2;
-      }
-      .btn-outline-primary {
-        margin-top: $base-margin * 2;
-        margin-bottom: $base-margin * 2;
-      }
-    }
+  box-shadow: none;
+  h4 {
+    margin-top: $base-margin / 2;
+    font-weight: bold;
+  }
+  h3 {
+    color: $color-literal-gray;
+    margin-top: $base-padding * 10;
+  }
+  h2 {
+    margin-top: $base-font-size + 1;
+  }
+  .authorized {
+    margin-top: $base-margin;
+    margin-bottom: $base-margin / 2;
+  }
+  .btn-primary {
+    padding: $base-font-size $base-height - 10;
+    margin-top: $base-margin * 2;
+  }
+  .page-header {
+    margin: 0;
+    width: 70%;
+  }
+  small {
+    display: block;
+  }
+  table.table-borderless {
+    margin-bottom: $base-padding * 10;
+  }
+  .table > tbody > tr > td {
+    width: 50%;
+    text-align: left;
+    padding-left: 0;
+    border-top: none;
+  }
+  .table > thead > tr > th {
+    width: 50%;
+    border-bottom: none;
+    text-align: left;
   }
   .color-red {
     color: $color-cancel;
+  }
+  .col-xs-12 {
+    padding-left: 0;
   }
 }

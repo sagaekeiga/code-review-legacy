@@ -4,22 +4,5 @@
       %h3 Settings
     .setting-integrations-wrapper
       = render 'reviewees/shared/settings/side_nav'
-      .col-sm-8.p-r-0
-        .page-header
-          %h4
-            %i.fab.fa-github
-            = t('views.integrations.github')
-        .panel.panel-default
-          .panel-body
-            .text-center
-              %small.text-muted
-                GitHubアカウント連携の設定をします。
-                %br
-                アカウント情報を取得するために読み取り権限を許可します。
-            .col-xs-4.col-xs-offset-4.text-center
-              - if current_reviewee.github_account&.owner_id
-                .authorized= t('reviewees.settings.integrations.authorized')
-              - else
-                = link_to '/auth/github?scope=repo', class: 'btn btn-block btn-outline-primary' do
-                  %i.github.icon
-                  = t('reviewees.settings.integrations.authorize')
+      .col-sm-7.p-r-0
+        = render 'reviewees/github_certification'

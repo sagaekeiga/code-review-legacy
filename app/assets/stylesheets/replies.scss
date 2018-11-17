@@ -1,174 +1,174 @@
 .conversation-wrapper {
-	font-family: $font-static;
-	font-weight: $base-font-weight;
-	padding-left: 0;
-	margin-right: 75px;
-	li {
-		&.step {
-			list-style: none;
-		}
-		i {
-			font-size: 50px;
-			color: #00e100;
+  font-family: $font-static;
+  font-weight: $base-font-weight;
+  padding-left: 0;
+  margin-right: 75px;
+  li {
+    &.step {
+      list-style: none;
+    }
+    i {
+      font-size: 50px;
+      color: #00e100;
       display: inline-block;
       border-radius: 50%;
-		}
-		.path {
-			font-weight: bold;
-			margin-top: - $base-margin * 2;
-			border-color: #eee;
-			display: inline-block;
-			vertical-align: middle;
-			padding-left: $base-padding;
-		}
-		.comment-line {
-			border-left: solid 5px $bg-color-github-panel;
-			padding-left: ($base-padding * 15) + 10px;
-			margin-left: $base-margin * 1.5;
-			padding-top: $base-padding * 6;
-			padding-bottom: $base-padding * 6;
-			margin-top: -1px;
-			margin-bottom: -$base-margin;
-			.panel {
-				max-width: 100%;
-				border-radius: 3px;
-				box-shadow: 0 0 2px gray;
-				margin-bottom: $base-margin;
-				.panel-body {
-					max-width: 100%;
-					border: 1px solid $color-sub-blue;
-					cursor: pointer;
-					&:hover {
-						background-color: #fafafa;
-					}
-					.table-wrapper {
-						overflow-x: scroll;
-						table {
-							border-collapse: collapse;
-							width: 100%;
-							max-width: 100%;
-							padding: $base-padding / 2;
-							td.file-code {
-								pre {
-									padding: $base-padding / 2;
-									color: none;
-									border: none;
-									margin: 0;
-									font-family: $font-code;
-									font-size: $base-font-size;
-								}
-								border: none;
-								&.markdown-highlight {
-									font-family: $font-code;
-									font-size: $base-font-size;
-									&.bg-primary {
-										background-color: $color-gihub-blue;
-									}
-									&.bg-success {
-										background-color: $color-github-green;
-									}
-									&.bg-danger {
-										background-color: $color-github-changed-file-minus-color;
-									}
-								}
-							}
-						}
-					}
-					.panel-text {
-						font-size: $base-font-size + 2px;
-						padding: $base-padding * 4;
-						pre {
-							border-radius: none;
-							border: none;
-							margin-top: $base-margin / 2;
-							margin-bottom: $base-margin / 2;
-							font-family: none;
-							font-size: $base-font-size;
-							background-color: $bg-color-pre-code;
-						}
-					}
-				}
-				.panel-footer {
-					background-color: $color-white;
-					border-bottom: solid 1px $bg-color-github-panel;
-					.menu {
-							border-radius: 50%;
-							border: solid 1px #eee;
-							width: 30px;
-							height: 30px;
-							cursor: pointer;
-							display: inline-block;
-							line-height: 25px;
-							text-align: center;
-							&:hover {
-								background-color: #fafafa;
-							}
-							&.active {
-								background-color: $color-dark-gray;
-							}
-						i {
-							font-size: $base-font-size;
-							color: $color-dark-gray;
-							&.active {
-								color: $color-white;
-							}
-						}
-				  }
-				}
-				.replies-wrapper {
-					.panel {
-						border-bottom: none;
-						border-left: none;
-						border: none;
-						border-radius: 0;
-						margin-bottom: 0;
-						.panel-body {
-							padding: $base-padding * 3;
-							border: none;
-							.panel-text {
-								.image {
-									width: 50px;
-									height: 50px;
-									display: inline-block;
-									img {
-										border: solid 1px #eee;
-									}
-								}
-								.nickname {
-									padding-left: $base-padding;
-									display: inline-block;
-									vertical-align: top;
-									font-weight: bold;
-								}
-								.date {
-									padding-left: $base-padding;
-									display: inline-block;
-									vertical-align: top;
-								}
-								.replies-line {
-									border-left: solid 5px $bg-color-github-panel;
-									padding-left: ($base-padding * 5) + 10px;
-									margin-left: $base-margin * 1.5;
-									padding-top: $base-padding * 2;
-									padding-bottom: $base-padding * 2;
-									margin-top: -$base-margin;
-									margin-bottom: - ($base-margin * 2);
-									&.last {
-										border: none;
-									}
-									.body {
-										max-width: 100%;
-										margin-bottom: $base-margin;
-										border-radius: 0;
-										border-color: #eee;
-									}
-								}
-							}
-						}
-						.panel-footer {
-							background-color: #eee;
-							border: none;
-							border-top: 1px solid #eee;
+    }
+    .path {
+      font-weight: bold;
+      margin-top: - $base-margin * 2;
+      border-color: #eee;
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: $base-padding;
+    }
+    .comment-line {
+      border-left: solid 5px $bg-color-github-panel;
+      padding-left: ($base-padding * 15) + 10px;
+      margin-left: $base-margin * 1.5;
+      padding-top: $base-padding * 6;
+      padding-bottom: $base-padding * 6;
+      margin-top: -1px;
+      margin-bottom: -$base-margin;
+      .panel {
+        max-width: 100%;
+        border-radius: 3px;
+        box-shadow: 0 0 2px gray;
+        margin-bottom: $base-margin;
+        .panel-body {
+          max-width: 100%;
+          border: 1px solid $color-sub-blue;
+          cursor: pointer;
+          &:hover {
+            background-color: #fafafa;
+          }
+          .table-wrapper {
+            overflow-x: scroll;
+            table {
+              border-collapse: collapse;
+              width: 100%;
+              max-width: 100%;
+              padding: $base-padding / 2;
+              td.file-code {
+                pre {
+                  padding: $base-padding / 2;
+                  color: none;
+                  border: none;
+                  margin: 0;
+                  font-family: $font-code;
+                  font-size: $base-font-size;
+                }
+                border: none;
+                &.markdown-highlight {
+                  font-family: $font-code;
+                  font-size: $base-font-size;
+                  &.bg-primary {
+                    background-color: $color-gihub-blue;
+                  }
+                  &.bg-success {
+                    background-color: $color-github-green;
+                  }
+                  &.bg-danger {
+                    background-color: $color-github-changed-file-minus-color;
+                  }
+                }
+              }
+            }
+          }
+          .panel-text {
+            font-size: $base-font-size + 2px;
+            padding: $base-padding * 4;
+            pre {
+              border-radius: none;
+              border: none;
+              margin-top: $base-margin / 2;
+              margin-bottom: $base-margin / 2;
+              font-family: none;
+              font-size: $base-font-size;
+              background-color: $bg-color-pre-code;
+            }
+          }
+        }
+        .panel-footer {
+          background-color: $color-white;
+          border-bottom: solid 1px $bg-color-github-panel;
+          .menu {
+            border-radius: 50%;
+            border: solid 1px #eee;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 25px;
+            text-align: center;
+            &:hover {
+              background-color: #fafafa;
+            }
+            &.active {
+              background-color: $color-dark-gray;
+            }
+            i {
+              font-size: $base-font-size;
+              color: $color-dark-gray;
+              &.active {
+                color: $color-white;
+              }
+            }
+          }
+        }
+        .replies-wrapper {
+          .panel {
+            border-bottom: none;
+            border-left: none;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 0;
+            .panel-body {
+              padding: $base-padding * 3;
+              border: none;
+              .panel-text {
+                .image {
+                  width: 50px;
+                  height: 50px;
+                  display: inline-block;
+                  img {
+                    border: solid 1px #eee;
+                  }
+                }
+                .nickname {
+                  padding-left: $base-padding;
+                  display: inline-block;
+                  vertical-align: top;
+                  font-weight: bold;
+                }
+                .date {
+                  padding-left: $base-padding;
+                  display: inline-block;
+                  vertical-align: top;
+                }
+                .replies-line {
+                  border-left: solid 5px $bg-color-github-panel;
+                  padding-left: ($base-padding * 5) + 10px;
+                  margin-left: $base-margin * 1.5;
+                  padding-top: $base-padding * 2;
+                  padding-bottom: $base-padding * 2;
+                  margin-top: -$base-margin;
+                  margin-bottom: - ($base-margin * 2);
+                  &.last {
+                    border: none;
+                  }
+                  .body {
+                    max-width: 100%;
+                    margin-bottom: $base-margin;
+                    border-radius: 0;
+                    border-color: #eee;
+                  }
+                }
+              }
+            }
+            .panel-footer {
+              background-color: #eee;
+              border: none;
+              border-top: 1px solid #eee;
               .input {
                 display: inline-block;
                 width: 85%;
@@ -178,75 +178,73 @@
                 vertical-align: top;
                 width: 10%;
               }
-						}
-				  }
-				}
-			}
-	  }
-	}
-	.bottom-line {
-		margin-top: $base-margin;
-		border: solid 2px $bg-color-github-panel;
-	}
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottom-line {
+    margin-top: $base-margin;
+    border: solid 2px $bg-color-github-panel;
+  }
 }
 
-
 .review-wrapper {
-	word-wrap: break-word;
-	.panel {
-		margin-top: $base-margin;
-		margin-bottom: $base-margin;
-		border: none;
-		box-shadow: none;
-		.panel-heading {
-			background-color: $color-grey;
-			font-size: $base-font-size;
-			padding: $base-padding * 2;
-			width: 100%;
-			padding: $base-padding * 3;
-		}
-		.panel-body {
-			padding: $base-padding * 5;
-			&:hover {
-				background-color: #fafafa;
-			}
-		}
-	}
+  word-wrap: break-word;
+  .panel {
+    margin-top: $base-margin;
+    margin-bottom: $base-margin;
+    border: none;
+    box-shadow: none;
+    .panel-heading {
+      background-color: $color-grey;
+      font-size: $base-font-size;
+      padding: $base-padding * 2;
+      width: 100%;
+      padding: $base-padding * 3;
+    }
+    .panel-body {
+      padding: $base-padding * 5;
+      &:hover {
+        background-color: #fafafa;
+      }
+    }
+  }
 }
 
 .issue-comment-wrapper {
-	font-family: $font-static;
-	.col-xs-12 {
-		.col-xs-1 {
-		}
-		.col-xs-11 {
-			padding-left: 0;
-			padding-right: 0;
-			.panel.panel-default {
-				margin-top: 0px;
-				border-color: #c0d3eb;
-				.panel-heading {
-					background-color: #f1f8ff;
-					padding: $base-padding * 2;
-					padding: $base-padding * 3;
-					max-width: 100%;
-					.panel-title {
-						.nickname {
-							font-weight: bold;
-							display: inline-block;
-							font-size: $base-font-size * 1.2;
-						}
-					}
-				}
-				.panel-body {
-					padding: $base-padding * 3;
-					pre {
-						border: none;
-						border-radius: 0;
-					}
-				}
-				margin-bottom: 1.5px;
-			}
-		}
-	}
+  font-family: $font-static;
+  .col-xs-12 {
+    .col-xs-1 {}
+    .col-xs-11 {
+      padding-left: 0;
+      padding-right: 0;
+      .panel.panel-default {
+        margin-top: 0px;
+        border-color: #c0d3eb;
+        .panel-heading {
+          background-color: #f1f8ff;
+          padding: $base-padding * 2;
+          padding: $base-padding * 3;
+          max-width: 100%;
+          .panel-title {
+            .nickname {
+              font-weight: bold;
+              display: inline-block;
+              font-size: $base-font-size * 1.2;
+            }
+          }
+        }
+        .panel-body {
+          padding: $base-padding * 3;
+          pre {
+            border: none;
+            border-radius: 0;
+          }
+        }
+        margin-bottom: 1.5px;
+      }
+    }
+  }
 }
