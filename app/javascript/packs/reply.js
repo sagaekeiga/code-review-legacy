@@ -53,10 +53,8 @@ function submitReply(elem) {
     },
     element: elem,
     success: function (data) {
-      console.log(data);
       if (data.status === 'success') {
         replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body').find('.panel-text').filter(':last');
-        console.log(replyWrapper);
         $(`
           <div class='panel-text'>
             <div class='image'>
@@ -73,10 +71,6 @@ function submitReply(elem) {
             </div>
           </div>
         `).insertAfter(replyWrapper);
-        // replyWrapper.find('.reply-hidden-target-element').removeClass('hidden');
-        // replyWrapper.find('.reply-show-target-element').addClass('hidden')
-        // replyWrapper.find('.reply-show-target-element').find('textarea').val('');
-        // replyWrapper.find('.reply-show-target-element').find('.remote_id').val(data.remote_id);
       }
       elem.prop('disabled', false);
     }

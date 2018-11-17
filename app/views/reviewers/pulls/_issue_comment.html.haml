@@ -1,0 +1,22 @@
+.col-xs-12
+  .col-xs-1
+    - if review.reviewer.present?
+      = image_tag review.reviewer.github_account.avatar_url, class: 'review-comment-img avatar img-responsive rounded'
+    - else
+      = image_tag 'reviewer.jpg', class: 'review-comment-img avatar img-responsive rounded'
+  .col-xs-11
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          .nickname
+            - if review.reviewer.present?
+              = review.reviewer.github_account.nickname
+            - else
+              Reviewee
+            %small.text-muted= date_format(review.updated_at)
+      .panel-body
+        .col-xs-12= markdown(review.body)
+// ライン
+.col-xs-12
+  .col-sm-2
+  .col-sm-10

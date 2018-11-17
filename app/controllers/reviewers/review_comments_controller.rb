@@ -20,7 +20,7 @@ class Reviewers::ReviewCommentsController < Reviewers::BaseController
       reviewer: reviewer
     )
 
-    if review_comment.save!
+    if review_comment.save
       review_comment.send_github!(params[:commit_id]) if params[:commit_id]
       render json: {
         status: 'success',
