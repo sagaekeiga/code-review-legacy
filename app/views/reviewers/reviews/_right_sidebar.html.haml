@@ -7,7 +7,7 @@
             %i.fas.fa-comments
             %br
             %small replies
-    - unless controller.action_name.eql?('replies')
+    - else
       %li.list.active
         = link_to '#codeTab', class: "#{is_same_action_name?('view_check')} tab active" do
           .text-center
