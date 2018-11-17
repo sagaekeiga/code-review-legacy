@@ -15,6 +15,9 @@ ja:
         woman: 女性
         man: 男性
   reviewees:
+    pending:
+      alert:
+        danger: 認証が済んでいません
     dashboard:
       title: ダッシュボード
     repos:
@@ -43,3 +46,4 @@ ja:
     views:
       already_reviewed: すでにレビューされているためキャンセルできません
       configure_github_app: GitHub Appの設定方法
+      add_repo: レポジトリを追加する

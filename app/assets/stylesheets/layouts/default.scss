@@ -18,7 +18,7 @@ body {
 .navbar-default {
   .navbar-brand {
     color: $color-white;
-    font-weight: bold;
+    font-weight: normal;
   }
   border-color: $color-github-black;
   .navbar-nav {
@@ -35,6 +35,13 @@ body {
   margin-top: .5rem;
   margin-bottom: .5rem;
   color: $color-white;
+}
+
+// --------------------------------------------------------------------------------
+// Panel
+// --------------------------------------------------------------------------------
+.panel-body {
+  box-shadow: 0 3px 3px rgba(61,10,0,.1);
 }
 
 // --------------------------------------------------------------------------------
