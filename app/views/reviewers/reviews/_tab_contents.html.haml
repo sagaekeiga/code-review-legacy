@@ -1,38 +1,37 @@
 / pullrequest
 #bodyTab.hidden.tab-content
   .pulls-body-wrapper
-    .page-header{ 'pull-id': @pull.id }
+    .page-header{ 'pull-id': pull.id }
       %h1
-        %strong= @pull.title
+        %strong= pull.title
     .panel
-      - if @pull.body.present?
+      - if pull.body.present?
         .panel-body
           .md-wrapper
-            = markdown(@pull.body)
+            = markdown(pull.body)
       - else
         チェック項目はありません。
 / issues
 #issueTab.hidden.tab-content
   .panel.h-550
-    - if @issues.blank?
-      .all-center issueはありません
-    - else
-      - @issues.each do |issue|
-        .page-header
-          %h4= issue.title
-        .panel-body
-          .md-wrapper= markdown(issue.body)
+    -# - if issues.blank?
+    -#   .all-center issueはありません
+    -# - issues.each do |issue|
+    -#   .page-header
+    -#     %h4= issue.title
+    -#   .panel-body
+    -#     .md-wrapper= markdown(issue.body)
 / commits
 #commitsTab.hidden.tab-content
   .panel
     %table.table.table-hover
       %tbody
-        - @commits.each do |commit|
+        - commits.each do |commit|
           %tr
             %td
-              = link_to commit.message, [:reviewers, @pull, commit], class: 'commit_title'
+              = link_to commit.message, [:reviewers, pull, commit], class: 'commit_title'
               .break-line.owner_name
                 = commit.committer_name
                 = I18n.l(commit.committed_date.to_time, format: :default)
             %td.text-right
-              = link_to commit.short_sha, [:reviewers, @pull, commit]
+              = link_to commit.short_sha, [:reviewers, pull, commit]
