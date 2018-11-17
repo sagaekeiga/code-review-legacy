@@ -6,9 +6,27 @@
 }
 
 .reviewee-dashboard-wrapper {
+  h2 {
+    font-size: 25px;
+  }
   table {
-    .repo-list td {
-      height: $base-height + 20;
+    th {
+      font-weight: lighter;
+      &.status {
+        padding-left: 0;
+        font-weight: lighter;
+      }
+    }
+    .repo-list {
+      a {
+        display: block;
+        height: 60px;
+        padding: 20px 7px;
+      }
+      td {
+        padding: 0;
+        height: $base-height + 20;
+      }
     }
     &.table thead tr th {
       text-align: left;

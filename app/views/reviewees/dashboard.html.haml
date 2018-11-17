@@ -4,14 +4,14 @@
       %h2
         %i.fab.fa-github
         = @reviewee.nickname
-      = link_to ENV['GITHUB_APP_URL'], class: 'btn btn-outline-primary m-t-4', target: '_blank' do
+      = link_to ENV['GITHUB_APP_URL'], class: 'btn btn-outline-primary m-t-1', target: '_blank' do
         %i.fas.fa-plus-circle
         = t('.add_project')
       %table.table.table-hover.m-t-4
         %thead
           %tr.repo-list-header
             %th= t('.project')
-            %th= t('.repo_status')
+            %th.status= t('.repo_status')
         - @reviewee.repos.each do |repo|
           %tbody
             %tr.repo-list
