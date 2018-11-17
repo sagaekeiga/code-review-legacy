@@ -1,4 +1,8 @@
 .reviewee-dashboard-wrapper {
+  margin-top: $base-height + 10;
+  h2 {
+    font-weight: normal;
+  }
   .card {
     border-radius: $base-border-radius;
     margin-top: $base-margin * 2;

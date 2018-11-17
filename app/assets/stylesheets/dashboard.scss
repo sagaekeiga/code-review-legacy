@@ -5,6 +5,37 @@
   }
 }
 
+.reviewee-dashboard-wrapper {
+  h2 {
+    font-size: $base-margin + 9;
+  }
+  table {
+    th {
+      font-weight: lighter;
+      &.status {
+        padding-left: 0;
+      }
+    }
+    .repo-list {
+      a {
+        display: block;
+        height: $base-height + 10;
+        padding: $base-margin + 4 $base-padding + 3;
+      }
+      td {
+        padding: 0;
+        height: $base-height + 20;
+      }
+    }
+    &.table thead tr th {
+      text-align: left;
+    }
+    .repo-list-header {
+      color: $color-literal-gray;
+    }
+  }
+}
+
 .reviewer-dashboard-wrapper {
   margin-top: $base-margin * 2;
   font-family: $font-dashboard;
