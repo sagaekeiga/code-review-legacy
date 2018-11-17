@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180925134835) do
+ActiveRecord::Schema.define(version: 20181115113017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,62 +65,15 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.index ["pull_id"], name: "index_commits_on_pull_id"
   end
 
-  create_table "content_trees", force: :cascade do |t|
-    t.bigint "parent_id"
-    t.bigint "child_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["child_id"], name: "index_content_trees_on_child_id"
-    t.index ["deleted_at"], name: "index_content_trees_on_deleted_at"
-    t.index ["parent_id"], name: "index_content_trees_on_parent_id"
-  end
-
-  create_table "contents", force: :cascade do |t|
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "reviewer_id"
+    t.bigint "pull_id"
     t.integer "resource_id"
     t.string "resource_type"
-    t.bigint "repo_id"
-    t.integer "file_type"
-    t.integer "status"
-    t.string "size"
-    t.string "name"
-    t.string "path"
-    t.text "content"
-    t.string "html_url"
-    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_contents_on_deleted_at"
-    t.index ["repo_id"], name: "index_contents_on_repo_id"
-  end
-
-  create_table "issues", force: :cascade do |t|
-    t.integer "resource_id"
-    t.string "resource_type"
-    t.bigint "repo_id"
-    t.bigint "remote_id"
-    t.integer "number"
-    t.integer "status"
-    t.integer "publish"
-    t.string "title"
-    t.text "body"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_issues_on_deleted_at"
-    t.index ["repo_id"], name: "index_issues_on_repo_id"
-  end
-
-  create_table "memberships", force: :cascade do |t|
-    t.bigint "owner_id"
-    t.bigint "member_id"
-    t.integer "status"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_memberships_on_deleted_at"
-    t.index ["member_id"], name: "index_memberships_on_member_id"
-    t.index ["owner_id"], name: "index_memberships_on_owner_id"
+    t.index ["pull_id"], name: "index_notifications_on_pull_id"
+    t.index ["reviewer_id"], name: "index_notifications_on_reviewer_id"
   end
 
   create_table "orgs", force: :cascade do |t|
@@ -169,6 +122,15 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.index ["deleted_at"], name: "index_repos_on_deleted_at"
   end
 
+  create_table "review_comment_trees", force: :cascade do |t|
+    t.bigint "comment_id"
+    t.bigint "reply_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_review_comment_trees_on_comment_id"
+    t.index ["reply_id"], name: "index_review_comment_trees_on_reply_id"
+  end
+
   create_table "review_comments", force: :cascade do |t|
     t.bigint "reviewer_id"
     t.bigint "review_id"
@@ -180,7 +142,6 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.bigint "remote_id"
     t.integer "status"
     t.integer "event"
-    t.integer "root_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -200,6 +161,15 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.index ["deleted_at"], name: "index_reviewee_orgs_on_deleted_at"
     t.index ["org_id"], name: "index_reviewee_orgs_on_org_id"
     t.index ["reviewee_id"], name: "index_reviewee_orgs_on_reviewee_id"
+  end
+
+  create_table "reviewee_tags", force: :cascade do |t|
+    t.bigint "reviewee_id"
+    t.bigint "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reviewee_id"], name: "index_reviewee_tags_on_reviewee_id"
+    t.index ["tag_id"], name: "index_reviewee_tags_on_tag_id"
   end
 
   create_table "reviewees", force: :cascade do |t|
@@ -237,6 +207,24 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_reviewees_github_accounts_on_deleted_at"
     t.index ["reviewee_id"], name: "index_reviewees_github_accounts_on_reviewee_id"
+  end
+
+  create_table "reviewer_pulls", force: :cascade do |t|
+    t.bigint "reviewer_id"
+    t.bigint "pull_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_reviewer_pulls_on_pull_id"
+    t.index ["reviewer_id"], name: "index_reviewer_pulls_on_reviewer_id"
+  end
+
+  create_table "reviewer_repos", force: :cascade do |t|
+    t.bigint "reviewer_id"
+    t.bigint "repo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repo_id"], name: "index_reviewer_repos_on_repo_id"
+    t.index ["reviewer_id"], name: "index_reviewer_repos_on_reviewer_id"
   end
 
   create_table "reviewers", force: :cascade do |t|
@@ -283,7 +271,6 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.text "body"
     t.text "reason"
     t.integer "event"
-    t.integer "working_hours"
     t.string "commit_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -293,46 +280,15 @@ ActiveRecord::Schema.define(version: 20180925134835) do
     t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"
   end
 
-  create_table "skillings", force: :cascade do |t|
-    t.bigint "skill_id"
-    t.integer "resource_id"
-    t.string "resource_type"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_skillings_on_deleted_at"
-    t.index ["resource_id", "resource_type"], name: "index_skillings_on_resource_id_and_resource_type"
-    t.index ["skill_id"], name: "index_skillings_on_skill_id"
-  end
-
-  create_table "skills", force: :cascade do |t|
+  create_table "tags", force: :cascade do |t|
     t.string "name"
-    t.integer "category"
-    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_skills_on_deleted_at"
-  end
-
-  create_table "wikis", force: :cascade do |t|
-    t.bigint "repo_id"
-    t.integer "resource_id"
-    t.string "resource_type"
-    t.string "title"
-    t.text "body"
-    t.integer "status"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_wikis_on_deleted_at"
-    t.index ["repo_id"], name: "index_wikis_on_repo_id"
   end
 
   add_foreign_key "changed_files", "commits"
   add_foreign_key "changed_files", "pulls"
   add_foreign_key "commits", "pulls"
-  add_foreign_key "contents", "repos"
-  add_foreign_key "issues", "repos"
   add_foreign_key "pulls", "repos"
   add_foreign_key "review_comments", "changed_files"
   add_foreign_key "review_comments", "reviewers"
@@ -341,6 +297,4 @@ ActiveRecord::Schema.define(version: 20180925134835) do
   add_foreign_key "reviewers_github_accounts", "reviewers"
   add_foreign_key "reviews", "pulls"
   add_foreign_key "reviews", "reviewers"
-  add_foreign_key "skillings", "skills"
-  add_foreign_key "wikis", "repos"
 end

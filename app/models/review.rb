@@ -2,18 +2,17 @@
 #
 # Table name: reviews
 #
-#  id            :bigint(8)        not null, primary key
-#  body          :text
-#  deleted_at    :datetime
-#  event         :integer
-#  reason        :text
-#  working_hours :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  commit_id     :string
-#  pull_id       :bigint(8)
-#  remote_id     :bigint(8)
-#  reviewer_id   :bigint(8)
+#  id          :bigint(8)        not null, primary key
+#  body        :text
+#  deleted_at  :datetime
+#  event       :integer
+#  reason      :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  commit_id   :string
+#  pull_id     :bigint(8)
+#  remote_id   :bigint(8)
+#  reviewer_id :bigint(8)
 #
 # Indexes
 #
@@ -64,7 +63,6 @@ class Review < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
-  # validates :working_hours, presence: true, on: %i(update)
   validates :remote_id, uniqueness: true, allow_nil: true
 
   # レビューはidが可変なので、commit_idを識別子にする
@@ -101,8 +99,6 @@ class Review < ApplicationRecord
     )
     review.save!
     review_comments = review.reviewer.review_comments.pending.order(:created_at).where(changed_file: pull.changed_files)
-    working_hours = review_comments.calc_working_hours
-    review.update!(working_hours: working_hours)
     review_comments.each do |review_comment|
       review_comment.review = review
       review_comment.reviewed!
@@ -116,7 +112,7 @@ class Review < ApplicationRecord
   #
   def self.fetch_issue_comments!(params)
     ActiveRecord::Base.transaction do
-      return false if params[:sender][:type] == 'Bot'
+      return false if params[:sender][:type].eql?('Bot')
       repo = Repo.find_by(name: params[:repository][:name])
       return false unless repo
       # ① 該当するPRを取得
@@ -158,7 +154,7 @@ class Review < ApplicationRecord
       res = Github::Request.github_exec_review!(request_params, pull)
 
       fail res.body unless res.code == Settings.api.success.status.code
-      review_comments.where.not(reviewer: nil).pending.each(&:commented!)
+      review_comments.where.not(reviewer: nil).pending.each(&:reviewed!).each(&:completed!)
       comment!
       pull.reviewed!
     end

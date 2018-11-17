@@ -36,11 +36,13 @@ class Reviewer < ApplicationRecord
   # -------------------------------------------------------------------------------
   has_many :reviews
   has_many :review_comments
-  has_many :skillings, dependent: :destroy, as: :resource
-  has_many :skills, through: :skillings
   has_many :pulls
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
-  accepts_nested_attributes_for :skillings, allow_destroy: true
+
+  # -------------------------------------------------------------------------------
+  # Delegations
+  # -------------------------------------------------------------------------------
+  delegate :avatar_url, to: :github_account
 
   # -------------------------------------------------------------------------------
   # Enumerables
@@ -62,22 +64,12 @@ class Reviewer < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attribute :status, default: statuses[:active]
+  attribute :status, default: statuses[:pending]
 
   # -------------------------------------------------------------------------------
-  # ClassMethods
+  # Validations
   # -------------------------------------------------------------------------------
-  def self.find_for_oauth(github_account)
-    reviewer = find_or_initialize_by(email: github_account.email)
-    if reviewer.persisted?
-      reviewer.update_attributes(last_sign_in_at: Time.zone.now)
-      github_account.save
-    else
-      reviewer.update_attributes(password: Devise.friendly_token.first(8))
-      github_account.update_attributes(reviewer: reviewer)
-    end
-    reviewer
-  end
+  validates_acceptance_of :agreement, allow_nil: true, on: :create
 
   # -------------------------------------------------------------------------------
   # InstanceMethods

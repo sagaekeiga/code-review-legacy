@@ -16,11 +16,8 @@
       %tbody
         %tr
           %td= @reviewed_pulls.count
-          %td
-            - if current_reviewer.reviews.comment.sum(:working_hours) > 0
-              = number_to_currency(current_reviewer.reviews.comment.sum(:working_hours) * 100)
-            - else
-              0円
+          // @TODO 報酬表示
+          %td 0円
     // 審査中
     .page-header
       %h5
@@ -35,14 +32,11 @@
             %thead
               %tr
                 %th.col-sm-6= t 'activerecord.attributes.pull.title'
-                %th.col-sm-3= t 'activerecord.models.skill'
                 %th.col-sm-3= t 'activerecord.attributes.repo.private'
             %tbody
               - @pending_reviews.each do |pending_review|
                 %tr
                   %td= pending_review.pull.title
-                  %td.text-center
-                    %span.label.label-warning= pending_review.pull.repo.skillings.first.skill.name
                   %td.text-center= pending_review.pull.repo_private
           .text-center= paginate @reviewed_pulls
     - else
@@ -67,8 +61,6 @@
             - @reviewed_pulls.each do |reviewed_pull|
               %tr
                 %td= link_to reviewed_pull.title&.truncate(40), reviewers_pull_path(reviewed_pull)
-                %td.text-center
-                  %span.label.label-warning= reviewed_pull.repo.skillings.first.skill.name
                 %td.text-center= reviewed_pull.repo_private
                 %td.text-center
                   = link_to reviewers_pull_path(reviewed_pull), class: 'btn btn-block btn-outline-primary' do

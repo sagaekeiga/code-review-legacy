@@ -10,6 +10,7 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認用）
         status: ステータス
+        agreement: 利用規約
       reviewer/github:
         login: ログイン名
         owner_id: オーナーID
@@ -46,10 +47,14 @@ ja:
     my_page:
       title: マイページ
       reviewed_pulls_count: 完了
-      sum_working_hours: 合計作業時間（月）
-      unit_minutes: "%{working_hours} 分"
-      unit_hour_and_minutes: "%{working_hours} 時間 %{working_minutes} 分"
-      remaining_time: 残り時間
+    pending:
+      alert:
+        danger: 審査が終わるまで少々お待ちください
+    integrations:
+      authorize: 認証する
+      authorized: 認証済み
+      alert:
+        danger: Githubに接続してください
     pulls:
       show:
         conversation: Conversation
@@ -70,13 +75,6 @@ ja:
         body_helper: 全体的な評価を入力してください。必要であればあなたのレビューの前提条件（○○を中心にチェックを行いました）を記載してください。この投稿をレビュイーは見ることができます。
       create:
         success: レビューしました
-    skillings:
-      edit:
-        alert: スキルを登録しましょう
-        title: スキルの登録
-        show_related_selected_skills: 登録されたスキルに一致するプルリクエストがダッシュボードに表示されます。
-      update:
-        success: スキルを登録しました
     views:
       reviews: レビューする
       cancels: キャンセルする

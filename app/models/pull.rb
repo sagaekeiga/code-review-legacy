@@ -100,12 +100,7 @@ class Pull < ApplicationRecord
           head_label: res_pull['head']['label'],
           base_label: res_pull['base']['label']
         )
-        skill = Skill.fetch!(res_pull['head']['repo']['language'], repo)
-        if pull&.deleted?
-          pull.restore
-          skillings = repo.skillings.with_deleted.where(resource_type: 'Repo')
-          skillings.each(&:restore) if skillings.present?
-        end
+        pull.restore if pull&.deleted?
         Commit.fetch!(pull)
       end
     end
@@ -142,7 +137,6 @@ class Pull < ApplicationRecord
       # たまに同時作成されて重複が起こる。ここは最新の方を「物理」削除する
       dup_pulls = Pull.where(remote_id: pull.remote_id)
       dup_pulls.order(created_at: :desc).last.really_destroy! if dup_pulls.count > 1
-      skill = Skill.fetch!(params[:head][:repo][:language], repo)
       Commit.fetch!(pull)
     end
     true

@@ -8,5 +8,20 @@ ja:
         body: 全体へのレビューコメント
         event: イベント
         state: ステート
-        working_hours: 作業時間（分）
         reason: 理由
+  enums:
+    review:
+      event:
+        pending: 審査中
+  reviewers:
+    reviews:
+      sidebars:
+        titles:
+          view_check: 動作確認
+          new: レビューの作成
+          show: 審査
+          edit: レビューの修正
+          replies: リプライ対応
+          complete: 完了
+      view_check:
+        next: レビューを作成する

@@ -35,17 +35,9 @@ class Reviewee < ApplicationRecord
   has_one :github_account, class_name: 'Reviewees::GithubAccount'
   has_many :repos, as: :resource
   has_many :pulls, as: :resource
-  has_many :issues, as: :resource
-  has_many :wikis, as: :resource
   has_many :commits, as: :resource
   has_many :reviewee_orgs
   has_many :orgs, through: :reviewee_orgs
-
-  has_many :passive_memberships, class_name: 'Membership', foreign_key: 'member_id', dependent: :destroy
-  has_many :owners, through: :passive_memberships, source: :owner
-
-  has_many :active_memberships, class_name: 'Membership', foreign_key: 'owner_id', dependent: :destroy
-  has_many :members, through: :active_memberships,  source: :member
 
   # -------------------------------------------------------------------------------
   # Delegations
@@ -54,32 +46,19 @@ class Reviewee < ApplicationRecord
   delegate :login, to: :github_account
   delegate :nickname, to: :github_account
 
-  def self.find_for_oauth(github_account)
-    reviewee = find_or_initialize_by(email: github_account.email)
-    if reviewee.persisted?
-      reviewee.update_attributes!(last_sign_in_at: Time.zone.now)
-      github_account.save
-    else
-      reviewee.update_attributes!(password: Devise.friendly_token.first(8))
-      github_account.update_attributes(reviewee: reviewee)
-    end
-    reviewee
-  end
+  # -------------------------------------------------------------------------------
+  # Validations
+  # -------------------------------------------------------------------------------
+  validates_acceptance_of :agreement, allow_nil: true, on: :create
 
   def viewable_repos
-    owner_org_ids = owners.map{ |owner| owner.orgs.pluck(:id) }.flatten!
     repos.
-      or(Repo.where(resource_type: 'Reviewee', resource_id: owners.pluck(:id))).
-      or(Repo.where(resource_type: 'Org', resource_id: owner_org_ids)).
       or(Repo.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       order(updated_at: :desc)
   end
 
   def viewable_pulls
-    owner_org_ids = owners.map{ |owner| owner.orgs.pluck(:id) }.flatten!
     pulls.
-      or(Pull.where(resource_type: 'Reviewee', resource_id: owners.pluck(:id))).
-      or(Pull.where(resource_type: 'Org', resource_id: owner_org_ids)).
       or(Pull.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       includes(:repo, :changed_files).
       order(updated_at: :desc)

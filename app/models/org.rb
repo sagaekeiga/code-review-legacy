@@ -24,8 +24,6 @@ class Org < ApplicationRecord
   has_many :reviewee_orgs, dependent: :destroy
   has_many :repos, as: :resource
   has_many :pulls, as: :resource
-  has_many :issues, as: :resource
-  has_many :wikis, as: :resource
   has_many :commits, as: :resource
   # -------------------------------------------------------------------------------
   # Validations

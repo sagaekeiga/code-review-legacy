@@ -1,0 +1,17 @@
+.container-fluid
+  .row
+    .review
+      .left-sidebar.col-sm-2.hidden-xs
+        = render 'left_sidebar', pull: @pull
+      .col-sm-10.col-sm-offset-2
+        .col-sm-8.col-sm-offset-2
+          .page-header{ 'pull-id': @pull.id }
+            %h1
+              %strong= @pull.title
+          .panel
+            .panel-body
+              .md-wrapper
+                = markdown(@pull.body)
+          %hr
+          .text-center
+            = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary'

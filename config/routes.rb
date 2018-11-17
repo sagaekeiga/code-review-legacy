@@ -23,8 +23,7 @@ Rails.application.routes.draw do
 
   constraints(WebDomainConstraint) do
     root to: 'welcome#index'
-    get '/auth/github/setup', to: 'authentications#setup'
-    get '/auth/github/callback', to: 'authentications#callback'
+    get '/auth/github/callback', to: 'connects#github'
 
     devise_scope :reviewee do
       post '/auth/:action/callback',
@@ -34,7 +33,7 @@ Rails.application.routes.draw do
 
     devise_scope :reviewer do
       get '/auth/:action/callback',
-        controller: 'authentications',
+        controller: 'connects',
         constraints: { action: /github/ }
     end
 
@@ -52,6 +51,7 @@ Rails.application.routes.draw do
     #
     namespace :reviewees do
       get :dashboard
+      get :integrations
       get 'settings/integrations'
       resources :memberships, only: %i(index create destroy update) do
         collection do
@@ -64,9 +64,6 @@ Rails.application.routes.draw do
         resources :contents, only: %i(index show update)
         resources :issues, only: %i(index show update)
         resources :pulls, only: %i(update)
-        resources :wikis do
-          post :import, on: :collection
-        end
       end
     end
 
@@ -81,28 +78,28 @@ Rails.application.routes.draw do
     }
 
     namespace :reviewers do
-      get :dashboard, :my_page
+      get *%i(dashboard my_page integrations pending)
       get 'settings/integrations'
-      get :pending
-      resource :skillings, only: %i(update) do
-        get :skills, to: 'skillings#edit'
-      end
       resources :pulls, only: %i(show update), param: :token do
         get :files
-        resources :reviews, only: %i(create) do
-          get :file, to: 'reviews#new', on: :collection
+        resources :reviews, only: %i(create show edit update) do
+          get :replies
+          collection do
+            get :view_check
+            get :file, to: 'reviews#new'
+          end
+          resources :replies, only: %i(create)
         end
         resources :comments, only: %i(create update destroy)
         resources :changed_files, only: %i(index show)
         resources :commits, only: %i(index show)
       end
-      resources :review_comments, only: %i(index create update destroy show)
+      resources :review_comments, only: %i(create update destroy show)
       resources :repos do
         resources :contents, only: %i(index show) do
           post :search, on: :collection
         end
         resources :issues, only: %i(index show)
-        resources :wikis, only: %i(index show)
       end
     end
 

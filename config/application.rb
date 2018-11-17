@@ -21,6 +21,7 @@ module PushRequestV2
     config.time_zone = 'Tokyo'
     config.i18n.default_locale = :ja
     config.active_record.default_timezone = :local
+    config.assets.paths << config.root.join('node_modules')
 
     config.active_support.use_standard_json_time_format = true
     config.paths.add 'lib', eager_load: true

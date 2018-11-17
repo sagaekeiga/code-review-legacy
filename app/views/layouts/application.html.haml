@@ -2,11 +2,10 @@
 %html
   %head
     = render partial: 'meta'
-    %title push-request-v2
+    %title mergee
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application'
     = yield :javascript
   %body{ class: "#{controller_name}-#{action_name}" }
     .container
@@ -19,23 +18,19 @@
     .top-wrapper
       - if reviewee_signed_in?
         .container-fluid.body-container
-          .row.side-bar-wrapper
-            = render 'reviewee_side_bar'
-            .col-sm-11
+          .col-sm-12
+            - !content_for?(:flash) && flash && flash.each do |key, message|
+              .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+                %strong= message
+            = yield
+      - elsif reviewer_signed_in?
+        - unless current_reviewer.pending? || is_same_controller_name?('reviews')
+          .container-fluid.body-container
+            .col-sm-12
               - !content_for?(:flash) && flash && flash.each do |key, message|
                 .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
                   %strong= message
               = yield
-      - elsif reviewer_signed_in?
-        - unless current_reviewer.pending? || is_same_controller_name?('reviews')
-          .container-fluid.body-container
-            .row.side-bar-wrapper
-              = render 'reviewer_side_bar'
-              .col-sm-11
-                - !content_for?(:flash) && flash && flash.each do |key, message|
-                  .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-                    %strong= message
-                = yield
         - if current_reviewer.pending?
           .container-fluid.body-container
             .col-sm-12
