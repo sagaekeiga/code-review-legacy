@@ -16,6 +16,7 @@
   .page-header{ 'repo-id': pull.repo.id, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
     %h1
       %strong= pull.title
+  #loader.text-center= image_tag 'loader.gif'
   #issueList
 / commits
 #commitsTab.hidden.tab-content

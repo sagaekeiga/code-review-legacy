@@ -4,7 +4,8 @@ $(document).ready(function () {
   issueList = $('#issueList')
   if (issueNumbers < 1) {
     issueList.text('issueはありません')
-    exit;
+    $('#loader').addClass('hidden')
+    return
   }
   $.ajax({
     type: 'GET',
@@ -27,9 +28,11 @@ $(document).ready(function () {
         </div>
       `)
       issue.appendTo(issueList)
+      $('#loader').addClass('hidden')
     });
   }).fail(function (data) {
     issueList.text('issueの取得に失敗しました')
+    $('#loader').addClass('hidden')
   });
 });
 
