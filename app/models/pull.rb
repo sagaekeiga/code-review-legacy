@@ -165,8 +165,4 @@ class Pull < ApplicationRecord
       completed!
     end
   end
-
-  def can_update?
-    present? && !changed_files&.review_commented? && changed_files.exists?
-  end
 end
