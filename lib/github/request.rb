@@ -18,12 +18,6 @@ module Github
         _post sub_url(:review_comment, pull), pull.repo.installation_id, :review_comment, params
       end
 
-      # GET プルリクエストのレビューコメント取得
-      # https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
-      def github_exec_fetch_pull_review_comment_contents!(pull)
-        _get sub_url(:review_comment, pull), pull.repo.installation_id, :review_comment
-      end
-
       # GET レポジトリファイルの取得
       def github_exec_fetch_repo_contents!(repo, path = '')
         _get "repos/#{repo.full_name}/contents/#{path}", repo.installation_id, :content

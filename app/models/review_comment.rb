@@ -94,6 +94,7 @@ class ReviewComment < ApplicationRecord
 
     changed_file = commit.changed_files.find_by(
       pull: pull,
+      event: :compared,
       filename:  params[:comment][:path]
     )
 
@@ -124,6 +125,7 @@ class ReviewComment < ApplicationRecord
 
       changed_file = commit.changed_files.find_by(
         pull: pull,
+        event: :compared,
         filename:  params[:comment][:path]
       )
 
