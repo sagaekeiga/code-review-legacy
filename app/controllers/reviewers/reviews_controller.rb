@@ -1,22 +1,24 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_pull, only: %i(new create)
-  before_action :set_changed_files, only: %i(new create)
-  before_action :check_pending_review, only: %i(new create)
+  before_action :set_review, only: %i(show edit update replies)
+  before_action :set_pull, only: %i(view_check new create show edit update replies)
+  before_action :set_commits, only: %i(new show edit replies)
+  before_action :set_changed_files, only: %i(new create show edit replies)
 
-  # GET /reviewers/pulls/:pull_id/reviews/file
+  def view_check
+  end
+
   def new
     @review = Review.new
     numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
-    @issues = @pull.repo.issues.where(number: numbers)
+    # @TODO issueの取得
   end
 
-  # POST /reviewers/pulls/:pull_id/reviews
   def create
     # データの作成とGHAへのリクエストを分離することで例外処理に対応する
     ActiveRecord::Base.transaction do
       @review = current_reviewer.reviews.ready_to_review!(@pull, params[:review][:body])
     end
-    redirect_to [:reviewers, @pull], success: t('.success')
+    redirect_to [:reviewers, @pull, @review], success: t('.success')
   rescue => e
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
@@ -25,17 +27,43 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     render :new
   end
 
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @review.update(review_params)
+      redirect_to [:reviewers, @pull, @review], success: '更新しました。'
+    else
+      render :edit
+    end
+  end
+
+  def replies
+    @reviews = @pull.reviews.where(event: %i(comment issue_comment))
+  end
+
   private
 
   def set_pull
-    @pull = Pull.includes(:changed_files).friendly.find(params[:pull_token]).decorate
+    @pull = Pull.friendly.find(params[:pull_token]).decorate
   end
 
   def set_changed_files
-    @changed_files = @pull.files_changed
+    @changed_files = @pull.files_changed.decorate
   end
 
-  def check_pending_review
-    @pending_review = @pull.reviews.pending.first if @pull.reviews
+  def set_review
+    @review = current_reviewer.reviews.find(params[:id] || params[:review_id])
+  end
+
+  def set_commits
+    @commits = @pull.commits.decorate
+  end
+
+  def review_params
+    params.require(:review).permit(:body)
   end
 end

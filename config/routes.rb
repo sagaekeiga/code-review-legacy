@@ -64,9 +64,6 @@ Rails.application.routes.draw do
         resources :contents, only: %i(index show update)
         resources :issues, only: %i(index show update)
         resources :pulls, only: %i(update)
-        resources :wikis do
-          post :import, on: :collection
-        end
       end
     end
 
@@ -85,20 +82,24 @@ Rails.application.routes.draw do
       get 'settings/integrations'
       resources :pulls, only: %i(show update), param: :token do
         get :files
-        resources :reviews, only: %i(create) do
-          get :file, to: 'reviews#new', on: :collection
+        resources :reviews, only: %i(create show edit update) do
+          get :replies
+          collection do
+            get :view_check
+            get :file, to: 'reviews#new'
+          end
+          resources :replies, only: %i(create)
         end
         resources :comments, only: %i(create update destroy)
         resources :changed_files, only: %i(index show)
         resources :commits, only: %i(index show)
       end
-      resources :review_comments, only: %i(index create update destroy show)
+      resources :review_comments, only: %i(create update destroy show)
       resources :repos do
         resources :contents, only: %i(index show) do
           post :search, on: :collection
         end
         resources :issues, only: %i(index show)
-        resources :wikis, only: %i(index show)
       end
     end
 

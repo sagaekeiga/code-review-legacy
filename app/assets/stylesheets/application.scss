@@ -17,14 +17,13 @@
   @import "bootstrap";
   @import 'variables';
   @import 'bootstrap-variables';
-  // @import 'bootstrap-material-design';
+
   // Fontawesome
   @import 'font-awesome-sprockets';
   @import 'font-awesome';
 
   @import 'layouts/default';
   @import 'dashboard';
-  @import 'skillings';
   @import 'pulls';
   @import 'reviewees';
   @import 'settings';
@@ -38,18 +37,21 @@
   @import 'commits';
   @import 'markdown';
   @import 'buttons';
-  @import 'wikis';
   @import 'changed_files';
+  @import 'replies';
+  @import 'code';
   @import 'components/navbar';
 
 .m-t-0 { margin-top: 0; }
 .m-t-1 { margin-top: $padding-base-vertical; }
 .m-t-2 { margin-top: $padding-base-vertical * 2; }
 .m-t-4 { margin-top: $padding-base-vertical * 4; }
+.m-t-10 { margin-top: $padding-base-vertical * 10; }
 
 .m-b-0 { margin-bottom: 0; }
 .m-b-1 { margin-bottom: $padding-base-vertical; }
 .m-b-2 { margin-bottom: $padding-base-vertical * 2; }
+.m-b-4 { margin-bottom: $padding-base-vertical * 4; }
 
 .p-l-1 { padding-left: $padding-base-horizontal; }
 .p-r-1 { padding-right: $padding-base-horizontal; }

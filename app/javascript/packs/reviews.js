@@ -176,6 +176,9 @@ function createReviewComment(elem) {
   elem.prop('disabled', true);
   $.ajax({
     type: 'POST',
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    },
     url: `/reviewers/review_comments`,
     dataType: 'JSON',
     data: {
@@ -241,6 +244,9 @@ function editReviewCommentForm(elem) {
   elem.prop('disabled', false);
   $.ajax({
     type: 'GET',
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    },
     url: `/reviewers/review_comments/${reviewCommentId}`,
     dataType: 'JSON',
     element: elem,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181110035213) do
+ActiveRecord::Schema.define(version: 20181115113017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,15 @@ ActiveRecord::Schema.define(version: 20181110035213) do
     t.index ["deleted_at"], name: "index_repos_on_deleted_at"
   end
 
+  create_table "review_comment_trees", force: :cascade do |t|
+    t.bigint "comment_id"
+    t.bigint "reply_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_review_comment_trees_on_comment_id"
+    t.index ["reply_id"], name: "index_review_comment_trees_on_reply_id"
+  end
+
   create_table "review_comments", force: :cascade do |t|
     t.bigint "reviewer_id"
     t.bigint "review_id"
@@ -133,7 +142,6 @@ ActiveRecord::Schema.define(version: 20181110035213) do
     t.bigint "remote_id"
     t.integer "status"
     t.integer "event"
-    t.integer "root_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -263,7 +271,6 @@ ActiveRecord::Schema.define(version: 20181110035213) do
     t.text "body"
     t.text "reason"
     t.integer "event"
-    t.integer "working_hours"
     t.string "commit_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false

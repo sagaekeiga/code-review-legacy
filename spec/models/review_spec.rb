@@ -2,18 +2,17 @@
 #
 # Table name: reviews
 #
-#  id            :bigint(8)        not null, primary key
-#  body          :text
-#  deleted_at    :datetime
-#  event         :integer
-#  reason        :text
-#  working_hours :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  commit_id     :string
-#  pull_id       :bigint(8)
-#  remote_id     :bigint(8)
-#  reviewer_id   :bigint(8)
+#  id          :bigint(8)        not null, primary key
+#  body        :text
+#  deleted_at  :datetime
+#  event       :integer
+#  reason      :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  commit_id   :string
+#  pull_id     :bigint(8)
+#  remote_id   :bigint(8)
+#  reviewer_id :bigint(8)
 #
 # Indexes
 #

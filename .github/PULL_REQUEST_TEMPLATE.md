@@ -10,13 +10,6 @@
 
 ## Merge前のチェック事項（全てパスしなければMergeはしないこと）
 
-- [ ] CircleCIを通すこと
-* CirclrCIをFixedまたはSuccessの状態にしておくこと。
-
-- [ ] SiderCIを通すこと
-* SiderCIをFixedまたはSuccessの状態にしておくこと。
-* もし不要なチェックがある場合はCloseすること。
-
 - [ ] 動作確認を通すこと。
 * セルフで動作確認をパスした後に、自分以外に動作確認を依頼してパスすること。
 * 依頼するときは、pullrequestのbodyにテスト方法を書くこと。

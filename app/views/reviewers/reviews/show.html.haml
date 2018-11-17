@@ -1,0 +1,28 @@
+.container-fluid
+  .row
+    .review
+      .left-sidebar.col-sm-2.hidden-xs
+        = render 'left_sidebar', pull: @pull
+      .col-sm-10.col-sm-offset-2
+        .col-sm-9.col-sm-offset-1
+          = render 'right_sidebar'
+          .m-t-10.m-b-4
+            / code
+            #codeTab.tab-content
+              .page-header{ 'pull-id': @pull.id }
+                %h1
+                  %strong= @pull.title
+                  %small
+                    = link_to '修正する', edit_reviewers_pull_review_path(@pull, @review), class: 'btn btn-outline-primary pull-right'
+                %h3
+                  %span.label.label-default= @review.event_i18n
+              .reviews-form-wrapper
+                .reviews-form-card-wrapper
+                  = render @changed_files
+              // コード全体へのレビュー
+              %h4.m-t-10 全体へのコメント
+              .panel
+                .panel-body
+                  = markdown(@review.body)
+            = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits
+= javascript_pack_tag 'review-tab'

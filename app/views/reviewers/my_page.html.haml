@@ -16,11 +16,8 @@
       %tbody
         %tr
           %td= @reviewed_pulls.count
-          %td
-            - if current_reviewer.reviews.comment.sum(:working_hours) > 0
-              = number_to_currency(current_reviewer.reviews.comment.sum(:working_hours) * 100)
-            - else
-              0円
+          // @TODO 報酬表示
+          %td 0円
     // 審査中
     .page-header
       %h5

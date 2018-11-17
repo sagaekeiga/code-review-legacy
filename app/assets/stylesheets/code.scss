@@ -1,0 +1,39 @@
+.code-wrapper {
+  overflow-x: scroll;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    padding: $base-padding / 2;
+    td.file-code {
+      pre {
+        padding: $base-padding / 2;
+        color: none;
+        background-color: transparent;
+        border: none;
+        margin: 0;
+        font-family: $font-code;
+        font-size: $base-font-size;
+        letter-spacing: 1px;
+        font-weight: 100;
+      }
+      border: none;
+      &.markdown-highlight {
+        font-family: $font-code;
+        font-size: $base-font-size;
+        &.bg-primary {
+          background-color: $color-gihub-blue;
+          pre {
+            color: $color-literal-gray;
+          }
+        }
+        &.bg-success {
+          background-color: $color-github-green;
+        }
+        &.bg-danger {
+          background-color: $color-github-changed-file-minus-color;
+        }
+      }
+    }
+  }
+}
