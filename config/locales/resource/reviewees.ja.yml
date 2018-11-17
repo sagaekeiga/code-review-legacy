@@ -15,6 +15,9 @@ ja:
         woman: 女性
         man: 男性
   reviewees:
+    pending:
+      alert:
+        danger: 認証が済んでいません
     dashboard:
       title: ダッシュボード
     repos:
