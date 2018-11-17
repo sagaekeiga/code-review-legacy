@@ -9,7 +9,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def new
     @review = Review.new
-    numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
+    @numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
     # @TODO issueの取得
   end
 

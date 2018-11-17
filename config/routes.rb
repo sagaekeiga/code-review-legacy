@@ -99,7 +99,9 @@ Rails.application.routes.draw do
         resources :contents, only: %i(index show) do
           post :search, on: :collection
         end
-        resources :issues, only: %i(index show)
+        resources :issues, only: %i(index show) do
+          get :remote, on: :collection
+        end
       end
     end
 
