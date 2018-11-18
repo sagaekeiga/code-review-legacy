@@ -25,3 +25,5 @@ ja:
           complete: 完了
       view_check:
         next: レビューを開始する
+      form:
+        finish: レビューを完了する

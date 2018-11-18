@@ -44,17 +44,16 @@ class Commit < ApplicationRecord
       res_commits = Github::Request.github_exec_fetch_commits!(pull)
       res_commits.each do |res_commit|
         update = true
-        Rails.logger.debug res_commit
         commit = pull.commits.with_deleted.find_or_initialize_by(
           sha: res_commit[:sha],
           resource_type: pull.repo.resource_type,
           resource_id: pull.repo.resource_id,
-          committer_name: res_commit['commit']['committer']['name'],
-          committed_date: res_commit['commit']['committer']['date'],
+          committer_name: res_commit[:commit][:committer][:name],
+          committed_date: res_commit[:commit][:committer][:date],
         )
         update = false unless commit.persisted?
         commit.restore if commit.deleted?
-        commit.update_attributes!(message: res_commit['commit']['message'])
+        commit.update_attributes!(message: res_commit[:commit][:message])
         next if update && commit.changed_files.present?
         ChangedFile.fetch!(commit)
         ChangedFile.fetch_diff!(pull)
