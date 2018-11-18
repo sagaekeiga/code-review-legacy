@@ -1,6 +1,7 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show edit update replies)
   before_action :set_pull, only: %i(view_check new create show edit update replies)
+  before_action :set_numbers, only: %i(new show edit replies)
   before_action :set_commits, only: %i(new show edit replies)
   before_action :set_changed_files, only: %i(new create show edit replies)
 
@@ -9,8 +10,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def new
     @review = Review.new
-    numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
-    # @TODO issueの取得
   end
 
   def create
@@ -61,6 +60,10 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_commits
     @commits = @pull.commits.decorate
+  end
+
+  def set_numbers
+    @numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
   end
 
   def review_params
