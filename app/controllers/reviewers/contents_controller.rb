@@ -12,9 +12,6 @@ class Reviewers::ContentsController < Reviewers::BaseController
     @dir_or_files = @content.children.sub(@content).decorate
   end
 
-  def remote
-  end
-
   private
 
   def set_repo

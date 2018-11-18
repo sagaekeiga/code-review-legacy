@@ -11,7 +11,7 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
     content = Base64.decode64(res[:content])
 
     highlight_content = []
-    # シンタックスハイライトで返す
+
     content.each_line { |line| highlight_content << line.gsub(' ', '&nbsp;') }
     highlight_content.map! { |e| e ? e : '' }
 
