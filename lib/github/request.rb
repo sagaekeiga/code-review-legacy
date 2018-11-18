@@ -23,6 +23,11 @@ module Github
         _get "repos/#{repo.full_name}/contents/#{path}", repo.installation_id, :content
       end
 
+      # GET 差分ファイルの内容
+      def github_exec_fetch_content_by_cf!(repo, sub_url)
+        _get sub_url, repo.installation_id, :content
+      end
+
       def github_exec_fetch_changed_file_content!(repo, content_url)
         headers = {
           'User-Agent': 'PushRequest',
