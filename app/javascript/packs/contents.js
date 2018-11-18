@@ -31,13 +31,13 @@ $(document).ready(function () {
         // 文字列で取得
         code = code.outerHTML
         tbody = $(`
-						<tbody>
-							<tr>
-								<td class='index'>${(highlightContent.length + 1) - i}</td>
-								<td class='file-code'>${code}</td>
-							</tr>
-						</tbody>
-					`)
+          <tbody>
+            <tr>
+              <td class='index'>${(highlightContent.length + 1) - i}</td>
+              <td class='file-code'>${code}</td>
+            </tr>
+          </tbody>
+        `)
         targetElement = $(`#code${index}`)
         $(tbody).insertAfter(targetElement)
       }
