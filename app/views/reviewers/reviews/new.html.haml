@@ -1,7 +1,8 @@
 // @see https://qiita.com/mikaku/items/2e19084dca4a5448194a
 %script{ src: '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' }
 %script{ src: '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js' }
-= render 'form', pull: @pull, review: @review, changed_files: @changed_files, commits: @commits, issues: @issues
+= render 'form', pull: @pull, review: @review, changed_files: @changed_files, commits: @commits
+= javascript_pack_tag 'issues'
 = javascript_pack_tag 'reviews'
 = javascript_pack_tag 'modal'
 = javascript_pack_tag 'review-check-list'

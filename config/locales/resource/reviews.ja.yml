@@ -24,4 +24,6 @@ ja:
           replies: リプライ対応
           complete: 完了
       view_check:
-        next: レビューを作成する
+        next: レビューを開始する
+      form:
+        finish: レビューを完了する

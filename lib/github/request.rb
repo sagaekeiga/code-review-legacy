@@ -77,6 +77,10 @@ module Github
         _get_credential_resource "orgs/#{org_name}/memberships/#{github_account.login}", :role_in_org, github_account.access_token
       end
 
+      def github_exec_fetch_issue_by_number(repo, issue_number)
+        _get "repos/#{repo.full_name}/issues/#{issue_number}", repo.installation_id, :issue_number
+      end
+
       private
 
       #
@@ -173,48 +177,35 @@ module Github
       # イベントに対応するacceptを返す
       def set_accept(event)
         case event
-        when *%i(review get_access_token)
-          return Settings.api.github.request.header.accept.machine_man_preview_json
-        when *%i(issue_comment)
-          return Settings.api.github.request.header.accept.machine_man_preview
-        when *%i(changed_file pull content issue commit diff org role_in_org repo_zip)
-          return Settings.api.github.request.header.accept.symmetra_preview_json
-        when *%i(review_comment)
-          return Settings.api.github.request.header.accept.squirrel_girl_preview
+        when *%i(review get_access_token) then Settings.api.github.request.header.accept.machine_man_preview_json
+        when *%i(issue_comment) then Settings.api.github.request.header.accept.machine_man_preview
+        when *%i(changed_file pull content issue commit diff org role_in_org issue_number) then Settings.api.github.request.header.accept.symmetra_preview_json
+        when *%i(review_comment) then Settings.api.github.request.header.accept.squirrel_girl_preview
         end
       end
 
       # 成功時のレスポンスコード
       def success_code(event)
         case event
-        when *%i(issue_comment changed_file pull review_comment)
-          return Settings.api.created.status.code
-        when *%i(content commit issue diff review org role_in_org repo_zip)
-          return Settings.api.success.status.code
+        when *%i(issue_comment changed_file pull review_comment) then Settings.api.created.status.code
+        when *%i(content commit issue diff review org role_in_org issue_number) then Settings.api.success.status.code
         end
       end
 
       def sub_url(event, pull)
         case event
-        when :review
-          return "repos/#{pull.repo_full_name}/pulls/#{pull.number}/reviews"
-        when :issue_comment
-          return "repos/#{pull.repo_full_name}/issues/#{pull.number}/comments"
-        when :changed_file
-          return "repos/#{pull.repo_full_name}/pulls/#{pull.number}/files"
-        when :review_comment
-          return "repos/#{pull.repo_full_name}/pulls/#{pull.number}/comments"
-        when :commit
-          return "repos/#{pull.repo_full_name}/pulls/#{pull.number}/commits"
+        when :review then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/reviews"
+        when :issue_comment then "repos/#{pull.repo_full_name}/issues/#{pull.number}/comments"
+        when :changed_file then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/files"
+        when :review_comment then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/comments"
+        when :commit then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/commits"
         end
       end
 
       def sub_url_for(repo, event)
         case event
-        when :issue
-          return "repos/#{repo.full_name}/issues?state=all"
-        when :pull
-          return "repos/#{repo.full_name}/pulls"
+        when :issue then "repos/#{repo.full_name}/issues?state=all"
+        when :pull then "repos/#{repo.full_name}/pulls"
         end
       end
 
