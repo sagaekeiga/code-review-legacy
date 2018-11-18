@@ -4,16 +4,16 @@
       font-size: $base-margin + 9;
     }
     .pull-title{
-      margin-top: 60px;
-      font-size: 35px;
+      margin-top: $base-height + 10;
+      font-size: $base-height - 15;
       font-weight: bold;
       .full_name {
         color: rgba(27, 31, 35, 0.5);
-        font-size: 20px;
-        margin-left: 15px;
+        font-size: $base-margin + 4;
+        margin-left: $base-margin - 1;
       }
       .fa-github {
-        font-size: 15px;
+        font-size: $base-margin - 1;
       }
     }
     table {
@@ -21,7 +21,7 @@
         background-color: $color-light-blue;
       }
       .add-success-color {
-        color: #23bd70;
+        color: $base-color-green;
         font-weight: bold;
       }
       .pull-list {
