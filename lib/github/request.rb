@@ -126,7 +126,7 @@ module Github
           logger.error "[Github][#{event}] responseMessage => #{res.message}"
           logger.error "[Github][#{event}] subUrl => #{sub_url}"
         end
-        ActiveSupport::HashWithIndifferentAccess.new(res)
+        res
       end
 
       # Organazation, Membership

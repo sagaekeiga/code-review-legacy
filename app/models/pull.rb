@@ -113,20 +113,20 @@ class Pull < ApplicationRecord
   # pull_requestのeventで発火しリモートの変更を検知して更新する
   def self.update_by_pull_request_event!(params)
     ActiveRecord::Base.transaction do
-      resource_type = params[:head][:user][:type].eql?('User') ? 'Reviewee' : 'Org'
+      resource_type = params['head']['user']['type'].eql?('User') ? 'Reviewee' : 'Org'
       resource =
         if resource_type.eql?('Reviewee')
-          Reviewees::GithubAccount.find_by(owner_id: params[:head][:user][:id]).reviewee
+          Reviewees::GithubAccount.find_by(owner_id: params['head']['user']['id']).reviewee
         else
-          Org.find_by(remote_id: params[:head][:user][:id])
+          Org.find_by(remote_id: params['head']['user']['id'])
         end
       return true if resource.nil?
-      pull = lock.find_or_initialize_by(remote_id: params[:id])
-      repo = Repo.find_by(remote_id: params[:head][:repo][:id])
+      pull = lock.find_or_initialize_by(remote_id: params['id'])
+      repo = Repo.find_by(remote_id: params['head']['repo']['id'])
       pull.update_attributes!(
-        title:  params[:title],
-        body:   params[:body],
-        number: params[:number],
+        title:  params['title'],
+        body:   params['body'],
+        number: params['number'],
         repo:   repo,
         resource_type: resource_type,
         resource_id: resource.id,
