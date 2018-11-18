@@ -65,20 +65,13 @@ $('.update-pull-button').on('click', function(e) {
   $(this).attr('disabled', true)
   $.ajax({
     type: 'PUT',
-    url: `/reviewees/repos/${$(this).attr('repo-id')}/pulls/${$(this).attr('pull-id')}`,
+    url: `/reviewees/pulls/${$(this).attr('pull-id')}`,
     dataType: 'JSON',
     data: {
       status: true
     },
     element: $(this),
     success: function(data) {
-      if (data.status == 'connected') {
-        $(this.element).text('Request Review')
-        $(this.element).removeClass('btn-outline-danger').addClass('btn-outline-primary')
-      } else if (data.status == 'request_reviewed') {
-        $(this.element).text('Cancel')
-        $(this.element).removeClass('btn-outline-primary').addClass('btn-outline-danger')
-      }
       $(this.element).attr('disabled', false)
     }
   });

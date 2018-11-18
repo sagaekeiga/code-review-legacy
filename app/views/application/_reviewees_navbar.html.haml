@@ -15,8 +15,7 @@
                 %ul.dropdown-menu
                   - current_reviewee.repos.each do |repo|
                     %li
-                      = link_to repo.full_name
-                      -# = link_to repo.full_name, repo_path(repo)
+                      = link_to repo.name.truncate(15), reviewees_repo_path(repo)
                   %li.add-repo
                     = link_to ENV['GITHUB_APP_URL'], target: '_blank' do
                       %i.fa.fa-folder-plus
