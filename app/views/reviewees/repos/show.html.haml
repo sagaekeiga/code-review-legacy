@@ -22,8 +22,8 @@
               %td= pull.remote_created_from
               %td
                 .onoffswitch
-                  %input.onoffswitch-checkbox.update-pull-button{ name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "myonoffswitch#{pull.id}" }/
-                  %label.onoffswitch-label{ for: "myonoffswitch#{pull.id}" }
+                  %input.onoffswitch-checkbox.update-pull-button{ name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
+                  %label.onoffswitch-label{ for: "reviewStatusSwitch#{pull.id}" }
                     %span.onoffswitch-inner{ class: pull.request_reviewed? ? 'switch-off-inner' : '' }
                     %span.onoffswitch-switch{ class: pull.request_reviewed? ? 'switch-off' : '' }
 
