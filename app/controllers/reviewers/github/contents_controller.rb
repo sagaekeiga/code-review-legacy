@@ -26,34 +26,4 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
   def set_repo
     @repo = Repo.find(params[:repo_id]).decorate
   end
-
-  # 言語をシンボルで返す
-  def symbolized_lang(path)
-    case File.extname(path)
-    when '.rb', '.rake'
-      :ruby
-    when '.cc', '.cp', '.cpp', '.cxx', '.c'
-      :c
-    when '.py'
-      :python
-    when '.js', '.coffee'
-      :javascript
-    when '.java'
-      :java
-    when '.html'
-      :html
-    when '.php'
-      :php
-    when '.sass', '.scss'
-      :sass
-    when '.css'
-      :css
-    when '.yml'
-      :yaml
-    when '.haml'
-      :html
-    else
-      :html
-    end
-  end
 end
