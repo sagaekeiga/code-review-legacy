@@ -65,8 +65,12 @@
                               %input{ type: 'hidden', value: review_comment.position, class: 'position' }
                               %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
                               %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
+                      // Contents
+                      .code-wrapper
+                        コード
             .bottom-line
           .m-t-10.m-b-4
             = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits
 = javascript_pack_tag 'review-tab'
 = javascript_pack_tag 'reply'
+= javascript_pack_tag 'contents'
