@@ -4,11 +4,25 @@ ja:
       repo: レポジトリ
     attributes:
       repo:
-        title: レポジトリ名
+        full_name: オーナー名/レポジトリ名
+        name: レポジトリ名
+        private: プライベート
+        resource_type: ユーザータイプ
         status: ステータス
-        sync: 同期
+        installation_id: インストールID
+        remote_id: GithubID
+        resource_id: ユーザーID
+        created_at: 作成日時
+        updated_at: 更新日時
   enums:
     repo:
       status:
         hidden: 非公開
         showing: 公開中
+  admins:
+    repos:
+      index:
+        title: レポジトリ一覧
+      show:
+        assign: アサイン
+        confirm: 本当に削除しますか？
