@@ -9,4 +9,15 @@ class Admins::ReviewerReposController < Admins::BaseController
       render :admins, :repos, :show
     end
   end
+
+  def destroy
+    reviewer_repo = ReviewerRepo.find(params[:id])
+    repo = reviewer_repo.repo
+    reviewer = reviewer_repo.reviewer
+    if reviewer_repo.destroy
+      redirect_to [:admins, repo], success: "#{reviewer.github_account&.nickname}さんをアサインから外しました"
+    else
+      render :admins, :repos, :show
+    end
+  end
 end

@@ -54,6 +54,6 @@
             %td= reviewer.github_account&.user_type
             %td.text-center
               - if reviewer.assigned?(@repo)
-                .text-danger アサイン済み
+                = link_to '削除', @repo.destroy_reviewer_repo_path(reviewer), method: :delete, class: 'btn btn-danger', data: { confirm: '本当によろしいですか' }
               - else
                 = link_to '追加', admins_repo_reviewer_repos_path(@repo, reviewer_id: reviewer.id), class: 'btn btn-primary', method: :post
