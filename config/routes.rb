@@ -96,10 +96,13 @@ Rails.application.routes.draw do
       end
       resources :review_comments, only: %i(create update destroy show)
       resources :repos do
-        resources :contents, only: %i(index show) do
-          post :search, on: :collection
+        resources :contents, only: %i(index show)
+        resources :issues, only: %i(index show) do
+          get :remote, on: :collection
         end
-        resources :issues, only: %i(index show)
+      end
+      namespace :github do
+        resource :contents, only: %i(show)
       end
     end
 

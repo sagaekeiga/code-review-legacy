@@ -15,7 +15,7 @@
                 -# 全体へのレビューコメント
                 .review-wrapper
                   = render review
-              - review.review_comments.reviewed.includes(:changed_file).each do |review_comment|
+              - review.review_comments.reviewed.includes(:changed_file).each.with_index do |review_comment, index|
                 %li.step
                   %i.fas.fa-check-circle
                   %span.path= review_comment.path
@@ -43,7 +43,7 @@
                           = render review_comment.target_comments
                       .panel-footer
                         .text-right
-                          .menu.code-button
+                          .menu.code-button{ 'repo-id': @pull.repo.id, 'changed-file-id': review_comment.changed_file.id }
                             %i.fas.fa-code
                           .menu.thread-button
                             %i.far.fa-comments
@@ -65,8 +65,18 @@
                               %input{ type: 'hidden', value: review_comment.position, class: 'position' }
                               %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
                               %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
+                      // Contents
+                      .code-wrapper.hidden
+                        .panel
+                          .table-wrapper
+                            %table
+                              %thead{ id: "code#{index}" }
+                                %tr
+                                  %th{ scope: 'col' }
             .bottom-line
           .m-t-10.m-b-4
             = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits
+= javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'
 = javascript_pack_tag 'reply'
+= javascript_pack_tag 'contents'

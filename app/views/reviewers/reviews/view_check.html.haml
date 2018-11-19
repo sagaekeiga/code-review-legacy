@@ -10,8 +10,11 @@
               %strong= @pull.title
           .panel
             .panel-body
-              .md-wrapper
-                = markdown(@pull.body)
+              - if @pull.body.present?
+                .md-wrapper
+                  = markdown(@pull.body)
+              - else
+                説明はありません
           %hr
           .text-center
             = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary'

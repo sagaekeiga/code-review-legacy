@@ -13,16 +13,16 @@
         チェック項目はありません。
 / issues
 #issueTab.hidden.tab-content
-  .panel.h-550
-    -# - if issues.blank?
-    -#   .all-center issueはありません
-    -# - issues.each do |issue|
-    -#   .page-header
-    -#     %h4= issue.title
-    -#   .panel-body
-    -#     .md-wrapper= markdown(issue.body)
+  .page-header{ 'repo-id': pull.repo.id, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
+    %h1
+      %strong= pull.title
+  #loader.text-center= image_tag 'loader.gif'
+  #issueList
 / commits
 #commitsTab.hidden.tab-content
+  .page-header
+    %h1
+      %strong= pull.title
   .panel
     %table.table.table-hover
       %tbody

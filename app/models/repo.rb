@@ -127,104 +127,11 @@ class Repo < ApplicationRecord
     end
   end
 
-  def import_wikis!(file_params, resource)
-    ActiveRecord::Base.transaction do
-      wikis.delete_all
-      zipfile = file_params
-      Zip::File.open(zipfile.path) do |zip|
-        zip.each do |entry|
-          next unless File.extname(entry.name).eql?('.md')
-          @title = File.basename(entry.name).gsub('.md', '')
-          ext = File.extname(entry.name)
-          Tempfile.open([File.basename(entry.to_s), ext]) do |file|
-            entry.extract(file.path) { true }
-            body = file.read
-            wiki = wikis.new(
-              resource_type: resource.class.to_s,
-              resource_id: resource.id,
-              title: @title,
-              body: body
-            )
-            wiki.save!
-            file.close!
-          end
-        end
-      end
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
-
-  def set_resource_for_content
-    case resource_type
-    when 'Reviewee'
-      Reviewee.find(resource_id)
-    when 'Org'
-      org = Org.find(resource_id)
-      org.owner
-    end
-  end
-
   def reviewee?(current_reviewee)
     resource_type.eql?('Reviewee') && resource_id.eql?(current_reviewee.id)
   end
 
   def reviewee_org?(current_reviewee)
     resource_type.eql?('Org') && current_reviewee.orgs.exists?(id: resource_id)
-  end
-
-  def membership?(current_reviewee)
-    owner =
-      case resource_type
-      when 'Reviewee'
-        Reviewee.find_by(id: resource_id)
-      when 'Org'
-        org = Org.find_by(id: resource_id)
-        org.reviewee_orgs.owner
-      end
-    current_reviewee.owners.exists?(id: owner.id)
-  end
-
-  private
-
-  def _content_params(dir_or_file, file_type, repo)
-    {
-      path: dir_or_file.name,
-      name: File.basename(dir_or_file.to_s),
-      content: _verify_content(file_type, dir_or_file),
-      resource_type: repo.resource_type,
-      resource_id: repo.resource_id,
-      file_type: file_type,
-      repo: repo
-    }
-  end
-
-  def _content_tree_params(parent, child)
-    {
-      parent: parent,
-      child: child
-    }
-  end
-
-  def _expand_and_create_contents(zip, parent, repo)
-    zip.glob(parent.path + '*').each do |dir_or_file|
-      file_type = _set_symbol_file_type(dir_or_file)
-      child = Content.new(_content_params(dir_or_file, file_type, repo))
-      child.save
-      content_tree = ContentTree.new(_content_tree_params(parent, child))
-      content_tree.save
-    end
-  end
-
-  def _set_symbol_file_type(dir_or_file)
-    dir_or_file.ftype.eql?(:directory) ? :dir : :file
-  end
-
-  def _verify_content(file_type, dir_or_file)
-    return nil if Settings.contents.prohibited_files.extnames.include?(File.extname(dir_or_file.name))
-    file_type.eql?(:dir) ? nil : dir_or_file.get_input_stream.read
   end
 end
