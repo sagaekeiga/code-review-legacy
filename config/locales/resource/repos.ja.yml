@@ -23,3 +23,6 @@ ja:
     repos:
       index:
         title: レポジトリ一覧
+      show:
+        assign: アサイン
+        confirm: 本当に削除しまスカ？
