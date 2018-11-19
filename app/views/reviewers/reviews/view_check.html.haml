@@ -14,8 +14,8 @@
                 .md-wrapper
                   = markdown(@pull.body)
               - else
-                説明はありません
+                = t('.description_is_blank')
           %hr
           .text-center
-            %p レビューを開始するとあなたにプルリクエストがアサインされます。
+            %p= t '.assign_to_pullrequest'
             = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-outline-primary'

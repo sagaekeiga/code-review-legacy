@@ -23,7 +23,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
     @review = Review.new
-    flash[:danger] = 'レビューに失敗しました'
+    flash[:danger] = t('reviewers.reviews.messages.failed')
     render :new
   end
 
@@ -35,7 +35,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def update
     if @review.update(review_params)
-      redirect_to [:reviewers, @pull, @review], success: '更新しました。'
+      redirect_to [:reviewers, @pull, @review], success: t('reviewers.reviews.messages.updated')
     else
       render :edit
     end
@@ -53,10 +53,10 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def check_assign
     unless current_reviewer.assign_to!(@pull)
-      flash.now[:warning] = 'すでに他のユーザーがアサインしています'
+      flash.now[:warning] = t('reviewers.reviews.messages.already')
       return render :view_check
     end
-    flash.now[:success] = 'アサインしました'
+    flash.now[:success] = t('reviewers.reviews.messages.assigned')
   end
 
   def set_changed_files
