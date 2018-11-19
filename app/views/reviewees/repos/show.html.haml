@@ -17,14 +17,14 @@
         - @pulls.each_with_index do |pull, i|
           %tbody
             %tr.pull-list{ class: i % 2 == 0 ? 'add-light-blue' : '' }
-              %td.add-success-color OPEN
+              %td{ class: pull.completed? ? 'add-merged-color' : 'add-success-color' }= pull.completed? ? 'Merge/Close' : 'OPEN'
               %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
-              %td= pull.remote_created_from
+              %td= date_format(pull.remote_created_at)
               %td
                 .onoffswitch
-                  %input.onoffswitch-checkbox.update-pull-button{ name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
+                  %input.onoffswitch-checkbox.update-pull-button{ checked: pull.request_reviewed? ? true : false, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
                   %label.onoffswitch-label{ for: "reviewStatusSwitch#{pull.id}" }
-                    %span.onoffswitch-inner{ class: pull.request_reviewed? ? 'switch-off-inner' : '' }
-                    %span.onoffswitch-switch{ class: pull.request_reviewed? ? 'switch-off' : '' }
+                    %span.onoffswitch-inner
+                    %span.onoffswitch-switch
 
 = javascript_pack_tag 'update-resource'

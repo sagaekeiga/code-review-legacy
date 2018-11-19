@@ -63,7 +63,7 @@ Rails.application.routes.draw do
       resources :repos, shallow: true, only: %i(index update show) do
         resources :contents, only: %i(index show update)
         resources :issues, only: %i(index show update)
-        resources :pulls, only: %i(update show)
+        resources :pulls, only: %i(update)
       end
     end
 

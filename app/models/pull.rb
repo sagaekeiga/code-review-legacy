@@ -166,8 +166,4 @@ class Pull < ApplicationRecord
       completed!
     end
   end
-
-  def remote_created_from
-    (Date.today - remote_created_at.to_date).to_i.days.ago.to_s(:human)
-  end
 end
