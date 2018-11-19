@@ -1,0 +1,59 @@
+.col-sm-3
+  = render 'admins/shared/side_nav'
+.col-sm-9
+  .page-header
+    %h4= @repo.name
+  .panel.panel-default
+    %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+      %tbody
+        %tr
+          %th= t 'activerecord.attributes.repo.full_name'
+          %td= @repo.full_name
+        %tr
+          %th= t 'activerecord.attributes.repo.private'
+          %td= @repo.private
+        %tr
+          %th= t 'activerecord.attributes.repo.resource_type'
+          %td= @repo.resource_type
+        %tr
+          %th= t 'activerecord.attributes.repo.installation_id'
+          %td= @repo.installation_id
+        %tr
+          %th= t 'activerecord.attributes.repo.remote_id'
+          %td= @repo.remote_id
+        %tr
+          %th= t 'activerecord.attributes.repo.resource_id'
+          %td= @repo.resource_id
+        %tr
+          %th= t 'activerecord.attributes.repo.created_at'
+          %td= l @repo.created_at
+        %tr
+          %th= t 'activerecord.attributes.repo.updated_at'
+          %td= l @repo.updated_at
+  .page-header
+    %h4 アサイン
+  .panel.panel-default
+    %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+      %thead
+        %tr
+          %th= t 'activerecord.attributes.reviewer/github.nickname'
+          %th= t 'activerecord.attributes.reviewer/github.avatar_url'
+          %th= t 'activerecord.attributes.reviewer/github.email'
+          %th= t 'activerecord.attributes.reviewer/github.user_type'
+          %th
+      %tbody
+        - @reviewers.each do |reviewer|
+          %tr
+            %td= reviewer.github_account&.nickname
+            %td
+              - if reviewer.github_account&.avatar_url
+                = image_tag reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
+              - else
+                ×
+            %td= reviewer.github_account&.email
+            %td= reviewer.github_account&.user_type
+            %td.text-center
+              - if reviewer.assigned?(@repo)
+                .text-danger アサイン済み
+              - else
+                = link_to '追加', admins_repo_reviewer_repos_path(@repo, reviewer_id: reviewer.id), class: 'btn btn-primary', method: :post

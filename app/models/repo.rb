@@ -28,6 +28,8 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :resource, polymorphic: true
   has_many :pulls, dependent: :destroy
+  has_many :reviewer_repos, dependent: :destroy
+  has_many :reviewers, through: :reviewer_repos, source: :reviewer
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------

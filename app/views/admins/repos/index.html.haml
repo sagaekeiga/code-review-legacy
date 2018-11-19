@@ -1,0 +1,24 @@
+.col-sm-3
+  = render 'admins/shared/side_nav'
+.col-sm-9
+  .page-header
+    %h4= t '.title'
+  %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+    %thead
+      %tr
+        %th= t 'activerecord.attributes.repo.name'
+        %th= t 'activerecord.attributes.repo.status'
+        %th= t 'activerecord.attributes.repo.remote_id'
+        %th= t 'activerecord.attributes.repo.resource_id'
+        %th= t 'activerecord.attributes.repo.created_at'
+        %th= t 'activerecord.attributes.repo.updated_at'
+        %th
+    %tbody
+      - @repos.each do |repo|
+        %tr
+          %td= link_to repo.name, [:admins, repo]
+          %td= repo.status_i18n
+          %td= repo.remote_id
+          %td= repo.resource_id
+          %td= l repo.created_at
+          %td= l repo.updated_at
