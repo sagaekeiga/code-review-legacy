@@ -5,6 +5,6 @@ class Admins::ReposController < Admins::BaseController
 
   def show
     @repo = Repo.find(params[:id]).decorate
-    @reviewers = Reviewer.all
+    @reviewers = Reviewer.all.includes(:github_account)
   end
 end
