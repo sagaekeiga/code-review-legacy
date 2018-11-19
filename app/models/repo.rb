@@ -106,6 +106,10 @@ class Repo < ApplicationRecord
       end
     end
 
+    def pulls_feed
+      Pull.where(repo_id: pluck(:id)).order(:created_at)
+    end
+
     private
 
     def _set_resource_for_repo(params, resource_type)

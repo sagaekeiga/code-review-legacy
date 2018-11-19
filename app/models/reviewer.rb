@@ -37,6 +37,7 @@ class Reviewer < ApplicationRecord
   has_many :reviews
   has_many :review_comments
   has_many :reviewer_repos
+  has_many :repos, through: :reviewer_repos, source: :repo
   has_many :pulls
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
 
