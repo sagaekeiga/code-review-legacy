@@ -71,7 +71,7 @@ class ReviewComment < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :status, default: statuses[:pending]
-  attribute :read, default: true
+  attribute :read, default: false
 
   # -------------------------------------------------------------------------------
   # Validations
@@ -81,40 +81,18 @@ class ReviewComment < ApplicationRecord
   validates :path,      presence: true
 
   # -------------------------------------------------------------------------------
-  # Scope
+  # Scopes
   # -------------------------------------------------------------------------------
-  def self.fetch!(params)
+  scope :unread, lambda {
+    where(read: false)
+  }
 
-    pull = Pull.find_by(
-      remote_id: params[:pull_request][:id],
-      number: params[:pull_request][:number]
-    )
+  # -------------------------------------------------------------------------------
+  # ClassMethods
+  # -------------------------------------------------------------------------------
 
-    commit = pull.commits.find_by(
-      sha: params[:comment][:commit_id]
-    )
-
-    changed_file = commit.changed_files.find_by(
-      pull: pull,
-      event: :compared,
-      filename:  params[:comment][:path]
-    )
-
-    # 編集時の取得
-    if params[:changes].present?
-      return ReviewComment.fetch_changes!(params, pull, changed_file)
-    end
-
-    review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
-    review_comment.update_attributes!(
-      body: params[:comment][:body],
-      remote_id: params[:comment][:id]
-    )
-  end
-
-  # リプライレスポンスの取得
-  def self.fetch_reply!(params)
-    ActiveRecord::Base.transaction do
+  class << self
+    def fetch!(params)
 
       pull = Pull.find_by(
         remote_id: params[:pull_request][:id],
@@ -131,34 +109,71 @@ class ReviewComment < ApplicationRecord
         filename:  params[:comment][:path]
       )
 
-      review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
+      # 編集時の取得
+      if params[:changes].present?
+        return ReviewComment.fetch_changes!(params, pull, changed_file)
+      end
 
-      reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
-      reply.update_attributes!(_reply_params(params, changed_file, review_comment))
-
-      review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
-      review_comment_tree.save!
-      ReviewerMailer.comment(review_comment).deliver_later if params[:sender][:type].eql?('Bot')
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
-
-  # Edit
-  def self.fetch_changes!(params, pull, changed_file)
-    ActiveRecord::Base.transaction do
       review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
-      review_comment.update_attributes!(body: params[:comment][:body])
+      review_comment.update_attributes!(
+        body: params[:comment][:body],
+        remote_id: params[:comment][:id]
+      )
     end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
+
+    # リプライレスポンスの取得
+    def fetch_reply!(params)
+      ActiveRecord::Base.transaction do
+
+        pull = Pull.find_by(
+          remote_id: params[:pull_request][:id],
+          number: params[:pull_request][:number]
+        )
+
+        commit = pull.commits.find_by(
+          sha: params[:comment][:commit_id]
+        )
+
+        changed_file = commit.changed_files.find_by(
+          pull: pull,
+          event: :compared,
+          filename:  params[:comment][:path]
+        )
+
+        review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
+
+        reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
+        reply.update_attributes!(_reply_params(params, changed_file, review_comment))
+
+        review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
+        review_comment_tree.save!
+        ReviewerMailer.comment(review_comment).deliver_later if params[:sender][:type].eql?('Bot')
+      end
+      true
+    rescue => e
+      Rails.logger.error e
+      Rails.logger.error e.backtrace.join("\n")
+      false
+    end
+
+    # Edit
+    def fetch_changes!(params, pull, changed_file)
+      ActiveRecord::Base.transaction do
+        review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
+        review_comment.update_attributes!(body: params[:comment][:body])
+      end
+      true
+    rescue => e
+      Rails.logger.error e
+      Rails.logger.error e.backtrace.join("\n")
+      false
+    end
+
   end
+
+  # -------------------------------------------------------------------------------
+  # InstanceMethods
+  # -------------------------------------------------------------------------------
 
   def reviewer?(current_reviewer)
     reviewer == current_reviewer
@@ -180,6 +195,11 @@ class ReviewComment < ApplicationRecord
   def reply!
     ActiveRecord::Base.transaction do
       save!
+      # 返信対象の既読処理
+      if in_reply_to_id
+        review_comment = ReviewComment.find_by(remote_id: in_reply_to_id)
+        review_comment.update!(read: true)
+      end
       comment = { body: body, in_reply_to: in_reply_to_id }
       res = Github::Request.github_exec_review_comment!(comment.to_json, changed_file.pull)
 
@@ -207,6 +227,14 @@ class ReviewComment < ApplicationRecord
 
   def last_reply_remote_id
     replies.present? ? replies.last.remote_id : remote_id
+  end
+
+  def has_unread_replies?
+    replies.unread.present?
+  end
+
+  def count_unread_replies
+    replies.unread.count
   end
 
   private

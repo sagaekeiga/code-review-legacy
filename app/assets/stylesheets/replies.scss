@@ -4,23 +4,33 @@
     font-weight: $base-font-weight;
     padding-left: 0;
     margin-right: 75px;
+    .review-wrapper {
+      margin-bottom: $base-margin;
+    }
     li {
       &.step {
         list-style: none;
       }
-      i {
-        font-size: 50px;
-        color: #00e100;
+      img.step {
+        margin-top: - ($base-margin + 10px);
+        margin-left: -$base-margin + 10px;
         display: inline-block;
         border-radius: 50%;
       }
       .path {
         font-weight: bold;
         margin-top: - $base-margin * 2;
-        border-color: #eee;
         display: inline-block;
         vertical-align: middle;
-        padding-left: $base-padding;
+        padding-left: $base-padding * 2;
+      }
+      span.unread {
+        font-weight: bold;
+        display: inline-block;
+        margin-top: - $base-margin * 1.9;
+        vertical-align: middle;
+        padding-left: $base-padding * 2;
+        color: $color-cancel;
       }
       .comment-line {
         border-left: solid 5px $bg-color-github-panel;
@@ -34,7 +44,7 @@
           max-width: 100%;
           border-radius: 3px;
           box-shadow: 0 0 2px gray;
-          margin-bottom: $base-margin;
+          margin-bottom: $base-margin * 2.5;
           .panel-body {
             max-width: 100%;
             border: 1px solid $color-sub-blue;
@@ -145,6 +155,11 @@
                     padding-left: $base-padding;
                     display: inline-block;
                     vertical-align: top;
+                  }
+                  .new-label {
+                    display: inline-block;
+                    vertical-align: top;
+                    color: $color-cancel;
                   }
                   .replies-line {
                     border-left: solid 5px $bg-color-github-panel;

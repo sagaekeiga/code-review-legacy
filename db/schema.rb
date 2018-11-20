@@ -91,15 +91,15 @@ ActiveRecord::Schema.define(version: 20181115113017) do
     t.bigint "repo_id"
     t.integer "resource_id"
     t.string "resource_type"
-    t.integer "remote_id"
-    t.integer "number"
+    t.integer "remote_id", null: false
+    t.integer "number", null: false
     t.string "title"
     t.string "body"
-    t.integer "status"
-    t.string "token"
+    t.integer "status", null: false
+    t.string "token", null: false
     t.string "base_label"
     t.string "head_label"
-    t.datetime "remote_created_at"
+    t.datetime "remote_created_at", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

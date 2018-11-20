@@ -8,6 +8,8 @@
       = review_comment.nickname
     .date
       .text-muted= date_format(review_comment.updated_at)
+    - unless review_comment.read?
+      .new-label NEW
     .replies-line{ class: review_comment.is_last?(review_comment.comment) }
       .body
         = markdown(review_comment.body)

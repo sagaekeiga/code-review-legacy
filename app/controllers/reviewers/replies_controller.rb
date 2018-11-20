@@ -28,6 +28,7 @@ class Reviewers::RepliesController < Reviewers::BaseController
       reviewer: review_comment.review.reviewer,
       review: review_comment.review,
       in_reply_to_id: review_comment.last_reply_remote_id,
+      read: true,
       status: :completed
     }
   end

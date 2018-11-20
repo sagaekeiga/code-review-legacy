@@ -15,10 +15,12 @@
                 -# 全体へのレビューコメント
                 .review-wrapper
                   = render review
-              - review.review_comments.reviewed.includes(:changed_file).each.with_index do |review_comment, index|
+              - review.review_comments.reviewed.includes(:changed_file).decorate.each.with_index do |review_comment, index|
                 %li.step
-                  %i.fas.fa-check-circle
+                  = image_tag review_comment.step_image, class: 'step'
                   %span.path= review_comment.path
+                  - if review_comment.has_unread_replies?
+                    %span.unread= t '.unread_messages', message_count: review_comment.count_unread_replies
                   .comment-line
                     .panel
                       .panel-body
@@ -45,10 +47,10 @@
                         .text-right
                           .menu.code-button{ 'repo-id': @pull.repo.id, 'changed-file-id': review_comment.changed_file.id }
                             %i.fas.fa-code
-                          .menu.thread-button
-                            %i.far.fa-comments
+                          .menu.thread-button{ class: review_comment.has_unread_replies? ? 'active' : '' }
+                            %i.far.fa-comments{ class: review_comment.has_unread_replies? ? 'active' : '' }
                       // Reply
-                      .replies-wrapper.hidden
+                      .replies-wrapper{ class: review_comment.has_unread_replies? ? '' : 'hidden' }
                         .panel
                           .panel-body{ class: review_comment.replies.present? ? '' : 'hidden' }
                             - if review_comment.replies.present?

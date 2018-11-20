@@ -11,9 +11,9 @@ $(document).on('click', '.reply-submit-btn', function () {
 })
 
 $(document).on('click', '.thread-button', function () {
-  var menu = $(this)
-  var repliesWrapper = $(this).closest('.panel-footer').nextAll('.replies-wrapper')
-  var menuIcon = $(this).find('i')
+  menu = $(this)
+  repliesWrapper = $(this).closest('.panel-footer').nextAll('.replies-wrapper')
+  menuIcon = $(this).find('i')
   if (repliesWrapper.hasClass('hidden')) {
     menu.addClass('active')
     menuIcon.addClass('active')

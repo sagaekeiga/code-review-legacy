@@ -7,15 +7,15 @@
 #  body              :string
 #  deleted_at        :datetime
 #  head_label        :string
-#  number            :integer
-#  remote_created_at :datetime
+#  number            :integer          not null
+#  remote_created_at :datetime         not null
 #  resource_type     :string
-#  status            :integer
+#  status            :integer          not null
 #  title             :string
-#  token             :string
+#  token             :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  remote_id         :integer
+#  remote_id         :integer          not null
 #  repo_id           :bigint(8)
 #  resource_id       :integer
 #

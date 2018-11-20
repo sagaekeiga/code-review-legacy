@@ -12,4 +12,8 @@ class ReviewCommentDecorator < ApplicationDecorator
   def is_last?(review_comment)
     object.id&.eql?(review_comment.replies.last&.id) ? 'last' : ''
   end
+
+  def step_image
+    has_unread_replies? ? 'unchecked.png' : 'checked.png'
+  end
 end

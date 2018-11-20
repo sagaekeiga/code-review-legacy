@@ -27,3 +27,5 @@ ja:
         next: レビューを開始する
       form:
         finish: レビューを完了する
+      replies:
+        unread_messages: "%{message_count} 件の未読メッセージがあります。返信してください。"
