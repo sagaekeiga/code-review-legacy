@@ -25,7 +25,14 @@ ja:
           complete: 完了
       view_check:
         next: レビューを開始する
+        description_is_blank: 説明はありません
+        assign_to_pullrequest: レビューを開始するとあなたにプルリクエストがアサインされます。
       form:
         finish: レビューを完了する
       replies:
         unread_messages: "%{message_count} 件の未対応メッセージがあります。返信してください。"
+      messages:
+        already: すでに他のユーザーがアサインしています
+        assigned: アサインしました
+        failed: レビューに失敗しました
+        updated: レビューを更新しました
