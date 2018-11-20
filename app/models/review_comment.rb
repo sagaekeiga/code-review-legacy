@@ -8,6 +8,7 @@
 #  event           :integer
 #  path            :string
 #  position        :integer
+#  read            :boolean
 #  status          :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -70,6 +71,7 @@ class ReviewComment < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :status, default: statuses[:pending]
+  attribute :read, default: true
 
   # -------------------------------------------------------------------------------
   # Validations
