@@ -27,3 +27,8 @@ ja:
         title: プルリクエスト
         empty: プルリクエストがありません。
         set_pulls: 設定する
+  statuses:
+    connected: OPEN
+    request_reviewed: OPEN
+    reviewed: OPEN
+    completed: Merge/Close済み
