@@ -17,6 +17,12 @@ class Reviewers::RepliesController < Reviewers::BaseController
     end
   end
 
+  def update
+    reply = ReviewComment.find(params[:id])
+    reply.update(read: true)
+    render json: {}
+  end
+
   private
 
   def reply_params(review_comment)

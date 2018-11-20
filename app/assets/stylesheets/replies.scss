@@ -24,20 +24,17 @@
         vertical-align: middle;
         padding-left: $base-padding * 2;
       }
-      span.unread {
+      span.unread, span.read {
         font-weight: bold;
         display: inline-block;
-        margin-top: - $base-margin * 1.9;
+        margin-top: - $base-margin * 2;
         vertical-align: middle;
         padding-left: $base-padding * 2;
+      }
+      span.unread {
         color: $color-cancel;
       }
       span.read {
-        font-weight: bold;
-        display: inline-block;
-        margin-top: - $base-margin * 1.9;
-        vertical-align: middle;
-        padding-left: $base-padding * 2;
         color: $review-btn;
       }
       .comment-line {
@@ -181,6 +178,10 @@
                     color: $color-white;
                     border-radius: $base-border-radius;
                     padding: 3px 10px;
+                  }
+                  .update-read {
+                    color: $review-btn;
+                    font-weight: bold;
                   }
                   .replies-line {
                     border-left: solid 5px $bg-color-github-panel;

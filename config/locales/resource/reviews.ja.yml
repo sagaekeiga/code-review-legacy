@@ -37,3 +37,5 @@ ja:
         assigned: アサインしました
         failed: レビューに失敗しました
         updated: レビューを更新しました
+      read:
+        unread: 未対応
