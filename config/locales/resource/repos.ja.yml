@@ -19,6 +19,13 @@ ja:
       status:
         hidden: 非公開
         showing: 公開中
+  reviewees:
+    repos:
+      show:
+        status: STATUS
+        title: タイトル
+        created: 作成日
+        review_status: レビューステータス
   admins:
     repos:
       index:

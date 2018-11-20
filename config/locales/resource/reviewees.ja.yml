@@ -21,7 +21,7 @@ ja:
     dashboard:
       title: ダッシュボード
       add_project: プロジェクトの追加
-      project: PROJECT 
+      project: PROJECT
       repo_status: STATUS
     repos:
       update:

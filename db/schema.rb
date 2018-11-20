@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20181115113017) do
     t.string "token"
     t.string "base_label"
     t.string "head_label"
+    t.datetime "remote_created_at"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
