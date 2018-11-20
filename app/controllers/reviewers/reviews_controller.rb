@@ -1,6 +1,7 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show edit update replies)
   before_action :set_pull, only: %i(view_check new create show edit update replies)
+  before_action :check_assign, only: %i(new)
   before_action :set_numbers, only: %i(new show edit replies)
   before_action :set_commits, only: %i(new show edit replies)
   before_action :set_changed_files, only: %i(new create show edit replies)
@@ -22,7 +23,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
     @review = Review.new
-    flash[:danger] = 'レビューに失敗しました'
+    flash[:danger] = t('reviewers.reviews.messages.failed')
     render :new
   end
 
@@ -34,7 +35,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def update
     if @review.update(review_params)
-      redirect_to [:reviewers, @pull, @review], success: '更新しました。'
+      redirect_to [:reviewers, @pull, @review], success: t('reviewers.reviews.messages.updated')
     else
       render :edit
     end
@@ -48,6 +49,14 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_pull
     @pull = Pull.friendly.find(params[:pull_token]).decorate
+  end
+
+  def check_assign
+    unless current_reviewer.assign_to!(@pull)
+      flash.now[:warning] = t('reviewers.reviews.messages.already')
+      return render :view_check
+    end
+    flash.now[:success] = t('reviewers.reviews.messages.assigned')
   end
 
   def set_changed_files
