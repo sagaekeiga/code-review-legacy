@@ -10,7 +10,6 @@
       .text-muted= date_format(review_comment.updated_at)
     - unless review_comment.read?
       .label.label-danger.unread= I18n.t('reviewers.reviews.read.unread')
-    - unless review_comment.read?
       .pull-right
         %button.btn.btn-primary.read-btn{ type: 'button', 'reply-id': review_comment.id } 対応済みにする
     .replies-line{ class: review_comment.is_last?(review_comment.comment) }
