@@ -10,17 +10,14 @@
     font-size: $base-margin + 9;
   }
   table {
-    th {
-      font-weight: lighter;
-      &.status {
-        padding-left: 0;
-      }
+    .add-light-blue {
+      background-color: $color-light-blue;
     }
     .repo-list {
       a {
         display: block;
         height: $base-height + 10;
-        padding: $base-margin + 4 $base-padding + 3;
+        padding: $base-margin + 4 $base-margin + 4;
       }
       td {
         padding: 0;
@@ -32,6 +29,13 @@
     }
     .repo-list-header {
       color: $color-literal-gray;
+      th {
+        font-weight: lighter;
+        padding-left: $base-margin + 4;
+        &.status {
+          padding-left: 0;
+        }
+      }
     }
   }
 }

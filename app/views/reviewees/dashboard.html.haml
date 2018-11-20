@@ -3,7 +3,7 @@
     .reviewee-dashboard-wrapper
       %h2
         %i.fab.fa-github
-        = current_reviewee.nickname
+        = current_reviewee.nickname.truncate(20)
       = link_to ENV['GITHUB_APP_URL'], class: 'btn btn-outline-primary m-t-1', target: '_blank' do
         %i.fas.fa-plus-circle
         = t('.add_project')
@@ -12,8 +12,8 @@
           %tr.repo-list-header
             %th= t('.project')
             %th.status= t('.repo_status')
-        - @repos.each do |repo|
+        - @repos.each_with_index do |repo, i|
           %tbody
-            %tr.repo-list
-              %td= link_to repo.full_name, reviewees_repo_contents_path(repo)
+            %tr.repo-list{ class: i % 2 == 0 ? 'add-light-blue' : '' }
+              %td= link_to repo.name.truncate(20), reviewees_repo_path(repo)
               %td= repo.status_i18n

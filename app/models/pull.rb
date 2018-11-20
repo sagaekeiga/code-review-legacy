@@ -2,21 +2,22 @@
 #
 # Table name: pulls
 #
-#  id            :bigint(8)        not null, primary key
-#  base_label    :string
-#  body          :string
-#  deleted_at    :datetime
-#  head_label    :string
-#  number        :integer
-#  resource_type :string
-#  status        :integer
-#  title         :string
-#  token         :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  remote_id     :integer
-#  repo_id       :bigint(8)
-#  resource_id   :integer
+#  id                :bigint(8)        not null, primary key
+#  base_label        :string
+#  body              :string
+#  deleted_at        :datetime
+#  head_label        :string
+#  number            :integer
+#  remote_created_at :datetime
+#  resource_type     :string
+#  status            :integer
+#  title             :string
+#  token             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  remote_id         :integer
+#  repo_id           :bigint(8)
+#  resource_id       :integer
 #
 # Indexes
 #
@@ -54,7 +55,6 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Enumerables
   # -------------------------------------------------------------------------------
-  # 性別
   #
   # - connected        : APIのレスポンスから作成された状態
   # - request_reviewed : レビューをリクエストした
@@ -98,7 +98,8 @@ class Pull < ApplicationRecord
           title:      res_pull['title'],
           body:       res_pull['body'],
           head_label: res_pull['head']['label'],
-          base_label: res_pull['base']['label']
+          base_label: res_pull['base']['label'],
+          remote_created_at: res_pull['created_at']
         )
         pull.restore if pull&.deleted?
         Commit.fetch!(pull)
