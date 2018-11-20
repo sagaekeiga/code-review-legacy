@@ -28,6 +28,8 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :resource, polymorphic: true
   has_many :pulls, dependent: :destroy
+  has_many :reviewer_repos, dependent: :destroy
+  has_many :reviewers, through: :reviewer_repos, source: :reviewer
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -102,6 +104,10 @@ class Repo < ApplicationRecord
           false
         end
       end
+    end
+
+    def pulls_feed
+      Pull.where(repo_id: pluck(:id)).order(:created_at)
     end
 
     private

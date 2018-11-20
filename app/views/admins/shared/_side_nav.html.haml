@@ -4,6 +4,4 @@
   %li.nav-item
     = link_to 'Reviews', [:admins, :reviews], class: 'nav-link'
   %li.nav-item
-    %a.nav-link
-      Billing details
-      %i.fa.fa-address-card.ml-2
+    = link_to t('admins.repos.index.title'), [:admins, :repos], class: 'nav-link'

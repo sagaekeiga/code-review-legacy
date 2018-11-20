@@ -127,6 +127,9 @@ Rails.application.routes.draw do
     namespace :admins do
       resources :reviews, only: %i(index show update)
       resources :reviewers, only: %i(show update)
+      resources :repos, only: %i(index show) do
+        resources :reviewer_repos, shallow: :true, only: %i(create destroy)
+      end
     end
   end
   get '*path', to: 'application#render_404'

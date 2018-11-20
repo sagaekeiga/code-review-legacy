@@ -20,4 +20,8 @@ class ReviewerRepo < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :repo
   belongs_to :reviewer
+  # -------------------------------------------------------------------------------
+  # Validations
+  # -------------------------------------------------------------------------------
+  validates :repo_id, uniqueness: { scope: :reviewer_id }
 end
