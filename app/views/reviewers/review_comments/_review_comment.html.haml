@@ -11,7 +11,7 @@
     - unless review_comment.read?
       .label.label-danger.unread= I18n.t('reviewers.reviews.read.unread')
       .pull-right
-        %button.btn.btn-primary.read-btn{ type: 'button', 'reply-id': review_comment.id }= t 'reviewers.reviews.replies.read.reading'
+        %button.btn.btn-primary.read-btn{ type: 'button', 'reply-id': review_comment.id }= t 'reviewers.reviews.read.reading'
     .replies-line{ class: review_comment.is_last?(review_comment.comment) }
       .body
         = markdown(review_comment.body)
