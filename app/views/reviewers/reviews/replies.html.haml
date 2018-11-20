@@ -19,10 +19,9 @@
                 %li.step
                   = image_tag review_comment.step_image, class: 'step'
                   %span.path= review_comment.path
-                  - if review_comment.has_unread_replies?
-                    %span.unread= t '.unread_messages', message_count: review_comment.count_unread_replies
+                  = review_comment.set_read_message
                   .comment-line
-                    .panel
+                    .panel.step{ class: review_comment.set_unread }
                       .panel-body
                         .code-wrapper
                           %table
@@ -47,12 +46,12 @@
                         .text-right
                           .menu.code-button{ 'repo-id': @pull.repo.id, 'changed-file-id': review_comment.changed_file.id }
                             %i.fas.fa-code
-                          .menu.thread-button{ class: review_comment.has_unread_replies? ? 'active' : '' }
-                            %i.far.fa-comments{ class: review_comment.has_unread_replies? ? 'active' : '' }
+                          .menu.thread-button{ class: review_comment.set_active }
+                            %i.far.fa-comments{ class: review_comment.set_active }
                       // Reply
-                      .replies-wrapper{ class: review_comment.has_unread_replies? ? '' : 'hidden' }
+                      .replies-wrapper{ class: review_comment.set_hidden(:unread_replies) }
                         .panel
-                          .panel-body{ class: review_comment.replies.present? ? '' : 'hidden' }
+                          .panel-body{ class: review_comment.set_hidden(:replies) }
                             - if review_comment.replies.present?
                               = render review_comment.replies.includes(:comment, :reviewer)&.decorate
                           .panel-footer

@@ -32,6 +32,14 @@
         padding-left: $base-padding * 2;
         color: $color-cancel;
       }
+      span.read {
+        font-weight: bold;
+        display: inline-block;
+        margin-top: - $base-margin * 1.9;
+        vertical-align: middle;
+        padding-left: $base-padding * 2;
+        color: $review-btn;
+      }
       .comment-line {
         border-left: solid 5px $bg-color-github-panel;
         padding-left: ($base-padding * 15) + 10px;
@@ -40,12 +48,14 @@
         padding-bottom: $base-padding * 6;
         margin-top: -1px;
         margin-bottom: -$base-margin;
-        .panel {
+        .panel.step {
           max-width: 100%;
           border-radius: 3px;
           box-shadow: 0 0 2px gray;
           margin-bottom: $base-margin * 2.5;
-          box-shadow: 0 0 2px $color-cancel;
+          &.unread {
+            box-shadow: 0 0 4px $color-cancel;
+          }
           .panel-body {
             max-width: 100%;
             border: 1px solid $color-sub-blue;

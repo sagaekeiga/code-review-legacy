@@ -9,7 +9,7 @@
     .date
       .text-muted= date_format(review_comment.updated_at)
     - unless review_comment.read?
-      .label.label-danger.unread 未読
+      .label.label-danger.unread 未対応
     .replies-line{ class: review_comment.is_last?(review_comment.comment) }
       .body
         = markdown(review_comment.body)
