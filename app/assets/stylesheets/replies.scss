@@ -45,6 +45,7 @@
           border-radius: 3px;
           box-shadow: 0 0 2px gray;
           margin-bottom: $base-margin * 2.5;
+          box-shadow: 0 0 2px $color-cancel;
           .panel-body {
             max-width: 100%;
             border: 1px solid $color-sub-blue;
@@ -137,6 +138,9 @@
                 padding: $base-padding * 3;
                 border: none;
                 .panel-text {
+                  &.unread {
+                    border: solid 1px $color-cancel;;
+                  }
                   .image {
                     width: 50px;
                     height: 50px;
@@ -156,10 +160,17 @@
                     display: inline-block;
                     vertical-align: top;
                   }
-                  .new-label {
+                  .unread {
                     display: inline-block;
                     vertical-align: top;
-                    color: $color-cancel;
+                    background-color: $color-cancel;
+                    margin-left: $base-padding;
+                    font-size: 12px;
+                    font-weight: 400;
+                    letter-spacing: 3px;
+                    color: $color-white;
+                    border-radius: $base-border-radius;
+                    padding: 3px 10px;
                   }
                   .replies-line {
                     border-left: solid 5px $bg-color-github-panel;

@@ -28,4 +28,4 @@ ja:
       form:
         finish: レビューを完了する
       replies:
-        unread_messages: "%{message_count} 件の未読メッセージがあります。返信してください。"
+        unread_messages: "%{message_count} 件の未対応メッセージがあります。返信してください。"

@@ -14,6 +14,6 @@ class ReviewCommentDecorator < ApplicationDecorator
   end
 
   def step_image
-    has_unread_replies? ? 'unchecked.png' : 'checked.png'
+    has_unread_replies? ? 'warning.png' : 'checked.png'
   end
 end
