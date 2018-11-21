@@ -29,8 +29,14 @@ ja:
         assign_to_pullrequest: レビューを開始するとあなたにプルリクエストがアサインされます。
       form:
         finish: レビューを完了する
+      replies:
+        unread_messages: "%{message_count} 件の未対応メッセージがあります。返信してください。"
+        read_messages: 対応済み
       messages:
         already: すでに他のユーザーがアサインしています
         assigned: アサインしました
         failed: レビューに失敗しました
         updated: レビューを更新しました
+      read:
+        unread: 未対応
+        reading: 対応済みにする
