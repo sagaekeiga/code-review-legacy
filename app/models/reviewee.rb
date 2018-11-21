@@ -51,6 +51,9 @@ class Reviewee < ApplicationRecord
   # -------------------------------------------------------------------------------
   validates_acceptance_of :agreement, allow_nil: true, on: %i(create)
 
+  # -------------------------------------------------------------------------------
+  # InstanceMethods
+  # -------------------------------------------------------------------------------
   def feed_for_repos
     repos.
       or(Repo.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
@@ -62,5 +65,9 @@ class Reviewee < ApplicationRecord
       or(Pull.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       includes(:repo, :changed_files).
       order(updated_at: :desc)
+  end
+
+  def has_repos?
+    feed_for_repos.present?
   end
 end

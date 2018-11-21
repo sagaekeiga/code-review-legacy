@@ -63,6 +63,14 @@ class Repo < ApplicationRecord
   scope :owned_by_orgs, lambda { |reviewee|
     where(resource_id: reviewee.orgs.owner.pluck(:id), resource_type: 'Org')
   }
+
+  scope :feed_for_pulls, lambda {
+    Pull.where(repo_id: pluck(:id)).order(:created_at)
+  }
+
+  # -------------------------------------------------------------------------------
+  # ClassMethods
+  # -------------------------------------------------------------------------------
   class << self
     #
     # リモートのレポジトリを保存する or リストアする
@@ -104,10 +112,6 @@ class Repo < ApplicationRecord
           false
         end
       end
-    end
-
-    def feed_for_pulls
-      Pull.where(repo_id: pluck(:id)).order(:created_at)
     end
 
     private
