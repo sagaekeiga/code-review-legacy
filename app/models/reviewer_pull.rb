@@ -20,4 +20,9 @@ class ReviewerPull < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :pull
   belongs_to :reviewer
+  # -------------------------------------------------------------------------------
+  # Validations
+  # -------------------------------------------------------------------------------
+  validates :pull_id, uniqueness: true
+  validates :pull_id, uniqueness: { scope: :reviewer_id }
 end

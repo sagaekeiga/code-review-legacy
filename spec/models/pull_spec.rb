@@ -2,21 +2,22 @@
 #
 # Table name: pulls
 #
-#  id            :bigint(8)        not null, primary key
-#  base_label    :string
-#  body          :string
-#  deleted_at    :datetime
-#  head_label    :string
-#  number        :integer
-#  resource_type :string
-#  status        :integer
-#  title         :string
-#  token         :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  remote_id     :integer
-#  repo_id       :bigint(8)
-#  resource_id   :integer
+#  id                :bigint(8)        not null, primary key
+#  base_label        :string
+#  body              :string
+#  deleted_at        :datetime
+#  head_label        :string
+#  number            :integer          not null
+#  remote_created_at :datetime         not null
+#  resource_type     :string
+#  status            :integer          not null
+#  title             :string
+#  token             :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  remote_id         :integer          not null
+#  repo_id           :bigint(8)
+#  resource_id       :integer
 #
 # Indexes
 #

@@ -36,6 +36,10 @@ class Reviewer < ApplicationRecord
   # -------------------------------------------------------------------------------
   has_many :reviews
   has_many :review_comments
+  has_many :reviewer_repos
+  has_many :repos, through: :reviewer_repos, source: :repo
+  has_many :reviewer_pulls
+  has_many :pulls, through: :reviewer_pulls, source: :pull
   has_many :pulls
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
 
@@ -77,5 +81,26 @@ class Reviewer < ApplicationRecord
   # pullのレビューコメントを返す
   def target_review_comments(pull)
     review_comments.where(changed_file: pull.changed_files).where.not(reviewer: nil)
+  end
+
+  # レポジトリにアサインされているかどうかを返す
+  def assigned?(resource)
+    case resource
+    when Repo then reviewer_repos.exists?(repo: resource)
+    when Pull then reviewer_pulls.exists?(pull: resource)
+    end
+  end
+
+  def assign_to!(pull)
+    ActiveRecord::Base.transaction do
+      return true if assigned?(pull)
+      reviewer_pull = reviewer_pulls.new(pull: pull)
+      reviewer_pull.save!
+    end
+    true
+  rescue => e
+    Rails.logger.error e
+    Rails.logger.error e.backtrace.join("\n")
+    false
   end
 end

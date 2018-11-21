@@ -49,25 +49,18 @@ class Reviewee < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
-  validates_acceptance_of :agreement, allow_nil: true, on: :create
+  validates_acceptance_of :agreement, allow_nil: true, on: %i(create)
 
-  def viewable_repos
+  def feed_for_repos
     repos.
       or(Repo.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       order(updated_at: :desc)
   end
 
-  def viewable_pulls
+  def feed_for_pulls
     pulls.
       or(Pull.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
       includes(:repo, :changed_files).
       order(updated_at: :desc)
-  end
-
-  def self.auto_complete(keyword, current_reviewee)
-    includes(:github_account).
-      where.not(id: current_reviewee.id).
-      where('email LIKE ?', "#{keyword}%").
-      select{ |reviewee| reviewee.github_account.present? }.first(10)
   end
 end
