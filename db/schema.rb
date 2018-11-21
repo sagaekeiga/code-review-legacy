@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 20181115113017) do
     t.bigint "remote_id"
     t.string "login"
     t.string "avatar_url"
-    t.string "description"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

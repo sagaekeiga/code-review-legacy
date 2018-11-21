@@ -6,7 +6,7 @@ class Reviewees::PullsController < Reviewees::BaseController
   end
 
   def update
-    @pull = current_reviewee.pulls.find(params[:id])
+    @pull = Pull.find(params[:id])
     case @pull.status
     when 'connected'
       @pull.request_reviewed!

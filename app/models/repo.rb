@@ -63,6 +63,14 @@ class Repo < ApplicationRecord
   scope :owned_by_orgs, lambda { |reviewee|
     where(resource_id: reviewee.orgs.owner.pluck(:id), resource_type: 'Org')
   }
+
+  scope :feed_for_pulls, lambda {
+    Pull.where(repo_id: pluck(:id)).order(:created_at)
+  }
+
+  # -------------------------------------------------------------------------------
+  # ClassMethods
+  # -------------------------------------------------------------------------------
   class << self
     #
     # リモートのレポジトリを保存する or リストアする
@@ -106,19 +114,27 @@ class Repo < ApplicationRecord
       end
     end
 
-    def pulls_feed
-      Pull.where(repo_id: pluck(:id)).order(:created_at)
-    end
-
     private
 
     def _set_resource_for_repo(params, resource_type)
+      reviewee = Reviewees::GithubAccount.find_by(owner_id: params[:sender][:id]).reviewee
       resource =
         if resource_type.eql?('Reviewee')
-          Reviewees::GithubAccount.find_by(owner_id: params[:installation][:account][:id]).reviewee
+          reviewee
         else
-          Org.find_by(remote_id: params[:installation][:account][:id])
+          org = Org.find_or_initialize_by(remote_id: params[:installation][:account][:id])
+          org.update_attributes!(_merge_org_params(params[:installation][:account]))
+          reviewee_org = reviewee.reviewee_orgs.find_or_initialize_by(org: org)
+          reviewee_org.save!
+          org
         end
+    end
+
+    def _merge_org_params(params)
+      {
+        avatar_url: params[:avatar_url],
+        login: params[:login]
+      }
     end
 
     def _merge_params(resource_type, resource, repo_params, params)

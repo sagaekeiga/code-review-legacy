@@ -1,4 +1,5 @@
 class Reviewees::BaseController < ApplicationController
+  before_action :authenticate_reviewee!
   before_action :connect_github!
 
   def check_reviweee_identity
