@@ -8,11 +8,6 @@ module Github
         _post sub_url(:review, pull), pull.repo.installation_id, :review, params
       end
 
-      # POST コメント送信
-      def github_exec_issue_comment!(params, pull)
-        _post sub_url(:issue_comment, pull), pull.repo.installation_id, :issue_comment, params
-      end
-
       # POST リプライ送信
       def github_exec_review_comment!(params, pull)
         _post sub_url(:review_comment, pull), pull.repo.installation_id, :review_comment, params

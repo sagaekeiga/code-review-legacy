@@ -17,32 +17,34 @@
         = render 'navbar'
     .top-wrapper
       - if reviewee_signed_in?
-        .container-fluid.body-container
-          .col-sm-12
+        .reviewees
+          .container-fluid.body-container
+            .col-sm-12
+              - !content_for?(:flash) && flash && flash.each do |key, message|
+                .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+                  %strong= message
+              = yield
+      - elsif reviewer_signed_in?
+        .reviewers
+          - unless current_reviewer.pending? || is_same_controller_name?('reviews')
+            .container-fluid.body-container
+              .col-sm-12
+                - !content_for?(:flash) && flash && flash.each do |key, message|
+                  .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+                    %strong= message
+                = yield
+          - if current_reviewer.pending?
+            .container-fluid.body-container
+              .col-sm-12
+                - !content_for?(:flash) && flash && flash.each do |key, message|
+                  .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+                    %strong= message
+                = yield
+          - if !current_reviewer.pending? && is_same_controller_name?('reviews')
             - !content_for?(:flash) && flash && flash.each do |key, message|
               .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
                 %strong= message
             = yield
-      - elsif reviewer_signed_in?
-        - unless current_reviewer.pending? || is_same_controller_name?('reviews')
-          .container-fluid.body-container
-            .col-sm-12
-              - !content_for?(:flash) && flash && flash.each do |key, message|
-                .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-                  %strong= message
-              = yield
-        - if current_reviewer.pending?
-          .container-fluid.body-container
-            .col-sm-12
-              - !content_for?(:flash) && flash && flash.each do |key, message|
-                .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-                  %strong= message
-              = yield
-        - if !current_reviewer.pending? && is_same_controller_name?('reviews')
-          - !content_for?(:flash) && flash && flash.each do |key, message|
-            .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-              %strong= message
-          = yield
       - elsif admin_signed_in?
         .col-sm-12
           .container.admin
@@ -57,7 +59,7 @@
               - !content_for?(:flash) && flash && flash.each do |key, message|
                 .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
                   %strong= message
-          = yield
+            = yield
     - unless is_same_controller_name?('reviews')
       .footer
         .container-fluid

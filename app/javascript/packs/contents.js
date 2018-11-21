@@ -8,7 +8,7 @@ $(document).ready(function () {
     changedFileId = $(codeButton).attr('changed-file-id')
     $.ajax({
       type: 'GET',
-      url: `/reviewers/github/contents`,
+      url: `/reviewers/github/changed_files`,
       dataTypr: 'JSON',
       data: {
         repo_id: repoId,

@@ -96,14 +96,18 @@ Rails.application.routes.draw do
       end
       resources :review_comments, only: %i(create update destroy show)
       resources :repos do
-        resources :contents, only: %i(index show)
+        resources :contents, only: %i(show)
         resources :issues, only: %i(index show) do
           get :remote, on: :collection
         end
       end
       namespace :github do
-        resource :contents, only: %i(show)
+        resource :changed_files, only: %i(show)
+        resource :contents do
+          get :fetch_contents
+        end
       end
+      resources :repos, only: %i(show)
     end
 
     if !Rails.env.production? && defined?(LetterOpenerWeb)
