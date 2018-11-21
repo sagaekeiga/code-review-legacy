@@ -280,6 +280,7 @@ function updateReviewComment(elem) {
   $.ajax({
     type: 'PUT',
     url: `/reviewers/review_comments/${elem.closest('.panel-body').find('textarea').attr('review-comment-id')}`,
+    headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
     dataType: 'JSON',
     data: { body: elem.closest('.panel-body').find('textarea').val() },
     element: elem,
