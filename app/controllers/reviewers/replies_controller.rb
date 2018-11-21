@@ -17,6 +17,12 @@ class Reviewers::RepliesController < Reviewers::BaseController
     end
   end
 
+  def update
+    reply = ReviewComment.find(params[:id])
+    reply.update(read: true)
+    render json: {}
+  end
+
   private
 
   def reply_params(review_comment)
@@ -28,6 +34,7 @@ class Reviewers::RepliesController < Reviewers::BaseController
       reviewer: review_comment.review.reviewer,
       review: review_comment.review,
       in_reply_to_id: review_comment.last_reply_remote_id,
+      read: true,
       status: :completed
     }
   end

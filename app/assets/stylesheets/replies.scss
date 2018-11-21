@@ -4,23 +4,38 @@
     font-weight: $base-font-weight;
     padding-left: 0;
     margin-right: 75px;
+    .review-wrapper {
+      margin-bottom: $base-margin;
+    }
     li {
       &.step {
         list-style: none;
       }
-      i {
-        font-size: 50px;
-        color: #00e100;
+      img.step {
+        margin-top: - ($base-margin + 10px);
+        margin-left: -$base-margin + 10px;
         display: inline-block;
         border-radius: 50%;
       }
       .path {
         font-weight: bold;
         margin-top: - $base-margin * 2;
-        border-color: #eee;
         display: inline-block;
         vertical-align: middle;
-        padding-left: $base-padding;
+        padding-left: $base-padding * 2;
+      }
+      span.unread, span.read {
+        font-weight: bold;
+        display: inline-block;
+        margin-top: - $base-margin * 2;
+        vertical-align: middle;
+        padding-left: $base-padding * 2;
+      }
+      span.unread {
+        color: $color-cancel;
+      }
+      span.read {
+        color: $review-btn;
       }
       .comment-line {
         border-left: solid 5px $bg-color-github-panel;
@@ -30,11 +45,14 @@
         padding-bottom: $base-padding * 6;
         margin-top: -1px;
         margin-bottom: -$base-margin;
-        .panel {
+        .panel.step {
           max-width: 100%;
           border-radius: 3px;
           box-shadow: 0 0 2px gray;
-          margin-bottom: $base-margin;
+          margin-bottom: $base-margin * 2.5;
+          &.unread {
+            box-shadow: 0 0 4px $color-cancel;
+          }
           .panel-body {
             max-width: 100%;
             border: 1px solid $color-sub-blue;
@@ -127,6 +145,9 @@
                 padding: $base-padding * 3;
                 border: none;
                 .panel-text {
+                  &.unread {
+                    border: solid 1px $color-cancel;;
+                  }
                   .image {
                     width: 50px;
                     height: 50px;
@@ -145,6 +166,22 @@
                     padding-left: $base-padding;
                     display: inline-block;
                     vertical-align: top;
+                  }
+                  .unread {
+                    display: inline-block;
+                    vertical-align: top;
+                    background-color: $color-cancel;
+                    margin-left: $base-padding;
+                    font-size: 12px;
+                    font-weight: 400;
+                    letter-spacing: 3px;
+                    color: $color-white;
+                    border-radius: $base-border-radius;
+                    padding: 3px 10px;
+                  }
+                  .update-read {
+                    color: $review-btn;
+                    font-weight: bold;
                   }
                   .replies-line {
                     border-left: solid 5px $bg-color-github-panel;

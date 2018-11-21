@@ -1,19 +1,16 @@
-$(document).on('click', '.input-reply', function () {
-  switchTextarea($(this));
-})
-
-$(document).on('click', '.reply-cancel-btn', function () {
-  cancelReply($(this));
-})
-
 $(document).on('click', '.reply-submit-btn', function () {
   submitReply($(this));
 })
 
+
+$(document).on('click', '.read-btn', function () {
+  updateRead($(this));
+})
+
 $(document).on('click', '.thread-button', function () {
-  var menu = $(this)
-  var repliesWrapper = $(this).closest('.panel-footer').nextAll('.replies-wrapper')
-  var menuIcon = $(this).find('i')
+  menu = $(this)
+  repliesWrapper = $(this).closest('.panel-footer').nextAll('.replies-wrapper')
+  menuIcon = $(this).find('i')
   if (repliesWrapper.hasClass('hidden')) {
     menu.addClass('active')
     menuIcon.addClass('active')
@@ -24,18 +21,6 @@ $(document).on('click', '.thread-button', function () {
     repliesWrapper.addClass('hidden')
   }
 })
-
-function switchTextarea(elem) {
-  replyWrapper = elem.closest('.reply-wrapper');
-  replyWrapper.find('.reply-hidden-target-element').addClass('hidden');
-  replyWrapper.find('.reply-show-target-element').removeClass('hidden');
-};
-
-function cancelReply(elem) {
-  replyWrapper = elem.closest('.reply-wrapper');
-  replyWrapper.find('.reply-hidden-target-element').removeClass('hidden');
-  replyWrapper.find('.reply-show-target-element').addClass('hidden').val('');
-};
 
 function submitReply(elem) {
   elem.prop('disabled', true);
@@ -53,35 +38,51 @@ function submitReply(elem) {
     },
     element: elem,
     success: function (data) {
-      if (data.status === 'success') {
-        replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body');
-        reply = $(`
-          <div class='panel-text'>
-            <div class='image'>
-              <img class='img-responsive img-circle' src="${data.avatar}">
-            </div>
-            <div class='nickname'>
-              ${data.nickname}
-            </div>
-            <div class='date'>
-              <div class='text-muted'>${data.time}</div>
-            </div>
-            <div class='replies-line last'>
-              <div class='body md-wrapper'>${data.body}</div>
-            </div>
+      replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body');
+      reply = $(`
+        <div class='panel-text'>
+          <div class='image'>
+            <img class='img-responsive img-circle' src="${data.avatar}">
           </div>
-        `)
-        if (replyWrapper.hasClass('hidden')) {
-          reply.appendTo(replyWrapper);
-          replyWrapper.removeClass('hidden')
-        } else {
-          lastPanelText = replyWrapper.find('.panel-text').filter(':last')
-          reply.insertAfter(lastPanelText)
-        }
-        replyInput = elem.closest('.submit').prevAll('.input').find('input')
-        replyInput.val('')
+          <div class='nickname'>
+            ${data.nickname}
+          </div>
+          <div class='date'>
+            <div class='text-muted'>${data.time}</div>
+          </div>
+          <div class='replies-line last'>
+            <div class='body md-wrapper'>${data.body}</div>
+          </div>
+        </div>
+      `)
+      if (replyWrapper.hasClass('hidden')) {
+        reply.appendTo(replyWrapper);
+        replyWrapper.removeClass('hidden')
+      } else {
+        lastPanelText = replyWrapper.find('.panel-text').filter(':last')
+        reply.insertAfter(lastPanelText)
       }
+      replyInput = elem.closest('.submit').prevAll('.input').find('input')
+      replyInput.val('')
       elem.prop('disabled', false);
+    }
+  });
+};
+
+function updateRead(elem) {
+  elem.prop('disabled', true);
+  $.ajax({
+    type: 'PUT',
+    url: `/reviewers/replies/${elem.attr('reply-id')}`,
+    dataType: 'JSON',
+    element: elem,
+    success: function (data) {
+      elem.addClass('hidden')
+      readLabel = elem.closest('.pull-right').prevAll('.label')
+      readLabel.addClass('hidden')
+      readMessage = $(`<div class='update-read'><i class='fas fa-check'></i>&nbsp;対応済みにしました</div>`)
+      readMessage.appendTo(elem.closest('.pull-right'))
+      readMessage.delay(3000).fadeOut('slow');
     }
   });
 };

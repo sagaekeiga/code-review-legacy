@@ -65,8 +65,11 @@ class Repo < ApplicationRecord
   }
 
   scope :feed_for_pulls, lambda {
-    Pull.request_reviewed.where(repo_id: pluck(:id))
+    Pull.request_reviewed.where(repo_id: pluck(:id)).order(:created_at)
   }
+  # -------------------------------------------------------------------------------
+  # ClassMethods
+  # -------------------------------------------------------------------------------
   class << self
     #
     # リモートのレポジトリを保存する or リストアする
