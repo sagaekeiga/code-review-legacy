@@ -4,7 +4,7 @@ class ReviewersController < Reviewers::BaseController
 
   def dashboard
     @repo = current_reviewer.repos
-    @pulls = current_reviewer.repos.pulls_feed.page(params[:page])
+    @pulls = current_reviewer.repos.feed_for_pulls.page(params[:page])
   end
 
   def my_page

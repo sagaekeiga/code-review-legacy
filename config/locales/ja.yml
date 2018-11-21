@@ -175,36 +175,6 @@ ja:
     bytes: "%{byte} Bytes"
     view: View
     back_pullrequest: Back Pullrequest
-    statuses:
-      text:
-        hidden: 公開する
-        showing: 非公開にする
-        connected: Pending
-        request_reviewed: In Progress
-        reviewed: In Progress
-        completed: Completed
-        colors:
-          connected: btn-outline-primary
-          request_reviewed: btn-outline-success
-          reviewed: btn-outline-success
-          completed: btn-warning
-      buttons:
-        hidden: btn-outline-primary
-        showing: btn-outline-danger
-        connected: Request Review
-        request_reviewed: Cancel
-        reviewed: Cancel
-        completed: Complete
-        colors:
-          connected: btn-outline-primary
-          request_reviewed: btn-outline-danger
-          reviewed: btn-outline-success
-          completed: btn-warning
-      icons:
-        connected: fa-user
-        request_reviewed: fa-spinner
-        reviewed: fa-spinner
-        completed: fa-check-circle
   reviewer_mailer:
     comment:
       title: コメントがつきました。
