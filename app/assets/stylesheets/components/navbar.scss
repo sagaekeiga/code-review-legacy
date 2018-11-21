@@ -23,6 +23,12 @@
   }
   .dropdown {
     margin: 0;
+    button {
+      span.repo-title {
+        padding-left: $base-padding;
+        padding-right: $base-padding;
+      }
+    }
     .setting-down {
       margin: $base-font-size - 2;
       height: $base-height - 20;

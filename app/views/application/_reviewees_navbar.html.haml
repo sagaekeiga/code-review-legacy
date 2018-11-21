@@ -8,14 +8,15 @@
           - if current_reviewee&.repos&.present?
             %li
               .dropdown
-                %button.btn-sm.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                %button.btn-sm.btn-primary.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }
+                  
                   %i.fab.fa-github
-                  リポジトリを選択する
+                  %span.repo-title= @repo.present? ? @repo.decorate.name_including_orgs : t('reviewees.views.select_repo')
                   %span.caret
                 %ul.dropdown-menu
-                  - current_reviewee.repos.each do |repo|
+                  - current_reviewee.feed_for_repos.decorate.each do |repo|
                     %li
-                      = link_to repo.name.truncate(15), reviewees_repo_path(repo)
+                      = link_to repo.name_including_orgs, reviewees_repo_path(repo)
                   %li.add-repo
                     = link_to ENV['GITHUB_APP_URL'], target: '_blank' do
                       %i.fa.fa-folder-plus
