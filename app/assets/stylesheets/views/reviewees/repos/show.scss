@@ -1,0 +1,59 @@
+.repos-show {
+  .reviewees {
+    .pull-list-wrapper {
+      h2 {
+        font-size: $base-margin + 9;
+      }
+      .pull-title{
+        margin-top: $base-height + 10;
+        font-size: $base-height - 15;
+        font-weight: bold;
+        i {
+          margin-left: $base-padding;
+        }
+        .full_name {
+          color: rgba(27, 31, 35, 0.5);
+          font-size: $base-margin + 4;
+          margin-left: $base-margin - 1;
+        }
+        .fa-github {
+          font-size: $base-margin - 1;
+        }
+      }
+      table {
+        .add-light-blue {
+          background-color: $color-light-blue;
+        }
+        .add-success-color {
+          color: $base-color-green;
+          font-weight: bold;
+        }
+        .add-merged-color {
+          color: $color-darker-gray;
+          font-weight: lighter;
+        }
+        .pull-list {
+          a {
+            display: block;
+            height: $base-height + 10;
+            padding: $base-margin + 4 0;
+          }
+          td {
+            padding: 0 0 0 20px;
+            height: $base-height + 30;
+          }
+        }
+        &.table thead tr th {
+          text-align: left;
+        }
+        .pull-list-header {
+          color: $color-literal-gray;
+          th {
+            font-weight: lighter;
+            padding-left: $base-margin + 4;
+          }
+        }
+      }
+    }
+  }
+}

@@ -65,9 +65,8 @@ class Repo < ApplicationRecord
   }
 
   scope :feed_for_pulls, lambda {
-    Pull.where(repo_id: pluck(:id)).order(:created_at)
+    Pull.request_reviewed.where(repo_id: pluck(:id)).order(:created_at)
   }
-
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

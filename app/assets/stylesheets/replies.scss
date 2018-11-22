@@ -292,40 +292,4 @@
       }
     }
   }
-
-  .issue-comment-wrapper {
-    font-family: $font-static;
-    .col-xs-12 {
-      .col-xs-1 {}
-      .col-xs-11 {
-        padding-left: 0;
-        padding-right: 0;
-        .panel.panel-default {
-          margin-top: 0px;
-          border-color: #c0d3eb;
-          .panel-heading {
-            background-color: #f1f8ff;
-            padding: $base-padding * 2;
-            padding: $base-padding * 3;
-            max-width: 100%;
-            .panel-title {
-              .nickname {
-                font-weight: bold;
-                display: inline-block;
-                font-size: $base-font-size * 1.2;
-              }
-            }
-          }
-          .panel-body {
-            padding: $base-padding * 3;
-            pre {
-              border: none;
-              border-radius: 0;
-            }
-          }
-          margin-bottom: 1.5px;
-        }
-      }
-    }
-  }
 }

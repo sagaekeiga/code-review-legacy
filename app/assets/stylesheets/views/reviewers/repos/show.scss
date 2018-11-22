@@ -1,0 +1,26 @@
+.repos-show {
+  .reviewers {
+    .contents-wrapper {
+      margin-top: $base-margin * 3;
+      .breadcrumbs {
+        padding-bottom: $base-padding * 4;
+      }
+      .panel {
+        padding: 0;
+        .panel-heading {
+          padding: $base-padding * 2;
+          font-weight: bold;
+        }
+        table {
+          tbody {
+            td {
+              i {
+                padding-right: $base-padding;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

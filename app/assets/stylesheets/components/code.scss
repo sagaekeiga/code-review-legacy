@@ -1,0 +1,68 @@
+.code-wrapper {
+  overflow-x: scroll;
+  .panel {
+    padding: $base-padding;
+    margin-bottom: 0;
+    box-shadow: none;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 100%;
+      padding: $base-padding / 2;
+      tbody {
+        &.file {
+          border: none;
+        }
+        .index {
+          border: none;
+          width: 1%;
+          min-width: 50px;
+          padding-right: 10px;
+          padding-left: 10px;
+          font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+          font-size: 12px;
+          line-height: 20px;
+          color: rgba(27,31,35,0.3);
+          text-align: right;
+          white-space: nowrap;
+          vertical-align: top;
+          cursor: pointer;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        td.file-code {
+          pre {
+            padding: $base-padding / 2;
+            color: none;
+            background-color: transparent;
+            border: none;
+            margin: 0;
+            font-family: $font-code;
+            font-size: $base-font-size;
+            letter-spacing: 1px;
+            font-weight: 100;
+          }
+          border: none;
+          &.markdown-highlight {
+            font-family: $font-code;
+            font-size: $base-font-size;
+            &.bg-primary {
+              background-color: $color-gihub-blue;
+              pre {
+                color: $color-literal-gray;
+              }
+            }
+            &.bg-success {
+              background-color: $color-github-green;
+            }
+            &.bg-danger {
+              background-color: $color-github-changed-file-minus-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

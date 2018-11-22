@@ -2,7 +2,6 @@ $(document).on('click', '.reply-submit-btn', function () {
   submitReply($(this));
 })
 
-
 $(document).on('click', '.read-btn', function () {
   updateRead($(this));
 })
