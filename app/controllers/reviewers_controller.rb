@@ -3,8 +3,9 @@ class ReviewersController < Reviewers::BaseController
   skip_before_action :check_reviewer_status, only: %i(pending integrations)
 
   def dashboard
-    @repo = current_reviewer.repos
-    @pulls = current_reviewer.repos.pulls_feed.page(params[:page])
+    @repo = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10)
+    @pulls = current_reviewer.pulls.order(updated_at: :desc).page(params[:page])
+    @pending_reviews = current_reviewer.reviews.where(event: :pending).includes(:pull)
   end
 
   def my_page

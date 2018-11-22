@@ -1,0 +1,15 @@
+- if current_reviewer.nickname
+  .reviewer-name
+    = image_tag current_reviewer.avatar_url, class: 'reviewer-image'
+    = current_reviewer.nickname.truncate(15)
+.panel.panel-default
+  .panel-body
+    %ul
+      - repo.each do |repo|
+        %li.repo-list
+          = link_to repo.name.truncate(25), class: 'repo-name'
+          = image_tag repo.resource.avatar_url, class: 'reviewee-image'
+          %span= repo.resource.nickname.truncate(15)
+          .recent-login.pull-right
+            %i.fab.fa-algolia
+            %span= date_format(repo.resource.last_sign_in_at)

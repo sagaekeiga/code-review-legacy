@@ -1,0 +1,14 @@
+.under-review-title
+  %i.fas.fa-hourglass-end
+  %span 審査中のPR
+.panel.panel-default.under-review-height
+  .panel-body
+    .under-review-body
+      - pending_reviews.each do |review|
+        .under-review
+          .pr-title
+            = link_to reviewers_pull_path(review.pull) do
+              %p= review.pull.title.truncate(25)
+              .worked-time
+                %i.fa.fa-clock
+                %span= date_format(review.updated_at)

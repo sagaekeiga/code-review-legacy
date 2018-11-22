@@ -1,0 +1,194 @@
+.reviewers-dashboard {
+  // 背景
+  background-color: $color-background-gray;
+  // スクロールバー
+  ::-webkit-scrollbar{
+    width: $base-padding * 2;
+  }
+  ::-webkit-scrollbar-track{
+    background: $color-white;
+    border-left: solid 1px $color-sub-gray;
+  }
+  ::-webkit-scrollbar-thumb{
+    background: $color-sub-gray;
+    border-radius: 0;
+    border: 1px solid $color-sub-gray;
+  }
+  .reviewer-dashboard-wrapper {
+    .left-sidebar {
+      position: fixed;
+      top: $base-font-size * 5;
+      bottom: 0;
+      left: 0;
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: #eaf1f7;
+      box-shadow: 0 0 2px gray;
+      .reviewer-name {
+        margin: 30px;
+        border-bottom: 1px solid $color-darker-gray;
+        font-size: $base-margin + 2;
+        padding-bottom: 5px;
+        font-weight: lighter;
+        .reviewer-image {
+          height: $base-margin + 1;
+          border-radius: 50%;
+          margin: $base-padding $base-padding + 1 $base-padding + 2 0;
+        }
+      }
+      .panel {
+        background-color: $color-sub-gray;
+        border-radius: $base-padding;
+        margin: $base-margin + 4;
+        width: $base-font-weight;
+        ul  {
+          list-style: none;
+          margin-left: -40px;
+          margin-bottom: -1px;
+          li {
+            .repo-name {
+              font-size: $base-margin + 4;
+            }
+            a {
+              display: block;
+              margin-bottom: $base-font-size - 2;
+              font-size: $base-margin + 4;
+              color: $color-black;
+            }
+          }
+        }
+        .panel-body {
+          padding: 0;
+          background-color: $color-white;
+          i {
+            font-size: $base-font-size + 1;
+          }
+          .repo-list {
+            padding: $base-font-size - 2 $base-margin - 1 $base-font-size - 2 $base-margin - 1;
+            border-bottom: 1px solid #eee;
+            .repo-name {
+              padding: 0;
+              color: #5d6267;
+              font-weight: 600;
+            }
+            span {
+              color: $color-dark-gray;
+            }
+            .reviewee-image {
+              border-radius: 2px;
+              height: $base-margin - 1;
+              width: $base-margin - 1;
+              border: 1px solid #eee;
+            }
+          }
+        }
+      }
+    }
+    .panel {
+      border-radius: 0;
+      border-bottom: 1px solid $color-sub-gray;
+    }
+    .container {
+      width: $base-font-weight * 3;
+      display: -webkit-flex;
+      display: flex;
+      padding-left: $base-font-size * 10;
+      .main {
+        display: block;
+        width: $base-height-lg * 6.6;
+        margin-right: $base-margin + 4;
+        tbody {
+          border: 1px solid #eee;
+          border-bottom: 2px solid #e7ecf0;
+        }
+        .pulls-on-dashboard-wrapper {
+          .add-light-blue {
+            background-color: $color-light-blue;
+          }
+          .add-light-white {
+            background-color: $color-white;
+          }
+          .descrition {
+            display: inline;
+            color: $color-dark-gray;
+            font-size: $base-font-size;
+            margin-left: 40px;
+          }
+          th {
+            text-align: left;
+            font-size: $base-margin + 4;
+            font-weight: bold;
+          }
+          td {
+            padding: 0;
+            a {
+              display: block;
+              padding: $base-margin - 1;
+              color: $color-td;
+              font-weight: 600;
+            }
+          }
+        }
+        margin-top: $base-margin * 2;
+        font-family: $font-dashboard;
+        font-weight: $base-font-weight;
+        .page-header {
+          font-family: $font-dashboard;
+        }
+        table {
+          td {
+            color: $color-td;
+          }
+        }
+      }
+    }
+    .sidebar {
+      width: $base-height-lg * 3.7;
+      .sidebar__item {
+        margin-bottom: $base-margin + 4;
+        .notice-height, .under-review-height {
+          min-height: $base-height-lg * 4;
+        }
+        .notice-title, .under-review-title {
+          span {
+            padding-left: $base-padding + 1;
+          }
+          font-size: $base-margin + 4;
+          padding: $base-padding * 2;
+          .fa-hourglass-end {
+            font-size: $base-margin + 2;
+          }
+        }
+      }
+      .sidebar__item--fixed {
+        position: sticky;
+        margin-bottom: 0;
+        top: 86px;
+        z-index: 1;
+        .panel-body {
+          padding: 0;
+          .under-review-body {
+            height: $base-height-lg * 4;
+            overflow-y: scroll;
+            .under-review {
+              padding: $base-font-size - 1 $base-margin - 1;
+              border-bottom: 1px solid $color-sub-gray;
+              .pr-title {
+                font-size: $base-font-size;
+                a {
+                  color: $color-hover-gray;
+                  font-weight: 600;
+                }
+              }
+              .worked-time {
+                color: $color-dark-gray;
+                font-size: $base-font-size - 1;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
