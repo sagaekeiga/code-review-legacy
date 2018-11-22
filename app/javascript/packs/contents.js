@@ -1,18 +1,16 @@
 // HighLight JS 初期化
 hljs.initHighlightingOnLoad();
-
 $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   setContents(repoId)
 });
-
 $(document).on('click', '.file, .dir', function (e) {
   e.preventDefault()
   $('img').removeClass('hidden')
   $('.table').empty()
   fileType = $(this).attr('class')
   repoId = $('.page-header').attr('repo-id')
-	path = $(this).attr('data-path')
+  path = $(this).attr('data-path')
   name = $(this).attr('data-name')
   $.ajax({
     type: 'GET',
@@ -21,12 +19,14 @@ $(document).on('click', '.file, .dir', function (e) {
     data: {
       repo_id: repoId,
       path: path,
-			file_type: fileType,
-			name: name
+      file_type: fileType,
+      name: name
     },
-	}).done(function (data) {
+  }).done(function (data) {
     // 第二階層以下であれば
-    if (data.breadcrumbs.length > 0) { newBreadcrumbs(data) }
+    if (data.breadcrumbs.length > 0) {
+      newBreadcrumbs(data)
+    }
     if (data.type == 'file') {
       highlightContent = data.content
       for (i = 0; i < highlightContent.length + 1; i++) {
@@ -51,8 +51,8 @@ $(document).on('click', '.file, .dir', function (e) {
             </tr>
           </tbody>
 				`)
-				$('.panel-title').text(data.name)
-				tbody.appendTo('table')
+        $('.panel-title').text(data.name)
+        tbody.appendTo('table')
       }
       breadcrumb = $(`
         <span>${data.name}</span>
@@ -70,7 +70,7 @@ $(document).on('click', '.file, .dir', function (e) {
 					</td>
 				</tbody>
 			`)
-				tbody.appendTo('table')
+        tbody.appendTo('table')
       }
       breadcrumb = $(`
         <span>${data.breadcrumbs[data.breadcrumbs.length - 1]}</span>
@@ -105,16 +105,15 @@ function setContents(repoId) {
 					</td>
 				</tbody>
 			`)
-			tbody.appendTo('table')
+      tbody.appendTo('table')
     }
     $('img').addClass('hidden')
-		$('.panel').removeClass('hidden')
+    $('.panel').removeClass('hidden')
   }).fail(function (data) {
     issueList.text('issueの取得に失敗しました')
     $('#loader').addClass('hidden')
   });
 }
-
 
 function newBreadcrumbs(data) {
   breadcrumbElem = $('.breadcrumbs')
