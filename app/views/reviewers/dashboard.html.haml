@@ -15,11 +15,13 @@
                 = t 'activerecord.models.pull'
                 .descrition
                   %i.fas.fa-check
-                  %span アサインされたPullrequestが表示されています
+                  %span= t '.assigned'
           %tbody
             - @pulls.each_with_index do |pull, i|
               %tr{ class: i % 2 == 0 ? 'add-light-blue' : 'add-light-white' }
-                %td= link_to pull.title&.truncate(40), reviewers_pull_path(pull)
+                %td
+                  = link_to pull.title&.truncate(40), reviewers_pull_path(pull)
+                  .pull-right= link_to pull.repo.full_name
 
         .text-center= paginate @pulls
 

@@ -25,16 +25,14 @@
       overflow-y: auto;
       background-color: #eaf1f7;
       box-shadow: 0 0 2px gray;
-      .reviewer-name {
+      .assigned {
         margin: 30px;
         border-bottom: 1px solid $color-darker-gray;
         font-size: $base-margin + 2;
         padding-bottom: 5px;
         font-weight: lighter;
-        .reviewer-image {
-          height: $base-margin + 1;
-          border-radius: 50%;
-          margin: $base-padding $base-padding + 1 $base-padding + 2 0;
+        span {
+          padding-left: $base-padding + 1;
         }
       }
       .panel {
@@ -67,6 +65,10 @@
           .repo-list {
             padding: $base-font-size - 2 $base-margin - 1 $base-font-size - 2 $base-margin - 1;
             border-bottom: 1px solid #eee;
+            .fa-check {
+              color: $color-github-red;
+              font-size: $base-font-size + 1;
+            }
             .repo-name {
               padding: 0;
               color: #5d6267;
@@ -123,7 +125,7 @@
           td {
             padding: 0;
             a {
-              display: block;
+              display: inline-block;
               padding: $base-margin - 1;
               color: $color-td;
               font-weight: 600;

@@ -44,6 +44,7 @@ ja:
       use: 使い方
       skill: スキル
       logout: ログアウト
+      assigned: アサインされたPullrequestが表示されています
     my_page:
       title: マイページ
       reviewed_pulls_count: 完了

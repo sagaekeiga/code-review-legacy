@@ -8,7 +8,7 @@
         .under-review
           .pr-title
             = link_to reviewers_pull_path(review.pull) do
-              %p= review.pull.title.truncate(25)
+              %p= review.pull.title.truncate(21)
               .worked-time
                 %i.fa.fa-clock
                 %span= date_format(review.updated_at)
