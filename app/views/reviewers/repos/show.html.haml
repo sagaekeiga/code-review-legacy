@@ -11,9 +11,9 @@
       = image_tag 'loader'
       %h2 Contents
       .code-wrapper
-        .breadcrumbs
+        .breadcrumbs{ 'repo-name': @repo.name }
         .panel.panel-default.hidden
           .panel-heading
             .panel-title
           %table.table
-= javascript_pack_tag 'repos'
+= javascript_pack_tag 'contents'
