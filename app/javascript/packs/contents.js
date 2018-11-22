@@ -54,7 +54,7 @@ $(document).on('click', '.file, .dir', function (e) {
               <td class='file-code'>${code}</td>
             </tr>
           </tbody>
-				`)
+        `)
         $('.panel-title').text(data.name)
         tbody.appendTo('table')
       }
