@@ -4,7 +4,6 @@ hljs.initHighlightingOnLoad();
 $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   $('.panel-heading').addClass('hidden')
-  $('.table').empty()
   setContents(repoId)
 });
 
@@ -109,6 +108,7 @@ function setContents(repoId) {
       repo_id: repoId
     },
   }).done(function (data) {
+    $('.table').empty()
     names = data.names
     for (i = 0; i < names.length; i++) {
       if (data.types[i] == 'dir') {
