@@ -11,10 +11,14 @@
       = image_tag 'loader'
       %h2 Contents
       .code-wrapper
-        .path
-        .panel.panel-default.hidden
+        .path{ 'repo-name': @repo.name }
+        .breadcrumbs
+        .panel.panel-default.hidden.parent-dirs
           .panel-heading
             .panel-title
-          %table.table
-
+          %table.table.parent-dirs
+        .panel.panel-default.hidden.main
+          .panel-heading
+            .panel-title
+          %table.table.main
 = javascript_pack_tag 'repos'
