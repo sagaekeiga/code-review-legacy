@@ -58,11 +58,23 @@
   }
   .reviewers {
     .contents-wrapper {
-      table {
-        tbody.file {
-          td {
-            padding: 0;
-            padding-left: $base-padding * 2;
+      margin-top: $base-margin * 3;
+      .breadcrumbs {
+        padding-bottom: $base-padding * 4;
+      }
+      .panel {
+        padding: 0;
+        .panel-heading {
+          padding: $base-padding * 2;
+          font-weight: bold;
+        }
+        table {
+          tbody {
+            td {
+              i {
+                padding-right: $base-padding;
+              }
+            }
           }
         }
       }

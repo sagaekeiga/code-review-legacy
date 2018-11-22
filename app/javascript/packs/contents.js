@@ -2,6 +2,7 @@
 hljs.initHighlightingOnLoad();
 $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
+  $('.panel-heading').addClass('hidden')
   setContents(repoId)
 });
 // イベントを削除（重複回避）
@@ -9,6 +10,7 @@ $(document).off('click', '.file, .dir');
 $(document).on('click', '.file, .dir', function (e) {
   e.preventDefault()
   $('img').removeClass('hidden')
+  $('.code-wrapper').addClass('hidden')
   $('.table').empty()
   fileType = $(this).attr('class')
   repoId = $('.page-header').attr('repo-id')
@@ -63,9 +65,15 @@ $(document).on('click', '.file, .dir', function (e) {
     } else {
       names = data.names
       for (i = 0; i < names.length; i++) {
+        if (data.types[i] == 'dir') {
+          icon = `<i class='fa fa-folder'></i>`
+        } else {
+          icon = `<i class='fas fa-file'></i>`
+        }
         tbody = $(`
           <tbody>
             <td>
+              ${icon}
               <a href='#' data-path='${data.paths[i]}' data-name='${data.names[i]}' class='${data.types[i]}'>
                 ${data.names[i]}
               </a>
@@ -78,9 +86,11 @@ $(document).on('click', '.file, .dir', function (e) {
         <span>${data.breadcrumbs[data.breadcrumbs.length - 1]}</span>
       `)
       breadcrumb.appendTo(breadcrumbElem)
+      $('.panel-title').text(data.breadcrumbs[data.breadcrumbs.length - 1])
     }
     $('img').addClass('hidden')
-    $('.panel').removeClass('hidden')
+    $('.panel-heading').removeClass('hidden')
+    $('.code-wrapper').removeClass('hidden')
   }).fail(function (data) {
     issueList.text('取得に失敗しました')
     $('#loader').addClass('hidden')
@@ -98,9 +108,15 @@ function setContents(repoId) {
   }).done(function (data) {
     names = data.names
     for (i = 0; i < names.length; i++) {
+      if (data.types[i] == 'dir') {
+        icon = `<i class='fa fa-folder'></i>`
+      } else {
+        icon = `<i class='fas fa-file'></i>`
+      }
       tbody = $(`
         <tbody>
           <td>
+            ${icon}
             <a href='#' data-path='${data.paths[i]}' class='${data.types[i]}'>
               ${data.names[i]}
             </a>
@@ -110,7 +126,7 @@ function setContents(repoId) {
       tbody.appendTo('table')
     }
     $('img').addClass('hidden')
-    $('.panel').removeClass('hidden')
+    $('.code-wrapper').removeClass('hidden')
   }).fail(function (data) {
     issueList.text('issueの取得に失敗しました')
     $('#loader').addClass('hidden')
