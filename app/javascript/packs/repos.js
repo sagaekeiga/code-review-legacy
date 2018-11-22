@@ -1,8 +1,11 @@
+// HighLight JS 初期化
 hljs.initHighlightingOnLoad();
+
 $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   setContents(repoId)
 });
+
 $(document).on('click', '.file, .dir', function (e) {
   e.preventDefault()
   $('img').removeClass('hidden')
@@ -22,34 +25,8 @@ $(document).on('click', '.file, .dir', function (e) {
 			name: name
     },
 	}).done(function (data) {
-		console.log(data.breadcrumbs)
-    console.log(data.breadcrumb_paths)
     // 第二階層以下であれば
-    if (data.breadcrumbs.length > 0) {
-      breadcrumbElem = $('.breadcrumbs')
-      breadcrumbElem.empty()
-      repoName = $('.path').attr('repo-name')
-      topBreadcrumb = $(`<a href='/reviewers/repos/${$('.page-header').attr('repo-id')}'>${repoName}</a><span> / </span>`)
-      topBreadcrumb.appendTo(breadcrumbElem)
-      for (i = 0; i < data.breadcrumbs.length; i++) {
-        first_is_file = data.breadcrumbs.length == 1 && data.type == 'file'
-        last_is_dir = data.breadcrumbs[i] == data.breadcrumbs[data.breadcrumbs.length - 1] && data.type == 'dir'
-        except = first_is_file || last_is_dir
-        console.log(data.breadcrumbs.size)
-        console.log(data.type)
-        console.log(data.type == 'file')
-        if (except) {
-          continue;
-        }
-        breadcrumb = $(`
-          <span>
-            <a href='#' data-path='${data.breadcrumb_paths[i]}'>${data.breadcrumbs[i]}</a>
-            <span> / </span>
-          </span>
-        `)
-        breadcrumb.appendTo(breadcrumbElem)
-      }
-    }
+    if (data.breadcrumbs.length > 0) { newBreadcrumbs(data) }
     if (data.type == 'file') {
       highlightContent = data.content
       for (i = 0; i < highlightContent.length + 1; i++) {
@@ -75,7 +52,7 @@ $(document).on('click', '.file, .dir', function (e) {
           </tbody>
 				`)
 				$('.panel-title').text(data.name)
-				tbody.appendTo('table.main')
+				tbody.appendTo('table')
       }
       breadcrumb = $(`
         <span>${data.name}</span>
@@ -93,7 +70,7 @@ $(document).on('click', '.file, .dir', function (e) {
 					</td>
 				</tbody>
 			`)
-				tbody.appendTo('table.main')
+				tbody.appendTo('table')
       }
       breadcrumb = $(`
         <span>${data.breadcrumbs[data.breadcrumbs.length - 1]}</span>
@@ -101,9 +78,9 @@ $(document).on('click', '.file, .dir', function (e) {
       breadcrumb.appendTo(breadcrumbElem)
     }
     $('img').addClass('hidden')
-    $('.panel.main').removeClass('hidden')
+    $('.panel').removeClass('hidden')
   }).fail(function (data) {
-    issueList.text('issueの取得に失敗しました')
+    issueList.text('取得に失敗しました')
     $('#loader').addClass('hidden')
   });
 })
@@ -128,12 +105,39 @@ function setContents(repoId) {
 					</td>
 				</tbody>
 			`)
-			tbody.appendTo('table.main')
+			tbody.appendTo('table')
     }
     $('img').addClass('hidden')
-		$('.panel.main').removeClass('hidden')
+		$('.panel').removeClass('hidden')
   }).fail(function (data) {
     issueList.text('issueの取得に失敗しました')
     $('#loader').addClass('hidden')
   });
+}
+
+
+function newBreadcrumbs(data) {
+  breadcrumbElem = $('.breadcrumbs')
+  breadcrumbElem.empty()
+  repoName = $('.path').attr('repo-name')
+  topBreadcrumb = $(`<a href='/reviewers/repos/${$('.page-header').attr('repo-id')}'>${repoName}</a><span> / </span>`)
+  topBreadcrumb.appendTo(breadcrumbElem)
+  for (i = 0; i < data.breadcrumbs.length; i++) {
+    // 1. 第二階層がファイルかどうか
+    first_is_file = data.breadcrumbs.length == 1 && data.type == 'file'
+    // 2. 最下層がディレクトリかどうか
+    last_is_dir = data.breadcrumbs[i] == data.breadcrumbs[data.breadcrumbs.length - 1] && data.type == 'dir'
+    // 1か2のどちらかが真であれば該当のパンくずを生成しない
+    except = first_is_file || last_is_dir
+    if (except) {
+      continue;
+    }
+    breadcrumb = $(`
+      <span>
+        <a href='#' data-path='${data.breadcrumb_paths[i]}'>${data.breadcrumbs[i]}</a>
+        <span> / </span>
+      </span>
+    `)
+    breadcrumb.appendTo(breadcrumbElem)
+  }
 }
