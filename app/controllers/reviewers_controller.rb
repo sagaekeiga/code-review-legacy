@@ -4,7 +4,7 @@ class ReviewersController < Reviewers::BaseController
 
   def dashboard
     @repo = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10)
-    @pulls = current_reviewer.pulls.order(updated_at: :desc).page(params[:page])
+    @pulls = Pull.joins(:repo).where(status: :request_reviewed).merge(Repo.where(resource: current_reviewer)).page(params[:page])
     @pending_reviews = current_reviewer.reviews.where(event: :pending).includes(:pull)
   end
 
