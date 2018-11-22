@@ -8,29 +8,13 @@
       .input-group-btn
         %button{ type: 'button', class: 'btn btn-primary' } 検索
     .contents-wrapper
+      = image_tag 'loader'
       %h2 Contents
-      .panel.panel-default
-        %table.table.table-hover.pulls-on-dashboard-wrapper.text-left
-          %tbody
-            %td
-              %a{ href: '#' } .circleci
-            %td .github
-            %td app
-          %tbody
-            %td .circleci
-            %td .github
-            %td app
-          %tbody
-            %td .circleci
-            %td .github
-            %td app
-          %tbody
-            %td .circleci
-            %td .github
-            %td app
-          %tbody
-            %td .circleci
-            %td .github
-            %td app
+      .code-wrapper
+        .path
+        .panel.panel-default.hidden
+          .panel-heading
+            .panel-title
+          %table.table
 
 = javascript_pack_tag 'repos'

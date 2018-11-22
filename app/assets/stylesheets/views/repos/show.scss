@@ -59,8 +59,10 @@
   .reviewers {
     .contents-wrapper {
       table {
-        tbody {
+        tbody.file {
           td {
+            padding: 0;
+            padding-left: $base-padding * 2;
           }
         }
       }

@@ -104,7 +104,7 @@ Rails.application.routes.draw do
       namespace :github do
         resource :changed_files, only: %i(show)
         resource :contents do
-          get :fetch_contents
+          get :get_contents
         end
       end
       resources :repos, only: %i(show)
