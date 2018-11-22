@@ -125,7 +125,7 @@ function newBreadcrumbs(data) {
   topBreadcrumb.appendTo(breadcrumbElem)
   for (i = 0; i < data.breadcrumbs.length; i++) {
     // 1. 第二階層がファイルかどうか
-    first_is_file = data.breadcrumbs.length == 1 && data.type == 'file'
+    first_is_file = data.breadcrumbs.length == 1 && data.type == 'file' && data.path && data.path.indexOf('/') == -1
     // 2. 最下層がディレクトリかどうか
     last_is_dir = data.breadcrumbs[i] == data.breadcrumbs[data.breadcrumbs.length - 1] && data.type == 'dir'
     // 1か2のどちらかが真であれば該当のパンくずを生成しない

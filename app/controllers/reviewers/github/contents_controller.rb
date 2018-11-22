@@ -64,6 +64,7 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
   end
 
   def dir_response(names, paths, types, breadcrumbs, breadcrumb_paths)
+    # @TODO 並び替え
     {
       names: names.reverse, # ディレクトリ・ファイル一覧の配列
       paths: paths.reverse, # パスの配列
