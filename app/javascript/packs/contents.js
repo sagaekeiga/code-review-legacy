@@ -62,14 +62,14 @@ $(document).on('click', '.file, .dir', function (e) {
       names = data.names
       for (i = 0; i < names.length; i++) {
         tbody = $(`
-				<tbody>
-					<td>
-						<a href='#' data-path='${data.paths[i]}' data-name='${data.names[i]}' class='${data.types[i]}'>
-							${data.names[i]}
-						</a>
-					</td>
-				</tbody>
-			`)
+          <tbody>
+            <td>
+              <a href='#' data-path='${data.paths[i]}' data-name='${data.names[i]}' class='${data.types[i]}'>
+                ${data.names[i]}
+              </a>
+            </td>
+          </tbody>
+        `)
         tbody.appendTo('table')
       }
       breadcrumb = $(`
@@ -97,14 +97,14 @@ function setContents(repoId) {
     names = data.names
     for (i = 0; i < names.length; i++) {
       tbody = $(`
-				<tbody>
-					<td>
-						<a href='#' data-path='${data.paths[i]}' class='${data.types[i]}'>
-							${data.names[i]}
-						</a>
-					</td>
-				</tbody>
-			`)
+        <tbody>
+          <td>
+            <a href='#' data-path='${data.paths[i]}' class='${data.types[i]}'>
+              ${data.names[i]}
+            </a>
+          </td>
+        </tbody>
+      `)
       tbody.appendTo('table')
     }
     $('img').addClass('hidden')
