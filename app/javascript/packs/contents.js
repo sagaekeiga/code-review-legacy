@@ -4,6 +4,8 @@ $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   setContents(repoId)
 });
+// イベントを削除（重複回避）
+$(document).off('click', '.file, .dir');
 $(document).on('click', '.file, .dir', function (e) {
   e.preventDefault()
   $('img').removeClass('hidden')
