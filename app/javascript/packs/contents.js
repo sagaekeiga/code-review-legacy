@@ -1,11 +1,13 @@
 // HighLight JS 初期化
 hljs.initHighlightingOnLoad();
-$(document).off('turbolinks:load');
-$(document).on('turbolinks:load', function () {
+
+$(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   $('.panel-heading').addClass('hidden')
+  $('.table').empty()
   setContents(repoId)
 });
+
 // イベントを削除（重複回避）
 $(document).off('click', '.file, .dir');
 $(document).on('click', '.file, .dir', function (e) {
