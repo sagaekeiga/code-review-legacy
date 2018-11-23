@@ -18,7 +18,6 @@
 #
 
 class SendMail < ApplicationRecord
-  after_commit :send_mail, on: :create
 
   # -------------------------------------------------------------------------------
   # Relations
@@ -29,6 +28,11 @@ class SendMail < ApplicationRecord
   # Validations
   # -------------------------------------------------------------------------------
   validates :email, presence: true, uniqueness: true
+
+  # -------------------------------------------------------------------------------
+  # Callbacks
+  # -------------------------------------------------------------------------------
+  after_commit :send_mail, on: :create
 
   def send_mail
     AdminMailer.slack_mail(self).deliver_later
