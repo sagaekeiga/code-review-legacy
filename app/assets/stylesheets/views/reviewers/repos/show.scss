@@ -13,9 +13,15 @@
         }
         table {
           tbody {
-            td {
-              i {
-                padding-right: $base-padding;
+            &.file {
+              tr {
+                td {
+                  padding: 0px;
+                  padding-left: $base-padding * 2;
+                  i {
+                    padding-right: $base-padding;
+                  }
+                }
               }
             }
           }

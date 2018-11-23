@@ -34,3 +34,4 @@ api:
           machine_man_preview: application/vnd.github.machine-man-preview
           symmetra_preview_json: application/vnd.github.symmetra-preview+json
           squirrel_girl_preview: application/vnd.github.squirrel-girl-preview
+          text_match_json: application/vnd.github.v3.text-match+json

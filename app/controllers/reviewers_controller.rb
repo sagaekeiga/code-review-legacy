@@ -3,7 +3,7 @@ class ReviewersController < Reviewers::BaseController
   skip_before_action :check_reviewer_status, only: %i(pending integrations)
 
   def dashboard
-    @repos = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10)
+    @repos = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10).decorate
     @pulls = Pull.includes(:repo).joins(:repo).request_reviewed.merge(current_reviewer.repos).order(created_at: :desc).page(params[:page])
     @pending_reviews = current_reviewer.reviews.pending.includes(:pull)
   end

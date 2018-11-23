@@ -7,3 +7,7 @@ ja:
         id: ID
         status: ステータス
         title: タイトル
+  reviewers:
+    contents:
+      index:
+        placeholder: キーワード

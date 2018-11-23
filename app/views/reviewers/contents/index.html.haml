@@ -1,10 +1,11 @@
-.col-xs-12
-  .container
-    .row
-      .content-show-wrapper
-        .page-header
-          %h3= @repo.full_name
-        = render 'reviewers/shared/repos/tab', repo: @repo
-        .page-header
-          %h3 /
-        = render 'dirs', resource: @repo, dir_or_files: @dir_or_files, readme: @readme
+.container
+  .col-xs-12
+    .page-header{ 'repo-id': @repo.id }
+      %h3= @repo.full_name
+    = render 'reviewers/shared/repos/tab', repo: @repo
+    %input{ type: 'text', class: 'form-control search-input', placeholder: t('.placeholder') }
+    .contents-wrapper
+      .text-center.hidden.loader= image_tag 'loader'
+      .search-results-count
+      .results-wrapper
+= javascript_pack_tag 'search'

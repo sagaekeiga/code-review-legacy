@@ -1,10 +1,12 @@
 // HighLight JS 初期化
 hljs.initHighlightingOnLoad();
+
 $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   $('.panel-heading').addClass('hidden')
   setContents(repoId)
 });
+
 // イベントを削除（重複回避）
 $(document).off('click', '.file, .dir');
 $(document).on('click', '.file, .dir', function (e) {
@@ -106,6 +108,7 @@ function setContents(repoId) {
       repo_id: repoId
     },
   }).done(function (data) {
+    $('.table').empty()
     names = data.names
     for (i = 0; i < names.length; i++) {
       if (data.types[i] == 'dir') {

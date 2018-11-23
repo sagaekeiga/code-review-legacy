@@ -17,4 +17,18 @@ class RepoDecorator < ApplicationDecorator
     when 'Reviewee' then name.truncate(40)
     end
   end
+
+  def resource_name
+    case resource_type
+    when 'Org' then resource.login
+    when 'Reviewee' then resource.nickname
+    end
+  end
+
+  def resource_last_sign_in_at
+    case resource_type
+    when 'Org' then resource.updated_at
+    when 'Reviewee' then resource.last_sign_in_at
+    end
+  end
 end
