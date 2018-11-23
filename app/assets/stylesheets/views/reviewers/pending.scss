@@ -1,4 +1,62 @@
 .reviewers-pending {
+  .form.send_mail {
+    text-align: -webkit-center;
+  }
+  .send_mail form{
+    height: $base-margin * 2;
+    width: $base-margin * 15;
+    position:relative;
+  }
+  .send_mail form input[type=email]{
+    width: 340px;
+    height: $base-margin * 2;
+    padding: $base-margin;
+    border:none;
+    -webkit-border-radius: $base-margin * 2;
+       -moz-border-radius: $base-margin * 2;
+            border-radius: $base-margin * 2;
+    -webkit-appearance: none;
+    outline: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position:absolute;
+    background: $color-background-gray;
+    top: 0;
+    right: -35px;
+    backface-visibility: hidden;
+    -webkit-transition: 0.25s ease-out;
+       -moz-transition: 0.25s ease-out;
+         -o-transition: 0.25s ease-out;
+            transition: 0.25s ease-out;
+  }
+  .send_mail form input[type=email]:focus{
+    background: $bg-color-pre-code;
+  }
+  .send_mail form .btn{
+    width: $base-height-lg;
+    height: $base-margin * 2;
+    color: $color-white;
+    border:none;
+    -webkit-border-radius: $base-margin * 2;
+       -moz-border-radius: $base-margin * 2;
+            border-radius: $base-margin * 2;
+    background:#1B73BA;
+    display:inline-block;
+    -webkit-appearance: none;
+    outline: 0;
+    position:absolute;
+    left: $base-height-lg * 2;
+    cursor:pointer;
+    backface-visibility: hidden;
+    -webkit-transition: 0.3s ease-out;
+       -moz-transition: 0.3s ease-out;
+         -o-transition: 0.3s ease-out;
+            transition: 0.3s ease-out;
+  }
+  .send_mail form .btn:hover{
+    opacity:0.8;
+  }
   .greet {
     color: $color-switch-off-gray;
     table {
@@ -11,18 +69,18 @@
   .send_mail {
     margin-top: 70px;
     .message {
-      padding: 10px;
+      padding: $base-font-size - 2;
       font-weight: bold;
     }
   }
   .welcome-image {
-    height: 200px;
-    width: 200px;
+    height: $base-height-lg * 2;
+    width: $base-height-lg * 2;
   }
   .calendly {
-    padding: 80px;
+    padding: $base-margin * 5;
     font-weight: bold;
-    font-size: 15px;
+    font-size: $base-margin - 1;
     .to-calendly  {
       padding: 30px;
     }
