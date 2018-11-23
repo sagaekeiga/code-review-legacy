@@ -10,7 +10,6 @@ class Reviewers::ContentsController < Reviewers::BaseController
       names, paths, = [], []
       highlight_contents = []
       text = []
-      indices = []
       res[:items].each do |item|
         item = ActiveSupport::HashWithIndifferentAccess.new(item)
         names << item[:name]

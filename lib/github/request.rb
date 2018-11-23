@@ -86,7 +86,7 @@ module Github
         headers = {
           'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(repo.installation_id)}",
-          'Accept': 'application/vnd.github.v3.text-match+json'
+          'Accept': set_accept(:search_code)
         }
         sub_url = "search/code?q=#{keyword}+in:file+repo:#{repo.full_name}"
         res = get Settings.api.github.api_domain + sub_url, headers: headers
@@ -196,8 +196,9 @@ module Github
         case event
         when *%i(review get_access_token) then Settings.api.github.request.header.accept.machine_man_preview_json
         when *%i(issue_comment) then Settings.api.github.request.header.accept.machine_man_preview
-        when *%i(changed_file pull content issue commit diff org role_in_org issue_number search_code) then Settings.api.github.request.header.accept.symmetra_preview_json
+        when *%i(changed_file pull content issue commit diff org role_in_org issue_number) then Settings.api.github.request.header.accept.symmetra_preview_json
         when *%i(review_comment) then Settings.api.github.request.header.accept.squirrel_girl_preview
+        when *%i(search_code) then Settings.api.github.request.header.accept.text_match_json
         end
       end
 

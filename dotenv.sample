@@ -1,22 +1,31 @@
 # domain constraint
-REVIEWEE_DOMAIN=push-request-v2.test
-REVIWER_DOMAIN=reviewer.push-request-v2.test
-ADMIN_DOMAIN=admin.push-request-v2.test
+WEB_DOMAIN=mergee.test
+ADMIN_DOMAIN=admin.mergee.test
 
+# Omniauth
+GITHUB_CLIENT_ID=""
+GITHUB_CLIENT_SECRET=""
 
 # Redis
 # for Docker
 # REDIS_URL=redis://cache:6379/0
 REDIS_URL=redis://localhost:6379/0
 
-RAILS_LOG_TO_STDOUT=true
+RAILS_LOG_TO_STDOUT=""
+
+# GOOGLE ANALYTICS
+GOOGLE_TRACKING_ID=UA-""
 
 # GITHUB API
 PATH_TO_PEM_FILE=""
-GITHUB_API_DOMAIN=""
 GITHUB_APP_PAYLOAD_ISS_ID=""
-GITHUB_APP_INSTALLATION_ID=""
+GITHUB_APP_URL=""
 
-# Omniauth
-GITHUB_CLIENT_ID=""
-GITHUB_CLIENT_SECRET=""
+# GA
+GOOGLE_ANALYTICS_ID=""
+
+# SENTRY_RAVEN
+SENTRY_RAVEN_URL=""
+
+# Mail
+ADMIN_CONTACT=""
