@@ -13,6 +13,8 @@ class AdminDomainConstraint
 end
 
 Rails.application.routes.draw do
+  get 'send_mails/create'
+
   scope module: :api do
     scope module: :v1 do
       namespace :github_apps do
@@ -94,6 +96,7 @@ Rails.application.routes.draw do
         resources :changed_files, only: %i(index show)
         resources :commits, only: %i(index show)
       end
+      resources :send_mails, only: %i(create)
       resources :review_comments, only: %i(create update destroy show)
       resources :repos do
         resources :contents, only: %i(show)

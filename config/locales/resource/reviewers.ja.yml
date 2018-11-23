@@ -54,6 +54,8 @@ ja:
       title: マイページ
       reviewed_pulls_count: 完了
     pending:
+      mail_placeholder: mergee@example.com
+      send: 送信
       alert:
         danger: 審査が終わるまで少々お待ちください
     integrations:
