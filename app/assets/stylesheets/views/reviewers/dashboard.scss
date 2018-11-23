@@ -65,6 +65,10 @@
           .repo-list {
             padding: $base-font-size - 2 $base-margin - 1 $base-font-size - 2 $base-margin - 1;
             border-bottom: 1px solid #eee;
+            .last-login {
+              font-size: $base-font-size - 1;
+              padding-top: $base-padding + 1;
+            }
             .fa-check {
               color: $color-github-red;
               font-size: $base-font-size + 1;
@@ -111,6 +115,13 @@
           .add-light-white {
             background-color: $color-white;
           }
+          .pull-title {
+            color: $color-black;
+            font-weight: bold;
+          }
+          .repo-path {
+            font-weight: lighter;
+          }
           .descrition {
             display: inline;
             color: $color-dark-gray;
@@ -127,8 +138,7 @@
             a {
               display: inline-block;
               padding: $base-margin - 1;
-              color: $color-td;
-              font-weight: 600;
+              color: $color-dark-gray;
             }
           }
         }
@@ -147,7 +157,7 @@
     }
     .sidebar {
       width: $base-height-lg * 3.7;
-      .sidebar__item {
+      .sidebar-item {
         margin-bottom: $base-margin + 4;
         .notice-height, .under-review-height {
           min-height: $base-height-lg * 4;
@@ -163,7 +173,7 @@
           }
         }
       }
-      .sidebar__item--fixed {
+      .sidebar-item-fixed {
         position: sticky;
         margin-bottom: 0;
         top: 86px;

@@ -47,6 +47,7 @@ ja:
       assigned_pull: アサインできるPullrequestが表示されています
     left_side_bar:
       assigned_repo: アサインされたリポジトリ
+      last_sign_in_at: "最終ログイン %{ago}"
     under_review:
       under_review: 審査中のPR
     my_page:

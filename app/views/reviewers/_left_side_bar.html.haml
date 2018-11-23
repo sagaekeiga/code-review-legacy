@@ -8,10 +8,10 @@
       - repo.each do |repo|
         %li.repo-list
           = link_to class: 'repo-name' do
-            = repo.name.truncate(25)
             %i.fa.fa-check
+            = repo.name.truncate(25)
           = image_tag repo.resource.avatar_url, class: 'reviewee-image'
           %span= repo.resource.nickname.truncate(15)
-          .recent-login.pull-right
+          .last-login.pull-right
             %i.fab.fa-algolia
-            %span= date_format(repo.resource.last_sign_in_at)
+            %span= t '.last_sign_in_at', ago: date_format(repo.resource.last_sign_in_at)
