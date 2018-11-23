@@ -81,6 +81,23 @@ module Github
         _get "repos/#{repo.full_name}/issues/#{issue_number}", repo.installation_id, :issue_number
       end
 
+      # GET 対象レポジトリ内のコードを検索する
+      def github_exec_search_contents_scope_repo!(repo, keyword)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Accept': 'application/vnd.github.v3.text-match+json'
+        }
+        sub_url = "search/code?q=#{keyword}+in:file+repo:#{repo.full_name}"
+        res = get Settings.api.github.api_domain + sub_url, headers: headers
+        unless res.code == success_code(:search_code)
+          logger.error "[Github][:search_code] responseCode => #{res.code}"
+          logger.error "[Github][:search_code] responseMessage => #{res.message}"
+          logger.error "[Github][:search_code] subUrl => #{sub_url}"
+        end
+        res
+      end
+
       private
 
       #
@@ -179,7 +196,7 @@ module Github
         case event
         when *%i(review get_access_token) then Settings.api.github.request.header.accept.machine_man_preview_json
         when *%i(issue_comment) then Settings.api.github.request.header.accept.machine_man_preview
-        when *%i(changed_file pull content issue commit diff org role_in_org issue_number) then Settings.api.github.request.header.accept.symmetra_preview_json
+        when *%i(changed_file pull content issue commit diff org role_in_org issue_number search_code) then Settings.api.github.request.header.accept.symmetra_preview_json
         when *%i(review_comment) then Settings.api.github.request.header.accept.squirrel_girl_preview
         end
       end
@@ -188,7 +205,7 @@ module Github
       def success_code(event)
         case event
         when *%i(issue_comment changed_file pull review_comment) then Settings.api.created.status.code
-        when *%i(content commit issue diff review org role_in_org issue_number) then Settings.api.success.status.code
+        when *%i(content commit issue diff review org role_in_org issue_number search_code) then Settings.api.success.status.code
         end
       end
 

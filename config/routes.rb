@@ -107,7 +107,9 @@ Rails.application.routes.draw do
           get :get_contents
         end
       end
-      resources :repos, only: %i(show)
+      resources :repos, only: %i(show) do
+        resources :contents, only: %i(index)
+      end
     end
 
     if !Rails.env.production? && defined?(LetterOpenerWeb)
