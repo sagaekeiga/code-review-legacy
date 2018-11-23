@@ -3,8 +3,8 @@
 .reviewer-dashboard-wrapper
   .col-xs-2
     .left-sidebar.hidden-xs
-      - if @repo
-        = render 'left_side_bar', repo: @repo
+      - if @repos
+        = render 'left_side_bar', repos: @repos
   .col-xs-10
     .container
       %main.main

@@ -5,7 +5,7 @@
 .panel.panel-default
   .panel-body
     %ul
-      - repo.each do |repo|
+      - repos.each do |repo|
         %li.repo-list
           = link_to class: 'repo-name' do
             %i.fa.fa-check
