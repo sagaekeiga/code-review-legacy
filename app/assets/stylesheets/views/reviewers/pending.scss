@@ -1,4 +1,5 @@
 .reviewers-pending {
+  // メールアドレス送信フォーム
   .form.send_mail {
     text-align: -webkit-center;
   }
@@ -85,7 +86,7 @@
       padding: 30px;
     }
     .calendly-color {
-      background-color: #00a2ff;
+      background-color: $color-calendly;
     }
   }
 }

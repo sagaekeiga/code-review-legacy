@@ -13,7 +13,6 @@ class AdminDomainConstraint
 end
 
 Rails.application.routes.draw do
-  get 'send_mails/create'
 
   scope module: :api do
     scope module: :v1 do
