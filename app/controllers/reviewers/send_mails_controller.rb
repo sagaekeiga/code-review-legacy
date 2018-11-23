@@ -5,10 +5,9 @@ class Reviewers::SendMailsController < Reviewers::BaseController
     @send_mail = current_reviewer.send_mails.new(send_mail_params)
 
     if @send_mail.save
-      redirect_to :reviewers_pending
+      redirect_to :reviewers_pending, success: 'メールアドレスを送信しました'
     else
-      flash[:danger] = '送信に失敗しました'
-      render 'reviewers/pending'
+      redirect_to :reviewers_pending, danger: '送信に失敗しました'
     end
   end
 

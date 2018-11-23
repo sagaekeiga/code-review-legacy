@@ -1,0 +1,33 @@
+.reviewers-pending {
+  .greet {
+    color: $color-switch-off-gray;
+    table {
+      margin-top: $base-margin * 4;
+      .ok {
+        color: $color-line;
+      }
+    }
+  }
+  .send_mail {
+    margin-top: 70px;
+    .message {
+      padding: 10px;
+      font-weight: bold;
+    }
+  }
+  .welcome-image {
+    height: 200px;
+    width: 200px;
+  }
+  .calendly {
+    padding: 80px;
+    font-weight: bold;
+    font-size: 15px;
+    .to-calendly  {
+      padding: 30px;
+    }
+    .calendly-color {
+      background-color: #00a2ff;
+    }
+  }
+}
