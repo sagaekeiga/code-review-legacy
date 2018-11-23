@@ -31,7 +31,6 @@ ja:
         showing: このレポジトリ全体を非公開にする
         hidden: このレポジトリ全体を公開する
         title: レポジトリ
-        add_repo: レポジトリを追加する
     wikis:
       import:
         success: インポートが完了しました
@@ -49,4 +48,5 @@ ja:
     views:
       already_reviewed: すでにレビューされているためキャンセルできません
       configure_github_app: GitHub Appの設定方法
-      add_repo: レポジトリを追加する
+      add_repo: リポジトリを追加する
+      select_repo: リポジトリを選択する

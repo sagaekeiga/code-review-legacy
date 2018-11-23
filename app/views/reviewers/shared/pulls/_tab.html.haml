@@ -22,7 +22,7 @@
         &nbsp;
         %span.badge.badge-default= pull.files_changed_count
     %li{ class: is_same_controller_and_action_name?('contents', 'index') }
-      = link_to reviewers_repo_contents_path(pull.repo), class: 'nav-link' do
+      = link_to [:reviewers, pull.repo], class: 'nav-link' do
         %i.fas.fa-project-diagram
         &nbsp;
         = t 'reviewers.pulls.show.project'

@@ -39,12 +39,14 @@
   @import 'buttons';
   @import 'changed_files';
   @import 'replies';
-  @import 'code';
   @import 'github';
   @import 'components/navbar';
   @import 'components/switch';
+  @import 'components/code';
   @import 'views/repos/show';
   @import 'views/reviewers/dashboard';
+  @import 'views/reviewees/repos/show';
+  @import 'views/reviewers/repos/show';
 
 
 .m-t-0 { margin-top: 0; }

@@ -2,7 +2,7 @@
   %ul.nav.nav-tabs.nav-justified
     // Repository
     %li{ class: is_same_controller_name?('contents') }
-      = link_to reviewers_repo_contents_path(repo), class: 'nav-link' do
+      = link_to '#', class: 'nav-link' do
         %i.fas.fa-code
         &nbsp;
         %b= t 'reviewers.pulls.show.code'
@@ -12,9 +12,9 @@
         %i.fas.fa-exclamation-circle
         &nbsp;
         %b= t 'reviewers.pulls.show.issue'
-    // Wikis
-    %li{ class: is_same_controller_name?('wikis') }
-      = link_to reviewers_repo_wikis_path(repo), class: 'nav-link' do
-        %i.fas.fa-book
+    // Pullrequests
+    %li{ class: is_same_controller_name?('pulls') }
+      = link_to '#', class: 'nav-link' do
+        %i.fas.fa-exclamation-circle
         &nbsp;
-        %b= t 'reviewers.pulls.show.wikis'
+        %b= t 'reviewers.pulls.show.issue'

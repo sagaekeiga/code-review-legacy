@@ -1,9 +1,8 @@
-.col-xs-12
-  .panel.panel-default
-    .panel-header
-      .panel-title
-        %h4 全体に対するコメント
-      %small.text-muted
-        = date_format(review.updated_at)
-    .panel-body
-      .panel-text= markdown(review.body)
+.panel.panel-default
+  .panel-header
+    .panel-title
+      %h4 全体に対するコメント
+    %small.text-muted
+      = date_format(review.updated_at)
+  .panel-body
+    .panel-text= markdown(review.body)
