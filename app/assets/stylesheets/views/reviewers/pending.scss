@@ -3,12 +3,12 @@
   .form.send_mail {
     text-align: -webkit-center;
   }
-  .send_mail form{
+  .send_mail form {
     height: $base-margin * 2;
     width: $base-margin * 15;
     position:relative;
   }
-  .send_mail form input[type=email]{
+  .send_mail form input[type=email] {
     width: 340px;
     height: $base-margin * 2;
     padding: $base-margin;
@@ -30,11 +30,14 @@
        -moz-transition: 0.25s ease-out;
          -o-transition: 0.25s ease-out;
             transition: 0.25s ease-out;
+    @media (max-width: $screen-xs-max) {
+      right: -55px;
+    }
   }
-  .send_mail form input[type=email]:focus{
+  .send_mail form input[type=email]:focus {
     background: $bg-color-pre-code;
   }
-  .send_mail form .btn{
+  .send_mail form .btn {
     width: $base-height-lg;
     height: $base-margin * 2;
     color: $color-white;
@@ -54,17 +57,24 @@
        -moz-transition: 0.3s ease-out;
          -o-transition: 0.3s ease-out;
             transition: 0.3s ease-out;
+    @media (max-width: $screen-xs-max) {
+      left: 195px;
+    }
   }
-  .send_mail form .btn:hover{
+  .send_mail form .btn:hover {
     opacity:0.8;
   }
   .greet {
     color: $color-switch-off-gray;
+    margin-top: 70px;
     table {
       margin-top: $base-margin * 4;
       .ok {
         color: $color-line;
       }
+    }
+    @media (max-width: $screen-xs-max) {
+      margin-top: 0;
     }
   }
   .send_mail {
@@ -72,6 +82,9 @@
     .message {
       padding: $base-font-size - 2;
       font-weight: bold;
+      @media (max-width: $screen-xs-max) {
+        padding: 0;
+      }
     }
   }
   .welcome-image {
@@ -87,6 +100,14 @@
     }
     .calendly-color {
       background-color: $color-calendly;
+    }
+    @media (max-width: $screen-xs-max) {
+      padding: $base-font-size * 5 $base-margin $base-margin $base-margin;
+    }
+  }
+  .supplement {
+    @media (max-width: $screen-xs-max) {
+      margin-bottom: 20px;
     }
   }
 }
