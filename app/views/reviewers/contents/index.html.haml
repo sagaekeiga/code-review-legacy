@@ -5,11 +5,7 @@
     = render 'reviewers/shared/repos/tab', repo: @repo
     %input{ type: 'text', class: 'form-control search-input', placeholder: 'キーワード' }
     .contents-wrapper
-      .text-center.hidden= image_tag 'loader'
-      .code-wrapper.hidden
-        .breadcrumbs{ 'repo-name': @repo.name }
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-          %table.table
+      .text-center.hidden.loader= image_tag 'loader'
+      .search-results-count
+      .results-wrapper
 = javascript_pack_tag 'search'
