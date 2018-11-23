@@ -1,9 +1,24 @@
 .col-xs-12
-  .container
-    .reviewee-dashboard-wrapper
-      .greet
-        %h1.text-center= "Hello!   #{current_reviewer.github_account.nickname}"
-        %p.text-center ただいま審査中です。少々お待ちください。
+  .contaniner
+    .greet
+      .text-center= image_tag 'welcome.png', class: 'welcome-image'
+      %h1.text-center= "Hello!!   #{current_reviewer.github_account.nickname}"
+      %p.text-center ただいま審査中です。少々お待ちください。
 
-      .contact
-        %p.text-center= link_to '審査員へ問い合わせ', 'https://sagae528.sarahah.com/'
+    .form.send_mail
+      .message
+        %i.far.fa-envelope
+        %span あなたにプロジェクトを割り当てるために面談を行います
+        %p 連絡を取り合えるようにslackにご登録されているメールアドレスをお送りください。
+      = form_with model: SendMail.new, url: reviewers_send_mails_path, local: true do |f|
+        = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('.mail_placeholder'), required: true
+        = f.submit t('.send'), class: 'btn btn-primary'
+
+    .calendly
+      .message.text-center
+        %i.far.fa-calendar-alt
+        %span 以下のリンク先より面談日時を決めてください。
+        .to-calendly= link_to 'calendlyへ', 'https://calendly.com/', class: 'btn-lg calendly-color btn-primary'
+
+    .supplement
+      %p.text-center 日時をご入力いただきましたら運営よりご連絡いたします。しばらくお待ちください。
