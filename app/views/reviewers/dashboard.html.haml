@@ -15,7 +15,7 @@
                 = t 'activerecord.models.pull'
                 .descrition
                   %i.fas.fa-check
-                  %span= t '.assigned'
+                  %span= t '.assigned_pull'
           %tbody
             - @pulls.each_with_index do |pull, i|
               %tr{ class: i % 2 == 0 ? 'add-light-blue' : 'add-light-white' }

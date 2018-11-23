@@ -44,7 +44,11 @@ ja:
       use: 使い方
       skill: スキル
       logout: ログアウト
-      assigned: アサインできるPullrequestが表示されています
+      assigned_pull: アサインできるPullrequestが表示されています
+    left_side_bar:
+      assigned_repo: アサインされたリポジトリ
+    under_review:
+      under_review: 審査中のPR
     my_page:
       title: マイページ
       reviewed_pulls_count: 完了
