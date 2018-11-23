@@ -1,18 +1,31 @@
+- content_for(:no_footer_page, true)
+
 .reviewer-dashboard-wrapper
-  .col-xs-12
+  .col-xs-2
+    .left-sidebar.hidden-xs
+      - if @repos
+        = render 'left_side_bar', repos: @repos
+  .col-xs-10
     .container
-      %table.table.table-hover.pulls-on-dashboard-wrapper
-        %thead
-          %tr
-            %th.col-sm-6= t 'activerecord.models.pull'
-            %th.col-sm-1
-        %tbody
-          - @pulls.each do |pull|
+      %main.main
+        %table.table.table-hover.pulls-on-dashboard-wrapper
+          %thead
             %tr
-              %td= link_to pull.title&.truncate(40), reviewers_pull_path(pull)
-              %td.text-center
-                = link_to reviewers_pull_path(pull), class: 'btn btn-block btn-outline-primary' do
-                  %i.fas.fa-eye
-                  &nbsp;
-                  = t('helpers.links.confirm')
-      .text-center= paginate @pulls
+              %th.col-sm-6
+                = t 'activerecord.models.pull'
+                .descrition
+                  %i.fas.fa-check
+                  %span= t '.assigned_pull'
+          %tbody
+            - @pulls.each_with_index do |pull, i|
+              %tr{ class: i % 2 == 0 ? 'add-light-blue' : 'add-light-white' }
+                %td
+                  = link_to pull.title&.truncate(20), reviewers_pull_path(pull), class: 'pull-title'
+                  .pull-right= link_to pull.repo.full_name.truncate(25), class: 'repo-path'
+
+        .text-center= paginate @pulls
+
+      .sidebar
+        .sidebar-item.sidebar-item-fixed
+          - if @pending_reviews
+            = render 'under_review', pending_reviews: @pending_reviews

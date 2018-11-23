@@ -1,7 +1,7 @@
 ja:
   activerecord:
     models:
-      pull: プルリクエスト
+      pull: PullRequest
     attributes:
       pull:
         id: ID
