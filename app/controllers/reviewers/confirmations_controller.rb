@@ -12,9 +12,10 @@ class Reviewers::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    super
+    sign_in(resource)
+  end
 
   # protected
 
@@ -24,7 +25,7 @@ class Reviewers::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # The path used after confirmation.
-  # def after_confirmation_path_for(resource_name, resource)
-  #   super(resource_name, resource)
-  # end
+  def after_confirmation_path_for(resource_name, resource)
+    stored_location_for(resource) || reviewers_dashboard_url
+  end
 end
