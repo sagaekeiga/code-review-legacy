@@ -1,26 +1,41 @@
-.side-menu
+.side-menus
   %li
-    = link_to '#', class: is_same_action_name?('view_check') do
+    = link_to view_check_reviewers_pull_reviews_path(pull), class: is_same_action_name?('view_check') do
       %i.fas.fa-check-circle
       = I18n.t('reviewers.reviews.sidebars.titles.view_check')
   %li
-    = link_to file_reviewers_pull_reviews_path(@pull), class: is_same_action_name?('new') do
+    = link_to file_reviewers_pull_reviews_path(pull), class: is_same_action_name?('new') do
       %i.fas.fa-check-circle
       = I18n.t('reviewers.reviews.sidebars.titles.new')
   %li
-    = link_to '#', class: is_same_action_name?('show') do
-      %i.fas.fa-check-circle
-      = I18n.t('reviewers.reviews.sidebars.titles.show')
+    - if review.persisted?
+      = link_to reviewers_pull_review_path(pull, review), class: is_same_action_name?('show') do
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.show')
+    - else
+      .menu
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.show')
   %li
-    = link_to '#', class: is_same_action_name?('edit') do
-      %i.fas.fa-check-circle
-      = I18n.t('reviewers.reviews.sidebars.titles.edit')
+    - if review.persisted?
+      = link_to edit_reviewers_pull_review_path(pull, review), class: is_same_action_name?('edit') do
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.edit')
+    - else
+      .menu
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.edit')
   %li
-    = link_to pull.replies_path(params[:id] || params[:review_id]), class: is_same_action_name?('replies') do
-      %i.fas.fa-check-circle
-      = I18n.t('reviewers.reviews.sidebars.titles.replies')
+    - if review.persisted?
+      = link_to pull.replies_path(params[:id] || params[:review_id]), class: is_same_action_name?('replies') do
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.replies')
+    - else
+      .menu
+        %i.fas.fa-check-circle
+        = I18n.t('reviewers.reviews.sidebars.titles.replies')
   %li
-    = link_to '#', class: is_same_action_name?('complete') do
+    .menu
       %i.fas.fa-check-circle
       = I18n.t('reviewers.reviews.sidebars.titles.complete')
   %h3 Reviews

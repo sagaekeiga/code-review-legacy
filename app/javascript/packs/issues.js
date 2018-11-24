@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  repoId = $('#issueTab').find('.page-header').attr('repo-id')
+  repoId = $('#issueTab').find('.page-header').attr('repo-token')
   issueNumbers = $('#issueTab').find('.page-header').attr('issue-numbers')
   issueList = $('#issueList')
   if (issueNumbers < 1) {
@@ -9,9 +9,12 @@ $(document).ready(function () {
   }
   $.ajax({
     type: 'GET',
-    url: `/reviewers/repos/${repoId}/issues/remote`,
+    url: `/reviewers/github/issues`,
     dataTypr: 'JSON',
-    data: { issue_numbers: issueNumbers },
+    data: {
+      repo_id: repoId,
+      issue_numbers: issueNumbers
+    },
   }).done(function (data) {
     $.each(data.titles, function (i, title) {
       issue = $(`

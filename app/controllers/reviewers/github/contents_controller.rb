@@ -12,7 +12,7 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
   private
 
   def set_repo
-    @repo = Repo.find(params[:repo_id])
+    @repo = Repo.friendly.find(params[:repo_id])
   end
 
   # GitHub APIのレスポンスを表示用（ファイルまたはディレクトリ）に加工して返す

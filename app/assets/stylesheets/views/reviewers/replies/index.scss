@@ -274,7 +274,7 @@
     word-wrap: break-word;
     .panel {
       margin-top: $base-margin;
-      margin-bottom: $base-margin;
+      margin-bottom: $base-margin * 3;
       border: none;
       box-shadow: none;
       .panel-heading {
@@ -288,6 +288,10 @@
         padding: $base-padding * 5;
         &:hover {
           background-color: #fafafa;
+        }
+        &.gray-space {
+          background-color: $color-sub-gray;
+          padding: $base-padding * 3;
         }
       }
     }

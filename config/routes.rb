@@ -99,15 +99,14 @@ Rails.application.routes.draw do
       resources :review_comments, only: %i(create update destroy show)
       resources :repos do
         resources :contents, only: %i(show)
-        resources :issues, only: %i(index show) do
-          get :remote, on: :collection
-        end
+        resources :issues, only: %i(index show)
       end
       namespace :github do
         resource :changed_files, only: %i(show)
         resource :contents do
           get :get_contents
         end
+        resources :issues, only: %i(index)
       end
       resources :repos, only: %i(show) do
         resources :contents, only: %i(index)
