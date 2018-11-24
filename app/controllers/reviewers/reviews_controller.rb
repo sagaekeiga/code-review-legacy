@@ -52,7 +52,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     unless current_reviewer.assign_to!(@pull)
       return redirect_to view_check_reviewers_pull_reviews_path(@pull), warning: t('reviewers.reviews.messages.already')
     end
-    # flash.now[:success] = t('reviewers.reviews.messages.assigned')
   end
 
   def set_changed_files
