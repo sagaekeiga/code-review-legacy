@@ -20,5 +20,3 @@ contents:
   prohibited_files:
     basenames: ['DS_Store']
     extnames: ['.jpg', '.png', '.jpeg', '.gif', '.pdf']
-links:
-  home: ENV['HOME']
