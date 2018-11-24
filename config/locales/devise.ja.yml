@@ -118,11 +118,12 @@ ja:
       updated: 'パスワードを変更しました。'
     confirmations:
       send_instructions: '登録方法を数分以内にメールでご連絡します。'
-      confirmed: 'アカウントを登録しました。'
+      confirmed: 'メール認証が完了しました、ログイン後Mergeeをご利用いただけます'
     registrations:
       signed_up: 'アカウント登録を受け付けました。'
       updated: 'アカウントを更新しました。'
       destroyed: 'アカウントを削除しました。またのご利用をお待ちしております。'
+      signed_up_but_unconfirmed: Mergeeから認証メールを送信しました。記載のURLからメール認証を完了してください。
     unlocks:
       send_instructions: 'アカウントの凍結解除方法を数分以内にメールでご連絡します。'
       unlocked: 'アカウントを凍結解除しました。'
