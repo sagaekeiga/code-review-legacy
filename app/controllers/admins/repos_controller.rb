@@ -4,7 +4,7 @@ class Admins::ReposController < Admins::BaseController
   end
 
   def show
-    @repo = Repo.find(params[:id]).decorate
+    @repo = Repo.friendly.find(params[:id]).decorate
     @reviewers = Reviewer.all.includes(:github_account)
   end
 end

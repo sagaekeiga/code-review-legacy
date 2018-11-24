@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20181123060121) do
     t.boolean "private"
     t.integer "status"
     t.bigint "installation_id"
+    t.string "token", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

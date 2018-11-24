@@ -56,6 +56,6 @@ class Reviewers::ContentsController < Reviewers::BaseController
   private
 
   def set_repo
-    @repo = Repo.find(params[:repo_id]).decorate
+    @repo = Repo.friendly.find(params[:repo_id]).decorate
   end
 end

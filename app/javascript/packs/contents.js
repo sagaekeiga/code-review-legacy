@@ -140,7 +140,7 @@ function newBreadcrumbs(data) {
   breadcrumbElem = $('.breadcrumbs')
   breadcrumbElem.empty()
   repoName = $('.breadcrumbs').attr('repo-name')
-  topBreadcrumb = $(`<a href='/reviewers/repos/${$('.page-header').attr('repo-id')}'>${repoName}</a><span> / </span>`)
+  topBreadcrumb = $(`<a href='/reviewers/repos/${$('.page-header').attr('repo-token')}'>${repoName}</a><span> / </span>`)
   topBreadcrumb.appendTo(breadcrumbElem)
   for (i = 0; i < data.breadcrumbs.length; i++) {
     // 1. 第二階層がファイルかどうか
