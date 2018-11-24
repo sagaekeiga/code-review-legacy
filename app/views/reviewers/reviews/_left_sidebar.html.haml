@@ -1,18 +1,19 @@
 .side-menus
-  .dropdown
-    %button.btn-sm.btn-block.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }
-      - if @review.persisted?
-        .commit-id= review.check_progress
-      - else
-        = 'レビューを選択する'
-      %span.caret
-    %ul.dropdown-menu
-      - reviews.each.with_index(1) do |review, index|
-        %li
-          = link_to [:reviewers, pull, review] do
-            .index= index
-            .image= image_tag review.reviewer.avatar_url
-            .commit-id= review.check_progress
+  - if reviews.present?
+    .dropdown
+      %button.btn-sm.btn-block.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }
+        - if @review.persisted?
+          .commit-id= review.check_progress
+        - else
+          = t 'reviewers.reviews.sidebars.select_review'
+        %span.caret
+      %ul.dropdown-menu
+        - reviews.each.with_index(1) do |review, index|
+          %li
+            = link_to [:reviewers, pull, review] do
+              .index= index
+              .image= image_tag review.reviewer.avatar_url
+              .commit-id= review.check_progress
   %li
     = link_to view_check_reviewers_pull_reviews_path(pull), class: is_same_action_name?('view_check') do
       %i.fas.fa-check-circle{ class: pull.check_view_check }
@@ -42,7 +43,7 @@
   %li
     - if review.persisted?
       = link_to pull.replies_path(params[:id] || params[:review_id]), class: is_same_action_name?('replies') do
-        %i.fas.fa-check-circle{ class: pull.completed? ? 'active' : '' }
+        %i.fas.fa-check-circle{ class: pull.check_replies }
         = I18n.t('reviewers.reviews.sidebars.titles.replies')
     - else
       .menu
@@ -50,5 +51,5 @@
         = I18n.t('reviewers.reviews.sidebars.titles.replies')
   %li
     .menu
-      %i.fas.fa-check-circle{ class: review.persisted? && pull.completed? ? 'active' : '' }
+      %i.fas.fa-check-circle{ class: review.check_complete_review }
       = I18n.t('reviewers.reviews.sidebars.titles.complete')

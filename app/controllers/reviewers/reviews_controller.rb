@@ -8,11 +8,11 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_reviews, only: %i(view_check new create show edit update)
 
   def view_check
-    @review = Review.new
+    @review = Review.new.decorate
   end
 
   def new
-    @review = Review.new
+    @review = Review.new.decorate
   end
 
   def create

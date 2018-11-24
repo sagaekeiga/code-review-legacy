@@ -13,7 +13,7 @@ ja:
     review:
       event:
         pending: 審査中
-        comment: 作成ずみ
+        comment: 作成済み
   reviewers:
     reviews:
       sidebars:
@@ -25,6 +25,7 @@ ja:
           replies: リプライ対応
           complete: 完了
         working: 作業中
+        select_review: レビューを選択する
       view_check:
         next: レビューを開始する
         description_is_blank: 説明はありません

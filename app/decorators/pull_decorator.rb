@@ -47,4 +47,8 @@ class PullDecorator < ApplicationDecorator
   def check_view_check
     reviewer_pulls.present? ? 'active' : ''
   end
+
+  def check_replies
+    completed? ? 'active' : ''
+  end
 end

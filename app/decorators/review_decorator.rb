@@ -17,4 +17,8 @@ class ReviewDecorator < ApplicationDecorator
   def check_progress
     remote_id.present? ? remote_id : I18n.t('reviewers.reviews.sidebars.working')
   end
+
+  def check_complete_review
+    persisted? && pull.completed? ? 'active' : ''
+  end
 end
