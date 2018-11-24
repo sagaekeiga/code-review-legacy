@@ -1,6 +1,6 @@
 .container
   .col-xs-12
-    .page-header{ 'repo-id': @repo.id }
+    .page-header{ 'repo-id': @repo.id, 'repo-token': @repo.token }
       %h3= @repo.full_name
     = render 'reviewers/shared/repos/tab', repo: @repo
     .input-group

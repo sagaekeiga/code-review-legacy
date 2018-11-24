@@ -9,6 +9,7 @@
 #  private         :boolean
 #  resource_type   :string
 #  status          :integer
+#  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  installation_id :bigint(8)
@@ -21,6 +22,7 @@
 #
 
 class Repo < ApplicationRecord
+  include GenToken, FriendlyId
   acts_as_paranoid
   paginates_per 10
   # -------------------------------------------------------------------------------

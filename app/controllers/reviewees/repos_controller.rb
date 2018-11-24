@@ -22,6 +22,6 @@ class Reviewees::ReposController < Reviewees::BaseController
   private
 
   def set_repo
-    @repo = Repo.find(params[:id]).decorate
+    @repo = Repo.friendly.find(params[:id]).decorate
   end
 end
