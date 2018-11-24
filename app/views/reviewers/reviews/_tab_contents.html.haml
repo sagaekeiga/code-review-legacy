@@ -13,7 +13,7 @@
         チェック項目はありません。
 / issues
 #issueTab.hidden.tab-content
-  .page-header{ 'repo-id': pull.repo.id, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
+  .page-header{ 'repo-token': pull.repo.token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
     %h1
       %strong= pull.title
   #loader.text-center= image_tag 'loader.gif'

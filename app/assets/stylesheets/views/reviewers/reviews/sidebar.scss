@@ -1,0 +1,99 @@
+.review {
+  margin-top: $base-margin;
+  margin-bottom: $base-margin;
+  .left-sidebar, .right-sidebar {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .left-sidebar {
+      position: fixed;
+      top: 55px;
+      bottom: 0;
+      left: 0;
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: $color-blue;
+      box-shadow: 0 0 2px gray;
+      .side-menus {
+        margin-top: $base-margin;
+        li {
+          list-style: none;
+          padding: $base-padding;
+          a, .menu {
+            text-decoration: none;
+            color: $color-white;
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-size: $base-font-size * 1.5;
+            &.active{
+              color: $color-github-yellow;
+            }
+            i {
+              color: $color-line;
+            }
+          }
+        }
+      }
+    }
+    .right-sidebar {
+      position: fixed;
+      top: 45px;
+      bottom: 0;
+      right: 0;
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: $color-sub-blue;
+      box-shadow: 0 0 2px gray;
+      .side-menu {
+        margin-top: $base-margin;
+        li {
+          list-style: none;
+          padding: $base-padding * 4;
+          &.active{
+            background-color: $color-dark-gray;
+          }
+          a {
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-size: $base-font-size * 1.5;
+            color: $color-dark-gray;
+            &.active{
+              background-color: $color-dark-gray;
+              color: $color-sub-blue;
+            }
+            i {
+              position:relative;
+              float:left;
+              left: 23px;
+            }
+            small {
+              font-size: $base-font-size;
+              letter-spacing: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  .page-header {
+    border-bottom: none;
+    margin-bottom: $base-margin * 2;
+  }
+  .panel {
+    box-shadow: none;
+    margin-bottom: 0;
+    .panel-body {
+      padding: 0;
+    }
+  }
+  hr {
+    margin-top: 40px;
+	}
+	.workspace {
+		margin-top: $base-margin * 4;
+	}
+}
