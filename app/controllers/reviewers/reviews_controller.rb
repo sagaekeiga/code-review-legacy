@@ -5,6 +5,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_numbers, only: %i(new show edit)
   before_action :set_commits, only: %i(new show edit)
   before_action :set_changed_files, only: %i(new create show edit)
+  before_action :set_reviews, only: %i(view_check new create show edit update)
 
   def view_check
     @review = Review.new
@@ -59,7 +60,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_review
-    @review = current_reviewer.reviews.find(params[:id] || params[:review_id])
+    @review = current_reviewer.reviews.find(params[:id] || params[:review_id]).decorate
   end
 
   def set_commits
@@ -72,5 +73,9 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def review_params
     params.require(:review).permit(:body)
+  end
+
+  def set_reviews
+    @reviews = current_reviewer.reviews.order(:created_at)
   end
 end

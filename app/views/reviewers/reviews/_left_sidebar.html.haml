@@ -1,16 +1,31 @@
 .side-menus
+  -
+  .dropdown
+    %button.btn-sm.btn-block.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }
+      - if @review.persisted?
+        .commit-id= review.check_progress
+      - else
+        = 'レビューを選択する'
+      %span.caret
+    %ul.dropdown-menu
+      - current_reviewer.reviews.order(:created_at).decorate.each.with_index(1) do |review, index|
+        %li
+          = link_to [:reviewers, pull, review] do
+            .index= index
+            .image= image_tag review.reviewer.avatar_url
+            .commit-id= review.check_progress
   %li
     = link_to view_check_reviewers_pull_reviews_path(pull), class: is_same_action_name?('view_check') do
-      %i.fas.fa-check-circle
+      %i.fas.fa-check-circle{ class: pull.check_view_check }
       = I18n.t('reviewers.reviews.sidebars.titles.view_check')
   %li
     = link_to file_reviewers_pull_reviews_path(pull), class: is_same_action_name?('new') do
-      %i.fas.fa-check-circle
+      %i.fas.fa-check-circle{ class: review.persisted? ? 'active' : '' }
       = I18n.t('reviewers.reviews.sidebars.titles.new')
   %li
     - if review.persisted?
       = link_to reviewers_pull_review_path(pull, review), class: is_same_action_name?('show') do
-        %i.fas.fa-check-circle
+        %i.fas.fa-check-circle{ class: review.check_pass_review }
         = I18n.t('reviewers.reviews.sidebars.titles.show')
     - else
       .menu
@@ -19,7 +34,7 @@
   %li
     - if review.persisted?
       = link_to edit_reviewers_pull_review_path(pull, review), class: is_same_action_name?('edit') do
-        %i.fas.fa-check-circle
+        %i.fas.fa-check-circle{ class: review.check_pass_review }
         = I18n.t('reviewers.reviews.sidebars.titles.edit')
     - else
       .menu
@@ -28,7 +43,7 @@
   %li
     - if review.persisted?
       = link_to pull.replies_path(params[:id] || params[:review_id]), class: is_same_action_name?('replies') do
-        %i.fas.fa-check-circle
+        %i.fas.fa-check-circle{ class: pull.completed? ? 'active' : '' }
         = I18n.t('reviewers.reviews.sidebars.titles.replies')
     - else
       .menu
@@ -36,11 +51,5 @@
         = I18n.t('reviewers.reviews.sidebars.titles.replies')
   %li
     .menu
-      %i.fas.fa-check-circle
+      %i.fas.fa-check-circle{ class: pull.completed? ? 'active' : '' }
       = I18n.t('reviewers.reviews.sidebars.titles.complete')
-  %h3 Reviews
-  - pull.reviews.each do |review|
-    %li
-      = link_to view_check_reviewers_pull_reviews_path(pull, review_id: review.id), class: is_same_action_name?('complete') do
-        %i.fas.fa-check-circle
-        = I18n.t('reviewers.reviews.sidebars.titles.complete')
