@@ -9,6 +9,5 @@ class WelcomeController < ApplicationController
   end
 
   def term
-    
   end
 end
