@@ -6,4 +6,4 @@ reviewees:
   memberships:
     join: http://<%= ENV['WEB_DOMAIN'] %>/reviewees/memberships/join?
 links:
-  home: http://<%= ENV[WEB_DOMAIN] %>
+  home: http://<%= ENV['WEB_DOMAIN'] %>
