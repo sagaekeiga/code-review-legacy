@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   constraints(WebDomainConstraint) do
     root to: 'welcome#index'
+    get 'welcome/term'
     get '/auth/github/callback', to: 'connects#github'
 
     devise_scope :reviewee do
