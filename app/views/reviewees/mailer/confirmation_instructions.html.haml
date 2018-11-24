@@ -1,4 +1,15 @@
-%p
-  Welcome #{@email}!
-%p You can confirm your account email through the link below:
-%p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+%p Mergeeのご利用ありがとうございます。
+%p メールアドレス確認のためご連絡いたしました。
+%p このメールアドレスをMergeeに登録してよい場合は、 以下のリンクをクリックして続行してください。
+%p= link_to 'メールアドレスを登録する', confirmation_url(@resource, confirmation_token: @token)
+%br
+%br
+%p 【心あたりのない場合】
+= 'このメールは無視してください。'
+%br
+= 'Mergeeのサービスでこのメールアドレスが入力されたので'
+%br
+= 'メールを送信しましたが、入力間違いで、あなたに届いてしまいました。'
+%br
+= 'ご迷惑をおかけして申し訳ございませんでした。'
+%br
