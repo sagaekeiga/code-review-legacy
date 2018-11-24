@@ -4,5 +4,5 @@
       %h4 全体に対するコメント
     %small.text-muted
       = date_format(review.updated_at)
-  .panel-body
+  .panel-body.gray-space
     .panel-text= markdown(review.body)
