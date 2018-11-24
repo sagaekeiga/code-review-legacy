@@ -1,10 +1,11 @@
+- content_for(:no_footer_page, true)
 .container-fluid
   .row
     .review
       .left-sidebar.col-sm-2.hidden-xs
-        = render 'left_sidebar', pull: @pull
+        = render 'reviewers/reviews/left_sidebar', pull: @pull
       .col-sm-10.col-sm-offset-2.p-l-0
-        = render 'right_sidebar'
+        = render 'reviewers/reviews/right_sidebar'
         .col-sm-8.col-sm-offset-2.p-l-0.conversation-wrapper
           #conversationTab.tab-content.active
             .page-header{ 'pull-id': @pull.id }
