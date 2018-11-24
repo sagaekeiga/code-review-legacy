@@ -35,17 +35,21 @@
   @import 'issues';
   @import 'reviewers';
   @import 'commits';
-  @import 'markdown';
   @import 'buttons';
   @import 'changed_files';
-  @import 'replies';
   @import 'github';
+
+  // Component
   @import 'components/navbar';
   @import 'components/switch';
   @import 'components/code';
+  @import 'components/markdown';
+
+  // Views
   @import 'views/reviewers/dashboard';
   @import 'views/reviewees/repos/show';
   @import 'views/reviewers/repos/show';
+  @import 'views/reviewers/replies/index';
   @import 'views/reviewers/contents/index';
   @import 'views/reviewers/pending';
 

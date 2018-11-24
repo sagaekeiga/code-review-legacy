@@ -61,7 +61,7 @@
                   %strong= message
           = yield
 
-    - unless is_same_controller_name?('reviews') || content_for?(:no_footer_page)
+    - unless is_same_controller_name?('reviews') || is_same_controller_name?('replies') || content_for?(:no_footer_page)
       .footer
         .container-fluid
           .text-center

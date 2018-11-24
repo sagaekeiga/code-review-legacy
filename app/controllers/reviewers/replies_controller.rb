@@ -3,6 +3,15 @@ require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 
 class Reviewers::RepliesController < Reviewers::BaseController
+  def index
+    @pull = Pull.friendly.find(params[:pull_token]).decorate
+    @numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
+    @commits = @pull.commits.decorate
+    @changed_files = @pull.files_changed.decorate
+    @review = current_reviewer.reviews.find(params[:id] || params[:review_id])
+    @reviews = @pull.reviews.where(event: %i(comment issue_comment))
+  end
+
   def create
     review = Review.find(params[:review_id])
     review_comment = ReviewComment.find(params[:review_comment_id])
