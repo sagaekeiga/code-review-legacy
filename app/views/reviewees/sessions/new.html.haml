@@ -10,12 +10,12 @@
             .input-group
               %span.input-group-addon
                 %i.fas.fa-at
-              = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.email')
+              = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.email'), required: true
           .form-group
             .input-group
               %span.input-group-addon
                 %i.fas.fa-lock
-              = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.password')
+              = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.password'), required: true
           - if devise_mapping.rememberable?
             .form-group
               = f.check_box :remember_me
