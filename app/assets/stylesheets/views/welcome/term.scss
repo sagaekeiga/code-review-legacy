@@ -1,0 +1,32 @@
+.welcome-term {
+  .service-of-terms {
+    margin-top: $base-margin * 5;
+    h1, h2 {
+      font-weight: bold;
+    }
+    h1 {
+      font-size: $base-margin * 2;
+    }
+    h2 {
+      font-size: $base-height / 2;
+    }
+    .border-bottom {
+      border-bottom: 1px solid $color-darker-gray;
+      padding-bottom: 7px;
+    }
+    .content {
+      font-size: $base-margin;
+      margin: $base-margin + 4 0px 30px 0px;
+      p {
+        letter-spacing: 0.1px;
+        margin: 0;
+      }
+      .bullet {
+        padding: $base-font-size - 2 $base-padding + 1;
+      }
+    }
+    .article-eighth {
+      margin-bottom: $base-margin * 5;
+    }
+  }
+}

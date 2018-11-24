@@ -7,4 +7,7 @@ class WelcomeController < ApplicationController
       select{ |pull| pull.repo.private == false }.
       first(10)
   end
+
+  def term
+  end
 end
