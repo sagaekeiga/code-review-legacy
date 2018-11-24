@@ -1,5 +1,4 @@
 .side-menus
-  -
   .dropdown
     %button.btn-sm.btn-block.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }
       - if @review.persisted?
@@ -8,7 +7,7 @@
         = 'レビューを選択する'
       %span.caret
     %ul.dropdown-menu
-      - current_reviewer.reviews.order(:created_at).decorate.each.with_index(1) do |review, index|
+      - reviews.each.with_index(1) do |review, index|
         %li
           = link_to [:reviewers, pull, review] do
             .index= index
@@ -51,5 +50,5 @@
         = I18n.t('reviewers.reviews.sidebars.titles.replies')
   %li
     .menu
-      %i.fas.fa-check-circle{ class: pull.completed? ? 'active' : '' }
+      %i.fas.fa-check-circle{ class: review.persisted? && pull.completed? ? 'active' : '' }
       = I18n.t('reviewers.reviews.sidebars.titles.complete')

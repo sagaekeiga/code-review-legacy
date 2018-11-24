@@ -8,11 +8,13 @@ class ReviewDecorator < ApplicationDecorator
     persisted? ? 'unchecked.png' : 'checked.png'
   end
 
+  # 審査を通過していればactiveクラスを返す
   def check_pass_review
     (approve? || comment?) ? 'active' : ''
   end
 
+  # 作業中であれば「作業中」を返す。
   def check_progress
-    remote_id.present? ? remote_id : '作業中'
+    remote_id.present? ? remote_id : I18n.t('reviewers.reviews.sidebars.working')
   end
 end

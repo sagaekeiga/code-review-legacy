@@ -76,6 +76,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_reviews
-    @reviews = current_reviewer.reviews.order(:created_at)
+    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
   end
 end
