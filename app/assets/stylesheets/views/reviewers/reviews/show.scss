@@ -1,10 +1,10 @@
 .reviews-show {
-	.panel {
-		.panel-body {
-			&.gray-space {
-				background-color: $color-sub-gray;
-				padding: $base-padding * 3;
-			}
-		}
-	}
+  .panel {
+    .panel-body {
+      &.gray-space {
+        background-color: $color-sub-gray;
+        padding: $base-padding * 3;
+      }
+    }
+  }
 }
