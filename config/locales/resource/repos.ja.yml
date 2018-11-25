@@ -26,6 +26,10 @@ ja:
         title: タイトル
         created: 作成日
         review_status: レビューステータス
+  reviewers:
+    repos:
+      show:
+        tab_title: Code
   admins:
     repos:
       index:
