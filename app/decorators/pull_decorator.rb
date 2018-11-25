@@ -43,4 +43,12 @@ class PullDecorator < ApplicationDecorator
   def replies_path(id_param)
     id_param ? h.reviewers_pull_review_replies_path(pull, review_id: id_param) : '#'
   end
+
+  def check_view_check
+    reviewer_pulls.present? ? 'active' : ''
+  end
+
+  def check_replies
+    completed? ? 'active' : ''
+  end
 end

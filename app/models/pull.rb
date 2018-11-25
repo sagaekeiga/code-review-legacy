@@ -42,6 +42,7 @@ class Pull < ApplicationRecord
   has_many :changed_files, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :commits, dependent: :destroy
+  has_many :reviewer_pulls, dependent: :destroy
 
   # -------------------------------------------------------------------------------
   # Validations

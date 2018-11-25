@@ -31,7 +31,59 @@
               color: $color-github-yellow;
             }
             i {
-              color: $color-line;
+              color: $color-sub-gray;
+              &.active {
+                color: $color-line;
+              }
+            }
+          }
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .dropdown {
+          margin-bottom: $base-margin;
+          button {
+            color: $color-blue;
+            background-color: $color-white;
+              .image {
+                display: inline-block;
+                img {
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 50%;
+                }
+              }
+              .commit-id {
+                font-size: $base-font-size;
+                display: inline-block;
+                color: $color-blue;
+              }
+          }
+          ul.dropdown-menu {
+            color: $color-blue;
+            width: 100%;
+            li {
+              color: $color-blue;
+                .index {
+                  font-size: $base-font-size;
+                  display: inline-block;
+                  color: $color-blue;
+                }
+                .image {
+                  display: inline-block;
+                  img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                  }
+                }
+                .commit-id {
+                  font-size: $base-font-size;
+                  display: inline-block;
+                  color: $color-blue;
+                }
             }
           }
         }
