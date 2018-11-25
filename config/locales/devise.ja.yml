@@ -118,7 +118,7 @@ ja:
       updated: 'パスワードを変更しました。'
     confirmations:
       send_instructions: '登録方法を数分以内にメールでご連絡します。'
-      confirmed: 'メール認証が完了しました、ログイン後Mergeeをご利用いただけます'
+      confirmed: 'メール認証が完了しました、Github認証後Mergeeをご利用いただけます'
     registrations:
       signed_up: 'アカウント登録を受け付けました。'
       updated: 'アカウントを更新しました。'
