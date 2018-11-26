@@ -18,7 +18,7 @@ ja:
     repo:
       status:
         hidden: 非公開
-        showing: 公開中
+        showing: 公開中(アサインされたレビュワーしか閲覧できません)
   reviewees:
     repos:
       show:
