@@ -3,12 +3,8 @@
     .page-header{ 'repo-id': @repo.id, 'repo-token': @repo.token }
       %h3= @repo.full_name
     = render 'reviewers/shared/repos/tab', repo: @repo
-    .input-group
-      %input{ type: 'text', class: 'form-control', placeholder: 'キーワード' }
-      .input-group-btn
-        %button{ type: 'button', class: 'btn btn-primary' } 検索
     .contents-wrapper
-      .text-center= image_tag 'loader'
+      .text-center.loader= image_tag 'loader'
       .code-wrapper.hidden
         .breadcrumbs{ 'repo-name': @repo.name }
         .panel.panel-default

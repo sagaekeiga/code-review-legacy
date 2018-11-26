@@ -9,16 +9,6 @@ class Reviewees::ReposController < Reviewees::BaseController
     @pulls = @repo.pulls.order(remote_created_at: :desc)
   end
 
-  def update
-    case @repo.status
-    when 'hidden'
-      @repo.showing!
-    when 'showing'
-      @repo.hidden!
-    end
-    redirect_to reviewees_repo_contents_url(@repo), success: t(".#{@repo.status}")
-  end
-
   private
 
   def set_repo
