@@ -91,6 +91,12 @@ class Pull < ApplicationRecord
       order(:created_at)
   }
 
+  scope :reviewed_in_month, lambda {
+    completed.
+    where(updated_at: Time.zone.today.beginning_of_month..Time.zone.today.end_of_month).
+    joins(:reviews).
+    where(reviews: { status: :comment })
+  }
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
