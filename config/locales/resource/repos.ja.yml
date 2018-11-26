@@ -14,11 +14,6 @@ ja:
         resource_id: ユーザーID
         created_at: 作成日時
         updated_at: 更新日時
-  enums:
-    repo:
-      status:
-        hidden: 非公開
-        showing: 公開中
   reviewees:
     repos:
       show:

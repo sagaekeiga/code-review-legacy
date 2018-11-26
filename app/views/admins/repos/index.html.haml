@@ -7,7 +7,6 @@
     %thead
       %tr
         %th= t 'activerecord.attributes.repo.name'
-        %th= t 'activerecord.attributes.repo.status'
         %th= t 'activerecord.attributes.repo.remote_id'
         %th= t 'activerecord.attributes.repo.resource_id'
         %th= t 'activerecord.attributes.repo.created_at'
@@ -17,7 +16,6 @@
       - @repos.each do |repo|
         %tr
           %td= link_to repo.name, [:admins, repo]
-          %td= repo.status_i18n
           %td= repo.remote_id
           %td= repo.resource_id
           %td= l repo.created_at

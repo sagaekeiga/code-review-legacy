@@ -33,6 +33,7 @@
 FactoryBot.define do
   factory :reviewer do
     sequence(:email) { |n| "reviewer#{n}@example.com" }
+    confirmed_at Time.zone.today
     password              'hogehoge'
     password_confirmation 'hogehoge'
   end

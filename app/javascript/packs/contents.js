@@ -11,7 +11,7 @@ $(document).ready(function () {
 $(document).off('click', '.file, .dir');
 $(document).on('click', '.file, .dir', function (e) {
   e.preventDefault()
-  $('img').removeClass('hidden')
+  $('.loader').removeClass('hidden')
   $('.code-wrapper').addClass('hidden')
   $('.table').empty()
   fileType = $(this).attr('class')
@@ -90,7 +90,7 @@ $(document).on('click', '.file, .dir', function (e) {
       breadcrumb.appendTo(breadcrumbElem)
       $('.panel-title').text(data.breadcrumbs[data.breadcrumbs.length - 1])
     }
-    $('img').addClass('hidden')
+    $('.loader').addClass('hidden')
     $('.panel-heading').removeClass('hidden')
     $('.code-wrapper').removeClass('hidden')
   }).fail(function (data) {
@@ -128,7 +128,7 @@ function setContents(repoId) {
       `)
       tbody.appendTo('table')
     }
-    $('img').addClass('hidden')
+    $('.loader').addClass('hidden')
     $('.code-wrapper').removeClass('hidden')
   }).fail(function (data) {
     issueList.text('issueの取得に失敗しました')
