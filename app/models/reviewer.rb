@@ -111,12 +111,12 @@ class Reviewer < ApplicationRecord
   end
 
   def monthly_reward
-    return 0 unless pulls.completed.present?
+    changed_files_count = 0
+    return changed_files_count unless pulls.completed.present?
     pulls = pulls.completed.
       where(updated_at: Time.zone.today.beginning_of_month..Time.zone.today.end_of_month).
       joins(:reviews).
-      where(reviews: { status: :comment}).
-    changed_files_count = 0
+      where(reviews: { status: :comment })
     pulls.each { |pull| changed_files_count += pull.changed_files.count }
     changed_files_count * Settings.rewards.price
   end
