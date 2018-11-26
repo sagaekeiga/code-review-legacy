@@ -4,13 +4,8 @@ class ReviewersController < Reviewers::BaseController
 
   def dashboard
     @repos = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10).decorate
-    @pulls = Pull.includes(:repo).joins(:repo).request_reviewed.merge(current_reviewer.repos).order(created_at: :desc).page(params[:page])
+    @pulls = Pull.feed(current_reviewer.repos).page(params[:page])
     @pending_reviews = current_reviewer.reviews.pending.includes(:pull)
-  end
-
-  def my_page
-    @reviewed_pulls = Pull.where(id: current_reviewer.reviews.comment.pluck(:pull_id)).page(params[:pages])
-    @pending_reviews = current_reviewer.reviews.pending
   end
 
   def pending

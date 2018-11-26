@@ -100,6 +100,7 @@
       display: -webkit-flex;
       display: flex;
       padding-left: $base-font-size * 10;
+      margin-top: $base-margin * 1.5;
       .main {
         display: block;
         width: $base-height-lg * 6.6;
@@ -115,13 +116,22 @@
           .add-light-white {
             background-color: $color-white;
           }
+          // p {
+          //   padding-top: $base-margin;
+          // }
           .pull-title {
-            color: $dashboard-pr-color;
+            color: $color-blue;
             font-weight: bold;
+            // padding-left: $base-margin;
+            // padding-right: $base-margin;
           }
           .repo-path {
             font-weight: lighter;
           }
+          // small {
+          //   padding-left: $base-margin;
+          //   padding-right: $base-margin;
+          // }
           .descrition {
             display: inline;
             color: $color-dark-gray;
@@ -134,10 +144,9 @@
             font-weight: bold;
           }
           td {
-            padding: 0;
+            padding-left: $base-margin;
+            padding-right: $base-margin;
             a {
-              display: inline-block;
-              padding: $base-margin - 1;
               color: $color-dark-gray;
             }
           }
@@ -161,6 +170,25 @@
         margin-bottom: $base-margin + 4;
         .notice-height, .under-review-height {
           min-height: $base-height-lg * 4;
+        }
+        .reward {
+          margin-top: $base-margin * 3;
+          .title {
+            font-size: $base-font-size * 1.5;
+            margin-bottom: $base-margin / 3;
+          }
+          .panel {
+            border: 1px solid $color-sub-gray;
+            padding: $base-margin * 4;
+            .panel-body {
+              .price {
+                letter-spacing: 2px;
+                color: $color-blue;
+                font-size: $base-font-size * 1.5;
+                font-weight: bold;
+              }
+            }
+          }
         }
         .notice-title, .under-review-title {
           span {
@@ -189,6 +217,7 @@
               border-bottom: 1px solid $color-sub-gray;
               .pr-title {
                 font-size: $base-font-size;
+                color: $color-blue;
                 a {
                   color: $color-hover-gray;
                   font-weight: 600;

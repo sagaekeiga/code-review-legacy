@@ -81,6 +81,17 @@ class Pull < ApplicationRecord
   attribute :status, default: statuses[:connected]
 
   # -------------------------------------------------------------------------------
+  # Scopes
+  # -------------------------------------------------------------------------------
+  scope :feed, lambda { |repos|
+    includes(:repo).
+      joins(:repo).
+      request_reviewed.
+      merge(repos).
+      order(:created_at)
+  }
+
+  # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
   # deletedなpullを考慮しているかどうかがupdate_by_pull_request_event!との違い

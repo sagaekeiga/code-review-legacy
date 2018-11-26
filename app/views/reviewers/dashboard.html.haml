@@ -1,4 +1,5 @@
 - content_for(:no_footer_page, true)
+- content_for(:no_flash_msg_page, true)
 
 .reviewer-dashboard-wrapper
   .col-xs-2
@@ -20,12 +21,20 @@
             - @pulls.each_with_index do |pull, i|
               %tr{ class: i % 2 == 0 ? 'add-light-blue' : 'add-light-white' }
                 %td
-                  = link_to pull.title&.truncate(20), view_check_reviewers_pull_reviews_path(pull), class: 'pull-title'
-                  .pull-right= link_to pull.repo.full_name.truncate(25), class: 'repo-path'
+                  %p= link_to pull.title&.truncate(20), view_check_reviewers_pull_reviews_path(pull), class: 'pull-title'
+                  %small= link_to pull.repo.decorate.name_including_orgs, class: 'repo-path'
 
         .text-center= paginate @pulls
 
       .sidebar
         .sidebar-item.sidebar-item-fixed
+          .reward
+            .title
+              %i.fas.fa-yen-sign
+              %span 今月の報酬
+            .panel
+              .panel-default
+                .panel-body
+                  .price.text-center= number_to_currency current_reviewer.monthly_reward
           - if @pending_reviews
             = render 'under_review', pending_reviews: @pending_reviews
