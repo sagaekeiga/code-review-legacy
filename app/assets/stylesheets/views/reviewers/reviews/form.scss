@@ -199,6 +199,7 @@
                 .panel-body {
                   padding: $base-padding * 3;
                   .panel-text {
+                    font-family: $font-static;
                     pre {
                       border-radius: none;
                       border: none;
