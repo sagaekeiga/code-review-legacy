@@ -57,7 +57,7 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attribute :status, default: statuses[:hidden]
+  attribute :status, default: statuses[:showing]
   attribute :private, default: false
   # -------------------------------------------------------------------------------
   # Scopes
