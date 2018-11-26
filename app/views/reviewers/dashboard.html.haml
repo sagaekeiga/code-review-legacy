@@ -29,12 +29,14 @@
       .sidebar
         .sidebar-item.sidebar-item-fixed
           .reward
-            .title
+            .title.text-muted
               %i.fas.fa-yen-sign
-              %span 今月の報酬
+              %strong= t '.reward_in_month'
             .panel
               .panel-default
                 .panel-body
-                  .price.text-center= number_to_currency current_reviewer.monthly_reward
+                  .price
+                    = current_reviewer.monthly_reward.to_s(:delimited)
+                    %span.text-muted.yen= t '.yen'
           - if @pending_reviews
             = render 'under_review', pending_reviews: @pending_reviews

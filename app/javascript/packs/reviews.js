@@ -55,21 +55,7 @@ function hoverColor() {
   $('.hljs-addition').each(function(i, elem) {
     $(elem).css('cursor','pointer');
     var color = $(elem).css("color");
-    $(elem).hover(
-      function(){
-        $(this).css({ 'color':'#FFFFFF', 'text-decoration':'none' });
-      },
-      function(){
-        $(this).css({ 'color': color, 'text-decoration':'none' });
-      }
-    )
-  })
-};
-
-function hoverColor() {
-  $('.hljs-addition').each(function(i, elem) {
-    $(elem).css('cursor','pointer');
-    var color = $(elem).css("color");
+    console.log(color)
     $(elem).hover(
       function(){
         $(this).css({ 'color':'#FFFFFF', 'text-decoration':'none' });
@@ -89,7 +75,7 @@ function hoverCode() {
 
      if ($(this).children($('td')).hasClass('bg-success')){
         bg_class = 'bg-success'
-     }else{
+     } else {
         bg_class = 'bg-danger'
      };
 

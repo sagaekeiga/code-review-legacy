@@ -91,12 +91,6 @@ class Pull < ApplicationRecord
       order(:created_at)
   }
 
-  scope :reviewed_in_month, lambda {
-    completed.
-    where(updated_at: Time.zone.today.beginning_of_month..Time.zone.today.end_of_month).
-    joins(:reviews).
-    where(reviews: { status: :comment })
-  }
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
@@ -165,6 +159,13 @@ class Pull < ApplicationRecord
     false
   end
 
+  # 月内に行ったレビューの数を返す
+  def self.reviewed_in_month
+    completed.
+      joins(:reviews).
+      where(updated_at: Time.zone.today.beginning_of_month..Time.zone.today.end_of_month).
+      where(reviews: { event: :comment })
+  end
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------

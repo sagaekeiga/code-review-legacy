@@ -167,25 +167,33 @@
           .title {
             font-size: $base-font-size * 1.5;
             margin-bottom: $base-margin / 3;
+            strong {
+              padding-left: $base-padding + 1;
+            }
           }
           .panel {
-            border: 1px solid $color-sub-gray;
-            padding: $base-margin * 4;
+            border-bottom: 1px solid $color-sub-gray;
+            padding: $base-margin * 2;
             .panel-body {
               .price {
                 letter-spacing: 2px;
                 color: $color-blue;
-                font-size: $base-font-size * 1.5;
+                font-size: $base-font-size * 3;
                 font-weight: bold;
+                text-align: center;
+                .yen {
+                  font-size: $base-font-size;
+                  font-weight: 200;
+                }
               }
             }
           }
         }
         .notice-title, .under-review-title {
-          span {
+          strong {
             padding-left: $base-padding + 1;
           }
-          font-size: $base-margin + 4;
+          font-size: $base-font-size * 1.5;
           padding: $base-padding * 2;
           .fa-hourglass-end {
             font-size: $base-margin + 2;

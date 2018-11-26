@@ -113,8 +113,8 @@ class Reviewer < ApplicationRecord
   def monthly_reward
     changed_files_count = 0
     return changed_files_count unless pulls.completed.present?
-    pulls = pulls.reviewed_in_month
-    pulls.each { |pull| changed_files_count += pull.changed_files.count }
+    pulls = self.pulls.reviewed_in_month
+    pulls.each { |pull| changed_files_count += pull.changed_files.size }
     changed_files_count * Settings.rewards.price
   end
 end
