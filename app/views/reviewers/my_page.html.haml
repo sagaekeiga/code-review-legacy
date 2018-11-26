@@ -63,7 +63,7 @@
                 %td= link_to reviewed_pull.title&.truncate(40), reviewers_pull_path(reviewed_pull)
                 %td.text-center= reviewed_pull.repo_private
                 %td.text-center
-                  = link_to reviewers_pull_path(reviewed_pull), class: 'btn btn-block btn-outline-primary' do
+                  = link_to reviewers_pull_path(reviewed_pull), class: 'btn btn-block btn-primary' do
                     %i.fas.fa-eye
                     &nbsp;
                     = t('helpers.links.confirm')

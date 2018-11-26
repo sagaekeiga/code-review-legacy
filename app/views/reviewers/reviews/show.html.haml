@@ -15,7 +15,7 @@
                 %h1
                   %strong= @pull.title
                   %small
-                    = link_to '修正する', edit_reviewers_pull_review_path(@pull, @review), class: 'btn btn-outline-primary pull-right'
+                    = link_to '修正する', edit_reviewers_pull_review_path(@pull, @review), class: 'btn btn-primary pull-right'
                 %h3
                   %span.label.label-default= @review.event_i18n
               .reviews-form-wrapper
