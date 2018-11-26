@@ -50,9 +50,6 @@ class Repo < ApplicationRecord
     where(resource_id: reviewee.orgs.owner.pluck(:id), resource_type: 'Org')
   }
 
-  scope :feed_for_pulls, lambda {
-    Pull.request_reviewed.where(repo_id: pluck(:id)).order(:created_at)
-  }
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

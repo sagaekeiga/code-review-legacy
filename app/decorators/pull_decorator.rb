@@ -14,18 +14,6 @@ class PullDecorator < ApplicationDecorator
     end
   end
 
-  # プルのステータスに基づきボタンカラーを返す
-  def btn_class_by_status
-    case object.status
-    when 'connected'
-      'btn-outline-primary'
-    when 'request_reviewed', 'reviewed'
-      'btn-success'
-    when 'completed'
-      'btn-warning'
-    end
-  end
-
   def back_path
     h.file_reviewers_pull_reviews_path(object)
   end
