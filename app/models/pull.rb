@@ -59,14 +59,16 @@ class Pull < ApplicationRecord
   #
   # - connected        : APIのレスポンスから作成された状態
   # - request_reviewed : レビューをリクエストした
+  # - pending          : コメントした
   # - reviewed         : レビューを完了した
   # - completed        : リモートのPRをMerge/Closeした
   #
   enum status: {
-    connected:  1000,
+    connected:        1000,
     request_reviewed: 2000,
-    reviewed: 4000,
-    completed: 5000,
+    pending:          3000,
+    reviewed:         4000,
+    completed:        5000,
   }
 
   # -------------------------------------------------------------------------------
