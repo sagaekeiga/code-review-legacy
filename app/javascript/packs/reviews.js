@@ -55,7 +55,6 @@ function hoverColor() {
   $('.hljs-addition').each(function(i, elem) {
     $(elem).css('cursor','pointer');
     var color = $(elem).css("color");
-    console.log(color)
     $(elem).hover(
       function(){
         $(this).css({ 'color':'#FFFFFF', 'text-decoration':'none' });

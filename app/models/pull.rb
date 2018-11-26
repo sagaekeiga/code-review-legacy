@@ -159,7 +159,7 @@ class Pull < ApplicationRecord
     false
   end
 
-  # 月内に行ったレビューの数を返す
+  # 月内に行ったレビューのプルリクエストを返す
   def self.reviewed_in_month
     completed.
       joins(:reviews).
