@@ -1,8 +1,0 @@
-%tr
-  %td.file-name.col-sm-11
-    = link_to issue.title, [:reviewees, issue.repo, issue]
-  %td.col-sm-1.text-right
-    %button{ type: 'button',
-      class: "btn #{t("views.statuses.buttons.#{issue.publish}")} update-issue-button",
-      'issue-id': issue.id,
-      'repo-id': issue.repo.id }= t "views.statuses.text.#{issue.publish}"

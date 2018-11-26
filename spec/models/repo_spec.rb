@@ -8,7 +8,6 @@
 #  name            :string
 #  private         :boolean
 #  resource_type   :string
-#  status          :integer
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
