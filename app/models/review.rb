@@ -103,6 +103,7 @@ class Review < ApplicationRecord
       review_comment.reviewed!
       review_comment.save!
     end
+    pull.pending!
     review
   end
 
