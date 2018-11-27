@@ -154,7 +154,7 @@ function newBreadcrumbs(data) {
     }
     breadcrumb = $(`
       <span>
-        <a href='#' data-path='${data.breadcrumb_paths[i]}'>${data.breadcrumbs[i]}</a>
+        <a href='#' data-path='${data.breadcrumb_paths[i]}' class='dir'>${data.breadcrumbs[i]}</a>
         <span> / </span>
       </span>
     `)
