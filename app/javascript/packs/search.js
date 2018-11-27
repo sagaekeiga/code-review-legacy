@@ -32,15 +32,15 @@ function Search(elem) {
 		paths = data.paths
 		// 検索結果一覧要素の作成
 		for (i = 0; i < total_count; i++) {
-			// コード要素の生成
-			codeWrapper = $(`
-				<div class='code-wrapper'>
-					<p class='filename'>${names[i]}</p>
-					<div class='panel panel-default' data-path=${paths[i]} data-name=${names[i]}>
+      // コード要素の生成
+      codeWrapper = $(`
+        <div class='code-wrapper'>
+          <p class='filename'>${names[i]}</p>
+          <div class='panel panel-default' data-path=${paths[i]} data-name=${names[i]}>
             <table class='table${i}'></table>
-					</div>
-				</div>
-			`)
+          </div>
+        </div>
+      `)
 			codeWrapper.appendTo('.results-wrapper')
 			for (t = 0; t < highlightContent[i].length; t++) {
 				// DOMエレメント生成
