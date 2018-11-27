@@ -32,8 +32,10 @@
 FactoryBot.define do
   factory :reviewee do
     sequence(:email) { |n| "reviewee#{n}@example.com" }
+    confirmed_at Time.zone.today
     password              'hogehoge'
     password_confirmation 'hogehoge'
+    confirmed_at Time.zone.now
     after(:build) do |reviewee|
       next if Reviewee.first.nil? || Reviewee.second.nil?
       reviewee.github_account ||= build(:reviewees_github_account,

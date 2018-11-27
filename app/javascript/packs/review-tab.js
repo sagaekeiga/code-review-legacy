@@ -1,5 +1,7 @@
 $(document).on('click', '.tab', function (e) {
-  e.preventDefault()
+  if (!$(this).hasClass('repo')) {
+    e.preventDefault()
+  }
   $('li').each(function (index, element) {
     if ($(element).hasClass('active')) {
       $(element).removeClass('active')

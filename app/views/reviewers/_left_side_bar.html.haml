@@ -7,7 +7,7 @@
     %ul
       - repos.each do |repo|
         %li.repo-list
-          = link_to class: 'repo-name' do
+          = link_to [:reviewers, repo], class: 'repo-name' do
             %i.fa.fa-check
             = repo.name.truncate(25)
           = image_tag repo.resource.avatar_url, class: 'reviewee-image'

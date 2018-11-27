@@ -59,14 +59,16 @@ class Pull < ApplicationRecord
   #
   # - connected        : APIのレスポンスから作成された状態
   # - request_reviewed : レビューをリクエストした
+  # - pending          : コメントした
   # - reviewed         : レビューを完了した
   # - completed        : リモートのPRをMerge/Closeした
   #
   enum status: {
-    connected:  1000,
+    connected:        1000,
     request_reviewed: 2000,
-    reviewed: 4000,
-    completed: 5000,
+    pending:          3000,
+    reviewed:         4000,
+    completed:        5000,
   }
 
   # -------------------------------------------------------------------------------
@@ -79,6 +81,17 @@ class Pull < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :status, default: statuses[:connected]
+
+  # -------------------------------------------------------------------------------
+  # Scopes
+  # -------------------------------------------------------------------------------
+  scope :feed, lambda { |repos|
+    includes(:repo).
+      joins(:repo).
+      request_reviewed.
+      merge(repos).
+      order(:created_at)
+  }
 
   # -------------------------------------------------------------------------------
   # ClassMethods
@@ -148,6 +161,13 @@ class Pull < ApplicationRecord
     false
   end
 
+  # 月内に行ったレビューのプルリクエストを返す
+  def self.reviewed_in_month
+    completed.
+      joins(:reviews).
+      where(updated_at: Time.zone.today.beginning_of_month..Time.zone.today.end_of_month).
+      where(reviews: { event: :comment })
+  end
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------

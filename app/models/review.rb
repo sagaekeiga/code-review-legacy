@@ -58,6 +58,7 @@ class Review < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :event, default: events[:pending]
+  attribute :body, default: I18n.t('reviewers.reviews.attributes.default_html')
 
   # -------------------------------------------------------------------------------
   # Validations
@@ -103,6 +104,7 @@ class Review < ApplicationRecord
       review_comment.reviewed!
       review_comment.save!
     end
+    pull.pending!
     review
   end
 

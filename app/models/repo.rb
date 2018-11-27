@@ -8,7 +8,6 @@
 #  name            :string
 #  private         :boolean
 #  resource_type   :string
-#  status          :integer
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -40,24 +39,9 @@ class Repo < ApplicationRecord
   validates :full_name, presence: true, uniqueness: true
   validates :private, inclusion: { in: [true, false] }
   validates :installation_id, presence: true
-
-  # -------------------------------------------------------------------------------
-  # Enumerables
-  # -------------------------------------------------------------------------------
-  # 性別
-  #
-  # - hidden  : 非公開
-  # - showing : 公開
-  #
-  enum status: {
-    hidden:  1000,
-    showing: 2000
-  }
-
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attribute :status, default: statuses[:hidden]
   attribute :private, default: false
   # -------------------------------------------------------------------------------
   # Scopes
@@ -66,9 +50,6 @@ class Repo < ApplicationRecord
     where(resource_id: reviewee.orgs.owner.pluck(:id), resource_type: 'Org')
   }
 
-  scope :feed_for_pulls, lambda {
-    Pull.request_reviewed.where(repo_id: pluck(:id)).order(:created_at)
-  }
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

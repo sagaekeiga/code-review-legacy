@@ -1,20 +1,14 @@
 .reviewers-shared-repos-tab-wrapper
   %ul.nav.nav-tabs.nav-justified
     // Repository
-    %li{ class: is_same_controller_name?('contents') }
-      = link_to '#', class: 'nav-link' do
+    %li{ class: is_same_controller_name?('repos') }
+      = link_to [:reviewers, repo], class: 'nav-link' do
         %i.fas.fa-code
         &nbsp;
-        %b= t 'reviewers.pulls.show.code'
+        %b= t 'reviewers.repos.show.tab_title'
     // Issues
-    %li{ class: is_same_controller_name?('issues') }
-      = link_to reviewers_repo_issues_path(repo), class: 'nav-link' do
-        %i.fas.fa-exclamation-circle
+    %li{ class: is_same_controller_name?('contents') }
+      = link_to reviewers_repo_contents_path(repo), class: 'nav-link' do
+        %i.fas.fa-search
         &nbsp;
-        %b= t 'reviewers.pulls.show.issue'
-    // Pullrequests
-    %li{ class: is_same_controller_name?('pulls') }
-      = link_to '#', class: 'nav-link' do
-        %i.fas.fa-exclamation-circle
-        &nbsp;
-        %b= t 'reviewers.pulls.show.issue'
+        %b= t 'reviewers.contents.index.tab_title'

@@ -1,9 +1,0 @@
-%tr
-  %td= image_tag reviewee.avatar_url, class: 'img-responsive'
-  %td= reviewee.login
-  %td.text-center Member
-  - membership = reviewee.passive_memberships.find_by(owner_id: current_reviewee.id)
-  %td.text-center= membership.status_i18n
-  %td.text-center
-    = link_to reviewees_membership_path(membership, reviewee_id: membership.member_id), method: :delete, data: { confirm: 'メンバーから外します。よろしいですか？' } do
-      %i.fas.fa-ban.color-red

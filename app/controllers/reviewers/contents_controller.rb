@@ -1,6 +1,6 @@
 require 'github/request.rb'
 class Reviewers::ContentsController < Reviewers::BaseController
-  before_action :set_repo, only: %i(index show)
+  before_action :set_repo, only: %i(index)
 
   def index
     if params[:keyword].present?
@@ -49,13 +49,9 @@ class Reviewers::ContentsController < Reviewers::BaseController
     end
   end
 
-  def show
-    @dir_or_files = @content.children.sub(@content).decorate
-  end
-
   private
 
   def set_repo
-    @repo = Repo.friendly.find(params[:repo_id]).decorate
+    @repo = current_reviewer.repos.friendly.find(params[:repo_id]).decorate
   end
 end

@@ -43,3 +43,7 @@ ja:
       read:
         unread: 未対応
         reading: 対応済みにする
+      attributes:
+        default_html: "Mergeeへようこそ！\n\n<<あなたのコメントを書いてください>>\n\n***\nコメントをさらに深く掘り下げたい場合は、コメントには返信することができます。"
+
+

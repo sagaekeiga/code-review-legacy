@@ -55,16 +55,8 @@ Rails.application.routes.draw do
       get :dashboard
       get :integrations
       get 'settings/integrations'
-      resources :memberships, only: %i(index create destroy update) do
-        collection do
-          post :suggest
-          get :join
-        end
-      end
       resources :pulls, only: %i(index)
-      resources :repos, shallow: true, only: %i(index update show) do
-        resources :contents, only: %i(index show update)
-        resources :issues, only: %i(index show update)
+      resources :repos, shallow: true, only: %i(index show) do
         resources :pulls, only: %i(update)
       end
     end
@@ -80,7 +72,7 @@ Rails.application.routes.draw do
     }
 
     namespace :reviewers do
-      get *%i(dashboard my_page integrations pending)
+      get *%i(dashboard integrations pending)
       get 'settings/integrations'
       resources :pulls, only: %i(show update), param: :token do
         get :files
@@ -97,10 +89,6 @@ Rails.application.routes.draw do
       end
       resources :send_mails, only: %i(create)
       resources :review_comments, only: %i(create update destroy show)
-      resources :repos do
-        resources :contents, only: %i(show)
-        resources :issues, only: %i(index show)
-      end
       namespace :github do
         resource :changed_files, only: %i(show)
         resource :contents do
