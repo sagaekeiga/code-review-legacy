@@ -32,9 +32,11 @@ class SendMail < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Callbacks
   # -------------------------------------------------------------------------------
-  after_commit :send_mail, on: :create
+  after_create :send_mail, on: :create
+
+  private
 
   def send_mail
-    AdminMailer.slack_mail(self).deliver_later
+    AdminMailer.slack_mail(self).deliver_later(wait: 5.seconds)
   end
 end

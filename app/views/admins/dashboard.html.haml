@@ -10,13 +10,9 @@
         %th= t 'activerecord.attributes.reviewer/github.avatar_url'
         %th= t 'activerecord.attributes.reviewer/github.email'
         %th= t 'activerecord.attributes.reviewer/github.user_type'
-        %th= t 'activerecord.attributes.reviewer/github.public_repos'
-        %th= t 'activerecord.attributes.reviewer/github.public_gists'
-        %th
     %tbody
       - @pending_reviewers.each do |pending_reviewer|
         %tr
-          %td= link_to pending_reviewer.github_account&.nickname, pending_reviewer.github_account&.html_url, target: '_blank'
           %td
             - if pending_reviewer.github_account&.avatar_url
               = image_tag pending_reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
@@ -24,6 +20,4 @@
               ×
           %td= pending_reviewer.github_account&.email
           %td= pending_reviewer.github_account&.user_type
-          %td= pending_reviewer.github_account&.public_repos
-          %td= pending_reviewer.github_account&.public_gists
           %td.text-center= link_to t('helpers.links.confirm'), [:admins, pending_reviewer]

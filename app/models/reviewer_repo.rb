@@ -24,4 +24,15 @@ class ReviewerRepo < ApplicationRecord
   # Validations
   # -------------------------------------------------------------------------------
   validates :repo_id, uniqueness: { scope: :reviewer_id }
+
+  # -------------------------------------------------------------------------------
+  # Callbacks
+  # -------------------------------------------------------------------------------
+  after_create :send_mail, on: :create
+
+  private
+
+  def send_mail
+    ReviewerRepoMailer.repo_assign_mail(self).deliver_later(wait: 5.seconds)
+  end
 end
