@@ -108,6 +108,7 @@ Rails.application.routes.draw do
     if !Rails.env.production? && defined?(Sidekiq::Web)
       mount Sidekiq::Web => '/sidekiq'
     end
+
   end
   constraints(AdminDomainConstraint) do
     root to: 'admins#dashboard'
