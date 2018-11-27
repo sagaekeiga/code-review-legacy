@@ -109,8 +109,6 @@ Rails.application.routes.draw do
       mount Sidekiq::Web => '/sidekiq'
     end
 
-    get '*not_found' => 'application#routing_error'
-    post '*not_found' => 'application#routing_error'
   end
   constraints(AdminDomainConstraint) do
     root to: 'admins#dashboard'
