@@ -1,12 +1,12 @@
 var stack = [];
 document.getElementById('searchInput').addEventListener('keyup', function () {
-  stack.push(1);
-  setTimeout($.proxy(function () {
-    stack.pop();
-    if (stack.length == 0) {
-      Search($(this))
-      stack = [];
-    }
+	stack.push(1);
+	setTimeout($.proxy(function () {
+		stack.pop();
+		if (stack.length == 0) {
+			Search($(this))
+			stack = [];
+		}
 	}, this), 300);
 });
 
@@ -37,7 +37,7 @@ function Search(elem) {
 				<div class='code-wrapper'>
 					<p class='filename'>${names[i]}</p>
 					<div class='panel panel-default' data-path=${paths[i]} data-name=${names[i]}>
-						<table class='table${i}'></table>
+            <table class='table${i}'></table>
 					</div>
 				</div>
 			`)
@@ -87,7 +87,6 @@ function Search(elem) {
 		// $('#loader').addClass('hidden')
 	});
 }
-
 $(document).on('click', '.panel', function () {
 	$('.search-results-count').text('')
 	$('.results-wrapper').empty()
