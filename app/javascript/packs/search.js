@@ -1,9 +1,23 @@
-$(document).on('input', '.search-input', function (e) {
+var stack = [];
+document.getElementById('searchInput').addEventListener('keyup', function () {
+	stack.push(1);
+
+	setTimeout($.proxy(function () {
+		stack.pop();
+
+		if (stack.length == 0) {
+			Search($(this))
+			stack = [];
+		}
+	}, this), 300);
+});
+
+function Search(elem) {
 	$('.loader').removeClass('hidden')
 	$('.results-wrapper').addClass('hidden')
 	$('.search-results-count').addClass('hidden')
 	$('.results-wrapper').empty()
-	keyword = $(this).val()
+	keyword = elem.val()
 	repoId = $('.page-header').attr('repo-id')
 	$.ajax({
 		type: 'GET',
@@ -73,4 +87,4 @@ $(document).on('input', '.search-input', function (e) {
 		// issueList.text('取得に失敗しました')
 		// $('#loader').addClass('hidden')
 	});
-})
+}
