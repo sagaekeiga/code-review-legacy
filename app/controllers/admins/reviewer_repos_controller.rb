@@ -3,8 +3,6 @@ class Admins::ReviewerReposController < Admins::BaseController
     @repo = Repo.friendly.find(params[:repo_id])
     @reviewer = Reviewer.find(params[:reviewer_id])
     @reviewer_repo = @repo.reviewer_repos.new(reviewer: @reviewer)
-    p '=========='
-    p @reviewer_repo
     if @reviewer_repo.save
       redirect_to [:admins, @repo], success: "#{@reviewer.github_account&.nickname}さんをアサインしました"
     else
