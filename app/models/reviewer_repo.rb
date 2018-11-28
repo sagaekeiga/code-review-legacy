@@ -33,6 +33,6 @@ class ReviewerRepo < ApplicationRecord
   private
 
   def send_mail
-    ReviewerRepoMailer.repo_assign_mail(self).deliver_later(wait: 5.seconds)
+    ReviewerRepoMailer.repo_assign_notice(self).deliver_later(wait: 5.seconds)
   end
 end

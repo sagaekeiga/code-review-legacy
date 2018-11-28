@@ -25,4 +25,14 @@ class ReviewerPull < ApplicationRecord
   # -------------------------------------------------------------------------------
   validates :pull_id, uniqueness: true
   validates :pull_id, uniqueness: { scope: :reviewer_id }
+  # -------------------------------------------------------------------------------
+  # Callbacks
+  # -------------------------------------------------------------------------------
+  after_create :send_mail, on: :create
+
+  private
+
+  def send_mail
+    ReviewerPullMailer.repo_assign_mail(self).deliver_later(wait: 5.seconds)
+  end
 end
