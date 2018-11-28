@@ -3,6 +3,9 @@
 # Table name: reviewers
 #
 #  id                     :bigint(8)        not null, primary key
+#  confirmation_sent_at   :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :inet
 #  deleted_at             :datetime
@@ -15,11 +18,13 @@
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  status                 :integer
+#  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
 # Indexes
 #
+#  index_reviewers_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_reviewers_on_deleted_at            (deleted_at)
 #  index_reviewers_on_email                 (email) UNIQUE
 #  index_reviewers_on_reset_password_token  (reset_password_token) UNIQUE
@@ -30,7 +35,7 @@ class Reviewer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
@@ -103,5 +108,13 @@ class Reviewer < ApplicationRecord
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
     false
+  end
+
+  def monthly_reward
+    changed_files_count = 0
+    return changed_files_count unless pulls.completed.present?
+    pulls = self.pulls.reviewed_in_month
+    pulls.each { |pull| changed_files_count += pull.changed_files.size }
+    changed_files_count * Settings.rewards.price
   end
 end

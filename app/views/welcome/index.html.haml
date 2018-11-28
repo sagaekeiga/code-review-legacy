@@ -44,7 +44,7 @@
         - @pulls.each do |pull|
           %tr
             %td= link_to pull.title&.truncate(40), [:reviewers, pull]
-            %td.text-center= link_to t('helpers.links.confirm'), [:reviewers, pull], class: 'btn btn-block btn-outline-primary'
+            %td.text-center= link_to t('helpers.links.confirm'), [:reviewers, pull], class: 'btn btn-block btn-primary'
 
 //
 // Demo

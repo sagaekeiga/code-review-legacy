@@ -3,7 +3,7 @@
     .page-header{ 'repo-id': @repo.id }
       %h3= @repo.full_name
     = render 'reviewers/shared/repos/tab', repo: @repo
-    %input{ type: 'text', class: 'form-control search-input', placeholder: t('.placeholder') }
+    %input{ type: 'text', id: 'searchInput', class: 'form-control search-input', placeholder: t('.placeholder') }
     .contents-wrapper
       .text-center.hidden.loader= image_tag 'loader'
       .search-results-count

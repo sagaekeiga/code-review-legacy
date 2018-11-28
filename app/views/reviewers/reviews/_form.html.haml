@@ -3,11 +3,11 @@
   .row
     .review
       .left-sidebar.col-sm-2.hidden-xs
-        = render 'reviewers/reviews/left_sidebar', pull: pull, review: @review
+        = render 'reviewers/reviews/left_sidebar', pull: pull, review: review, reviews: reviews
       .col-sm-10.col-sm-offset-2
         .col-sm-9.col-sm-offset-1.workspace
           = render 'shared/flash_msg'
-          = render 'reviewers/reviews/right_sidebar'
+          = render 'reviewers/reviews/right_sidebar', repo: pull.repo
           .m-t-10.m-b-4
             / code
             #codeTab.tab-content
@@ -23,7 +23,7 @@
                     %h4.title コード全体へのレビュー
                     = f.text_area :body, id: 'review_body', class: 'form-control', rows: '5'
                     .text-right.p-r-0.m-t-1
-                      %button#reviewSubmit.btn.btn-outline-primary{ type: 'button' } チェックする
+                      %button#reviewSubmit.btn.btn-primary{ type: 'button' } チェックする
                       #reviewSubmitModal.modal.fade
                         .modal-dialog
                           .modal-content
@@ -46,7 +46,7 @@
                                   = check_box_tag :link
                                   伝え切れない内容は参考リンクを貼って補足できているか。
                             .modal-footer
-                              = f.submit t('.finish'), id: 'submit_review_button', class: 'btn btn-outline-primary', disabled: true
+                              = f.submit t('.finish'), id: 'submit_review_button', class: 'btn btn-primary', disabled: true
                     %br
                     %br
                     %br

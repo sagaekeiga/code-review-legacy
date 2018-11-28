@@ -9,18 +9,24 @@
           font-weight: bold;
         }
       }
-      tbody {
-        tr {
-          td {
-            &.border {
-              background-color: $color-sub-blue;
-              font-size: $base-font-size / 2;
-              color: $color-darker-gray;
-              font-weight: 100;
-              text-align: right;
-            }
-            span.text {
-              background-color: $color-github-yellow;
+      .panel {
+        cursor: pointer;
+        &:hover {
+          background-color: $color-sub-gray;
+        }
+        tbody {
+          tr {
+            td {
+              &.border {
+                background-color: $color-sub-blue;
+                font-size: $base-font-size / 2;
+                color: $color-darker-gray;
+                font-weight: 100;
+                text-align: right;
+              }
+              span.text {
+                background-color: $color-github-yellow;
+              }
             }
           }
         }

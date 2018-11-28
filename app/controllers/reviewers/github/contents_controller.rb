@@ -69,7 +69,7 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
       names: names.reverse, # ディレクトリ・ファイル一覧の配列
       paths: paths.reverse, # パスの配列
       types: types.reverse, # タイプ（ファイル/ディレクトリ）の配列
-      breadcrumbs: breadcrumbs, # パンくずの配列
+      breadcrumbs: breadcrumbs.reject(&:blank?), # パンくずの配列
       breadcrumb_paths: breadcrumb_paths, # パンくず（パス）の配列
       type: 'dir' # レスポンスのタイプ
     }

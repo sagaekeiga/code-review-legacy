@@ -44,21 +44,21 @@ class Review < ApplicationRecord
   # - comment         : コメント
   # - request_changes : 修正を要求
   # - approve         : 承認
-  # - issue_comment   : issue, pullへのコメント
+  # - refused         : 非承認
   #
   enum event: {
     pending:         1000,
     comment:         2000,
     request_changes: 3000,
     approve:         4000,
-    issue_comment:   5000,
-    refused:         6000
+    refused:         5000
   }
 
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :event, default: events[:pending]
+  attribute :body, default: I18n.t('reviewers.reviews.attributes.default_html')
 
   # -------------------------------------------------------------------------------
   # Validations
@@ -104,6 +104,7 @@ class Review < ApplicationRecord
       review_comment.reviewed!
       review_comment.save!
     end
+    pull.pending!
     review
   end
 

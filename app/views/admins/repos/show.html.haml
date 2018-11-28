@@ -51,7 +51,7 @@
                 = image_tag reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
               - else
                 ×
-            %td= reviewer.github_account&.email
+            %td= reviewer.email
             %td= reviewer.github_account&.user_type
             %td.text-center
               - if reviewer.assigned?(@repo)

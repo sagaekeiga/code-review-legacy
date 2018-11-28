@@ -8,8 +8,8 @@ class Reviewers::RepliesController < Reviewers::BaseController
     @numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
     @commits = @pull.commits.decorate
     @changed_files = @pull.files_changed.decorate
-    @review = current_reviewer.reviews.find(params[:id] || params[:review_id])
-    @reviews = @pull.reviews.where(event: %i(comment issue_comment))
+    @review = current_reviewer.reviews.find(params[:id] || params[:review_id]).decorate
+    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
   end
 
   def create

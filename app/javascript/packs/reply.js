@@ -37,6 +37,8 @@ function submitReply(elem) {
     },
     element: elem,
     success: function (data) {
+      lastReply = elem.closest('.panel-footer').prevAll('.panel-body').find('.panel-text').filter(':last').find('.replies-line')
+      lastReply.removeClass('last')
       replyWrapper = elem.closest('.panel-footer').prevAll('.panel-body');
       reply = $(`
         <div class='panel-text'>
@@ -82,6 +84,12 @@ function updateRead(elem) {
       readMessage = $(`<div class='update-read'><i class='fas fa-check'></i>&nbsp;対応済みにしました</div>`)
       readMessage.appendTo(elem.closest('.pull-right'))
       readMessage.delay(3000).fadeOut('slow');
+      panelStep = elem.closest('.panel.step')
+      panelStep.removeClass('unread')
+      img = elem.closest('.comment-line').prevAll('img')
+      img.attr('src', '/assets/checked.png')
+      unread = elem.closest('.comment-line').prevAll('span.unread')
+      unread.removeClass('unread').addClass('read').text('対応済み')
     }
   });
 };

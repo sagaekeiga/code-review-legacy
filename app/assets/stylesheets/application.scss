@@ -35,7 +35,6 @@
   @import 'issues';
   @import 'reviewers';
   @import 'commits';
-  @import 'buttons';
   @import 'changed_files';
   @import 'github';
 
@@ -44,6 +43,8 @@
   @import 'components/switch';
   @import 'components/code';
   @import 'components/markdown';
+  @import 'components/buttons';
+  @import 'components/errors';
 
   // Views
   @import 'views/reviewers/dashboard';
@@ -56,6 +57,7 @@
   @import 'views/reviewers/reviews/sidebar';
   @import 'views/reviewers/reviews/form';
   @import 'views/reviewers/reviews/show';
+  @import 'views/reviewers/reviews/tab';
 
 
 .m-t-0 { margin-top: 0; }

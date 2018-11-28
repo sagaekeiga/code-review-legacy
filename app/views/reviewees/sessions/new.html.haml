@@ -1,5 +1,5 @@
 .reviewee-session-new-wrapper
-  .col-xs-6.col-xs-offset-3
+  .col-md-6.col-xs-12.col-md-offset-3
     %h3.text-center
       %b ログイン
     %hr
@@ -10,12 +10,12 @@
             .input-group
               %span.input-group-addon
                 %i.fas.fa-at
-              = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.email')
+              = f.email_field :email, autofocus: true, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.email'), required: true
           .form-group
             .input-group
               %span.input-group-addon
                 %i.fas.fa-lock
-              = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.password')
+              = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: t('helpers.links.password'), required: true
           - if devise_mapping.rememberable?
             .form-group
               = f.check_box :remember_me
