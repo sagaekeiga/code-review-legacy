@@ -69,22 +69,13 @@ function hoverColor() {
 function hoverCode() {
  $('.code-tr').hover(
    function(){
-     self_review_num = $(this).attr('data-line-number');
-     comment_position = `div[comment-position=${self_review_num}]`
+     if ($(this).children($('td')).hasClass('bg-success')) { legacy_bg_class = 'bg-success' }
+     if ($(this).children($('td')).hasClass('bg-primary')) { legacy_bg_class = 'bg-primary' }
+     if ($(this).children($('td')).hasClass('bg-danger')) { legacy_bg_class = 'bg-danger' }
 
-     if ($(this).children($('td')).hasClass('bg-success')){
-        bg_class = 'bg-success'
-     } else {
-        bg_class = 'bg-danger'
-     };
-
-     $(this).children($('td')).addClass('bg-warning').removeClass(bg_class);
-     $(comment_position).children('div').addClass('bg-warning')
+     $(this).children($('td')).addClass('bg-warning').removeClass(legacy_bg_class);
    },
-   function(){
-     $(this).children($('td')).addClass(bg_class).removeClass('bg-warning');
-     $(comment_position).children('div').removeClass('bg-warning')
-   }
+   function(){ $(this).children($('td')).addClass(legacy_bg_class).removeClass('bg-warning'); }
   );
 };
 
