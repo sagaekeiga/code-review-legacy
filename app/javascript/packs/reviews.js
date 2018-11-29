@@ -198,6 +198,9 @@ function destroyReviewComment(elem) {
     elem.prop('disabled', true);
     $.ajax({
       type: 'DELETE',
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
       url: `/reviewers/review_comments/${elem.closest('.panel-body').find('.panel-text').attr('review-comment-id')}`,
       dataType: 'JSON',
       element: elem,
