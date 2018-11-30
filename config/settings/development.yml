@@ -7,3 +7,5 @@ reviewees:
     join: http://<%= ENV['WEB_DOMAIN'] %>/reviewees/memberships/join?
 links:
   home: http://<%= ENV['WEB_DOMAIN'] %>
+  reviewer_pull_show_before: http://<%= ENV['WEB_DOMAIN'] %>/reviewers/pulls/
+  reviewer_pull_show_after: /reviews/view_check

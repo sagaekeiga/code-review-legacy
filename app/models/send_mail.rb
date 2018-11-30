@@ -34,6 +34,8 @@ class SendMail < ApplicationRecord
   # -------------------------------------------------------------------------------
   after_commit :send_mail, on: :create
 
+  private
+
   def send_mail
     AdminMailer.slack_mail(self).deliver_later
   end

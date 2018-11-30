@@ -30,4 +30,10 @@ class ReviewerMailer < ApplicationMailer
     @reviewer = review.reviewer
     mail(subject: 'レビューが審査を通過できませんでした。', to: @reviewer.email)
   end
+
+  def pull_request_notice(reviewer, pull_request_mail)
+    @pull = pull_request_mail
+    @reviewer = reviewer
+    mail(subject: 'Pullrequestがレビューリクエストされました', to: @reviewer.email)
+  end
 end
