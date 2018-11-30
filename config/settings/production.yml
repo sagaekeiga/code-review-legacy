@@ -7,3 +7,4 @@ reviewees:
     join: http://<%= ENV['WEB_DOMAIN'] %>/reviewees/memberships/join?
 links:
   home: https://<%= ENV['WEB_DOMAIN'] %>
+  reviewer_repo_show: https://<%= ENV['WEB_DOMAIN'] %>/reviewers/repos/

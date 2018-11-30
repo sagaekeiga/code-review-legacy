@@ -6,7 +6,7 @@
       %tbody
         %tr
           %th= t 'activerecord.attributes.reviewer/github.nickname'
-          %td= link_to @reviewer.github_account&.nickname, @reviewer.github_account&.html_url, target: '_blank'
+          %td= @reviewer.github_account&.nickname
         %tr
           %th= t 'activerecord.attributes.reviewer/github.avatar_url'
           %td
@@ -20,12 +20,6 @@
         %tr
           %th= t 'activerecord.attributes.reviewer/github.user_type'
           %td= @reviewer.github_account&.user_type
-        %tr
-          %th= t 'activerecord.attributes.reviewer/github.public_repos'
-          %td= @reviewer.github_account&.public_repos
-        %tr
-          %th= t 'activerecord.attributes.reviewer/github.public_gists'
-          %td= @reviewer.github_account&.public_gists
         %tr
           %th= t 'activerecord.attributes.reviewer.status'
           %td= @reviewer.status_i18n
