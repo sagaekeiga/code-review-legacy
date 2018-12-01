@@ -141,13 +141,13 @@ class ReviewComment < ApplicationRecord
         )
 
         review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
-
         reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
         reply.update_attributes!(_reply_params(params, changed_file, review_comment))
 
+
         review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
         review_comment_tree.save!
-        ReviewerMailer.comment(review_comment).deliver_later if params[:sender][:type].eql?('Bot')
+        ReviewerMailer.comment(reply).deliver_later if params[:sender][:type].eql?('User')
       end
       true
     rescue => e
