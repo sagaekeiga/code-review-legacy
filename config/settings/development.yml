@@ -8,3 +8,5 @@ reviewees:
 links:
   home: http://<%= ENV['WEB_DOMAIN'] %>
   reviewer_repo_show: http://<%= ENV['WEB_DOMAIN'] %>/reviewers/repos/
+  reviewer_repo_show_before: 'http://mergee.test/reviewers/pulls/'
+  reviewer_repo_show_after: '/reviews/view_check'
