@@ -32,7 +32,6 @@
 FactoryBot.define do
   factory :reviewee do
     sequence(:email) { |n| "reviewee#{n}@example.com" }
-    confirmed_at Time.zone.today
     password              'hogehoge'
     password_confirmation 'hogehoge'
     confirmed_at Time.zone.now
