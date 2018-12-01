@@ -10,37 +10,37 @@
       background-color: $color-white;
       color: $color-github-black;
       .landing-wrapper {
-				.right-block {
-					letter-spacing: $base-padding;
-					h1 {
-						margin-top: $base-margin * 4;
-						margin-bottom: $base-margin * 4;
-						font-size: $base-font-size * 4;
-						font-weight: $base-font-weight * 4;
-					}
-					.description {
-						color: $color-switch-off-gray;
-					}
-					.sub-line {
-						font-size: $base-sl-font-size;
-						margin-top: $base-margin * 2;
-						margin-bottom: $base-margin;
-						color: $color-white;
-					}
-					.panel.panel-default {
-						margin-top: $base-margin;
-						background-color: $color-github-black;
-						border-color: $color-github-black;
-					}
-					hr {
-						color: $color-github-black;
-						margin-bottom: $base-margin * 3;
-					}
-				}
-				.signup {
-					letter-spacing: $base-padding;
-					margin-top: $base-margin * 6;
-				}
+        .right-block {
+          letter-spacing: $base-padding;
+          h1 {
+            margin-top: $base-margin * 4;
+            margin-bottom: $base-margin * 4;
+            font-size: $base-font-size * 4;
+            font-weight: $base-font-weight * 4;
+          }
+          .description {
+            color: $color-switch-off-gray;
+          }
+          .sub-line {
+            font-size: $base-sl-font-size;
+            margin-top: $base-margin * 2;
+            margin-bottom: $base-margin;
+            color: $color-white;
+          }
+          .panel.panel-default {
+            margin-top: $base-margin;
+            background-color: $color-github-black;
+            border-color: $color-github-black;
+          }
+          hr {
+            color: $color-github-black;
+            margin-bottom: $base-margin * 3;
+          }
+        }
+        .signup {
+          letter-spacing: $base-padding;
+          margin-top: $base-margin * 6;
+        }
       }
       @media (max-width: $screen-xs-max) {
         .landing-wrapper {
