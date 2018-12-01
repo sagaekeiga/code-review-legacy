@@ -36,4 +36,10 @@ class ReviewerMailer < ApplicationMailer
     @reviewer = repo_assign_mail.reviewer
     mail(subject: 'Mergeeからリポジトリをアサインがされました', to: @reviewer.email)
   end
+
+  def pull_request_notice(reviewer, pull)
+    @pull = pull
+    @reviewer = reviewer
+    mail(subject: 'Pullrequestがレビューリクエストされました', to: @reviewer.email)
+  end
 end
