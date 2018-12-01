@@ -1,4 +1,12 @@
 .reviews-show {
+  span {
+    &.reviewing {
+      font-size: $base-font-size;
+      color: $color-cancel;
+      padding-left: $base-padding;
+      letter-spacing: $base-padding;
+    }
+  }
   .panel {
     .panel-body {
       &.gray-space {
