@@ -30,8 +30,13 @@ ja:
         next: レビューを開始する
         description_is_blank: 説明はありません
         assign_to_pullrequest: レビューを開始するとあなたにプルリクエストがアサインされます。
+        assign_is: アサインすると他のレビュワーはこのプルリクエストにレビューできなくなります。
       form:
         finish: レビューを完了する
+      new:
+        start_review: レビューを開始しました。
+      show:
+        reviewing: 審査中です。審査が終了するまで少々お待ちください。
       replies:
         unread_messages: "%{message_count} 件の未対応メッセージがあります。返信してください。"
         read_messages: 対応済み
@@ -44,6 +49,6 @@ ja:
         unread: 未対応
         reading: 対応済みにする
       attributes:
-        default_html: "Mergeeへようこそ！\n\n<<あなたのコメントを書いてください>>\n\n***\nコメントをさらに深く掘り下げたい場合は、コメントには返信することができます。"
+        default_html: "Mergeeへようこそ！\n\n<<ここにコメントを挿入してください>>\n\n***\nコメントをさらに深く掘り下げたい場合は、コメントには返信することができます。"
 
 

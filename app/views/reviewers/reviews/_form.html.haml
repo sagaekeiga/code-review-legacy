@@ -20,7 +20,9 @@
                 .reviews-form-wrapper
                   .reviews-form-card-wrapper.editor
                     = render changed_files
-                    %h4.title コード全体へのレビュー
+                    %h4.title
+                      コード全体へのレビュー
+                      %small.text-muted フォーム内の文言はそのままレビュイーに伝えられます。テンプレートを元に<<から>>を書き換えてください。
                     = f.text_area :body, id: 'review_body', class: 'form-control', rows: '5'
                     .text-right.p-r-0.m-t-1
                       %button#reviewSubmit.btn.btn-primary{ type: 'button' } チェックする
