@@ -1,0 +1,154 @@
+.welcome-index {
+  .container-fluid.top {
+    padding: 0px;
+    margin: 0px;
+    font-family: $font-static;
+    /*
+        Demo
+    */
+    .container-fluid.landing {
+      background-color: $color-sub-blue;
+      color: $color-white;
+      .demo-wrapper {
+        h1 {
+          margin-top: $base-margin * 4;
+          font-size: $base-font-size * 4;
+          font-weight: $base-font-weight * 4;
+        }
+        .sub-line {
+          font-size: $base-sl-font-size;
+          margin-top: $base-margin * 2;
+          margin-bottom: $base-margin;
+          color: $color-white;
+        }
+        .panel.panel-default {
+          margin-top: $base-margin;
+          background-color: $color-github-black;
+          border-color: $color-github-black;
+        }
+        hr {
+          color: $color-github-black;
+          margin-bottom: $base-margin * 3;
+        }
+      }
+      @media (max-width: $screen-xs-max) {
+        .demo-wrapper {
+          h1 {
+            margin-top: $base-margin * 3;
+            font-size: $base-font-size * 4;
+            font-weight: $base-font-weight * 4;
+          }
+          .sub-line {
+            font-size: $base-font-size * 1.1;
+            margin-bottom: $base-margin;
+          }
+        }
+      }
+    }
+    /*
+        Demo
+    */
+    .container-fluid.demo {
+      background-color: $color-sub-blue;
+      color: $color-white;
+      .demo-wrapper {
+        h1 {
+          margin-top: $base-margin * 4;
+          font-size: $base-font-size * 4;
+          font-weight: $base-font-weight * 4;
+        }
+        .sub-line {
+          font-size: $base-sl-font-size;
+          margin-top: $base-margin * 2;
+          margin-bottom: $base-margin;
+          color: $color-white;
+        }
+        .panel.panel-default {
+          margin-top: $base-margin;
+          background-color: $color-github-black;
+          border-color: $color-github-black;
+        }
+        hr {
+          color: $color-github-black;
+          margin-bottom: $base-margin * 3;
+        }
+      }
+      @media (max-width: $screen-xs-max) {
+        .demo-wrapper {
+          h1 {
+            margin-top: $base-margin * 3;
+            font-size: $base-font-size * 4;
+            font-weight: $base-font-weight * 4;
+          }
+          .sub-line {
+            font-size: $base-font-size * 1.1;
+            margin-bottom: $base-margin;
+          }
+        }
+      }
+    }
+    /*
+        Get Started
+    */
+    .container-fluid.get-started {
+      padding: 0;
+      margin-bottom: - $base-margin;
+      color: $color-white;
+      background-color: $color-github-black;
+      .container {
+        h1 {
+          margin-top: $base-margin * 4;
+          font-size: $base-font-size * 4;
+          font-weight: $base-font-weight * 4;
+        }
+        .start-wrapper {
+          h1 {
+            font-size: $base-font-size * 4;
+            font-weight: $base-font-weight * 4;
+          }
+          .start-line {
+            margin-top: $base-margin * 2;
+            font-size: $base-font-size * 1.2;
+            margin-bottom: $base-margin * 4;
+          }
+          .col-xs-12 {
+            padding: 0;
+            margin-bottom: $base-margin * 5;
+            .col-xs-6 {
+              font-size: $base-font-size * 1.1;
+              .target {
+                margin-bottom: $base-margin / 4;
+              }
+            }
+          }
+        }
+      }
+      @media (max-width: $screen-xs-max) {
+        .container {
+          .start-wrapper {
+            h1 {
+              margin-top: $base-margin * 3;
+            }
+            .start-line {
+              font-size: $base-font-size;
+              margin-bottom: $base-margin * 2;
+            }
+          }
+        }
+      }
+    }
+  }
+  .share .twitter, .share .facebook, .share .pocket, .share .hatena {
+    display: inline-block;
+    vertical-align: top;
+  }
+  .share .facebook {
+    width: 150px;
+    overflow: hidden;
+  }
+  .top-wrapper {
+    .alert {
+      margin-top: $base-margin;
+    }
+  }
+}
