@@ -8,5 +8,3 @@ reviewees:
 links:
   home: https://<%= ENV['WEB_DOMAIN'] %>
   reviewer_repo_show: https://<%= ENV['WEB_DOMAIN'] %>/reviewers/repos/
-  reviewer_repo_show_before: 'http://mergee-dev.herokuapp.com/reviewers/pulls/'
-  reviewer_repo_show_after: '/reviews/view_check'

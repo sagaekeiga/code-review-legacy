@@ -36,8 +36,6 @@ class SendMail < ApplicationRecord
 
   private
 
-  private
-
   def send_mail
     AdminMailer.slack_mail(self).deliver_later(wait: 5.seconds)
   end

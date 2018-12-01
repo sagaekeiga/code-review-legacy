@@ -96,7 +96,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Callbacks
   # -------------------------------------------------------------------------------
-  after_commit :send_mail, on: :update, if: :requested?
+  after_commit :send_mail, on: :update, if: :request_reviewed?
 
   # -------------------------------------------------------------------------------
   # ClassMethods
@@ -191,10 +191,6 @@ class Pull < ApplicationRecord
     when 'closed', 'merged'
       completed!
     end
-  end
-
-  def requested?
-    request_reviewed?
   end
 
   private
