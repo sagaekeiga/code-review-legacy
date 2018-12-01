@@ -1,125 +1,102 @@
-.container-fluid.head
-  %p.filter= image_tag 'top.png', class: 'img-responsive filter-img'
-  %p
-    %h1.top-literal PushRequest
-    %p.top-literal.text-center
-      PushRequestはコードレビューのマーケットプレイスです
-      %br
-      あなたのプルリクエストを公開することでコードの品質を上げることができます
-    .container
-      .col-xs-12
-        .col-xs-6
-          .text-center
-            .target レビューを受けたい方
-            %br
-            = link_to '新規登録/ログイン', new_reviewee_session_path, class: 'btn btn-block btn-primary'
-        .col-xs-6
-          .text-center
-            .target レビューをしたい方
-            %br
-            = link_to '新規登録/ログイン', new_reviewer_session_path, class: 'btn btn-block btn-primary'
+-# .container-fluid.head
+-#   %p
+-#     %h1.top-literal PushRequest
+-#     %p.top-literal.text-center
+-#       PushRequestはコードレビューのマーケットプレイスです
+-#       %br
+-#       あなたのプルリクエストを公開することでコードの品質を上げることができます
+-#     .container
+-#       .col-xs-12
+-#         .col-xs-6
+-#           .text-center
+-#             .target レビューを受けたい方
+-#             %br
+-#             = link_to '新規登録/ログイン', new_reviewee_session_path, class: 'btn btn-block btn-primary'
+-#         .col-xs-6
+-#           .text-center
+-#             .target レビューをしたい方
+-#             %br
+-#             = link_to '新規登録/ログイン', new_reviewer_session_path, class: 'btn btn-block btn-primary'
 
 //
-// Live
+// Landing
 //
-.container-fluid.live-wrapper
+.container-fluid.landing
   .container
-    %h1.text-center
-      %i.fas.fa-clock
-      Live
-    %br
-    .text-center.text-muted.sub-line
-      .description
-        479言語の pullrequest が投稿されます。
-        %br
-        ユーザーを特定できる情報が漏れることはありません。
-        %br
-    %table.table.table-hover.pulls-on-dashboard-wrapper
-      %thead
-        %tr
-          %th= t 'activerecord.models.pull'
-          %th= t 'activerecord.models.skill'
-          %th
-      %tbody
-        - @pulls.each do |pull|
-          %tr
-            %td= link_to pull.title&.truncate(40), [:reviewers, pull]
-            %td.text-center= link_to t('helpers.links.confirm'), [:reviewers, pull], class: 'btn btn-block btn-primary'
-
+    .reviewee-dashboard-wrapper
+      .landing-wrapper
+        .col-xs-12.m-m-3
+          .col-sm-8.col-xs-12.right-block
+            %h1 Mergee
+            .description
+              Mergeeはコードレビューのためのプラットフォームです。
+              %br
+              プルリクエスト単位で利用を選択できるオンデマンドサービスです。
+          .col-sm-4.col-xs-12
+            -# .panel.panel-default
+            -#   .panel-body.text-center.p-r-0.p-l-0
+            -#     = link_to '新規登録/ログイン', new_reviewee_session_path, class: 'btn btn-block btn-primary'
+            -# .panel.panel-default
+            -#   .panel-body.text-center.p-r-0.p-l-0
+            -#     = link_to '新規登録/ログイン', new_reviewer_session_path, class: 'btn btn-block btn-primary'
+        %hr
+        .col-xs-4.col-xs-offset-4.signup
+          = link_to '新規登録/ログイン', new_reviewee_session_path, class: 'btn btn-block btn-primary'
 //
 // Demo
 //
-.container-fluid.demo
-  .container
-    .reviewee-dashboard-wrapper
-      .demo-wrapper
-        %h1.text-center
-          %i.fas.fa-play
-          Demo
-        .text-center.text-muted.sub-line
-          PushRequestでは簡単にレビューをもらうことができる仕組みを構築しています
-          %br
-          GitHub Appとの連携を終えたあとに2ステップであなたのコードの品質を上げることができます
-        .col-xs-12.m-m-3
-          .col-sm-6.col-xs-12
-            .page-header
-              %h3.text-center 1. PushRequest
-            = image_tag 'demo-local.png', class: 'img-responsive'
-            .panel.panel-default
-              .panel-body.text-center.p-r-0.p-l-0
-                PushRequest上で、取得されたPullRequestにコメントを残すことができます。
-                %br
-                コードに対するコメントだけでなく、全体へのコメントも残すことができます。
+-# .container-fluid.demo
+-#   .container
+-#     .reviewee-dashboard-wrapper
+-#       .demo-wrapper
+-#         %h1.text-center
+-#           %i.fas.fa-play
+-#           Demo
+-#         .text-center.text-muted.sub-line
+-#           PushRequestでは簡単にレビューをもらうことができる仕組みを構築しています
+-#           %br
+-#           GitHub Appとの連携を終えたあとに2ステップであなたのコードの品質を上げることができます
+-#         .col-xs-12.m-m-3
+-#           .col-sm-6.col-xs-12
+-#             .page-header
+-#               %h3.text-center 1. PushRequest
+-#             = image_tag 'demo-local.png', class: 'img-responsive'
+-#             .panel.panel-default
+-#               .panel-body.text-center.p-r-0.p-l-0
+-#                 PushRequest上で、取得されたPullRequestにコメントを残すことができます。
+-#                 %br
+-#                 コードに対するコメントだけでなく、全体へのコメントも残すことができます。
 
-          .col-sm-6.col-xs-12
-            .page-header
-              %h3.text-center 2. GitHub
-            = image_tag 'demo-remote.png', class: 'img-responsive'
-            .panel.panel-default
-              .panel-body.text-center.p-r-0.p-l-0
-                PushRequestからGitHubAppを介してコメントが届きます。
-                %br
-                コメントを見るだけでなく、コメントへの返信をすることもできます。
-        %hr
-//
-// Teaser
-//
-.container-fluid.teaser-wrapper
-  .container
-    %h1.text-center
-      %i.fas.fa-user
-      To corporate technical staff
-    %br
-    .text-center.text-muted.sub-line
-      コミッターがプロジェクトのコードレビューをします。
-      %br
-      技術負債の削減・脆弱性の発見と解決案提示を行い、堅牢で綺麗なコードに仕上げることができます。
-      %br
-      %br
-      %br
-      = link_to '詳しく読む', 'https://pushrequest.jp/'
-      %br
-      %br
+-#           .col-sm-6.col-xs-12
+-#             .page-header
+-#               %h3.text-center 2. GitHub
+-#             = image_tag 'demo-remote.png', class: 'img-responsive'
+-#             .panel.panel-default
+-#               .panel-body.text-center.p-r-0.p-l-0
+-#                 PushRequestからGitHubAppを介してコメントが届きます。
+-#                 %br
+-#                 コメントを見るだけでなく、コメントへの返信をすることもできます。
+-#         %hr
 //
 // Get Started
 //
-.container-fluid.get-started
-  .container
-    .start-wrapper
-      %h1.text-center
-        %i.fas.fa-location-arrow
-        Get Started!
-      .text-center.start-line
-        PushRequestはすぐに利用することができます。
-        不明点がある方は運営にお問い合わせください
-      .col-xs-12
-        .col-xs-6
-          .text-center
-            .target 初めての方
-            %br
-            = link_to 'Sign up', new_reviewee_registration_path, class: 'btn btn-block btn-primary'
-        .col-xs-6
-          .text-center
-            .target 登録済みの方
-            %br
-            = link_to 'Sign in', new_reviewee_session_path, class: 'btn btn-block btn-primary'
+-# .container-fluid.get-started
+-#   .container
+-#     .start-wrapper
+-#       %h1.text-center
+-#         %i.fas.fa-location-arrow
+-#         Get Started!
+-#       .text-center.start-line
+-#         PushRequestはすぐに利用することができます。
+-#         不明点がある方は運営にお問い合わせください
+-#       .col-xs-12
+-#         .col-xs-6
+-#           .text-center
+-#             .target 初めての方
+-#             %br
+-#             = link_to 'Sign up', new_reviewee_registration_path, class: 'btn btn-block btn-primary'
+-#         .col-xs-6
+-#           .text-center
+-#             .target 登録済みの方
+-#             %br
+-#             = link_to 'Sign in', new_reviewee_session_path, class: 'btn btn-block btn-primary'
