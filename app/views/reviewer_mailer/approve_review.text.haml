@@ -7,4 +7,4 @@
 = simple_format(@review.reason)
 \
 \
-= Settings.reviewers.pulls.show + @review.pull.token
+= Settings.top + "reviewers/pulls/#{@review.pull.token.to_s}/reviews/#{@review.id}/replies"

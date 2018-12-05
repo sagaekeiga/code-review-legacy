@@ -1,11 +1,11 @@
 = @reviewer.github_account.login
 さん、こんにちは。
 
-= link_to @pull.title, Settings.reviewers.pulls.show + @pull.token.to_s
+= link_to @pull.title, Settings.top + "reviewers/pulls/#{@pull.token.to_s}/reviews/#{@reply.review_id}/replies"
 にコメントがつきました。
 %br
 %br
-%small= simple_format(@review_comment.body)
+%small= simple_format(@reply.body)
 %br
 %br
-= link_to 'View on PushRequest', Settings.reviewers.pulls.show + @pull.token.to_s
+= link_to 'プルリクエストを確認する', Settings.top + "reviewers/pulls/#{@pull.token.to_s}/reviews/#{@reply.review_id}/replies"
