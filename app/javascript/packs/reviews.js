@@ -106,12 +106,6 @@ function addForm(elem) {
     var position = $(elem).closest('.code-tr').attr('data-line-number');
     var path = $(elem).closest('.changed-file-list-wrapper').find('.changed-file-name').text();
     var changed_file_id = $(elem).closest('.file-border').attr('changed-file-id');
-    var textarea = $('<textarea>').attr({
-        name: 'reviews[body][]',
-        class: 'form-control md-textarea body',
-        rows: '5'
-    });
-    textarea.val('* 指摘事項\n\n* 理由\n\n* 参考（リンク・サンプルコード）')
     positionHiddenField = $('<input>').attr({
         type: 'hidden',
         name: 'reviews[position][]',
@@ -155,16 +149,6 @@ function addForm(elem) {
     `)
 
     addingPanelBody.insertAfter($(elem).closest('.code-tr'));
-
-    // addedPanelBody = $(elem).closest('.code-tr').nextAll('.panel').find('.panel-body')
-
-    // addingButtons.appendTo($(elem).closest('.code-tr').nextAll('.panel'));
-    // $('<div class="flex-row text-right"></div>').insertAfter($(elem).closest('.code-tr').nextAll('.panel').find('textarea'));
-    // $(elem).closest('.code-tr').nextAll('.panel').find('.flex-row').prepend('<button class="btn btn-primary review-trigger" type="button">Add Review Comment</button>');
-    // $(elem).closest('.code-tr').nextAll('.panel').find('.flex-row').prepend('<button class="btn btn-default cancel-trigger" type="button">Cancel</button>');
-    // positionHiddenField.insertAfter($(elem).closest('.code-tr').nextAll('.panel').find('.review-trigger'));
-    // pathHiddenField.insertAfter($(elem).closest('.code-tr').nextAll('.panel').find('.review-trigger'));
-    // changedFileIdHiddenField.insertAfter($(elem).closest('.code-tr').nextAll('.panel').find('.review-trigger'));
     $(elem).addClass('add-form');
   }
 };
