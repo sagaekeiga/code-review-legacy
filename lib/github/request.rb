@@ -161,7 +161,7 @@ module Github
       def get_access_token(installation_id)
         request_url = Settings.api.github.request.access_token_uri + installation_id.to_s + '/access_tokens'
         headers = {
-          'User-Agent': 'PushRequest',
+          'User-Agent': 'Mergee',
           'Authorization': "Bearer #{get_jwt}",
           'Accept': set_accept(:get_access_token)
         }

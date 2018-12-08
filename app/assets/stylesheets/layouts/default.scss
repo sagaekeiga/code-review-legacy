@@ -368,6 +368,14 @@ html {
       @media (max-width: $screen-xs-max) {
         height: $footer-height * 1.7;
       }
+      .share .twitter, .share .facebook, .share .pocket, .share .hatena {
+        display: inline-block;
+        vertical-align: top;
+      }
+      .share .facebook {
+        width: 150px;
+        overflow: hidden;
+      }
     }
 
     footer.in {
