@@ -39,11 +39,6 @@
               - else
                 %span.caret.uncertified
             %ul.dropdown-menu
-              -# - if current_reviewee.github_account
-              -#   %li
-              -#     = link_to :edit_reviewee_registration do
-              -#       %i.fa.fa-user-edit
-              -#       = t('reviewees.registrations.edit.title')
               %li
                 = link_to :destroy_reviewee_session, method: :delete do
                   %i.fa.fa-sign-out-alt
