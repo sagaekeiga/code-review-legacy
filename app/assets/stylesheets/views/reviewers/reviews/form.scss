@@ -25,9 +25,10 @@
           font-size: $base-font-size;
           width: 100%;
           padding: $base-padding * 3;
+          padding-right: $base-padding;
           .btn-sm {
             font-size: $base-font-size;
-            margin-top: - $base-margin / 3;
+            margin-top: - $base-margin / 2;
             font-family: $font-static;
           }
         }
@@ -50,14 +51,10 @@
           border: 1px solid $color-github-label-border-white;
           border-radius: $base-border-radius;
           font-weight: 400;
+          font-family: $font-static;
           &.label-warning {
             color: $color-github-label-white;
             background-color: $color-github-yellow !important;
-          }
-          &.label-primary {
-            margin-left: $base-margin;
-            color: $color-github-label-white;
-            background-color: $color-github-green !important;
           }
         }
         .panel-heading {
@@ -70,6 +67,7 @@
             margin-bottom: $base-padding * 3;
           }
           .panel-text {
+            font-family: $font-static;
             pre {
               border-radius: none;
               border: none;
@@ -78,6 +76,18 @@
               font-family: none;
               font-size: $base-font-size;
               background-color: $bg-color-pre-code;
+            }
+          }
+          textarea {
+            height: 150px;
+            margin-bottom: $base-padding * 3;
+          }
+          .btn {
+            font-family: $font-static;
+            &.circle {
+              font-size: $base-font-size;
+              border-radius: 50%;
+              padding: $base-padding * 3 $base-padding * 3;
             }
           }
           button {
@@ -134,15 +144,12 @@
                   border: 1px solid $color-github-label-border-white;
                   border-radius: $base-border-radius;
                   font-weight: 400;
+                  font-family: $font-static;
                   &.label-warning {
                     color: $color-github-label-white;
                     background-color: $color-github-yellow !important;
                   }
-                  &.label-primary {
-                    margin-left: $base-margin / 2;
-                    color: $color-github-label-white;
-                    background-color: $color-github-green !important;
-                  }
+
                 }
                 .panel-body {
                   padding: $base-padding;
@@ -186,6 +193,7 @@
                   border: 1px solid $color-github-label-border-white;
                   border-radius: $base-border-radius;
                   font-weight: 400;
+                  font-family: $font-static;
                   &.label-warning {
                     color: $color-github-label-white;
                     background-color: $color-github-yellow !important;
@@ -216,6 +224,11 @@
                   }
                   .btn {
                     font-family: $font-static;
+                    &.circle {
+                      font-size: $base-font-size;
+                      border-radius: 50%;
+                      padding: $base-padding * 3 $base-padding * 3;
+                    }
                   }
                 }
               }
