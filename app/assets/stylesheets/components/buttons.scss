@@ -5,68 +5,16 @@
   background-color: $color-blue;
 }
 
-.btn-outline-danger {
-  background-color: $color-white;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+.btn.btn-danger {
+  box-shadow: 0 3px 3px rgba(61,10,0,.1);
   border-color: $color-cancel;
-  color: $color-cancel;
-  &:hover, &:focus, &:active, &.active, .open > .dropdown-toggle.btn-outline-danger {
-    color: $color-white;
-    background-color: $color-cancel;
-    border-color: $color-cancel;
-  }
-}
-
-.btn-outline-default {
-  background-color: $color-white;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-color: $color-dark-gray;
-  color: $color-dark-gray;
-  &:hover, &:focus, &:active, &.active, .open > .dropdown-toggle.btn-outline-danger {
-    color: $color-white;
-    background-color: $color-dark-gray;
-    border-color: $color-dark-gray;
-  }
-}
-
-.btn-outline-success {
-  cursor: default;
-  background-color: $base-color-green;
   color: $color-white;
-  border: 1px solid $base-color-green;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  &:hover, &:focus, &:active, &.active, .open > .dropdown-toggle.btn-success{
-    color: $color-white;
-    background-color: $base-color-green;
-    border-color: $base-color-green;
-  }
+  background-color: $color-cancel;
 }
 
-.btn-warning {
-  cursor: default;
-  color: $base-color-green;
-  background-color: $color-white;
-  border: 1px solid $base-color-green;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.btn-outline-danger {
-  cursor: default;
-  color: $color-cancel;
-  background-color: $color-white;
-  border: 1px solid $color-cancel;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  &:hover, &:focus, &:active, &.active, .open > .dropdown-toggle.btn-success{
-    color: $color-white;
-    background-color: $color-cancel;
-    border-color: $color-cancel;
-  }
+.btn.btn-default {
+  box-shadow: 0 3px 3px rgba(61,10,0,.1);
+  color: #24292e !important;
 }
 
 .everywhere {

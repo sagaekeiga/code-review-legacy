@@ -837,21 +837,3 @@ $badge-border-radius:         0px !default;
   padding-left: ($spacer * .5) !important;
   padding-right: ($spacer * .5) !important;
 }
-
-.btn.btn-danger {
-  color: #cb2431 !important;
-  background-color: #fafbfc;
-  background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-  font-weight: bold;
-  border: 1px solid rgba(27,31,35,0.2);
-}
-
-.btn.btn-default {
-  color: #24292e !important;
-  background-color: #eff3f6;
-  background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);;
-  font-weight: bold;
-  border: 1px solid rgba(27,31,35,0.2);
-  font-weight: 600;
-  border-radius: 0.25em;
-}
