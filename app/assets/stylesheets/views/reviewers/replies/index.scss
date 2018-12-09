@@ -208,13 +208,13 @@
                 border: none;
                 border-top: 1px solid #eee;
                 .input {
-                  display: inline-block;
-                  width: 85%;
+                  textarea {
+                    height: 150px;
+                  }
                 }
                 .submit {
-                  display: inline-block;
-                  vertical-align: top;
-                  width: 10%;
+                  text-align: right;
+                  margin-top: $base-margin / 2;
                 }
               }
             }

@@ -58,7 +58,7 @@
                               = render review_comment.replies.includes(:comment, :reviewer)&.decorate
                           .panel-footer
                             .input
-                              %input{ type: 'text', class: 'form-control' }
+                              %textarea{ type: 'text', class: 'form-control' }
                             .submit
                               %button{ type: 'button', class: 'btn btn-primary reply-submit-btn' } 返信する
                               %input{ type: 'hidden', value: @pull.token, class: 'pull_token' }
