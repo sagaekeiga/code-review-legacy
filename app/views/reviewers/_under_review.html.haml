@@ -7,7 +7,7 @@
       - pending_reviews.each do |review|
         .under-review
           .pr-title
-            = link_to reviewers_pull_path(review.pull) do
+            = link_to reviewers_pull_review_path(review.pull, review) do
               %p= review.pull.title.truncate(21)
               .worked-time
                 %i.fa.fa-clock
