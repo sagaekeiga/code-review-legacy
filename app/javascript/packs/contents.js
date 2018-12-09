@@ -1,6 +1,10 @@
 // HighLight JS 初期化
 hljs.initHighlightingOnLoad();
 
+$(window).on('beforeunload', function () {
+  return '表示されているファイルはリセットされます。';
+});
+
 $(document).ready(function () {
   repoId = $('.page-header').attr('repo-id')
   $('.panel-heading').addClass('hidden')

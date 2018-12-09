@@ -23,13 +23,22 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
       file_response(content, breadcrumbs, breadcrumb_paths)
     else
       names, paths, types = [], [], []
+      contents = []
       res.each do |content|
         content = ActiveSupport::HashWithIndifferentAccess.new(content)
-        names << content[:name]
-        paths << content[:path]
-        types << content[:type]
+        content_hash = { name: content[:name], path: content[:path], type: content[:type] }
+        contents << content_hash
       end
-      dir_response(names, paths, types, breadcrumbs, breadcrumb_paths)
+      dirs = contents.select { |content| content[:type].eql?('dir') }
+      files = contents.select { |content| content[:type].eql?('file') }
+      # dir -> file順にする
+      names << dirs.map{ |dir| dir[:name] }
+      names << files.map{ |file| file[:name] }
+      paths << dirs.map{ |dir| dir[:path] }
+      paths << files.map{ |file| file[:path] }
+      types << dirs.map{ |dir| dir[:type] }
+      types << files.map{ |file| file[:type] }
+      dir_response(names.flatten, paths.flatten, types.flatten, breadcrumbs, breadcrumb_paths)
     end
   end
 
@@ -66,9 +75,9 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
   def dir_response(names, paths, types, breadcrumbs, breadcrumb_paths)
     # @TODO 並び替え
     {
-      names: names.reverse, # ディレクトリ・ファイル一覧の配列
-      paths: paths.reverse, # パスの配列
-      types: types.reverse, # タイプ（ファイル/ディレクトリ）の配列
+      names: names, # ディレクトリ・ファイル一覧の配列
+      paths: paths, # パスの配列
+      types: types, # タイプ（ファイル/ディレクトリ）の配列
       breadcrumbs: breadcrumbs.reject(&:blank?), # パンくずの配列
       breadcrumb_paths: breadcrumb_paths, # パンくず（パス）の配列
       type: 'dir' # レスポンスのタイプ
@@ -80,7 +89,12 @@ class Reviewers::Github::ContentsController < Reviewers::BaseController
     highlight_content = []
     content = Base64.decode64(res[:content]).force_encoding('UTF-8')
 
-    content.each_line { |line| highlight_content << line.gsub(' ', '&nbsp;') }
+    content.each_line do |line|
+      line = line.gsub(' ', '&nbsp;')
+      line = line.gsub(/[<]/, "&lt;")
+      line = line.gsub(/[>]/, "&gt;")
+      highlight_content << line
+    end
     highlight_content.map! { |e| e ? e : '' }
     {
       name: res[:name],
