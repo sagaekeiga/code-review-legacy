@@ -7,6 +7,9 @@
         %ul.nav.navbar-nav
 
       %ul.nav.navbar-nav.navbar-right
+        - if @pull.present?
+          %li
+            = link_to I18n.t('reviewers.reviews.sidebars.titles.new'), file_reviewers_pull_reviews_path(@pull), class: 'btn'
         %li
           .dropdown
             %button.setting-down.btn-sm.btn-primary.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }

@@ -19,8 +19,8 @@ ja:
       sidebars:
         titles:
           view_check: 動作確認
-          new: レビューの作成
-          show: 審査
+          new: レビューの新規作成
+          show: 詳細
           edit: レビューの修正
           replies: リプライ対応
           complete: 完了

@@ -10,7 +10,13 @@ class ReviewDecorator < ApplicationDecorator
 
   # 審査を通過していればactiveクラスを返す
   def check_pass_review
-    (approve? || comment?) ? 'active' : ''
+    if approve? || comment?
+      'complete'
+    elsif controller.action_name.eql?('show')
+      'active'
+    else
+      'disabled'
+    end
   end
 
   # 作業中であれば「作業中」を返す。
@@ -20,5 +26,13 @@ class ReviewDecorator < ApplicationDecorator
 
   def check_complete_review
     persisted? && pull.completed? ? 'active' : ''
+  end
+
+  def check_new_page
+    if review.persisted?
+      'complete'
+    elsif controller.action_name.eql?('new')
+      'active'
+    end
   end
 end

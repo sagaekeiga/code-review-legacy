@@ -397,3 +397,15 @@ html {
     }
   }
 }
+
+.alert {
+  padding: 5px;
+  border-color: none;
+  margin-bottom: $base-margin * 2;
+  &.alert-success {
+    background-color: $base-color-green;
+  }
+  strong {
+    color: $color-white;
+  }
+}

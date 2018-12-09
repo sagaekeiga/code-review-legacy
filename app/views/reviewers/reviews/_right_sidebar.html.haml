@@ -1,6 +1,6 @@
 .right-sidebar
   .side-menu
-    - if controller.action_name.eql?('replies')
+    - if controller.action_name.eql?('index')
       %li.list.active
         = link_to '#conversationTab', class: "#{is_same_action_name?('replies')} tab active" do
           .text-center
