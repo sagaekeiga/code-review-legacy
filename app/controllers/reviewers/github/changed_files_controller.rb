@@ -12,9 +12,13 @@ class Reviewers::Github::ChangedFilesController < Reviewers::BaseController
 
     highlight_content = []
 
-    content.each_line { |line| highlight_content << line.gsub(' ', '&nbsp;') }
+    content.each_line do |line|
+      line = line.gsub(' ', '&nbsp;')
+      line = line.gsub(/[<]/, "&lt;")
+      line = line.gsub(/[>]/, "&gt;")
+      highlight_content << line
+    end
     highlight_content.map! { |e| e ? e : '' }
-
     render json: {
       path: path,
       content: highlight_content
