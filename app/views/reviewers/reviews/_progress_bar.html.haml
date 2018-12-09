@@ -1,0 +1,25 @@
+.row.bs-wizard.center-block{style: "border-bottom:0;"}
+  .col-xs-3.bs-wizard-step{ class: pull.check_view_check }
+    .text-center.bs-wizard-stepnum PRの確認
+    .progress
+      .progress-bar
+    %a.bs-wizard-dot{href: "#"}
+    .bs-wizard-info.text-center{ class: hidden?('view_check') } チェック内容を確認してください
+  .col-xs-3.bs-wizard-step{ class: review.check_new_page }
+    .text-center.bs-wizard-stepnum レビュー
+    .progress
+      .progress-bar
+    %a.bs-wizard-dot{href: "#"}
+    .bs-wizard-info.text-center{ class: hidden?('new') } コードレビューをしてください
+  .col-xs-3.bs-wizard-step{ class: review.check_pass_review }
+    .text-center.bs-wizard-stepnum 審査
+    .progress
+      .progress-bar
+    %a.bs-wizard-dot{href: "#"}
+    .bs-wizard-info.text-center{ class: hidden?('show') } 審査中です
+  .col-xs-3.bs-wizard-step{ class: pull.check_replies }
+    .text-center.bs-wizard-stepnum リプライ対応
+    .progress
+      .progress-bar
+    %a.bs-wizard-dot{href: "#"}
+    .bs-wizard-info.text-center{ class: hidden?('index') }  返信をしてください

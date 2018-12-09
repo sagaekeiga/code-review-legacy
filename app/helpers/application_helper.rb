@@ -31,6 +31,10 @@ module ApplicationHelper
     'active' if action_name == controller.action_name
   end
 
+  def hidden?(action_name)
+    'hidden' unless controller.action_name.eql?(action_name)
+  end
+
   def is_same_controller_name?(controller_names)
     'active' if controller.controller_name.in?(controller_names)
   end

@@ -33,10 +33,20 @@ class PullDecorator < ApplicationDecorator
   end
 
   def check_view_check
-    reviewer_pulls.present? ? 'active' : ''
+    if reviewer_pulls.present?
+      'complete'
+    elsif controller.action_name.eql?('view_check')
+      'active'
+    end
   end
 
   def check_replies
-    completed? ? 'active' : ''
+    if completed?
+      'complete'
+    elsif controller.action_name.eql?('index')
+      'active'
+    else
+      'disabled'
+    end
   end
 end
