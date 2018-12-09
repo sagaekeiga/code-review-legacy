@@ -7,4 +7,4 @@
 %p= simple_format(@review.reason)
 %br
 %br
-= link_to 'View on PushRequest', Settings.top + "reviewers/pulls/#{@review.pull.token.to_s}/reviews/#{@review.id}/replies"
+= link_to 'View on Mergee', Settings.top + "reviewers/pulls/#{@review.pull.token.to_s}/reviews/#{@review.id}/replies"

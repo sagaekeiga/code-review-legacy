@@ -16,7 +16,7 @@ require 'sprockets/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module PushRequestV2
+module Mergee
   class Application < Rails::Application
     config.time_zone = 'Tokyo'
     config.i18n.default_locale = :ja
