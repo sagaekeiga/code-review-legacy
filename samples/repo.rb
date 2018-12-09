@@ -4,7 +4,7 @@ require 'zip'
 require 'open-uri'
 
 headers = {
-  'User-Agent': 'PushRequest'
+  'User-Agent': 'Mergee'
 }
 
 res = HTTParty.get 'https://github.com/sagaekeiga/github-api-sample/archive/master.zip'

@@ -1,7 +1,7 @@
 require 'httparty'
 
 headers = {
-  'User-Agent': 'PushRequest',
+  'User-Agent': 'Mergee',
   'Accept': 'application/vnd.github.machine-man-preview'
 }
 

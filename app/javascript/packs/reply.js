@@ -32,7 +32,7 @@ function submitReply(elem) {
       path: elem.nextAll('.path').val(),
       position: elem.nextAll('.position').val(),
       changed_file_id: elem.nextAll('.changed_file_id').val(),
-      body: elem.closest('.submit').prevAll('.input').find('input').val(),
+      body: elem.closest('.submit').prevAll('.input').find('textarea').val(),
       commit_id: elem.nextAll('.commit_id').val()
     },
     element: elem,
@@ -52,7 +52,7 @@ function submitReply(elem) {
             <div class='text-muted'>${data.time}</div>
           </div>
           <div class='replies-line last'>
-            <div class='body md-wrapper'>${data.body}</div>
+            <div class='body md-wrapper'>${marked(data.body)}</div>
           </div>
         </div>
       `)
@@ -63,7 +63,7 @@ function submitReply(elem) {
         lastPanelText = replyWrapper.find('.panel-text').filter(':last')
         reply.insertAfter(lastPanelText)
       }
-      replyInput = elem.closest('.submit').prevAll('.input').find('input')
+      replyInput = elem.closest('.submit').prevAll('.input').find('textarea')
       replyInput.val('')
       elem.prop('disabled', false);
     }

@@ -7,8 +7,8 @@ qiita:
 github:
   web_domain: https://github.com/
 site:
-  name: PushRequest
-  page_title: PushRequest
+  name: Mergee
+  page_title: Mergee
   page_description: コードレビューのマーケットプレイス
   page_keywords: プルリクエスト、pullrequest、レビュー、エンジニア、独学、個人
   meta:

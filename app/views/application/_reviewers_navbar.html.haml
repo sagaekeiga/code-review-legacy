@@ -23,9 +23,9 @@
                 %span.caret.uncertified
             %ul.dropdown-menu
               %li
+                = link_to :reviewers_reviews do
+                  レビュー履歴
+              %li
                 = link_to :destroy_reviewee_session, method: :delete do
                   %i.fa.fa-sign-out-alt
                   = t('helpers.label.log_out')
-              %li
-                = link_to :reviewers_reviews do
-                  レビュー履歴

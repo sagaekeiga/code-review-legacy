@@ -25,7 +25,7 @@ module Github
 
       def github_exec_fetch_changed_file_content!(repo, content_url)
         headers = {
-          'User-Agent': 'PushRequest',
+          'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(repo.installation_id)}",
           'Accept': set_accept(:content)
         }
@@ -125,7 +125,7 @@ module Github
 
       def _get(sub_url, installation_id, event)
         headers = {
-          'User-Agent': 'PushRequest',
+          'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(installation_id)}",
           'Accept': set_accept(event)
         }
@@ -143,7 +143,7 @@ module Github
       # Organazation, Membership
       def _get_credential_resource(sub_url, event, access_token)
         headers = {
-          'User-Agent': 'PushRequest',
+          'User-Agent': 'Mergee',
           'Authorization': "token #{access_token}",
           'Accept': set_accept(event)
         }
