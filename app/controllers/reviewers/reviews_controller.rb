@@ -8,6 +8,10 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_changed_files, only: %i(new create show edit)
   before_action :set_reviews, only: %i(view_check new create show edit update)
 
+  def index
+    @reviews = current_reviewer.reviews.includes(:pull).order(updated_at: :desc).decorate
+  end
+
   def view_check
     @review = Review.new.decorate
   end

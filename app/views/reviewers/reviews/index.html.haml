@@ -1,0 +1,14 @@
+- content_for(:no_footer_page, true)
+.container
+  %table.table
+    %thead
+      %tr
+        %th{scope: "col"} タイトル
+        %th{scope: "col"} ステータス
+        %th{scope: "col"} 更新日
+    %tbody
+      - @reviews.each do |review|
+        %tr.text-center
+          %td= link_to review.pull.title, review.path
+          %td= review.event_i18n
+          %td= l review.updated_at

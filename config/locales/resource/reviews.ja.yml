@@ -13,7 +13,7 @@ ja:
     review:
       event:
         pending: 審査中
-        comment: 作成済み
+        comment: 審査通過済み
   reviewers:
     reviews:
       sidebars:
