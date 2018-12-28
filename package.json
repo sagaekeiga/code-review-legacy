@@ -3,7 +3,9 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "3.5",
-    "prop-types": "^15.6.2"
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15.6.2",
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"

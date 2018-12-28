@@ -10,4 +10,7 @@ class WelcomeController < ApplicationController
 
   def term
   end
+
+  def privacy
+  end
 end
