@@ -402,8 +402,16 @@ html {
   padding: 5px;
   border-color: none;
   margin-bottom: $base-margin * 2;
-  &.alert-success {
+  margin-top: $base-margin * 2;
+  &.alert-notice {
     background-color: $base-color-green;
+    border-color: $base-color-green;
+    text-align: center;
+  }
+  &.alert-error {
+    background-color: $color-cancel;
+    border-color: $color-cancel;
+    text-align: center;
   }
   strong {
     color: $color-white;

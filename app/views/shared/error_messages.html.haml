@@ -1,8 +1,0 @@
-- if resource.errors.any?
-  .alert.alert-danger{ role: 'alert' }
-    %i.close.icon
-    %h4= t 'views.errors.count', count: resource.errors.count
-
-    %ul
-      - resource.errors.full_messages.each do |msg|
-        %li= msg
