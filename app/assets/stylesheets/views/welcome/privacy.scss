@@ -1,0 +1,48 @@
+.welcome-privacy {
+  .service-of-terms {
+    margin-top: $base-margin * 5;
+    margin-bottom: $base-margin * 4;
+    h1, h2 {
+      font-weight: bold;
+    }
+    h1 {
+      font-size: $base-margin * 2;
+    }
+    h2 {
+      font-size: $base-height / 2;
+    }
+    .border-bottom {
+      border-bottom: 1px solid $color-darker-gray;
+      padding-bottom: 7px;
+    }
+    .content {
+      font-size: $base-margin;
+      margin: $base-margin + 4 0px 30px 0px;
+      letter-spacing: 2px;
+      color: $color-dark-gray;
+      p {
+        letter-spacing: 0.1px;
+        margin: 0;
+      }
+      .bullet {
+        padding: $base-font-size - 2 $base-padding + 1;
+      }
+      ol.list_parentheses {
+        padding:0 0 0 2em;
+        margin:0;
+      }
+      ol.list_parentheses li {
+        list-style-type:none;
+        list-style-position:inside;
+        counter-increment: cnt;
+      }
+      ol.list_parentheses li:before {
+        display: marker;
+        content: "(" counter(cnt) ") ";
+      }
+    }
+    .article {
+      margin-top: $base-margin * 2;
+    }
+  }
+}
