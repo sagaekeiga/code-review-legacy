@@ -403,15 +403,14 @@ html {
   border-color: none;
   margin-bottom: $base-margin * 2;
   margin-top: $base-margin * 2;
+  text-align: center;
   &.alert-notice {
     background-color: $base-color-green;
     border-color: $base-color-green;
-    text-align: center;
   }
   &.alert-error {
     background-color: $color-cancel;
     border-color: $color-cancel;
-    text-align: center;
   }
   strong {
     color: $color-white;
