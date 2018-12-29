@@ -50,8 +50,26 @@
                 .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
                   %strong= message
           = yield
+    %button{ class: 'feedback-btn fixed_btn', id: 'feedbackButton', type: 'button' }
+      %i.fas.fa-comment
+    #feedbackModal.modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-body
+            .text-left
+              = form_with scope: :feedback, url: :feedbacks, id: 'feedback-form' do |f|
+                .form-group
+                  = 'URL: ' + url_for(only_path: false)
+                  = f.hidden_field :url, value: url_for(only_path: false)
+                .form-group
+                  フィードバック
+                  = f.text_area :body, rows: '10', id: 'feedback-body', class: 'form-control', required: true
+                .form-group.text-right
+                  = f.submit '送信', class: 'btn btn-primary'
     - unless content_for?(:no_footer_page)
       .footer
         .container-fluid
           .text-center
             = render 'footer'
+= javascript_pack_tag 'modal'
+= javascript_pack_tag 'feedbacks'

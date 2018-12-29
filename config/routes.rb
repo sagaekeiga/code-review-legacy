@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get '/term', to: 'welcome#term'
     get '/privacy', to: 'welcome#privacy'
     get '/auth/github/callback', to: 'connects#github'
+    post '/feedbacks', to: 'feedbacks#create'
 
     devise_scope :reviewee do
       post '/auth/:action/callback',
