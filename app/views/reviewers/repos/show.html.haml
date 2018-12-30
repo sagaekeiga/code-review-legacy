@@ -1,8 +1,7 @@
-- content_for(:no_footer_page, true)
 .container
   .row
     .page-header{ 'repo-id': @repo.id, 'repo-token': @repo.token }
-      %h3= @repo.full_name
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
     = form_with url: reviewers_repo_contents_path(@repo), method: :get, local: true, class: 'search-form' do |f|
       .input-group
         = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')

@@ -8,11 +8,17 @@ class Reviewers::ContentsController < Reviewers::BaseController
       return
     end
     if params[:type] == 'dir' || params[:type].nil?
-      @contents = Github::Request.content repo: @repo, path: params[:path]
-      @contents = sort contents: @contents
+      res = Github::Request.content repo: @repo, path: params[:path]
+      @contents = Content.initializes contents: res
     else
-      @content = Github::Request.content repo: @repo, path: params[:path]
-      @content[:content] = Base64.decode64(@content[:content]).force_encoding('UTF-8') if @content[:content].present?
+      res = Github::Request.content repo: @repo, path: params[:path]
+      @content = Content.new(
+        name: res[:name],
+        path: res[:path],
+        content: res[:content],
+        type: :file
+      )
+      @content.content = Base64.decode64(@content.content).force_encoding('UTF-8') if @content.content.present?
     end
   end
 

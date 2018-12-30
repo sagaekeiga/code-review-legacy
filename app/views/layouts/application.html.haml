@@ -11,8 +11,6 @@
     .container
       - if reviewee_signed_in?
         = render 'reviewees_navbar'
-      - elsif reviewer_signed_in?
-        = render 'reviewers_navbar'
       - else
         = render 'navbar'
     .top-wrapper
@@ -24,17 +22,6 @@
                 .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
                   %strong= message
               = yield
-      - elsif reviewer_signed_in?
-        .reviewers
-          - unless content_for?(:no_flash_msg_page)
-            .container-fluid.body-container
-              .col-sm-12
-                - !content_for?(:flash) && flash && flash.each do |key, message|
-                  .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-                    %strong= message
-                = yield
-          - else
-            = yield
       - elsif admin_signed_in?
         .col-sm-12
           .container.admin

@@ -1,7 +1,8 @@
 class ContentDecorator < ApplicationDecorator
   delegate_all
+  decorates :content
 
   def breadcrumbs
-    (repo.full_name + '/' + path).gsub!('/', ' / ')
+    split('/')
   end
 end

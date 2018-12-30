@@ -6,7 +6,6 @@ class Reviewers::ReposController < Reviewers::BaseController
     @contents = Github::Request.contents repo: @repo
     @contents = sort contents: @contents
     @readme = Github::Request.readme repo: @repo
-    Rails.logger.debug @readme
   end
 
   private
