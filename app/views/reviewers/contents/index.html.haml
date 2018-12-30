@@ -3,10 +3,59 @@
   .col-xs-12
     .page-header{ 'repo-id': @repo.id }
       %h3= @repo.full_name
-    = render 'reviewers/shared/repos/tab', repo: @repo
-    %input{ type: 'text', id: 'searchInput', class: 'form-control search-input', placeholder: t('.placeholder') }
-    .contents-wrapper
-      .text-center.hidden.loader= image_tag 'loader'
-      .search-results-count
-      .results-wrapper
-= javascript_pack_tag 'search'
+    = form_with url: reviewers_repo_contents_path(@repo), method: :get, local: true, class: 'search-form' do |f|
+      .input-group
+        = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')
+        %span.input-group-btn
+          = f.submit t('reviewers.contents.index.search'), class: 'btn btn-primary'
+    - if params[:keyword].present?
+      - @result[:items].each do |item|
+        .code-wrapper
+          .contents-wrapper
+            %p.filename= link_to item[:path], reviewers_repo_contents_path(@repo, path: item[:path], type: 'file')
+            .panel.panel-default
+              %table
+                - item[:text_matches]&.each.with_index do |text_match, index|
+                  - if index > 0
+                    %tbody.file
+                      %tr
+                        %td.border •••
+                        %td.border
+                  - text_match[:fragment].each_line.with_index do |line, index|
+                    - next if index < 1
+                    %tbody.file
+                      %tr
+                        %td.index= index
+                        %td.file-code= coderay(line, item[:name])
+    - else
+      - case params[:type]
+      - when 'dir', nil
+        .contents-wrapper
+          %p= params[:path]
+          .panel.panel-default
+            %table.table.table-hover
+              %tbody
+                - @contents.each do |content|
+                  %tr
+                    %td.file-name.col-sm-11
+                      = link_to reviewers_repo_contents_path(@repo, path: content[:path], type: content[:type]) do
+                        %i.fas{ class: content[:type].eql?('dir') ? 'fa-folder' : 'fa-file' }
+                        &nbsp;
+                        = content[:name]
+      - when 'file'
+        .code-wrapper
+          %p= params[:path]
+          .panel.panel-default
+            .table-wrapper
+              %table
+                %thead
+                  %tr
+                    %th{ scope: 'col' }
+                - if @content[:content].present?
+                  - @content[:content].each_line.with_index do |line, index|
+                    %tbody
+                      %tr
+                        %td.index= index
+                        %td.file-code= coderay(line, @content[:path])
+
+-# = javascript_pack_tag 'search'

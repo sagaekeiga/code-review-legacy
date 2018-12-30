@@ -3,6 +3,7 @@ module Github
     include HTTParty
 
     class << self
+      BASE_API_URI = 'https://api.github.com'.freeze
       # POST レビュー送信
       def github_exec_review!(params, pull)
         _post sub_url(:review, pull), pull.repo.installation_id, :review, params
@@ -16,6 +17,23 @@ module Github
       # GET レポジトリファイルの取得
       def github_exec_fetch_repo_contents!(repo, path = '')
         _get "repos/#{repo.full_name}/contents/#{path}", repo.installation_id, :content
+      end
+
+      # リポジトリファイルの取得
+      def contents(repo:)
+        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents", headers: general_headers(installation_id: repo.installation_id, event: :contents)
+        res = JSON.parse res, symbolize_names: true
+      end
+
+      def content(repo:, path:)
+        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
+        res = JSON.parse res, symbolize_names: true
+      end
+
+      def search_contents(keyword:, repo:)
+        Rails.logger.debug "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}"
+        res = get "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}", headers: general_headers(installation_id: repo.installation_id, event: :search_code)
+        res = JSON.parse res, symbolize_names: true
       end
 
       # GET 差分ファイルの内容
@@ -99,6 +117,14 @@ module Github
       end
 
       private
+
+      def general_headers(installation_id:, event:)
+        {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(installation_id)}",
+          'Accept': set_accept(event)
+        }
+      end
 
       #
       # リクエストの送信処理

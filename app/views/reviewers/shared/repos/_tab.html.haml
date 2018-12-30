@@ -1,3 +1,8 @@
+= form_with url: reviewers_repo_contents_path(repo), method: :get, local: true do |f|
+  .input-group
+    = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')
+    %span.input-group-btn
+      = f.submit t('reviewers.contents.index.search'), class: 'btn btn-primary'
 .reviewers-shared-repos-tab-wrapper
   %ul.nav.nav-tabs.nav-justified
     // Repository

@@ -3,7 +3,7 @@ module Feedback
     include HTTParty
     class << self
       def feedback_exec(params)
-        post ENV['FEEDBACK_POST_URL'], body: params
+        post "#{ENV['FEEDBACK_POST_URL']}/api/feedbacks", body: params
       end
     end
   end
