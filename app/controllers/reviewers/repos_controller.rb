@@ -5,6 +5,7 @@ class Reviewers::ReposController < Reviewers::BaseController
   def show
     @contents = Github::Request.contents repo: @repo
     @contents = sort contents: @contents
+    @readme = Github::Request.readme repo: @repo
   end
 
   private

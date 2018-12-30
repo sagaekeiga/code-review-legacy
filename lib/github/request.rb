@@ -19,20 +19,27 @@ module Github
         _get "repos/#{repo.full_name}/contents/#{path}", repo.installation_id, :content
       end
 
-      # リポジトリファイルの取得
+      # リポジトリファイルの取得（トップディレクトリ）
       def contents(repo:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents", headers: general_headers(installation_id: repo.installation_id, event: :contents)
         res = JSON.parse res, symbolize_names: true
       end
 
+      # リポジトリファイルの取得（サブディレクトリ以下）
       def content(repo:, path:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
         res = JSON.parse res, symbolize_names: true
       end
 
+      # ファイル検索
       def search_contents(keyword:, repo:)
-        Rails.logger.debug "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}"
         res = get "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}", headers: general_headers(installation_id: repo.installation_id, event: :search_code)
+        res = JSON.parse res, symbolize_names: true
+      end
+
+      # Readmeの取得
+      def readme(repo:)
+        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/readme", headers: general_headers(installation_id: repo.installation_id, event: :contents)
         res = JSON.parse res, symbolize_names: true
       end
 

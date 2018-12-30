@@ -1,8 +1,7 @@
-- content_for(:no_footer_page, true)
 .container
-  .col-xs-12
+  .row
     .page-header{ 'repo-id': @repo.id }
-      %h3= @repo.full_name
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
     = form_with url: reviewers_repo_contents_path(@repo), method: :get, local: true, class: 'search-form' do |f|
       .input-group
         = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')
@@ -11,9 +10,9 @@
     - if params[:keyword].present?
       - @result[:items].each do |item|
         .code-wrapper
-          .contents-wrapper
-            %p.filename= link_to item[:path], reviewers_repo_contents_path(@repo, path: item[:path], type: 'file')
-            .panel.panel-default
+          %p.filename= link_to item[:path], reviewers_repo_contents_path(@repo, path: item[:path], type: 'file')
+          = link_to reviewers_repo_contents_path(@repo, path: item[:path], type: 'file'), class: 'result-panel-link' do
+            .panel.panel-default.result
               %table
                 - item[:text_matches]&.each.with_index do |text_match, index|
                   - if index > 0
@@ -30,32 +29,35 @@
     - else
       - case params[:type]
       - when 'dir', nil
-        .contents-wrapper
-          %p= params[:path]
-          .panel.panel-default
-            %table.table.table-hover
-              %tbody
-                - @contents.each do |content|
-                  %tr
-                    %td.file-name.col-sm-11
-                      = link_to reviewers_repo_contents_path(@repo, path: content[:path], type: content[:type]) do
-                        %i.fas{ class: content[:type].eql?('dir') ? 'fa-folder' : 'fa-file' }
-                        &nbsp;
-                        = content[:name]
+        %p= @repo.breadcrumbs(params[:path], params[:type])
+        .panel.panel-default
+          %table.table.table-hover
+            %tbody
+              - @contents.each do |content|
+                %tr
+                  %td.file-name.col-sm-11
+                    = link_to reviewers_repo_contents_path(@repo, path: content.path, type: content.type) do
+                      %i.fas{ class: content.dir? ? 'fa-folder' : 'fa-file' }
+                      &nbsp;
+                      = content.name
       - when 'file'
         .code-wrapper
-          %p= params[:path]
+          %p= @repo.breadcrumbs(params[:path])
           .panel.panel-default
-            .table-wrapper
-              %table
-                %thead
-                  %tr
-                    %th{ scope: 'col' }
-                - if @content[:content].present?
-                  - @content[:content].each_line.with_index do |line, index|
-                    %tbody
-                      %tr
-                        %td.index= index
-                        %td.file-code= coderay(line, @content[:path])
-
--# = javascript_pack_tag 'search'
+            - case File.extname(params[:path])
+            - when '.jpg', '.png', '.jpeg', '.gif'
+              %img{ src: "data:image/#{File.extname(params[:path]).gsub('.', '')};base64, #{@content.content}", class: 'img-responsive center-block' }
+            - when '.pdf'
+              %object{ data: "data:image/#{File.extname(params[:path]).gsub('.', '')};base64, #{@content.content}", type: 'application/pdf' }
+            - else
+              .table-wrapper
+                %table
+                  %thead
+                    %tr
+                      %th{ scope: 'col' }
+                  - if @content.content.present?
+                    - Base64.decode64(@content.content).force_encoding('UTF-8').each_line.with_index do |line, index|
+                      %tbody
+                        %tr
+                          %td.index= index
+                          %td.file-code= coderay(line, @content.path)

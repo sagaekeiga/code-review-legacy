@@ -31,4 +31,16 @@ class RepoDecorator < ApplicationDecorator
     when 'Reviewee' then resource.last_sign_in_at
     end
   end
+
+  def breadcrumbs(path, type='dir')
+    pathes = path.split('/')
+    links = []
+    pathes.each.with_index do |path, index|
+      type = 'file' if File.extname(path).present?
+      param = pathes[0..index].join('/')
+      link ="<a href='/reviewers/repos/#{token}/contents?path=#{param}&type=#{type}'>#{path}</a>"
+      links << link
+    end
+    links.join(' / ').html_safe
+  end
 end
