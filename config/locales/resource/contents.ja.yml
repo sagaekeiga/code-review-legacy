@@ -10,5 +10,6 @@ ja:
   reviewers:
     contents:
       index:
-        placeholder: キーワード
+        placeholder: ファイル名
         tab_title: Search
+        search: 検索

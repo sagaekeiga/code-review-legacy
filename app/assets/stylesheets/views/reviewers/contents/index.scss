@@ -1,5 +1,8 @@
 .contents-index {
   .reviewers {
+    .search-form {
+      margin-bottom: $base-margin * 2;
+    }
     .contents-wrapper {
       margin-top: $base-margin * 3;
       p {
@@ -26,6 +29,15 @@
               }
               span.text {
                 background-color: $color-github-yellow;
+              }
+              &.file-name {
+                a {
+                  text-decoration: none;
+                  i {
+                    color: $color-hover-gray;
+                    padding-right: $base-padding;
+                  }
+                }
               }
             }
           }

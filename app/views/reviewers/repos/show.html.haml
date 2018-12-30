@@ -1,15 +1,20 @@
 - content_for(:no_footer_page, true)
 .container
-  .col-xs-12
+  .row
     .page-header{ 'repo-id': @repo.id, 'repo-token': @repo.token }
       %h3= @repo.full_name
-    = render 'reviewers/shared/repos/tab', repo: @repo
-    .contents-wrapper
-      .text-center.loader= image_tag 'loader'
-      .code-wrapper.hidden
-        .breadcrumbs{ 'repo-name': @repo.name }
-        .panel.panel-default
-          .panel-heading
-            .panel-title
-          %table.table
-= javascript_pack_tag 'contents'
+    = form_with url: reviewers_repo_contents_path(@repo), method: :get, local: true, class: 'search-form' do |f|
+      .input-group
+        = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')
+        %span.input-group-btn
+          = f.submit t('reviewers.contents.index.search'), class: 'btn btn-primary'
+    .panel.panel-default
+      %table.table.table-hover
+        %tbody
+          - @contents.each do |content|
+            %tr
+              %td.file-name.col-sm-11
+                = link_to reviewers_repo_contents_path(@repo, path: content[:path], type: content[:type]) do
+                  %i.fas{ class: content[:type].eql?('dir') ? 'fa-folder' : 'fa-file' }
+                  &nbsp;
+                  = content[:name]

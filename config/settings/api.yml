@@ -26,6 +26,7 @@ api:
   github:
     web_domain: https://github.com/
     api_domain: https://api.github.com/
+    domain: api.github.com
     request:
       access_token_uri: https://api.github.com/installations/
       header:
