@@ -44,14 +44,20 @@
         .code-wrapper
           %p= @repo.breadcrumbs(params[:path])
           .panel.panel-default
-            .table-wrapper
-              %table
-                %thead
-                  %tr
-                    %th{ scope: 'col' }
-                - if @content.content.present?
-                  - @content.content.each_line.with_index do |line, index|
-                    %tbody
-                      %tr
-                        %td.index= index
-                        %td.file-code= coderay(line, @content.path)
+            - case File.extname(params[:path])
+            - when '.jpg', '.png', '.jpeg', '.gif'
+              %img{ src: "data:image/#{File.extname(params[:path]).gsub('.', '')};base64, #{@content.content}", class: 'img-responsive center-block' }
+            - when '.pdf'
+              %object{ data: "data:image/#{File.extname(params[:path]).gsub('.', '')};base64, #{@content.content}", type: 'application/pdf' }
+            - else
+              .table-wrapper
+                %table
+                  %thead
+                    %tr
+                      %th{ scope: 'col' }
+                  - if @content.content.present?
+                    - Base64.decode64(@content.content).force_encoding('UTF-8').each_line.with_index do |line, index|
+                      %tbody
+                        %tr
+                          %td.index= index
+                          %td.file-code= coderay(line, @content.path)

@@ -18,7 +18,6 @@ class Reviewers::ContentsController < Reviewers::BaseController
         content: res[:content],
         type: :file
       )
-      @content.content = Base64.decode64(@content.content).force_encoding('UTF-8') if @content.content.present?
     end
   end
 
