@@ -18,3 +18,9 @@
                   %i.fas{ class: content[:type].eql?('dir') ? 'fa-folder' : 'fa-file' }
                   &nbsp;
                   = content[:name]
+    -if @readme[:content].present?
+      .panel.panel-default
+        .panel-heading= @readme[:name]
+        .panel-body
+          .md-wrapper
+            = markdown(Base64.decode64(@readme[:content]).force_encoding('UTF-8'))
