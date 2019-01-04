@@ -3,6 +3,7 @@
 # Table name: reviewers
 #
 #  id                     :bigint(8)        not null, primary key
+#  address                :string
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -13,6 +14,7 @@
 #  encrypted_password     :string           default(""), not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
+#  name                   :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -80,6 +82,8 @@ class Reviewer < ApplicationRecord
   # Validations
   # -------------------------------------------------------------------------------
   validates_acceptance_of :agreement, allow_nil: true, on: :create
+  validates :name, presence: true
+  validates :address, presence: true
 
   # -------------------------------------------------------------------------------
   # InstanceMethods

@@ -10,7 +10,7 @@
           .form-group
             .input-group
               %span.input-group-addon
-                %i.fas.fa-at
+                %i.fas.fa-envelope
               = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('helpers.links.email'), required: true
           .form-group
             .input-group
@@ -22,6 +22,17 @@
               %span.input-group-addon
                 %i.fas.fa-check
               = f.password_field :password_confirmation, class: 'form-control', placeholder: t('helpers.links.password_confirm'), required: true
+          %p お名前と住所は秘密保持契約時に使用します。
+          .form-group
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-user
+              = f.text_field :name, class: 'form-control', placeholder: t('helpers.links.name'), required: true
+          .form-group
+            .input-group
+              %span.input-group-addon
+                %i.fas.fa-at
+              = f.text_field :address, class: 'form-control', placeholder: t('helpers.links.address'), required: true
           .form-group
             = f.check_box :agreement, as: :boolean, checked: false, required: true
             = link_to :term do

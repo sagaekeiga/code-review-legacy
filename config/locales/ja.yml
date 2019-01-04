@@ -24,6 +24,8 @@ ja:
       password_confirm: パスワード (確認用)
       email: メールアドレス
       agreement: 利用規約
+      name: お名前（フルネーム）
+      address: 住所
     label:
       log_out: ログアウト
       reviewer:
