@@ -17,6 +17,6 @@
               %th.col-sm-1= t 'activerecord.attributes.pull.status'
               %th.col-sm-1
           %tbody
-            = render(action: @pulls, {})
+            = render 'pull', collection: @pulls
         .text-center= paginate @pulls
 = javascript_pack_tag 'update-resource'
