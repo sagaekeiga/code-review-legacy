@@ -1,24 +1,21 @@
-.container-fluid
+.container
   .row
     .review
-      .left-sidebar.col-sm-2.hidden-xs
-        = render 'left_sidebar', pull: @pull, review: @review, reviews: @reviews
-      .col-sm-10.col-sm-offset-2
-        .col-sm-9.col-sm-offset-1.workspace
-          = render 'progress_bar', pull: @pull, review: @review
-          = render 'shared/flash_msg'
-          .page-header{ 'pull-id': @pull.id }
-            %h1
-              %strong= @pull.title
-          .panel
-            .panel-body
-              - if @pull.body.present?
-                .md-wrapper
-                  = markdown(@pull.body)
-              - else
-                = t('.description_is_blank')
-          %hr
-          .text-center
-            %p= t '.assign_to_pullrequest'
-            %p= t '.assign_is'
-            = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-primary'
+      .col-sm-8.col-sm-offset-2.workspace
+        = render 'progress_bar', pull: @pull, review: @review
+        = render 'shared/flash_msg'
+        .page-header{ 'pull-id': @pull.id }
+          %h1
+            %strong= @pull.title
+        .panel
+          .panel-body
+            - if @pull.body.present?
+              .md-wrapper
+                = markdown(@pull.body)
+            - else
+              = t('.description_is_blank')
+        %hr
+        .text-center
+          %p= t '.assign_to_pullrequest'
+          %p= t '.assign_is'
+          = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-primary'
