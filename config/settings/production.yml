@@ -1,5 +1,7 @@
 top: https://<%= ENV['WEB_DOMAIN'] %>/
 reviewers:
+  sessions:
+    new: http://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/sign_in
   pulls:
     show: https://<%= ENV['WEB_DOMAIN'] %>/reviewers/pulls/
 reviewees:

@@ -5,6 +5,13 @@ class WebDomainConstraint
   end
 end
 
+class ReviewerDomainConstraint
+  # Review Appsでは毎回ドメインが変更されるのでドメイン制約をつけない
+  def self.matches?(request)
+    ENV['REVIEW_APP'].present? || request.host == (ENV['REVIEWER_DOMAIN'])
+  end
+end
+
 class AdminDomainConstraint
   # Review Appsでは毎回ドメインが変更されるのでドメイン制約をつけない
   def self.matches?(request)
@@ -27,20 +34,13 @@ Rails.application.routes.draw do
     get '/term', to: 'welcome#term'
     get '/privacy', to: 'welcome#privacy'
     get '/auth/github/callback', to: 'connects#github'
-    post '/feedbacks', to: 'feedbacks#create'
 
-    #
-    # Reviewee
-    #
     devise_for :reviewees, path: 'reviewees', controllers: {
       registrations: 'reviewees/registrations',
       confirmations: 'reviewees/confirmations',
       sessions: 'reviewees/sessions'
     }
 
-    #
-    # Reviewee
-    #
     namespace :reviewees do
       get :dashboard
       get :integrations
@@ -51,9 +51,20 @@ Rails.application.routes.draw do
       end
     end
 
-    #
-    # Reviewer
-    #
+    if !Rails.env.production? && defined?(LetterOpenerWeb)
+      mount LetterOpenerWeb::Engine, at: '/letter_opener'
+    end
+
+    if !Rails.env.production? && defined?(Sidekiq::Web)
+      mount Sidekiq::Web => '/sidekiq'
+    end
+
+  end
+
+  constraints(ReviewerDomainConstraint) do
+    root to: 'reviewers#dashboard'
+    get '/auth/github/callback', to: 'connects#github'
+    post '/feedbacks', to: 'feedbacks#create'
 
     devise_for :reviewers, path: 'reviewers', controllers: {
       registrations: 'reviewers/registrations',
@@ -88,16 +99,8 @@ Rails.application.routes.draw do
       end
       resources :reviews, only: %i(index)
     end
-
-    if !Rails.env.production? && defined?(LetterOpenerWeb)
-      mount LetterOpenerWeb::Engine, at: '/letter_opener'
-    end
-
-    if !Rails.env.production? && defined?(Sidekiq::Web)
-      mount Sidekiq::Web => '/sidekiq'
-    end
-
   end
+
   constraints(AdminDomainConstraint) do
     root to: 'admins#dashboard'
     #

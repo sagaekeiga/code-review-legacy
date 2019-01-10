@@ -24,4 +24,10 @@ class Reviewers::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  #
+  # ログアウト後に遷移するページ
+  #
+  def after_sign_out_path_for(resource)
+    Settings.top
+  end
 end
