@@ -10,7 +10,7 @@
   %body{ class: "#{controller_name}-#{action_name}" }
     .container
       - if reviewee_signed_in?
-        = render 'reviewees_navbar'
+        = render 'reviewees_navbar', repo: @repo
       - else
         = render 'navbar'
     .top-wrapper

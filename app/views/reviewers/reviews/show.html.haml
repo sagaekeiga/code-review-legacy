@@ -23,6 +23,6 @@
             .panel
               .panel-body.gray-space
                 = markdown(@review.body)
-          = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits
+          = render 'reviewers/reviews/tab_contents', pull: @pull, commits: @commits, numbers: @numbers
 = javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'

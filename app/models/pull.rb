@@ -76,6 +76,8 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
+  delegate :resource_id, to: :repo, prefix: true
+  delegate :resource_type, to: :repo, prefix: true
   delegate :full_name, to: :repo, prefix: true
   delegate :private, to: :repo, prefix: true
   delegate :token, to: :repo, prefix: true
