@@ -27,7 +27,7 @@ class Reviewers::SessionsController < Devise::SessionsController
   #
   # ログアウト後に遷移するページ
   #
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(_resource)
     Settings.top
   end
 end
