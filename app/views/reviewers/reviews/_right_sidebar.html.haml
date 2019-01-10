@@ -2,32 +2,32 @@
   .side-menu
     - if controller.action_name.eql?('index')
       %li.list.active
-        = link_to '#conversationTab', class: "#{is_same_action_name?('replies')} tab active" do
+        = link_to '#conversationTab', class: "#{same_action_name?('replies')} tab active" do
           .text-center
             %i.fas.fa-comments
             %br
             %small replies
     - else
       %li.list.active
-        = link_to '#codeTab', class: "#{is_same_action_name?('view_check')} tab active" do
+        = link_to '#codeTab', class: "#{same_action_name?('view_check')} tab active" do
           .text-center
             %i.fas.fa-code
             %br
             %small code
     %li.list
-      = link_to '#bodyTab', class: "#{is_same_action_name?('view_check')} tab" do
+      = link_to '#bodyTab', class: "#{same_action_name?('view_check')} tab" do
         .text-center
           %i.glyphicon.glyphicon-comment
           %br
           %small pullrequest
     %li.list
-      = link_to '#issueTab', class: "#{is_same_action_name?('view_check')} tab" do
+      = link_to '#issueTab', class: "#{same_action_name?('view_check')} tab" do
         .text-center
           %i.fas.fa-exclamation-circle
           %br
           %small issues
     %li.list
-      = link_to '#commitsTab', class: "#{is_same_action_name?('view_check')} tab" do
+      = link_to '#commitsTab', class: "#{same_action_name?('view_check')} tab" do
         .text-center.center-block
           %i.fas.fa-history
           %br

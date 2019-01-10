@@ -5,7 +5,7 @@
       %h1
         %strong= pull.title
     .panel
-      - if pull.body.present?
+      - if pull.body?
         .panel-body
           .md-wrapper
             = markdown(pull.body)
@@ -13,7 +13,7 @@
         チェック項目はありません。
 / issues
 #issueTab.hidden.tab-content
-  .page-header{ 'repo-token': pull.repo.token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
+  .page-header{ 'repo-token': pull.repo_token, 'issue-numbers': numbers.empty? ? 0 : numbers }
     %h1
       %strong= pull.title
   #loader.text-center= image_tag 'loader.gif'

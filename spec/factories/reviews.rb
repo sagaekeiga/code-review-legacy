@@ -16,6 +16,7 @@
 #
 # Indexes
 #
+#  index_reviews_on_commit_id    (commit_id)
 #  index_reviews_on_deleted_at   (deleted_at)
 #  index_reviews_on_pull_id      (pull_id)
 #  index_reviews_on_reviewer_id  (reviewer_id)

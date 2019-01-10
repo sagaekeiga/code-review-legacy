@@ -3,7 +3,7 @@
     .col-xs-12
       .panel
         .panel-body
-          = form_for @review, url: reviewers_pull_comments_path(pull), method: :post, html: { class: 'form-horizontal', role: 'form', class: 'form' } do |f|
+          = form_for review, url: reviewers_pull_comments_path(pull), method: :post, html: { class: 'form-horizontal', role: 'form', class: 'form' } do |f|
             .form-group
               = f.text_area :body, class: 'form-control', rows: 6, placeholder: 'コメント', required: true
             .form-group

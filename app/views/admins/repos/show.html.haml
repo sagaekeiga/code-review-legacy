@@ -55,6 +55,6 @@
             %td= reviewer.github_account&.user_type
             %td.text-center
               - if reviewer.assigned?(@repo)
-                = link_to t('helpers.links.destroy'), @repo.destroy_reviewer_repo_path(reviewer), method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm') }
+                = link_to t('helpers.links.destroy'), @repo.destroy_reviewer_repo_path(reviewer: reviewer, repo_id: @repo.id), method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm') }
               - else
                 = link_to t('helpers.links.add'), admins_repo_reviewer_repos_path(@repo, reviewer_id: reviewer.id), class: 'btn btn-primary', method: :post

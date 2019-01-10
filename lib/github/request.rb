@@ -1,11 +1,11 @@
 module Github
-  class Request
+  class Request # rubocop:disable Metrics/ClassLength
     include HTTParty
 
     class << self
       BASE_API_URI = 'https://api.github.com'.freeze
       # POST レビュー送信
-      def github_exec_review!(params, pull)
+      def review!(params:, pull:)
         _post sub_url(:review, pull), pull.repo.installation_id, :review, params
       end
 
@@ -22,25 +22,25 @@ module Github
       # リポジトリファイルの取得（トップディレクトリ）
       def contents(repo:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        res = JSON.parse res, symbolize_names: true
+        JSON.parse res, symbolize_names: true
       end
 
       # リポジトリファイルの取得（サブディレクトリ以下）
       def content(repo:, path:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        res = JSON.parse res, symbolize_names: true
+        JSON.parse res, symbolize_names: true
       end
 
       # ファイル検索
       def search_contents(keyword:, repo:)
         res = get "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}", headers: general_headers(installation_id: repo.installation_id, event: :search_code)
-        res = JSON.parse res, symbolize_names: true
+        JSON.parse res, symbolize_names: true
       end
 
       # Readmeの取得
       def readme(repo:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/readme", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        res = JSON.parse res, symbolize_names: true
+        JSON.parse res, symbolize_names: true
       end
 
       # GET 差分ファイルの内容
@@ -94,7 +94,7 @@ module Github
 
       # GET 組織取得
       def github_exec_fetch_orgs!(github_account)
-        _get_credential_resource "user/orgs", :org, github_account.access_token
+        _get_credential_resource 'user/orgs', :org, github_account.access_token
       end
 
       # GET レビュイーの組織内での役割を取得する
@@ -227,19 +227,19 @@ module Github
       # イベントに対応するacceptを返す
       def set_accept(event)
         case event
-        when *%i(review get_access_token) then Settings.api.github.request.header.accept.machine_man_preview_json
-        when *%i(issue_comment) then Settings.api.github.request.header.accept.machine_man_preview
-        when *%i(changed_file pull content issue commit diff org role_in_org issue_number) then Settings.api.github.request.header.accept.symmetra_preview_json
-        when *%i(review_comment) then Settings.api.github.request.header.accept.squirrel_girl_preview
-        when *%i(search_code) then Settings.api.github.request.header.accept.text_match_json
+        when :review, :get_access_token then Settings.api.github.request.header.accept.machine_man_preview_json
+        when :issue_comment then Settings.api.github.request.header.accept.machine_man_preview
+        when :changed_file, :pull, :content, :issue, :commit, :diff, :org, :role_in_org, :issue_number then Settings.api.github.request.header.accept.symmetra_preview_json
+        when :review_comment then Settings.api.github.request.header.accept.squirrel_girl_preview
+        when :search_code then Settings.api.github.request.header.accept.text_match_json
         end
       end
 
       # 成功時のレスポンスコード
       def success_code(event)
         case event
-        when *%i(issue_comment changed_file pull review_comment) then Settings.api.created.status.code
-        when *%i(content commit issue diff review org role_in_org issue_number search_code) then Settings.api.success.status.code
+        when :issue_comment, :changed_file, :pull, :review_comment then Settings.api.created.status.code
+        when :content, :commit, :issue, :diff, :review, :org, :role_in_org, :issue_number, :search_code then Settings.api.success.status.code
         end
       end
 

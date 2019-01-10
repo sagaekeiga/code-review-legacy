@@ -1,78 +1,142 @@
-version: 2
-dependencies:
-jobs:
-  build:
-    working_directory: ~/push-request-v2
+# @see https://github.com/wdb-circleci/wdb-circleci-rails/blob/master/.circleci/config.yml
+executors:
+  default:
     docker:
-      - image: circleci/ruby:2.4.3-stretch-node-browsers
+      - image: circleci/ruby:2.6.0-node-browsers-legacy
         environment:
-          PGHOST: 127.0.0.1
-          PGUSER: push-request-v2
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
+          DB_HOST: localhost
+    working_directory: ~/repo
+  with_db:
+    docker:
+      - image: circleci/ruby:2.6.0-node-browsers-legacy
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+          DB_HOST: localhost
       - image: circleci/postgres:9.6.2-alpine
         environment:
-          POSTGRES_USER: push-request-v2
-          POSTGRES_DB: push-request-v2_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: unplan-checkin_test
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+    working_directory: ~/repo
+
+version: 2.1
+
+# --------------------------------------------------
+# Job definitions
+# --------------------------------------------------
+jobs:
+  checkout_code:
+    executor: default
     steps:
       - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
 
+  bundle_dependencies:
+    executor: default
+    steps:
       - restore_cache:
-          name: Restore bundle cache
-          keys:
-            - myapp-bundle-{{ checksum "Gemfile.lock" }}
-            - myapp-bundle-
-
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
-          name: Restore yarn cache
-          keys:
-            - myapp-yarn-{{ checksum "yarn.lock" }}
-            - myapp-yarn-
-
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: Bundle Install
-          command: bin/bundle check --path vendor/bundle ||  bin/bundle install --path vendor/bundle --jobs 4 --retry 3
-
-      - run:
-          name: Yarn Install
-          command: yarn install
-
+          command: bundle check || bundle install
       - save_cache:
-          name: Store bundle cache
-          key: myapp-bundle-{{ checksum "Gemfile.lock" }}
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
-      - save_cache:
-          name: Store yarn cache
-          key: push-request-v2-yarn-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.yarn-cache
-
+  test_rubocop:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
-          name: Rubocop
-          command: bundle exec rubocop --rails
+          name: Run rubocop
+          command: bundle exec rubocop
 
+  test_rails_best_practices:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
-          name: RailsBestPractice
-          command: bundle exec rails_best_practices .
+          name: Run Rails Best Practice
+          command: bundle exec rails_best_practices -e app/views/kaminari
 
+  test_brakeman:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
-          name: Brakemen
-          command: bundle exec brakeman
+          name: Run brakeman
+          command: bundle exec brakeman -4 -A -w 1 -z
 
+  test_rspec:
+    parallelism: 2
+    executor: with_db
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
+          name: Waiting database launch
+          command: |
+            dockerize -wait \
+            tcp://127.0.0.1:5432 -timeout 120s
       - run:
-          name: Database setup
-          command: gem pristine rmagick
+          name: Setup database
           command: bin/rails db:schema:load --trace
-
       - run:
-          name: Run tests
-          command: bundle exec rspec
+          name: Run rspec
+          command: |
+            bundle exec rspec \
+            --format RspecJunitFormatter \
+            --out test_results/rspec.xml \
+            --format progress
+          # command: |
+          #   bundle exec rspec --profile 10 \
+          #   --format RspecJunitFormatter \
+          #   --out test_results/rspec.xml \
+          #   --format progress \
+          #   $(circleci tests glob "spec/**/*_spec.rb" | \
+          #   circleci tests split --split-by=timings)
+      - store_test_results:
+          path: test_results
 
-      - store_artifacts:
-          path: coverage
+workflows:
+  version: 2
+  build_test:
+    jobs:
+      - checkout_code
+      - bundle_dependencies:
+          requires:
+            - checkout_code
+      - test_rubocop:
+          requires:
+            - bundle_dependencies
+      - test_rails_best_practices:
+          requires:
+            - bundle_dependencies
+      - test_brakeman:
+          requires:
+            - bundle_dependencies
+      - test_rspec:
+          requires:
+            - bundle_dependencies

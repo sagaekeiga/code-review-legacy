@@ -16,8 +16,10 @@
 #
 # Indexes
 #
-#  index_commits_on_deleted_at  (deleted_at)
-#  index_commits_on_pull_id     (pull_id)
+#  index_commits_on_deleted_at     (deleted_at)
+#  index_commits_on_pull_id        (pull_id)
+#  index_commits_on_resource_id    (resource_id)
+#  index_commits_on_resource_type  (resource_type)
 #
 # Foreign Keys
 #
@@ -46,8 +48,8 @@ class Commit < ApplicationRecord
         update = true
         commit = pull.commits.with_deleted.find_or_initialize_by(
           sha: res_commit['sha'],
-          resource_type: pull.repo.resource_type,
-          resource_id: pull.repo.resource_id,
+          resource_type: pull.repo_resource_type,
+          resource_id: pull.repo_resource_id,
           committer_name: res_commit['commit']['committer']['name'],
           committed_date: res_commit['commit']['committer']['date'],
         )

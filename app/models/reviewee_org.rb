@@ -41,12 +41,4 @@ class RevieweeOrg < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :role, default: roles[:member]
-  # -------------------------------------------------------------------------------
-  # InstanceMethods
-  # -------------------------------------------------------------------------------
-  def set_role(github_account)
-    membership = Github::Request.github_exec_fetch_role_in_org!(github_account, org.login)
-    role = membership['role'].eql?('admin') ? :owner : :member
-    self.assign_attributes(role: role)
-  end
 end

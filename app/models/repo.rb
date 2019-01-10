@@ -17,7 +17,9 @@
 #
 # Indexes
 #
-#  index_repos_on_deleted_at  (deleted_at)
+#  index_repos_on_deleted_at     (deleted_at)
+#  index_repos_on_resource_id    (resource_id)
+#  index_repos_on_resource_type  (resource_type)
 #
 
 class Repo < ApplicationRecord
@@ -44,11 +46,10 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   attribute :private, default: false
   # -------------------------------------------------------------------------------
-  # Scopes
+  # Delegations
   # -------------------------------------------------------------------------------
-  scope :owned_by_orgs, lambda { |reviewee|
-    where(resource_id: reviewee.orgs.owner.pluck(:id), resource_type: 'Org')
-  }
+  delegate :resource_type, to: :repo, prefix: true
+  delegate :resource_id, to: :repo, prefix: true
 
   # -------------------------------------------------------------------------------
   # ClassMethods

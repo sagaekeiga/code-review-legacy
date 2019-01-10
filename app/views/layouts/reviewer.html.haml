@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    = render partial: 'meta'
+    = render 'meta'
     %title mergee
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -9,7 +9,7 @@
     = yield :javascript
   %body{ class: "#{controller_name}-#{action_name}" }
     .container
-      = render 'reviewers_navbar'
+      = render 'reviewers_navbar', pull: @pull
     .top-wrapper
       .reviewers
         = yield

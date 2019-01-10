@@ -12,8 +12,10 @@
 #
 # Indexes
 #
-#  index_notifications_on_pull_id      (pull_id)
-#  index_notifications_on_reviewer_id  (reviewer_id)
+#  index_notifications_on_pull_id        (pull_id)
+#  index_notifications_on_resource_id    (resource_id)
+#  index_notifications_on_resource_type  (resource_type)
+#  index_notifications_on_reviewer_id    (reviewer_id)
 #
 
 class Notification < ApplicationRecord

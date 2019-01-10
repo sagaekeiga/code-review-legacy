@@ -6,7 +6,7 @@ class Reviewers::PullsController < Reviewers::BaseController
     @review = Review.new
     @pull = Pull.includes(changed_files: :review_comments).order('review_comments.created_at asc').friendly.find(params[:token]).decorate
     @pending_review = @pull.reviews.pending.first
-    @double_review_comments = @pull.changed_files.map{ |changed_file| changed_file.review_comments.includes(:reviewer) }
+    @double_review_comments = @pull.changed_files.map { |changed_file| changed_file.review_comments.includes(:reviewer) }
     @reviews = @pull.reviews.where(event: %i(comment issue_comment))
   end
 

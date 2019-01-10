@@ -17,7 +17,6 @@ module ApplicationHelper
         url: request.original_url,
         image: image_url(Settings.site.meta.ogp.image_path),
         site_name: Settings.site.name,
-        description: :description,
         locale: 'ja_JP'
       }
     }
@@ -27,7 +26,7 @@ module ApplicationHelper
     time_ago_in_words(datetime) + '前' if datetime
   end
 
-  def is_same_action_name?(action_name)
+  def same_action_name?(action_name)
     'active' if action_name == controller.action_name
   end
 
@@ -35,11 +34,11 @@ module ApplicationHelper
     'hidden' unless controller.action_name.eql?(action_name)
   end
 
-  def is_same_controller_name?(controller_names)
+  def same_controller_name?(controller_names)
     'active' if controller.controller_name.in?(controller_names)
   end
 
-  def is_same_controller_and_action_name?(controller_name, action_name)
+  def same_controller_and_action_name?(controller_name, action_name)
     'active' if controller.controller_name.eql?(controller_name) && controller.action_name.eql?(action_name)
   end
 

@@ -29,18 +29,6 @@ Rails.application.routes.draw do
     get '/auth/github/callback', to: 'connects#github'
     post '/feedbacks', to: 'feedbacks#create'
 
-    devise_scope :reviewee do
-      post '/auth/:action/callback',
-        controller: 'authentications',
-        constraints: { action: /github/ }
-    end
-
-    devise_scope :reviewer do
-      get '/auth/:action/callback',
-        controller: 'connects',
-        constraints: { action: /github/ }
-    end
-
     #
     # Reviewee
     #
@@ -76,7 +64,7 @@ Rails.application.routes.draw do
     namespace :reviewers do
       get *%i(dashboard integrations pending)
       get 'settings/integrations'
-      resources :pulls, only: %i(show update), param: :token do
+      resources :pulls, only: %i(show), param: :token do
         get :files
         resources :reviews, only: %i(create show edit update) do
           collection do
@@ -93,9 +81,6 @@ Rails.application.routes.draw do
       resources :review_comments, only: %i(create update destroy show)
       namespace :github do
         resource :changed_files, only: %i(show)
-        resource :contents do
-          get :get_contents
-        end
         resources :issues, only: %i(index)
       end
       resources :repos, only: %i(show) do

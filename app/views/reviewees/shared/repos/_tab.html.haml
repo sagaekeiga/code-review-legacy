@@ -1,13 +1,13 @@
 .reviewee-repo-tab-wrapper
   %ul.nav.nav-tabs.nav-justified
     // Contents
-    %li{ class: is_same_controller_name?('contents') }
+    %li{ class: same_controller_name?('contents') }
       = link_to reviewees_repo_contents_path(repo), class: 'nav-link' do
         %i.fas.fa-code
         &nbsp;
         %b= t 'reviewers.pulls.show.code'
     // Issues
-    %li{ class: is_same_controller_name?('issues') }
+    %li{ class: same_controller_name?('issues') }
       = link_to reviewees_repo_issues_path(repo), class: 'nav-link' do
         %i.fas.fa-exclamation-circle
         &nbsp;
@@ -15,7 +15,7 @@
         &nbsp;
         %span.badge.badge-default
     // Wikis
-    %li{ class: is_same_controller_name?('wikis') }
+    %li{ class: same_controller_name?('wikis') }
       = link_to reviewees_repo_wikis_path(repo), class: 'nav-link' do
         %i.fas.fa-book
         &nbsp;

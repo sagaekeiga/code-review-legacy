@@ -15,9 +15,7 @@ class Admins::ReviewsController < Admins::BaseController
     ActiveRecord::Base.transaction do
       case params[:review][:event]
       when 'approve'
-        @review.update!(reason: params[:review][:reason])
-        @review.github_exec_review!
-        ReviewerMailer.approve_review(@review).deliver_later
+        @review.review! reason: params[:review][:reason]
       when 'non_approve'
         @review.update!(reason: params[:review][:reason])
         @review.refused!

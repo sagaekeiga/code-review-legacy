@@ -56,9 +56,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def check_assign
-    unless current_reviewer.assign_to!(@pull)
-      return redirect_to view_check_reviewers_pull_reviews_path(@pull), warning: t('reviewers.reviews.messages.already')
-    end
+    return redirect_to view_check_reviewers_pull_reviews_path(@pull), warning: t('reviewers.reviews.messages.already') unless current_reviewer.assign_to!(@pull)
   end
 
   def check_show
@@ -78,7 +76,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_numbers
-    @numbers = @pull.body.scan(/#\d+/)&.map{ |num| num.delete('#').to_i }
+    @numbers = @pull.body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
   end
 
   def review_params
