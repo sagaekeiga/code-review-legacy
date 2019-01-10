@@ -58,14 +58,14 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # force_ssl if: :use_ssl?
+  force_ssl if: :use_ssl?
 
   #
   # 本番環境かどうかを返す
   #
-  # def use_ssl?
-  #   Rails.env.production?
-  # end
+  def use_ssl?
+    Rails.env.production?
+  end
 
   def set_raven_context
     Raven.user_context(id: session[:current_user_id]) # or anything else in session
