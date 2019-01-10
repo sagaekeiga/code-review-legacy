@@ -1,9 +1,7 @@
-.container-fluid
+.container
   .row
     .review
-      .left-sidebar.col-sm-2.hidden-xs
-        = render 'reviewers/reviews/left_sidebar', pull: @pull, review: @review, reviews: @reviews
-      .col-sm-10.col-sm-offset-2.p-l-0
+      .col-sm-10.col-sm-offset-2.p-l-0.workspace
         = render 'reviewers/reviews/right_sidebar', repo: @pull.repo
         .col-sm-9.col-sm-offset-1.p-l-0.conversation-wrapper
           = render 'reviewers/reviews/progress_bar', pull: @pull, review: @review

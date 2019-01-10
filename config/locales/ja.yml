@@ -179,4 +179,14 @@ ja:
     back_pullrequest: Back Pullrequest
   reviewer_mailer:
     comment:
-      title: コメントがつきました。
+      subject: コメントがつきました。
+    ok:
+      subject: 審査を通過しました。
+    approve_review:
+      subject: レビューが審査を通過しました。
+    refused_review:
+      subject: レビューが審査を通過できませんでした。
+    repo_assign_notice:
+      subject: Mergeeからリポジトリをアサインがされました
+    pull_request_notice:
+      subject: Pullrequestがレビューリクエストされました

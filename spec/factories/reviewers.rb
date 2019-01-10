@@ -38,5 +38,7 @@ FactoryBot.define do
     confirmed_at          Time.zone.now
     password              'hogehoge'
     password_confirmation 'hogehoge'
+    name { 'hoge' }
+    address { 'hogehogehogehogehoge' }
   end
 end

@@ -127,7 +127,6 @@ class Review < ApplicationRecord
         event: :issue_comment
       )
     end
-    ReviewerMailer.issue_comment(@review).deliver_later
     true
   rescue => e
     Rails.logger.error e
