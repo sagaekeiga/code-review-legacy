@@ -88,11 +88,6 @@ class Reviewer < ApplicationRecord
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
-  # pullのレビューコメントを返す
-  def target_review_comments(pull)
-    review_comments.where(changed_file: pull.changed_files).where.not(reviewer: nil)
-  end
-
   # レポジトリにアサインされているかどうかを返す
   def assigned?(resource)
     case resource

@@ -64,7 +64,7 @@ Rails.application.routes.draw do
     namespace :reviewers do
       get *%i(dashboard integrations pending)
       get 'settings/integrations'
-      resources :pulls, only: %i(show update), param: :token do
+      resources :pulls, only: %i(show), param: :token do
         get :files
         resources :reviews, only: %i(create show edit update) do
           collection do

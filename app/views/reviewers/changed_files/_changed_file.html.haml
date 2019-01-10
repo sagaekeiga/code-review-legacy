@@ -2,7 +2,7 @@
   .panel.panel-default.changed-file-list-wrapper
     .panel-heading
       .pull-right
-        = link_to t('views.view'), reviewers_pull_changed_file_path(@pull, changed_file), class: 'btn btn-default btn-sm'
+        = link_to t('views.view'), reviewers_pull_changed_file_path(pull, changed_file), class: 'btn btn-default btn-sm'
       .changed-file-name= changed_file.filename
     .panel-body.file-border{ 'changed-file-id': changed_file.id }
       .panel-text

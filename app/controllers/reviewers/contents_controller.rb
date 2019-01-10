@@ -26,14 +26,4 @@ class Reviewers::ContentsController < Reviewers::BaseController
   def set_repo
     @repo = current_reviewer.repos.friendly.find(params[:repo_id]).decorate
   end
-
-  def sort(contents:)
-    dirs = contents.select { |content| content[:type].eql?('dir') }
-    files = contents.select { |content| content[:type].eql?('file') }
-    result = []
-    result << dirs
-    result << files
-    result.flatten!
-    result
-  end
 end

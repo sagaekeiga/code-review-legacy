@@ -109,24 +109,11 @@ class ChangedFile < ApplicationRecord
     review_comments.find_by(position: index).review.present?
   end
 
-  def self.review_commented?
-    joins(:review_comments).where.not(review_comments: { review_id: nil }).present?
-  end
-
-  def reviewed_and_reviewer?(index)
-    !reviewed?(index) && review_comments.find_by(position: index)&.reviewer.nil?
-  end
-
   def reviewer?(index, reviewer)
     review_comments.find_by(position: index, reviewer: reviewer).present?
   end
 
   def github_exec_fetch_content!
     Github::Request.github_exec_fetch_changed_file_content!(pull.repo, contents_url)
-  end
-
-  # 最新の差分を取得する
-  def already_updated?(pull, double_file_names)
-    filename.in?(double_file_names) && pull.changed_files.find_by(filename: filename).id != id
   end
 end

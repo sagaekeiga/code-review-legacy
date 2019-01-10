@@ -7,7 +7,7 @@
       .pulls-conversation-wrapper
         .col-xs-12.col-sm-10
           .pulls-body-wrapper
-            - if @pull.body.present?
+            - if @pull.body?
               .pull-body-wrapper
                 .panel
                   .panel-heading= t '.reviewee_comment'

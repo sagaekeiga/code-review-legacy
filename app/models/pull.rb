@@ -21,9 +21,11 @@
 #
 # Indexes
 #
-#  index_pulls_on_deleted_at  (deleted_at)
-#  index_pulls_on_remote_id   (remote_id) UNIQUE
-#  index_pulls_on_repo_id     (repo_id)
+#  index_pulls_on_deleted_at     (deleted_at)
+#  index_pulls_on_remote_id      (remote_id) UNIQUE
+#  index_pulls_on_repo_id        (repo_id)
+#  index_pulls_on_resource_id    (resource_id)
+#  index_pulls_on_resource_type  (resource_type)
 #
 # Foreign Keys
 #
@@ -76,6 +78,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   delegate :full_name, to: :repo, prefix: true
   delegate :private, to: :repo, prefix: true
+  delegate :token, to: :repo, prefix: true
 
   # -------------------------------------------------------------------------------
   # Attributes

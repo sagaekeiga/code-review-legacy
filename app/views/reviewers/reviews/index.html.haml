@@ -8,6 +8,6 @@
     %tbody
       - @reviews.each do |review|
         %tr.text-center
-          %td= link_to review.pull.title, review.path
+          %td= link_to review.pull_title, review.path
           %td= review.event_i18n
           %td= l review.updated_at

@@ -65,13 +65,6 @@ class Reviewee < ApplicationRecord
       order(updated_at: :desc)
   end
 
-  def feed_for_pulls
-    pulls.
-      or(Pull.where(resource_type: 'Org', resource_id: orgs.pluck(:id))).
-      includes(:repo, :changed_files).
-      order(updated_at: :desc)
-  end
-
   def has_repos?
     feed_for_repos.present?
   end

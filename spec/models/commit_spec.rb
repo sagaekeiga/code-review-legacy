@@ -16,8 +16,10 @@
 #
 # Indexes
 #
-#  index_commits_on_deleted_at  (deleted_at)
-#  index_commits_on_pull_id     (pull_id)
+#  index_commits_on_deleted_at     (deleted_at)
+#  index_commits_on_pull_id        (pull_id)
+#  index_commits_on_resource_id    (resource_id)
+#  index_commits_on_resource_type  (resource_type)
 #
 # Foreign Keys
 #

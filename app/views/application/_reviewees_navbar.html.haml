@@ -10,7 +10,7 @@
               .dropdown
                 %button.btn-sm.btn-primary.dropdown-toggle{ 'data-toggle': 'dropdown', type: 'button' }
                   %i.fab.fa-github
-                  %span.repo-title= @repo.present? ? @repo.decorate.name_including_orgs : t('reviewees.views.select_repo')
+                  %span.repo-title= repo.present? ? repo.decorate.name_including_orgs : t('reviewees.views.select_repo')
                   %span.caret
                 %ul.dropdown-menu
                   - current_reviewee.feed_for_repos.decorate.each do |repo|

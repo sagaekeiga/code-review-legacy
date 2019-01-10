@@ -29,16 +29,4 @@ class Org < ApplicationRecord
   # -------------------------------------------------------------------------------
   validates :remote_id, presence: true, uniqueness: true
   validates :login, presence: true
-  # -------------------------------------------------------------------------------
-  # Scopes
-  # -------------------------------------------------------------------------------
-  scope :owner, lambda {
-    where(reviewee_orgs: { role: :owner })
-  }
-  # -------------------------------------------------------------------------------
-  # InstanceMethods
-  # -------------------------------------------------------------------------------
-  def owner
-    reviewee_orgs.find_by(role: :owner).reviewee
-  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190104045931) do
+ActiveRecord::Schema.define(version: 20190110093250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 20190104045931) do
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_commits_on_deleted_at"
     t.index ["pull_id"], name: "index_commits_on_pull_id"
+    t.index ["resource_id"], name: "index_commits_on_resource_id"
+    t.index ["resource_type"], name: "index_commits_on_resource_type"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -73,6 +75,8 @@ ActiveRecord::Schema.define(version: 20190104045931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pull_id"], name: "index_notifications_on_pull_id"
+    t.index ["resource_id"], name: "index_notifications_on_resource_id"
+    t.index ["resource_type"], name: "index_notifications_on_resource_type"
     t.index ["reviewer_id"], name: "index_notifications_on_reviewer_id"
   end
 
@@ -105,6 +109,8 @@ ActiveRecord::Schema.define(version: 20190104045931) do
     t.index ["deleted_at"], name: "index_pulls_on_deleted_at"
     t.index ["remote_id"], name: "index_pulls_on_remote_id", unique: true
     t.index ["repo_id"], name: "index_pulls_on_repo_id"
+    t.index ["resource_id"], name: "index_pulls_on_resource_id"
+    t.index ["resource_type"], name: "index_pulls_on_resource_type"
   end
 
   create_table "repos", force: :cascade do |t|
@@ -120,6 +126,8 @@ ActiveRecord::Schema.define(version: 20190104045931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_repos_on_deleted_at"
+    t.index ["resource_id"], name: "index_repos_on_resource_id"
+    t.index ["resource_type"], name: "index_repos_on_resource_type"
   end
 
   create_table "review_comment_trees", force: :cascade do |t|
@@ -288,6 +296,7 @@ ActiveRecord::Schema.define(version: 20190104045931) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["commit_id"], name: "index_reviews_on_commit_id"
     t.index ["deleted_at"], name: "index_reviews_on_deleted_at"
     t.index ["pull_id"], name: "index_reviews_on_pull_id"
     t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"

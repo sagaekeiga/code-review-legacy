@@ -9,7 +9,7 @@
             %strong= @pull.title
         .panel
           .panel-body
-            - if @pull.body.present?
+            - if @pull.body?
               .md-wrapper
                 = markdown(@pull.body)
             - else

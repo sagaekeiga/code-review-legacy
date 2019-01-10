@@ -19,7 +19,7 @@ class Reviewers::RepliesController < Reviewers::BaseController
     review_comment = changed_file.review_comments.new(reply_params(review_comment))
 
     if review_comment.reply!
-      render json: reply_response(review_comment)
+      render json: reply_response(review_comment: review_comment, github_account: review_comment.reviewer)
     else
       render json: { status: 'failed' }
     end
@@ -47,13 +47,13 @@ class Reviewers::RepliesController < Reviewers::BaseController
     }
   end
 
-  def reply_response(review_comment)
+  def reply_response(review_comment:, github_account:)
     {
       status: 'success',
       review_comment_id: review_comment.id,
       body: review_comment.body,
-      avatar: review_comment.reviewer.github_account.avatar_url,
-      nickname: review_comment.reviewer.github_account.nickname,
+      avatar: github_account.avatar_url,
+      nickname: github_account.nickname,
       time: time_ago_in_words(review_comment.updated_at) + '前',
       remote_id: review_comment.remote_id,
       review_id: review_comment.review_id

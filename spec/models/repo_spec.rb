@@ -17,7 +17,9 @@
 #
 # Indexes
 #
-#  index_repos_on_deleted_at  (deleted_at)
+#  index_repos_on_deleted_at     (deleted_at)
+#  index_repos_on_resource_id    (resource_id)
+#  index_repos_on_resource_type  (resource_type)
 #
 
 require 'rails_helper'
