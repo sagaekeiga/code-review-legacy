@@ -12,7 +12,7 @@
       .label.label-danger.unread= I18n.t('reviewers.reviews.read.unread')
       .pull-right
         %button.btn.btn-primary.read-btn{ type: 'button', 'reply-id': review_comment.id }= t 'reviewers.reviews.read.reading'
-    .replies-line{ class: review_comment.is_last?(review_comment.comment) }
+    .replies-line{ class: review_comment.last?(review_comment.comment) }
       .body
         = markdown(review_comment.body)
   = render review_comment.replies&.decorate

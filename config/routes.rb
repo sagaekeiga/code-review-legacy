@@ -93,9 +93,6 @@ Rails.application.routes.draw do
       resources :review_comments, only: %i(create update destroy show)
       namespace :github do
         resource :changed_files, only: %i(show)
-        resource :contents do
-          get :get_contents
-        end
         resources :issues, only: %i(index)
       end
       resources :repos, only: %i(show) do

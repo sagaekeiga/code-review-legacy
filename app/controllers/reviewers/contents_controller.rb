@@ -28,8 +28,8 @@ class Reviewers::ContentsController < Reviewers::BaseController
   end
 
   def sort(contents:)
-    dirs = contents.select{ |content| content[:type].eql?('dir') }
-    files = contents.select{ |content| content[:type].eql?('file') }
+    dirs = contents.select { |content| content[:type].eql?('dir') }
+    files = contents.select { |content| content[:type].eql?('file') }
     result = []
     result << dirs
     result << files

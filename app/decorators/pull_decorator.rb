@@ -18,16 +18,6 @@ class PullDecorator < ApplicationDecorator
     h.file_reviewers_pull_reviews_path(object)
   end
 
-  # ブランチ差分
-  def files_changed_count
-    files_changed.count
-  end
-
-  # コミット数
-  def commits_count
-    commits.count
-  end
-
   def replies_path(id_param)
     id_param ? h.reviewers_pull_review_replies_path(pull, review_id: id_param) : '#'
   end

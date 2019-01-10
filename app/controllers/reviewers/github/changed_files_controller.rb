@@ -14,8 +14,8 @@ class Reviewers::Github::ChangedFilesController < Reviewers::BaseController
 
     content.each_line do |line|
       line = line.gsub(' ', '&nbsp;')
-      line = line.gsub(/[<]/, "&lt;")
-      line = line.gsub(/[>]/, "&gt;")
+      line = line.gsub(/[<]/, '&lt;')
+      line = line.gsub(/[>]/, '&gt;')
       highlight_content << line
     end
     highlight_content.map! { |e| e ? e : '' }

@@ -25,7 +25,7 @@ class Reviewees::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # The path used after confirmation.
-  def after_confirmation_path_for(resource_name, resource)
+  def after_confirmation_path_for(resource)
     stored_location_for(resource) || reviewees_integrations_url
   end
 end

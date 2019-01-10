@@ -32,13 +32,13 @@ class RepoDecorator < ApplicationDecorator
     end
   end
 
-  def breadcrumbs(path, type='dir')
-    pathes = path.split('/')
+  def breadcrumbs(path, type = 'dir')
+    split_pathes = path.split('/')
     links = []
-    pathes.each.with_index do |path, index|
-      type = 'file' if File.extname(path).present?
-      param = pathes[0..index].join('/')
-      link ="<a href='/reviewers/repos/#{token}/contents?path=#{param}&type=#{type}'>#{path}</a>"
+    split_pathes.each.with_index do |split_path, index|
+      type = 'file' if File.extname(split_path).present?
+      param = split_pathes[0..index].join('/')
+      link = "<a href='/reviewers/repos/#{token}/contents?path=#{param}&type=#{type}'>#{split_path}</a>"
       links << link
     end
     links.join(' / ').html_safe

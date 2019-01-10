@@ -7,7 +7,6 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def show
-
   end
 
   private

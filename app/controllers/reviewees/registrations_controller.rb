@@ -75,6 +75,7 @@ class Reviewees::RegistrationsController < Devise::RegistrationsController
   def update_resource(resource, params)
     resource.update_without_password(params)
   end
+
   #
   # アカウント情報を更新した後にリダイレクト先を指定
   #
@@ -83,7 +84,7 @@ class Reviewees::RegistrationsController < Devise::RegistrationsController
   end
 
   # The path used after sign up for inactive accounts.
-  def after_inactive_sign_up_path_for(resource)
+  def after_inactive_sign_up_path_for(_resource)
     new_reviewee_session_url
   end
 end
