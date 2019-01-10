@@ -29,7 +29,6 @@
   @import 'settings';
   @import 'reviews';
   @import 'side_bar';
-  @import 'admins';
   @import 'contents';
   @import 'issues';
   @import 'reviewers';
@@ -61,6 +60,7 @@
   @import 'views/reviewers/reviews/show';
   @import 'views/reviewers/reviews/tab';
   @import 'views/reviewers/reviews/index';
+  @import 'views/admins/admins';
 
 
 .m-t-0 { margin-top: 0; }

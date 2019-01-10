@@ -1,29 +1,27 @@
-.repos-show {
-  .reviewers {
-    margin-top: $base-margin * 3;
-    .search-form {
-      margin-bottom: $base-margin * 2;
+.reviewers-repos-show {
+  margin-top: $base-margin * 3;
+  .search-form {
+    margin-bottom: $base-margin * 2;
+  }
+  .breadcrumbs {
+    padding-bottom: $base-padding * 4;
+  }
+  .panel {
+    padding: 0;
+    .panel-heading {
+      padding: $base-padding * 2;
+      font-weight: bold;
     }
-    .breadcrumbs {
-      padding-bottom: $base-padding * 4;
-    }
-    .panel {
-      padding: 0;
-      .panel-heading {
-        padding: $base-padding * 2;
-        font-weight: bold;
-      }
-      table {
-        tbody {
-          tr {
-            td {
-              padding-left: $base-padding * 2;
-              a {
-                text-decoration: none;
-                i {
-                  color: $color-hover-gray;
-                  padding-right: $base-padding;
-                }
+    table {
+      tbody {
+        tr {
+          td {
+            padding-left: $base-padding * 2;
+            a {
+              text-decoration: none;
+              i {
+                color: $color-hover-gray;
+                padding-right: $base-padding;
               }
             }
           }
