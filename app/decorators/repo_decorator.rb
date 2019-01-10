@@ -6,9 +6,9 @@ class RepoDecorator < ApplicationDecorator
   end
 
   # レポジトリアサイン削除アクションのパスを返す
-  def destroy_reviewer_repo_path(reviewer)
+  def destroy_reviewer_repo_path(reviewer:, repo_id:)
     reviewer_repo = reviewer_repos.find_by(reviewer: reviewer)
-    h.admins_reviewer_repo_path(reviewer_repo)
+    h.admins_reviewer_repo_path(reviewer_repo, repo_id: repo_id)
   end
 
   def name_including_orgs

@@ -29,18 +29,6 @@ Rails.application.routes.draw do
     get '/auth/github/callback', to: 'connects#github'
     post '/feedbacks', to: 'feedbacks#create'
 
-    devise_scope :reviewee do
-      post '/auth/:action/callback',
-        controller: 'authentications',
-        constraints: { action: /github/ }
-    end
-
-    devise_scope :reviewer do
-      get '/auth/:action/callback',
-        controller: 'connects',
-        constraints: { action: /github/ }
-    end
-
     #
     # Reviewee
     #

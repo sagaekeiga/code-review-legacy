@@ -12,8 +12,8 @@ class Admins::ReviewerReposController < Admins::BaseController
   end
 
   def destroy
-    @reviewer_repo = ReviewerRepo.find(params[:id])
-    @repo = @reviewer_repo.repo
+    @repo = Repo.friendly.find(params[:repo_id])
+    @reviewer_repo = @repo.reviewer_repos.find(params[:id])
     @reviewer = @reviewer_repo.reviewer
     if @reviewer_repo.destroy
       redirect_to [:admins, @repo], success: "#{@reviewer.github_account&.nickname}さんをアサインから外しました"
