@@ -7,6 +7,8 @@ ja:
         id: ID
         status: ステータス
         title: タイトル
+        body: 内容
+        count: ファイル数
   enums:
     pull:
       status:

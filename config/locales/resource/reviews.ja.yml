@@ -11,6 +11,7 @@ ja:
         reason: 理由
         resource: 所有者
         created_at: 作成日時
+        count: レビュー数
   enums:
     review:
       event:

@@ -22,3 +22,6 @@ ja:
     reviews:
       index:
         title: レビュー一覧
+    pulls:
+      index:
+        title: プルリクエスト一覧

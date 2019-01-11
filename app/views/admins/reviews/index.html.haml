@@ -10,6 +10,7 @@
           %tr
             %th= t 'activerecord.attributes.review.id'
             %th= t 'activerecord.attributes.review.resource'
+            %th= t 'activerecord.attributes.pull.title'
             %th= t 'activerecord.attributes.review.body'
             %th= t 'activerecord.attributes.review.created_at'
             %th
@@ -18,6 +19,7 @@
             %tr
               %td= pending_review.id
               %td= pending_review.pull.resource_name
+              %td= pending_review.pull_title&.truncate(55)
               %td= pending_review.body&.truncate(55)
               %td= l pending_review.created_at
               %td= link_to '詳細', [:admins, pending_review]

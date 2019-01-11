@@ -117,6 +117,7 @@ Rails.application.routes.draw do
       resources :repos, only: %i(index show) do
         resources :reviewer_repos, shallow: :true, only: %i(create destroy)
       end
+      resources :pulls, only: %i(show index)
     end
   end
   get '*path', to: 'application#render_404'
