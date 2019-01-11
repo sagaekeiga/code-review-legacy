@@ -1,0 +1,247 @@
+.admins-reviews-show {
+  .reviews-form-wrapper {
+    .reviews-form-card-wrapper {
+      font-family: $font-code;
+      &.editor {
+        height: 650px;
+      }
+      .title {
+        margin-top: $base-padding * 5;
+      }
+      textarea {
+        font-family: $font-static;
+      }
+      .changed-file-title {
+        font-size: $base-font-size + 1px;
+      }
+      .panel.changed-file-list-wrapper {
+        margin-top: $base-margin;
+        border: $base-border;
+        box-shadow: none;
+        overflow-x: auto;
+        .panel-heading {
+          background-color: $color-grey;
+          font-family: $font-code;
+          font-size: $base-font-size;
+          width: 100%;
+          padding: $base-padding * 3;
+          padding-right: $base-padding;
+          .btn-sm {
+            font-size: $base-font-size;
+            margin-top: - $base-margin / 2;
+            font-family: $font-static;
+          }
+        }
+        .panel-body {
+          padding: 0;
+          .panel-text {
+            font-size: $base-font-size + 2px;
+          }
+        }
+      }
+      .panel.panel-default.new-review-comments {
+        border-radius: $base-border-radius;
+        margin-top: 0;
+        border: $base-border;
+        box-shadow: none;
+        margin-bottom: 0;
+        .label {
+          padding: 2px 5px;
+          font-size: 12px;
+          border: 1px solid $color-github-label-border-white;
+          border-radius: $base-border-radius;
+          font-weight: 400;
+          font-family: $font-static;
+          &.label-warning {
+            color: $color-github-label-white;
+            background-color: $color-github-yellow !important;
+          }
+        }
+        .panel-heading {
+          font-size: $base-font-size;
+        }
+        .panel-body {
+          padding: $base-padding * 3;
+          textarea {
+            height: 150px;
+            margin-bottom: $base-padding * 3;
+          }
+          .panel-text {
+            font-family: $font-static;
+            pre {
+              border-radius: none;
+              border: none;
+              margin-top: $base-margin;
+              margin-bottom: $base-margin;
+              font-family: none;
+              font-size: $base-font-size;
+              background-color: $bg-color-pre-code;
+            }
+          }
+          textarea {
+            height: 150px;
+            margin-bottom: $base-padding * 3;
+          }
+          .btn {
+            font-family: $font-static;
+            &.circle {
+              font-size: $base-font-size;
+              border-radius: 50%;
+              padding: $base-padding * 3 $base-padding * 3;
+            }
+          }
+          button {
+            margin-left: $base-margin / 2;
+          }
+          .btn {
+            font-family: $font-static;
+          }
+        }
+      }
+      .table-wrapper {
+        overflow-x: scroll;
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          td.file-code {
+            pre {
+              padding: $base-padding;
+              color: none;
+              background-color: transparent;
+              border: none;
+              margin: 0;
+              font-family: $font-code;
+              font-size: $base-font-size;
+            }
+            border: none;
+            &.markdown-highlight {
+              font-family: $font-code;
+              font-size: $base-font-size;
+              &.bg-primary {
+                background-color: $color-gihub-blue;
+                color: $color-literal-gray;
+                pre {
+                  color: $color-literal-gray;
+                }
+              }
+              &.bg-success {
+                background-color: $color-github-green;
+              }
+              &.bg-danger {
+                background-color: $color-github-changed-file-minus-color;
+                ;
+              }
+            }
+            .review-comments-wrapper {
+              .panel {
+                border-radius: $base-border-radius;
+                margin-top: 0;
+                border: $base-border;
+                box-shadow: none;
+                .label {
+                  padding: 2px 5px;
+                  font-size: 12px;
+                  border: 1px solid $color-github-label-border-white;
+                  border-radius: $base-border-radius;
+                  font-weight: 400;
+                  font-family: $font-static;
+                  &.label-warning {
+                    color: $color-github-label-white;
+                    background-color: $color-github-yellow !important;
+                  }
+
+                }
+                .panel-body {
+                  padding: $base-padding;
+                  textarea {
+                    height: 150px;
+                  }
+                }
+              }
+            }
+          }
+          td {
+            border: none;
+            &.markdown-highlight {
+              font-family: $font-code;
+              font-size: $base-font-size;
+              &.bg-primary {
+                background-color: $color-gihub-blue;
+                pre {
+                  color: $color-literal-gray;
+                }
+              }
+              &.bg-success {
+                background-color: $color-github-green;
+              }
+              &.bg-danger {
+                background-color: $color-github-changed-file-minus-color;
+                ;
+              }
+            }
+            .review-comments-wrapper {
+              padding: 0;
+              .panel {
+                border-radius: $base-border-radius;
+                margin-top: 0;
+                border: $base-border;
+                box-shadow: none;
+                margin-bottom: 0;
+                .label {
+                  padding: 2px 5px;
+                  font-size: 12px;
+                  border: 1px solid $color-github-label-border-white;
+                  border-radius: $base-border-radius;
+                  font-weight: 400;
+                  font-family: $font-static;
+                  &.label-warning {
+                    color: $color-github-label-white;
+                    background-color: $color-github-yellow !important;
+                  }
+                  &.label-primary {
+                    margin-left: $base-margin / 2;
+                    color: $color-github-label-white;
+                    background-color: $color-github-green !important;
+                  }
+                }
+                .panel-body {
+                  padding: $base-padding * 3;
+                  .panel-text {
+                    font-family: $font-static;
+                    pre {
+                      border-radius: none;
+                      border: none;
+                      margin-top: $base-margin;
+                      margin-bottom: $base-margin;
+                      font-family: none;
+                      font-size: $base-font-size;
+                      background-color: $bg-color-pre-code;
+                    }
+                  }
+                  textarea {
+                    height: 150px;
+                    margin-bottom: $base-padding * 3;
+                  }
+                  .btn {
+                    font-family: $font-static;
+                    &.circle {
+                      font-size: $base-font-size;
+                      border-radius: 50%;
+                      padding: $base-padding * 3 $base-padding * 3;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .review-footer-wrapper {
+      font-family: $font-static;
+      .review-btn {
+        margin-top: $base-margin;
+      }
+    }
+  }
+}

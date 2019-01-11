@@ -198,6 +198,19 @@ class Pull < ApplicationRecord
     end
   end
 
+  def resource_name
+    self.resource.login
+  end
+
+  def resource
+    case resource_type
+    when 'Reviewee'
+      Reviewee.find(resource_id)
+    when 'Org'
+      Org.find(resource_id)
+    end
+  end
+
   private
 
   def send_mail

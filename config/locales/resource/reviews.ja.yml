@@ -9,6 +9,8 @@ ja:
         event: イベント
         state: ステート
         reason: 理由
+        resource: 所有者
+        created_at: 作成日時
   enums:
     review:
       event:

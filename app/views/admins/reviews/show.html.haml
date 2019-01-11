@@ -1,8 +1,14 @@
-- content_for(:no_footer_page, true)
 .col-xs-12
   .container
-    .page-header{ 'pull-id': @pull.id }
-      %h3= @pull.title
+    %h2= @pull.title
+    %table.table
+      %tbody
+        %tr
+          %th{scope: "row"} タイトル
+          %td= @pull.title
+        %tr
+          %th{scope: "row"} 所有者
+          %td= @pull.resource_name
     .reviews-form-wrapper
       .reviews-form-card-wrapper
         - @changed_files.each do |changed_file|
