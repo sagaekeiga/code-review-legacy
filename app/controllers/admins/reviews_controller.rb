@@ -2,7 +2,7 @@ class Admins::ReviewsController < Admins::BaseController
   before_action :set_review, only: %i(show update destroy)
 
   def index
-    @pending_reviews = Review.pending
+    @pending_reviews = Review.pending.includes(:pull)
   end
 
   def show

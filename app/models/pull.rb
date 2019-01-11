@@ -198,6 +198,14 @@ class Pull < ApplicationRecord
     end
   end
 
+  def resource_name
+    self.resource_find.login
+  end
+
+  def resource_find
+    resource_type.constantize.find(resource_id)
+  end
+
   private
 
   def send_mail

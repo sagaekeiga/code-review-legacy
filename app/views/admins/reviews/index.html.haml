@@ -1,18 +1,23 @@
-.row
-  .col-sm-3
-    = render 'admins/shared/side_nav'
-  .col-sm-9
-    .page-header
-      %h4= t '.title'
-    %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
-      %thead
-        %tr
-          %th= t 'activerecord.attributes.review.id'
-          %th= t 'activerecord.attributes.review.body'
-          %th
-      %tbody
-        - @pending_reviews.each do |pending_review|
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      .page-header
+        %h4= t '.title'
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %thead
           %tr
-            %td= pending_review.id
-            %td= pending_review.body&.truncate(55)
-            %td= link_to '詳細', [:admins, pending_review]
+            %th= t 'activerecord.attributes.review.id'
+            %th= t 'activerecord.attributes.review.resource'
+            %th= t 'activerecord.attributes.review.body'
+            %th= t 'activerecord.attributes.review.created_at'
+            %th
+        %tbody
+          - @pending_reviews.each do |pending_review|
+            %tr
+              %td= pending_review.id
+              %td= pending_review.pull.resource_name
+              %td= pending_review.body&.truncate(55)
+              %td= l pending_review.created_at
+              %td= link_to '詳細', [:admins, pending_review]
