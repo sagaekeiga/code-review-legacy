@@ -4,9 +4,6 @@
     %table.table
       %tbody
         %tr
-          %th{ scope: 'row' } タイトル
-          %td= @pull.title
-        %tr
           %th{ scope: 'row' } 所有者
           %td= @pull.resource_name
     .reviews-form-wrapper
@@ -63,4 +60,4 @@
               = f.text_area :reason, class: 'form-control', rows: '3'
             .form-group
               .text-center
-                = f.submit '決定', id: 'submit_review_button', class: 'btn btn-primary review-btn'
+                = f.submit '決定', id: 'submit_review_button', class: 'btn btn-primary review-btn', data: { confirm: '処理を実行してよろしいですか？' }
