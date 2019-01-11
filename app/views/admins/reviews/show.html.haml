@@ -1,63 +1,66 @@
-.col-xs-12
-  .container
-    %h2= @pull.title
-    %table.table
-      %tbody
-        %tr
-          %th{ scope: 'row' } 所有者
-          %td= @pull.resource_name
-    .reviews-form-wrapper
-      .reviews-form-card-wrapper
-        - @changed_files.each do |changed_file|
-          .js-blob-wrapper
-            .panel.panel-default.changed-file-list-wrapper
-              .panel-heading.changed-file-name= changed_file.filename
-              .panel-body.file-border{ 'changed-file-id': changed_file.id }
-                .panel-text
-                  .table-wrapper
-                    %table
-                      %thead
-                        %tr
-                          %th{ scope: 'col' }
-                      %tbody
-                        - changed_file.patch&.each_line&.with_index do |line, index|
-                          %tr.code-tr{ 'data-line-number': index }
-                            - if line.start_with?('+')
-                              %td.markdown-highlight.bg-success.hljs-addition.file-code= changed_file.coderay(line)
-                            - elsif line.start_with?('-')
-                              %td.markdown-highlight.bg-danger.hljs-addition.file-code= changed_file.coderay(line)
-                            - elsif line.start_with?('@@')
-                              %td.markdown-highlight.bg-primary.hljs-addition.file-code
-                                %pre= line
-                            - else
-                              %td.markdown-highlight.hljs-addition.file-code= changed_file.coderay(line)
-                          - review_comment = changed_file.review_comments.find_by(position: index, reviewer: @review.reviewer, status: :pending)
-                          // レビュワー自身のコメントでPendingなものだけ表示
-                          - if review_comment && changed_file.present_review_comment?(index) && review_comment.pending?
-                            %tr
-                              %td
-                                .review-comments-wrapper
-                                  .panel.panel-default
-                                    .panel-heading
-                                    .panel-body
-                                      .panel-text{ 'review-comment-id': changed_file.review_comment_id(index) }
-                                        = markdown(changed_file.review_comment_body(index))
-      %hr
-      .review-footer-wrapper
-        .panel.panel-default
-          .panel-body= @review.body
-        .text-center
-          = form_for [:admins, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
-            .form-group
-              %label.radio-inline
-                = f.radio_button :event, 'approve'
-                承認
-              %label.radio-inline
-                = f.radio_button :event, 'non_approve'
-                非承認
-            .form-group
-              = f.label :reason
-              = f.text_area :reason, class: 'form-control', rows: '3'
-            .form-group
-              .text-center
-                = f.submit '決定', id: 'submit_review_button', class: 'btn btn-primary review-btn', data: { confirm: '処理を実行してよろしいですか？' }
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      %h2= @pull.title
+      %table.table
+        %tbody
+          %tr
+            %th{ scope: 'row' } 所有者
+            %td= @pull.resource_name
+      .reviews-form-wrapper
+        .reviews-form-card-wrapper
+          - @changed_files.each do |changed_file|
+            .js-blob-wrapper
+              .panel.panel-default.changed-file-list-wrapper
+                .panel-heading.changed-file-name= changed_file.filename
+                .panel-body.file-border{ 'changed-file-id': changed_file.id }
+                  .panel-text
+                    .table-wrapper
+                      %table
+                        %thead
+                          %tr
+                            %th{ scope: 'col' }
+                        %tbody
+                          - changed_file.patch&.each_line&.with_index do |line, index|
+                            %tr.code-tr{ 'data-line-number': index }
+                              - if line.start_with?('+')
+                                %td.markdown-highlight.bg-success.hljs-addition.file-code= changed_file.coderay(line)
+                              - elsif line.start_with?('-')
+                                %td.markdown-highlight.bg-danger.hljs-addition.file-code= changed_file.coderay(line)
+                              - elsif line.start_with?('@@')
+                                %td.markdown-highlight.bg-primary.hljs-addition.file-code
+                                  %pre= line
+                              - else
+                                %td.markdown-highlight.hljs-addition.file-code= changed_file.coderay(line)
+                            - review_comment = changed_file.review_comments.find_by(position: index, reviewer: @review.reviewer, status: :pending)
+                            // レビュワー自身のコメントでPendingなものだけ表示
+                            - if review_comment && changed_file.present_review_comment?(index) && review_comment.pending?
+                              %tr
+                                %td
+                                  .review-comments-wrapper
+                                    .panel.panel-default
+                                      .panel-heading
+                                      .panel-body
+                                        .panel-text{ 'review-comment-id': changed_file.review_comment_id(index) }
+                                          = markdown(changed_file.review_comment_body(index))
+        %hr
+        .review-footer-wrapper
+          .panel.panel-default
+            .panel-body= @review.body
+          .text-center
+            = form_for [:admins, @review], html: { class: 'form-horizontal', role: 'form' } do |f|
+              .form-group
+                %label.radio-inline
+                  = f.radio_button :event, 'approve'
+                  承認
+                %label.radio-inline
+                  = f.radio_button :event, 'non_approve'
+                  非承認
+              .form-group
+                = f.label :reason
+                = f.text_area :reason, class: 'form-control', rows: '3'
+              .form-group
+                .text-center
+                  = f.submit '決定', id: 'submit_review_button', class: 'btn btn-primary review-btn', data: { confirm: '処理を実行してよろしいですか？' }

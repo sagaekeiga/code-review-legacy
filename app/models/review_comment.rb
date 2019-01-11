@@ -147,7 +147,7 @@ class ReviewComment < ApplicationRecord
 
         review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
         review_comment_tree.save!
-        ReviewerMailer.comment(reply).deliver_later if params[:sender][:type].eql?('User')
+        ReviewerMailer.comment(reply).deliver_later if params[:sender][:type].eql?('User') && reply.present?
       end
       true
     rescue => e
