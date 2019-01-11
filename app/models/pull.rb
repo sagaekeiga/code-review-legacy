@@ -199,16 +199,11 @@ class Pull < ApplicationRecord
   end
 
   def resource_name
-    self.resource.login
+    self.resource_find.login
   end
 
-  def resource
-    case resource_type
-    when 'Reviewee'
-      Reviewee.find(resource_id)
-    when 'Org'
-      Org.find(resource_id)
-    end
+  def resource_find
+    resource_type.constantize.find(resource_id)
   end
 
   private
