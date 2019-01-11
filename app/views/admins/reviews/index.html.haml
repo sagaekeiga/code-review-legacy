@@ -19,7 +19,7 @@
             %tr
               %td= pending_review.id
               %td= pending_review.pull.resource_name
-              %td= pending_review.pull_title&.truncate(55)
+              %td= link_to pending_review.pull_title&.truncate(55), [:admins, pending_review.pull]
               %td= pending_review.body&.truncate(55)
               %td= l pending_review.created_at
               %td= link_to '詳細', [:admins, pending_review]
