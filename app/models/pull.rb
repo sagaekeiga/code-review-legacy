@@ -45,7 +45,7 @@ class Pull < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :commits, dependent: :destroy
   has_many :reviewer_pulls, dependent: :destroy
-
+  has_many :reviewers, through: :reviewer_pulls, source: :reviewer
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------

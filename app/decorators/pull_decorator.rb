@@ -39,4 +39,10 @@ class PullDecorator < ApplicationDecorator
       'disabled'
     end
   end
+
+  # レポジトリアサイン削除アクションのパスを返す
+  def destroy_reviewer_pull_path(reviewer:)
+    reviewer_pull = reviewer_pulls.find_by(reviewer: reviewer)
+    h.admins_pull_reviewer_pull_path(object, reviewer_pull)
+  end
 end
