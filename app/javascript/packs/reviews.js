@@ -142,7 +142,7 @@ function addForm(elem) {
             name='reviews[body][]'
             class='form-control md-textarea body'
             rows='5'
-          >* 指摘事項\n\n* 理由\n\n* 参考（リンク・サンプルコード）</textarea>
+          >* 提案\n\n* 理由\n\n* 参考（リンク・サンプルコード）</textarea>
           ${addingButtons.prop('outerHTML')}
         </div>
       </div>
