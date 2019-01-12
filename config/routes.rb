@@ -112,7 +112,7 @@ Rails.application.routes.draw do
       sessions: 'admins/sessions'
     }
     namespace :admins do
-      resources :reviews, only: %i(index show update)
+      resources :reviews, only: %i(index show update destroy)
       resources :reviewers, only: %i(show update)
       resources :repos, only: %i(index show) do
         resources :reviewer_repos, shallow: :true, only: %i(create destroy)
