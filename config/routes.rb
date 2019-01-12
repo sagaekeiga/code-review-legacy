@@ -112,12 +112,14 @@ Rails.application.routes.draw do
       sessions: 'admins/sessions'
     }
     namespace :admins do
-      resources :reviews, only: %i(index show update)
+      resources :reviews, only: %i(index show update destroy)
       resources :reviewers, only: %i(show update)
       resources :repos, only: %i(index show) do
         resources :reviewer_repos, shallow: :true, only: %i(create destroy)
       end
-      resources :pulls, only: %i(show index)
+      resources :pulls, only: %i(show index) do
+        resources :reviewer_pulls, only: %i(create destroy)
+      end
     end
   end
   get '*path', to: 'application#render_404'

@@ -64,3 +64,5 @@
               .form-group
                 .text-center
                   = f.submit '決定', id: 'submit_review_button', class: 'btn btn-primary review-btn', data: { confirm: '処理を実行してよろしいですか？' }
+      .text-right
+        = link_to '削除する', :admins_review, method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？' }

@@ -32,6 +32,11 @@ class Admins::ReviewsController < Admins::BaseController
     render :show
   end
 
+  def destroy
+    @review.destroy
+    redirect_to [:admins, :reviews], success: '削除しました'
+  end
+
   private
 
   def set_review

@@ -25,10 +25,3 @@ ja:
     repos:
       show:
         tab_title: Code
-  admins:
-    repos:
-      index:
-        title: レポジトリ一覧
-      show:
-        assign: アサイン
-        confirm: 本当に削除しますか？

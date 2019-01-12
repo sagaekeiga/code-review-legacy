@@ -10,16 +10,16 @@
           %tr
             %th= t 'activerecord.attributes.review.id'
             %th= t 'activerecord.attributes.pull.title'
-            %th= t 'activerecord.attributes.pull.body'
             %th= t 'activerecord.attributes.review.count'
+            %th= t 'activerecord.attributes.pull.status'
             %th= t 'activerecord.attributes.review.created_at'
             %th
         %tbody
           - @pulls.each do |pull|
             %tr
               %td= pull.id
-              %td{ align: 'left' }= pull.title&.truncate(55)
-              %td{ align: 'left' }= pull.body&.truncate(55)
+              %td{ align: 'left' }= pull.title&.truncate(20)
               %td= pull.reviews.count
+              %td= pull.status_i18n
               %td= l pull.created_at
               %td= link_to '詳細', [:admins, pull]

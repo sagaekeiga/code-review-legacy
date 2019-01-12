@@ -1,0 +1,22 @@
+%tr
+  %td= reviewer.github_account&.nickname
+  %td
+    - if reviewer.github_account&.avatar_url
+      = image_tag reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
+    - else
+      ×
+  %td= reviewer.email
+  %td= reviewer.github_account&.user_type
+  %td.text-center
+    - case resource
+    - when Repo
+      - if reviewer.assigned?(resource)
+        - Rails.logger.debug resource
+        = link_to t('helpers.links.destroy'), resource.destroy_reviewer_repo_path(reviewer: reviewer, repo_id: resource.id), method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm') }
+      - else
+        = link_to t('helpers.links.add'), admins_repo_reviewer_repos_path(resource, reviewer_id: reviewer.id), class: 'btn btn-primary', method: :post
+    - when Pull
+      - if reviewer.assigned?(resource)
+        = link_to t('helpers.links.destroy'), resource.destroy_reviewer_pull_path(reviewer: reviewer), method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm') }
+      - else
+        = link_to t('helpers.links.add'), admins_pull_reviewer_pulls_path(resource, reviewer: reviewer), class: 'btn btn-primary', method: :post

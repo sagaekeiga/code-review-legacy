@@ -19,9 +19,18 @@ ja:
         rejected: 承認しない
       update:
         success: ステータスを変更しました
+      reviewer:
+        confirm: 本当に削除しますか？
     reviews:
       index:
         title: レビュー一覧
     pulls:
       index:
         title: プルリクエスト一覧
+      show:
+        assign: アサイン
+    repos:
+      index:
+        title: レポジトリ一覧
+      show:
+        assign: アサイン

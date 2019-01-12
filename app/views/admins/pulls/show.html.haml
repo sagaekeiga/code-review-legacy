@@ -16,6 +16,19 @@
             %th= t 'activerecord.attributes.pull.body'
             %td
               .md-wrapper= markdown(@pull.body)
+      .page-header
+        %h4= t '.assign'
+      .panel.panel-default
+        %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+          %thead
+            %tr
+              %th= t 'activerecord.attributes.reviewer/github.nickname'
+              %th= t 'activerecord.attributes.reviewer/github.avatar_url'
+              %th= t 'activerecord.attributes.reviewer/github.email'
+              %th= t 'activerecord.attributes.reviewer/github.user_type'
+              %th
+          %tbody
+            = render @reviewers, resource: @pull
       .reviews-form-wrapper
         .reviews-form-card-wrapper.editor
           = render @changed_files
