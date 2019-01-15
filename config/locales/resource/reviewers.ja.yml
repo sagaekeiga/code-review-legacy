@@ -11,6 +11,8 @@ ja:
         password_confirmation: パスワード（確認用）
         status: ステータス
         agreement: 利用規約
+        name: フルネーム
+        address: 住所
       reviewer/github:
         login: ログイン名
         owner_id: オーナーID
