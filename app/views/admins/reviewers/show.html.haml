@@ -18,8 +18,11 @@
           %th= t 'activerecord.attributes.reviewer/github.email'
           %td= @reviewer.github_account&.email
         %tr
-          %th= t 'activerecord.attributes.reviewer/github.user_type'
-          %td= @reviewer.github_account&.user_type
+          %th= t 'activerecord.attributes.reviewer.name'
+          %td= @reviewer.name
+        %tr
+          %th= t 'activerecord.attributes.reviewer.address'
+          %td= @reviewer.address
         %tr
           %th= t 'activerecord.attributes.reviewer.status'
           %td= @reviewer.status_i18n
