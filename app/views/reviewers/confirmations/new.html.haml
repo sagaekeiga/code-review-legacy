@@ -1,10 +1,9 @@
-%h2 Resend confirmation instructions
-= form_for(resource, as: resource_name, url: reviewer_confirmation_path(resource_name), html: { method: :post }) do |f|
+%h2 確認メールを再送する
+= form_for(resource, as: resource_name, url: reviewer_confirmation_path, html: { method: :post }) do |f|
   = devise_error_messages!
-  .field
+  .form-group
     = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
-  .actions
-    = f.submit "Resend confirmation instructions"
-= render "reviewers/shared/links"
+    = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control'
+  .form-group
+    = f.submit '確認メールを再送する', class: 'btn btn-primary'
+= render 'reviewers/shared/links'
