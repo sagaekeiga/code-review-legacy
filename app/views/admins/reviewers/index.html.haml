@@ -1,0 +1,27 @@
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      .page-header
+        %h4= t('admins.reviewers.index.title')
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %thead
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.avatar_url'
+            %th= t 'activerecord.attributes.reviewer/github.email'
+            %th 本登録
+            %th Github連携
+            %th
+        %tbody
+          - @reviewers.each do |reviewer|
+            %tr
+              %td
+                - if reviewer.github_account&.avatar_url
+                  = image_tag reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
+                - else
+                  ×
+              %td= reviewer.email
+              %td= reviewer.confirmed? ? '本登録済み' : '仮登録済み'
+              %td= reviewer.github_account.present? ? '○' : '×'
+              %td.text-center= link_to t('helpers.links.confirm'), [:admins, reviewer]

@@ -8,9 +8,11 @@
       %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
         %thead
           %tr
-            %th= t 'activerecord.attributes.reviewer/github.nickname'
             %th= t 'activerecord.attributes.reviewer/github.avatar_url'
             %th= t 'activerecord.attributes.reviewer/github.email'
+            %th 本登録
+            %th Github連携
+            %th
         %tbody
           - @pending_reviewers.each do |pending_reviewer|
             %tr
@@ -19,5 +21,7 @@
                   = image_tag pending_reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
                 - else
                   ×
-              %td= pending_reviewer.github_account&.email
+              %td= pending_reviewer.email
+              %td= pending_reviewer.confirmed? ? '本登録済み' : '仮登録済み'
+              %td= pending_reviewer.github_account.present? ? '○' : '×'
               %td.text-center= link_to t('helpers.links.confirm'), [:admins, pending_reviewer]
