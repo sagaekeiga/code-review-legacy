@@ -4,9 +4,6 @@ reviewers:
     new: http://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/sign_in
   pulls:
     show: http://<%= ENV['WEB_DOMAIN'] %>/reviewers/pulls/
-reviewees:
-  memberships:
-    join: http://<%= ENV['WEB_DOMAIN'] %>/reviewees/memberships/join?
 links:
   home: http://<%= ENV['WEB_DOMAIN'] %>
   reviewer_repo_show: http://<%= ENV['WEB_DOMAIN'] %>/reviewers/repos/
