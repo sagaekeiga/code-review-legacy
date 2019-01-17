@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success, :info, :warning, :danger
   before_action :set_raven_context
+  before_action :set_mailer_host
 
   unless Rails.env.development?
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
@@ -69,5 +70,9 @@ class ApplicationController < ActionController::Base
   def set_raven_context
     Raven.user_context(id: session[:current_user_id]) # or anything else in session
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  end
+
+  def set_mailer_host
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
 end
