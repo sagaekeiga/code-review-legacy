@@ -21,6 +21,8 @@ ja:
         success: ステータスを変更しました
       reviewer:
         confirm: 本当に削除しますか？
+      index:
+        title: レビュワー一覧
     reviews:
       index:
         title: レビュー一覧
