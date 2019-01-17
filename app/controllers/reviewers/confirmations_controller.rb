@@ -21,9 +21,9 @@ class Reviewers::ConfirmationsController < Devise::ConfirmationsController
 
       sign_in(resource)
 
-      respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
+      respond_with_navigational(resource) { redirect_to after_confirmation_path_for(resource_name, resource) }
     else
-      respond_with_navigational(resource.errors, :status => :unprocessable_entity){ render :new }
+      respond_with_navigational(resource.errors, status: :unprocessable_entity) { render :new }
     end
   end
 
@@ -35,7 +35,7 @@ class Reviewers::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # The path used after confirmation.
-  def after_confirmation_path_for(_resource_name, resource)
+  def after_confirmation_path_for(_resource_name, _resource)
     reviewers_integrations_url
   end
 end
