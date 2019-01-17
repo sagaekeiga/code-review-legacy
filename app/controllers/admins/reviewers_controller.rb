@@ -31,7 +31,7 @@ class Admins::ReviewersController < Admins::BaseController
   end
 
   def reviewer_params
-    params.require(:reviewer).permit(:email)
+    params.require(:reviewer).permit(:email, :name, :address)
   end
 
   def update_status
