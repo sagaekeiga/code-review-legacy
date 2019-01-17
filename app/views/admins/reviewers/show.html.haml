@@ -3,15 +3,14 @@
     .col-sm-3
       = render 'admins/shared/side_nav'
     .col-sm-9
+      .text-right
+        = link_to '編集', edit_admins_reviewer_path(@reviewer), class: 'btn btn-primary'
       %h3 基本情報
-      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center.text-muted
         %tbody
           %tr
-            %th= t 'activerecord.attributes.reviewer/github.nickname'
-            %td= @reviewer.github_account&.nickname
-          %tr
             %th= t 'activerecord.attributes.reviewer/github.email'
-            %td= @reviewer.github_account&.email
+            %td= @reviewer.email
           %tr
             %th= t 'activerecord.attributes.reviewer.name'
             %td= @reviewer.name
@@ -19,7 +18,7 @@
             %th= t 'activerecord.attributes.reviewer.address'
             %td= @reviewer.address
       %h3 登録状況
-      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center.text-muted
         %tbody
           %tr
             %th 登録状況
@@ -31,7 +30,7 @@
             %th= t 'activerecord.attributes.reviewer.deleted_at'
             %td= @reviewer.deleted_at ? '削除済み' : ''
       %h3 ログイン情報
-      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center.text-muted
         %tbody
           %tr
             %th= t 'activerecord.attributes.reviewer.sign_in_count'
@@ -43,11 +42,11 @@
             %th= t 'activerecord.attributes.reviewer.unconfirmed_email'
             %td= @reviewer.unconfirmed_email
       %h3 GitHub
-      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center.text-muted
         %tbody
           %tr
             %th= t 'activerecord.attributes.reviewer/github.owner_id'
-            %td= @reviewer.github_account.owner_id
+            %td= @reviewer.github_account&.owner_id
           %tr
             %th= t 'activerecord.attributes.reviewer/github.avatar_url'
             %td
@@ -57,22 +56,22 @@
                 ×
           %tr
             %th= t 'activerecord.attributes.reviewer/github.company'
-            %td= @reviewer.github_account.company
+            %td= @reviewer.github_account&.company
           %tr
             %th= t 'activerecord.attributes.reviewer/github.email'
-            %td= @reviewer.github_account.email
+            %td= @reviewer.github_account&.email
           %tr
             %th= t 'activerecord.attributes.reviewer/github.login'
-            %td= @reviewer.github_account.login
+            %td= @reviewer.github_account&.login
           %tr
             %th= t 'activerecord.attributes.reviewer/github.name'
-            %td= @reviewer.github_account.name
+            %td= @reviewer.github_account&.name
           %tr
             %th= t 'activerecord.attributes.reviewer/github.nickname'
-            %td= @reviewer.github_account.nickname
+            %td= @reviewer.github_account&.nickname
           %tr
             %th= t 'activerecord.attributes.reviewer/github.user_type'
-            %td= @reviewer.github_account.user_type
+            %td= @reviewer.github_account&.user_type
       %table.table.text-center
         %tr
           - if @reviewer.pending?
