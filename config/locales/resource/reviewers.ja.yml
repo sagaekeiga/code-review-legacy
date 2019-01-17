@@ -13,6 +13,10 @@ ja:
         agreement: 利用規約
         name: フルネーム
         address: 住所
+        sign_in_count:  ログイン回数
+        last_sign_in_at: 最終ログイン
+        unconfirmed_email: 未確認メール
+        deleted_at: 削除
       reviewer/github:
         login: ログイン名
         owner_id: オーナーID

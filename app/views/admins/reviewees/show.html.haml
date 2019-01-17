@@ -1,0 +1,69 @@
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      %h3 基本情報
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.nickname'
+            %td= @reviewee.github_account&.nickname
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.email'
+            %td= @reviewee.github_account&.email
+      %h3 登録状況
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th 登録状況
+            %td= @reviewee.confirmed? ? '本登録済み' : '仮登録済み'
+          %tr
+            %th= t 'activerecord.attributes.reviewee.deleted_at'
+            %td= @reviewee.deleted_at ? '削除済み' : ''
+      %h3 ログイン情報
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th= t 'activerecord.attributes.reviewee.sign_in_count'
+            %td= @reviewee.sign_in_count
+          %tr
+            %th= t 'activerecord.attributes.reviewee.last_sign_in_at'
+            %td= l @reviewee.last_sign_in_at
+          %tr
+            %th= t 'activerecord.attributes.reviewee.unconfirmed_email'
+            %td= @reviewee.unconfirmed_email
+      %h3 GitHub
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.owner_id'
+            %td= @reviewee.github_account.owner_id
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.avatar_url'
+            %td
+              - if @reviewee.github_account&.avatar_url
+                = image_tag @reviewee.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
+              - else
+                ×
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.company'
+            %td= @reviewee.github_account.company
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.email'
+            %td= @reviewee.github_account.email
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.login'
+            %td= @reviewee.github_account.login
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.name'
+            %td= @reviewee.github_account.name
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.nickname'
+            %td= @reviewee.github_account.nickname
+          %tr
+            %th= t 'activerecord.attributes.reviewee/github.user_type'
+            %td= @reviewee.github_account.user_type
+      %table.table.text-center
+        %tr
+          %td= link_to t('.quit'), admins_reviewee_path(@reviewee, status: 'quit'), method: :put, class: 'btn btn-danger'
