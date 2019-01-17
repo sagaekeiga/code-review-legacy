@@ -1,0 +1,18 @@
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      = form_with model: [:admins, @reviewer] do |f|
+        = render 'error_messages', resource: @reviewer
+        .form-group
+          = f.label :name
+          = f.text_field :name, class: 'form-control'
+        .form-group
+          = f.label :address
+          = f.text_field :address, class: 'form-control'
+        .form-group
+          = f.label :email
+          = f.email_field :email, class: 'form-control'
+        .form-group
+          = f.submit '更新する', class: 'btn btn-primary'

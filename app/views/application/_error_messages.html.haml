@@ -1,4 +1,4 @@
-- if resource
+- if resource&.errors.present?
   .alert.alert-danger.alert-error-message#form-error-explanation
     %ul.m-b-0.p-l-2
       - resource.errors.full_messages.each do |error|

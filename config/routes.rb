@@ -113,7 +113,7 @@ Rails.application.routes.draw do
     }
     namespace :admins do
       resources :reviews, only: %i(index show update destroy)
-      resources :reviewers, only: %i(index show update)
+      resources :reviewers, only: %i(index show edit update)
       resources :reviewees, only: %i(index show)
       resources :repos, only: %i(index show) do
         resources :reviewer_repos, shallow: :true, only: %i(create destroy)
