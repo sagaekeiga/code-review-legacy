@@ -9,6 +9,19 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認用）
         agreement: 利用規約
+        deleted_at: 削除
+        sign_in_count: ログイン回数
+        last_sign_in_at: 最終ログイン
+        unconfirmed_email: 未確認メール
+      reviewee/github:
+        email: Eメール
+        owner_id: オーナーID
+        company: 会社
+        avatar_url: イメージ
+        login: ログイン名
+        name: 名前
+        nickname: ニックネーム
+        user_type: ユーザータイプ
   enums:
     reviewee:
       gender:

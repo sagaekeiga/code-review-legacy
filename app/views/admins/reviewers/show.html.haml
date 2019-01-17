@@ -1,34 +1,81 @@
-.row
-  .col-sm-3
-    = render 'admins/shared/side_nav'
-  .col-sm-9
-    %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
-      %tbody
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      %h3 基本情報
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.nickname'
+            %td= @reviewer.github_account&.nickname
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.email'
+            %td= @reviewer.github_account&.email
+          %tr
+            %th= t 'activerecord.attributes.reviewer.name'
+            %td= @reviewer.name
+          %tr
+            %th= t 'activerecord.attributes.reviewer.address'
+            %td= @reviewer.address
+      %h3 登録状況
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th 登録状況
+            %td= @reviewer.confirmed? ? '本登録済み' : '仮登録済み'
+          %tr
+            %th= t 'activerecord.attributes.reviewer.status'
+            %td= @reviewer.status_i18n
+          %tr
+            %th= t 'activerecord.attributes.reviewer.deleted_at'
+            %td= @reviewer.deleted_at ? '削除済み' : ''
+      %h3 ログイン情報
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th= t 'activerecord.attributes.reviewer.sign_in_count'
+            %td= @reviewer.sign_in_count
+          %tr
+            %th= t 'activerecord.attributes.reviewer.last_sign_in_at'
+            %td= l @reviewer.last_sign_in_at
+          %tr
+            %th= t 'activerecord.attributes.reviewer.unconfirmed_email'
+            %td= @reviewer.unconfirmed_email
+      %h3 GitHub
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.owner_id'
+            %td= @reviewer.github_account.owner_id
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.avatar_url'
+            %td
+              - if @reviewer.github_account&.avatar_url
+                = image_tag @reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
+              - else
+                ×
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.company'
+            %td= @reviewer.github_account.company
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.email'
+            %td= @reviewer.github_account.email
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.login'
+            %td= @reviewer.github_account.login
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.name'
+            %td= @reviewer.github_account.name
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.nickname'
+            %td= @reviewer.github_account.nickname
+          %tr
+            %th= t 'activerecord.attributes.reviewer/github.user_type'
+            %td= @reviewer.github_account.user_type
+      %table.table.text-center
         %tr
-          %th= t 'activerecord.attributes.reviewer/github.nickname'
-          %td= @reviewer.github_account&.nickname
-        %tr
-          %th= t 'activerecord.attributes.reviewer/github.avatar_url'
-          %td
-            - if @reviewer.github_account&.avatar_url
-              = image_tag @reviewer.github_account&.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
-            - else
-              ×
-        %tr
-          %th= t 'activerecord.attributes.reviewer/github.email'
-          %td= @reviewer.github_account&.email
-        %tr
-          %th= t 'activerecord.attributes.reviewer.name'
-          %td= @reviewer.name
-        %tr
-          %th= t 'activerecord.attributes.reviewer.address'
-          %td= @reviewer.address
-        %tr
-          %th= t 'activerecord.attributes.reviewer.status'
-          %td= @reviewer.status_i18n
-    %table.table.text-center
-      %tr
-        - if @reviewer.pending?
-          %td= link_to t('.agreed'), admins_reviewer_path(@reviewer, status: @reviewer.status), method: :put, class: 'btn btn-primary'
-          %td= link_to t('.rejected'), admins_reviewer_path(@reviewer, status: 'rejected'), method: :put, class: 'btn btn-warning'
-        %td= link_to t('.quit'), admins_reviewer_path(@reviewer, status: 'quit'), method: :put, class: 'btn btn-danger'
+          - if @reviewer.pending?
+            %td= link_to t('.agreed'), admins_reviewer_path(@reviewer, status: @reviewer.status), method: :put, class: 'btn btn-primary'
+            %td= link_to t('.rejected'), admins_reviewer_path(@reviewer, status: 'rejected'), method: :put, class: 'btn btn-warning'
+          %td= link_to t('.quit'), admins_reviewer_path(@reviewer, status: 'quit'), method: :put, class: 'btn btn-danger'
