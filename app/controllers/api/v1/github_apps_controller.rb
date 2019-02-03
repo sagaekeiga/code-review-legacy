@@ -17,8 +17,6 @@ class Api::V1::GithubAppsController < ApplicationController
           Repo.find_by(remote_id: repositories_removed_params[:id])&.destroy
         end
       end
-    when 'issues'
-      Issue.update_by_issue_event!(params)
     when 'pull_request'
       Pull.update_by_pull_request_event!(params[:github_app][:pull_request]) if params.dig(:github_app, :pull_request).present?
     when 'pull_request_review'

@@ -156,7 +156,8 @@ class Pull < ApplicationRecord
         resource_type: resource_type,
         resource_id: resource.id,
         head_label: params['head']['label'],
-        base_label: params['base']['label']
+        base_label: params['base']['label'],
+        remote_created_at: params['created_at']
       )
       pull.update_status_by!(params[:state])
       # たまに同時作成されて重複が起こる。ここは最新の方を「物理」削除する
