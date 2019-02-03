@@ -32,5 +32,5 @@ ja:
   statuses:
     connected: OPEN
     request_reviewed: OPEN
-    reviewed: OPEN
-    completed: Merge/Close済み
+    reviewed: Reviewed
+    completed: Merged/Closed
