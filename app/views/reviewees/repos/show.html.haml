@@ -1,31 +1,31 @@
--# .col-xs-12
--#   .container
--#     .pull-list-wrapper
--#       .pull-title
--#         %span
--#           = @repo.name.truncate(40)
--#         %span.full_name
--#           = @repo.full_name.truncate(40)
--#         %i.fab.fa-github
--#       %table.table.table-hover.m-t-4
--#         %thead
--#           %tr.pull-list-header
--#             %th= t('.status')
--#             %th= t('.title')
--#             %th= t('.created')
--#             %th= t('.review_status')
--#         - @pulls.each_with_index do |pull, i|
--#           %tbody
--#             %tr.pull-list{ class: i % 2 == 0 ? 'add-light-blue' : '' }
--#               %td{ class: (pull.completed? || pull.reviewed?) ? 'add-merged-color' : 'add-success-color' }= t "statuses.#{pull.status}"
--#               %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
--#               %td= date_format(pull.remote_created_at)
--#               %td
--#                 - unless pull.completed? || pull.reviewed?
--#                   .onoffswitch
--#                     %input.onoffswitch-checkbox.update-pull-button{ checked: pull.request_reviewed? ? true : false, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
--#                     %label.onoffswitch-label{ for: "reviewStatusSwitch#{pull.id}" }
--#                       %span.onoffswitch-inner
--#                       %span.onoffswitch-switch
+.col-xs-12
+  .container
+    .pull-list-wrapper
+      .pull-title
+        %span
+          = @repo.name.truncate(40)
+        %span.full_name
+          = @repo.full_name.truncate(40)
+        %i.fab.fa-github
+      %table.table.table-hover.m-t-4
+        %thead
+          %tr.pull-list-header
+            %th= t('.status')
+            %th= t('.title')
+            %th= t('.created')
+            %th= t('.review_status')
+        - @pulls.each_with_index do |pull, i|
+          %tbody
+            %tr.pull-list{ class: i % 2 == 0 ? 'add-light-blue' : '' }
+              %td{ class: (pull.completed? || pull.reviewed?) ? 'add-merged-color' : 'add-success-color' }= t "statuses.#{pull.status}"
+              %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
+              %td= date_format(pull.remote_created_at)
+              %td
+                - unless pull.completed? || pull.reviewed?
+                  .onoffswitch
+                    %input.onoffswitch-checkbox.update-pull-button{ checked: pull.request_reviewed? ? true : false, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
+                    %label.onoffswitch-label{ for: "reviewStatusSwitch#{pull.id}" }
+                      %span.onoffswitch-inner
+                      %span.onoffswitch-switch
 
--# = javascript_pack_tag 'update-resource'
+= javascript_pack_tag 'update-resource'
