@@ -8,6 +8,20 @@ class Reviewers::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  # 管理画面から、レビュアー画面へSSOする
+  def sso
+    if admin_signed_in? && params[:reviewer_id].present?
+      self.resource = Reviewer.find(params[:reviewer_id])
+      set_flash_message(:notice, :signed_in) if is_flashing_format?
+      bypass_sign_in(resource)
+      yield resource if block_given?
+      respond_with resource
+      redirect_to reviewers_dashboard_url
+    else
+      redirect_to root_path
+    end
+  end
+
   # POST /resource/sign_in
   # def create
   #   super
