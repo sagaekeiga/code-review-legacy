@@ -100,13 +100,15 @@ class Repo < ApplicationRecord
     private
 
     def _set_resource_for_repo(params, resource_type)
-      reviewee = Reviewees::GithubAccount.find_by(owner_id: params[:sender][:id]).reviewee
+      github_account = Reviewees::GithubAccount.find_by(owner_id: params[:sender][:id])
+      reviewee = github_account.reviewee if github_account.present?
       resource =
         if resource_type.eql?('Reviewee')
           reviewee
         else
           org = Org.find_or_initialize_by(remote_id: params[:installation][:account][:id])
           org.update_attributes!(_merge_org_params(params[:installation][:account]))
+          return org if reviewee.nil?
           reviewee_org = reviewee.reviewee_orgs.find_or_initialize_by(org: org)
           reviewee_org.save!
           org
