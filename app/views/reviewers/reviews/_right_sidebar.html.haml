@@ -1,19 +1,18 @@
 .right-sidebar
   .side-menu
     - if controller.action_name.eql?('index')
-      %li.list.active
+      %li.list{ class: controller.action_name.eql?('index') ? 'active' : '' }
         = link_to '#conversationTab', class: "#{same_action_name?('replies')} tab active" do
           .text-center
             %i.fas.fa-comments
             %br
             %small replies
-    - else
-      %li.list.active
-        = link_to '#codeTab', class: "#{same_action_name?('view_check')} tab active" do
-          .text-center
-            %i.fas.fa-code
-            %br
-            %small code
+    %li.list{ class: controller.action_name.eql?('index') ? '' : 'active' }
+      = link_to '#codeTab', class: "#{same_action_name?('view_check')} tab #{ controller.action_name.eql?('index') ? '' : 'active' }" do
+        .text-center
+          %i.fas.fa-code
+          %br
+          %small code
     %li.list
       = link_to '#bodyTab', class: "#{same_action_name?('view_check')} tab" do
         .text-center
