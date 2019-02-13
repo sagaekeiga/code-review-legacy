@@ -1,3 +1,4 @@
+$(document).off('click', '.reply-submit-btn')
 $(document).on('click', '.reply-submit-btn', function () {
   submitReply($(this));
 })
