@@ -1,3 +1,4 @@
+$(document).off('click', '.reply-submit-btn')
 $(document).on('click', '.reply-submit-btn', function () {
   submitReply($(this));
 })
@@ -22,6 +23,7 @@ $(document).on('click', '.thread-button', function () {
 })
 
 function submitReply(elem) {
+  console.log(1111111)
   elem.prop('disabled', true);
   $.ajax({
     type: 'POST',
