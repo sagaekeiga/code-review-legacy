@@ -1,10 +1,11 @@
 top: http://<%= ENV['WEB_DOMAIN'] %>/
 reviewers:
+  top: http://<%= ENV['REVIEWER_DOMAIN'] %>/
   dashbord: http://<%= ENV['REVIEWER_DOMAIN'] %>/dashboard
   sessions:
     new: http://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/sign_in
   pulls:
-    show: http://<%= ENV['WEB_DOMAIN'] %>/reviewers/pulls/
+    show: http://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/pulls/
 links:
   home: http://<%= ENV['WEB_DOMAIN'] %>
-  reviewer_repo_show: http://<%= ENV['WEB_DOMAIN'] %>/reviewers/repos/
+  reviewer_repo_show: http://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/repos/
