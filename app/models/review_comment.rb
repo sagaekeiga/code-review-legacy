@@ -179,6 +179,15 @@ class ReviewComment < ApplicationRecord
     reviewer == current_reviewer
   end
 
+  #
+  # コメントがレビュイーのものかどうかを返す
+  #
+  # @return [Boolean]
+  #
+  def reviewee?
+    review.pull.resource_id != reviewer_id
+  end
+
   # レビューコメント対象のコードを返す
   def target_lines
     if position > 3
