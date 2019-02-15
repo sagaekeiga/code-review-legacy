@@ -8,7 +8,7 @@ class Reviewees::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # 管理画面から、レビュアー画面へSSOする
+  # 管理画面から、レビュイー画面へSSOする
   def sso
     if admin_signed_in? && params[:reviewee_id].present?
       self.resource = Reviewee.find(params[:reviewee_id])
