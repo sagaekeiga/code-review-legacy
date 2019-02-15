@@ -78,3 +78,4 @@
             %td= link_to t('.agreed'), admins_reviewer_path(@reviewer, status: @reviewer.status), method: :put, class: 'btn btn-primary'
             %td= link_to t('.rejected'), admins_reviewer_path(@reviewer, status: 'rejected'), method: :put, class: 'btn btn-warning'
           %td= link_to t('.quit'), admins_reviewer_path(@reviewer, status: 'quit'), method: :put, class: 'btn btn-danger'
+          %td= link_to 'SSO', reviewer_sso_path(reviewer_id: @reviewer.id), method: :post, class: 'btn btn-primary'

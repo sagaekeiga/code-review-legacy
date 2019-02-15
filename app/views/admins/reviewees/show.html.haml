@@ -67,3 +67,4 @@
       %table.table.text-center
         %tr
           %td= link_to t('.quit'), admins_reviewee_path(@reviewee, status: 'quit'), method: :put, class: 'btn btn-danger'
+          %td= link_to 'SSO', reviewee_sso_path(reviewee_id: @reviewee.id), method: :post, class: 'btn btn-primary'

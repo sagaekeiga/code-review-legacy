@@ -6,7 +6,7 @@ class Reviewees::PullsController < Reviewees::BaseController
   end
 
   def update
-    @pull = Pull.find(params[:id])
+    @pull = current_reviewee.find_with_org(params[:id])
     case @pull.status
     when 'connected', 'pending', 'reviewed'
       @pull.request_reviewed!

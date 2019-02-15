@@ -65,6 +65,16 @@ class Reviewee < ApplicationRecord
       order(updated_at: :desc)
   end
 
+  def find_with_org(id)
+    pull = Pull.where(
+      id: id,
+      resource_type: 'Org',
+      resource_id: orgs.pluck(:id)
+    ).or(pulls.where(id: id)).compact.first
+    raise ActiveRecord::RecordNotFound unless pull.is_a?(Pull)
+    pull
+  end
+
   def has_repos?
     feed_for_repos.present?
   end
