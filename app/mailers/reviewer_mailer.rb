@@ -2,7 +2,7 @@ class ReviewerMailer < ApplicationMailer
   # GitHub上でレビュイーがコメントした時
   def comment(reply)
     @reply = reply
-    @reviewer = reply.reviewer
+    @reviewer = reply.review.reviewer
     @pull = reply.changed_file.pull
     mail(to: @reviewer.email)
   end

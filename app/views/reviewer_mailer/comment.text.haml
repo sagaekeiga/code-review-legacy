@@ -1,6 +1,6 @@
 = @reviewer.github_account.login + 'さん、こんにちは。'
 
-= link_to @pull.title, Settings.top + "reviewers/pulls/#{@pull.token.to_s}/reviews/replies"
+= link_to @pull.title, Settings.reviewers.top + "reviewers/pulls/#{@pull.token.to_s}/reviews/replies"
 \
 \
 %small= simple_format(@reply.body)
