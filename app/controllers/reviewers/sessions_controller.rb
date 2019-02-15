@@ -13,10 +13,9 @@ class Reviewers::SessionsController < Devise::SessionsController
     if admin_signed_in? && params[:reviewer_id].present?
       self.resource = Reviewer.find(params[:reviewer_id])
       set_flash_message(:notice, :signed_in) if is_flashing_format?
-      # bypass_sign_in(resource)
-      sign_in resource, event: :authentication
+      bypass_sign_in(resource)
       yield resource if block_given?
-      redirect_to Settings.reviewers.dashboard
+      respond_with resource, location: Settings.reviewers.dashboard
     else
       redirect_to root_path
     end

@@ -126,6 +126,9 @@ Rails.application.routes.draw do
     as :reviewer do
       post 'reviewer/sso' => 'reviewers/sessions#sso', as: :reviewer_sso
     end
+    as :reviewee do
+      post 'reviewee/sso' => 'reviewees/sessions#sso', as: :reviewee_sso
+    end
   end
   get '*path', to: 'application#render_404'
 end
