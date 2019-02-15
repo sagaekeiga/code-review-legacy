@@ -1,7 +1,7 @@
 top: https://<%= ENV['WEB_DOMAIN'] %>/
 reviewers:
   top: https://<%= ENV['REVIEWER_DOMAIN'] %>/
-  dashbord: https://<%= ENV['REVIEWER_DOMAIN'] %>/dashboard
+  dashboard: https://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/dashboard
   sessions:
     new: http://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/sign_in
   pulls:
