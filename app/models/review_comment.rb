@@ -142,7 +142,9 @@ class ReviewComment < ApplicationRecord
 
         review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
         reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
-        reply.update_attributes!(_reply_params(params, changed_file, review_comment))
+        reply_params = _reply_params(params, changed_file, review_comment)
+        reply_params = reply.persisted? ? reply_params : reply_params.merge(reviewer: nil)
+        reply.update_attributes!(reply_params)
 
 
         review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
@@ -177,15 +179,6 @@ class ReviewComment < ApplicationRecord
 
   def reviewer?(current_reviewer)
     reviewer == current_reviewer
-  end
-
-  #
-  # コメントがレビュイーのものかどうかを返す
-  #
-  # @return [Boolean]
-  #
-  def reviewee?
-    review.pull.resource_id != reviewer_id
   end
 
   # レビューコメント対象のコードを返す

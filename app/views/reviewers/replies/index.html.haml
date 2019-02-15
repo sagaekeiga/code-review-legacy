@@ -52,7 +52,7 @@
                         .panel
                           .panel-body{ class: review_comment.set_hidden(:replies) }
                             - if review_comment.replies.present?
-                              = render review_comment.replies.includes(:comment)&.decorate
+                              = render review_comment.replies.includes(:comment, :reviewer)&.decorate
                           .panel-footer
                             .input
                               %textarea{ type: 'text', class: 'form-control' }

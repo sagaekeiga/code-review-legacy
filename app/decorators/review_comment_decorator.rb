@@ -1,11 +1,11 @@
 class ReviewCommentDecorator < ApplicationDecorator
   delegate_all
   def avatar
-    reviewee? ? 'reviewee.jpg' : reviewer.github_account.avatar_url
+    reviewer.present? ? reviewer.github_account.avatar_url : 'reviewee.jpg'
   end
 
   def nickname
-    reviewee? ? 'reviewee' : reviewer.github_account.nickname
+    reviewer.present? ? reviewer.github_account.nickname : 'reviewee'
   end
 
   # 最後のリプライであればlastクラスを返す。lastクラスはステップラインを非表示にする。
