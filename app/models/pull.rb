@@ -99,11 +99,6 @@ class Pull < ApplicationRecord
   }
 
   # -------------------------------------------------------------------------------
-  # Callbacks
-  # -------------------------------------------------------------------------------
-  after_commit :send_mail, on: :update, if: :request_reviewed?
-
-  # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
   # deletedなpullを考慮しているかどうかがupdate_by_pull_request_event!との違い
@@ -207,9 +202,14 @@ class Pull < ApplicationRecord
     resource_type.constantize.find(resource_id)
   end
 
+  def request_reviewed!
+    super
+    send_request_reviewed_mail
+  end
+
   private
 
-  def send_mail
+  def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }
   end
 end
