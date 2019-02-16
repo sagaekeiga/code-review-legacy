@@ -1,0 +1,23 @@
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      .page-header
+        %h4 組織一覧
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %thead
+          %tr
+            %th ID
+            %th ログイン名
+            %th アバター
+            %th 作成日
+            %th
+        %tbody
+          - @orgs.each do |org|
+            %tr
+              %td= org.id
+              %td= org.login
+              %td= image_tag org.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
+              %td= l org.created_at
+              %td= link_to '詳細', [:admins, org]

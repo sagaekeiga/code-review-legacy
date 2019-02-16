@@ -1,0 +1,41 @@
+.container-fluid
+  .row
+    .col-sm-3
+      = render 'admins/shared/side_nav'
+    .col-sm-9
+      %h3 基本情報
+      %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+        %tbody
+          %tr
+            %th ID
+            %td= @org.id
+          %tr
+            %th ログイン
+            %td= @org.login
+          %tr
+            %th イメージ
+            %td= image_tag @org.avatar_url
+      %h3 メンバー
+      .panel.panel-default
+        %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+          %thead
+            %tr
+              %th= t 'activerecord.attributes.reviewer/github.nickname'
+              %th= t 'activerecord.attributes.reviewer/github.avatar_url'
+              %th= t 'activerecord.attributes.reviewer/github.email'
+              %th= t 'activerecord.attributes.reviewer/github.user_type'
+              %th
+          %tbody
+          = render @orgs_reviewees, org: @org
+      %h3 追加
+      .panel.panel-default
+        %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
+          %thead
+            %tr
+              %th= t 'activerecord.attributes.reviewer/github.nickname'
+              %th= t 'activerecord.attributes.reviewer/github.avatar_url'
+              %th= t 'activerecord.attributes.reviewer/github.email'
+              %th= t 'activerecord.attributes.reviewer/github.user_type'
+              %th
+          %tbody
+          = render @reviewees, org: @org

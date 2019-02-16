@@ -11,7 +11,6 @@
     - case resource
     - when Repo
       - if reviewer.assigned?(resource)
-        - Rails.logger.debug resource
         = link_to t('helpers.links.destroy'), resource.destroy_reviewer_repo_path(reviewer: reviewer, repo_id: resource.id), method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm') }
       - else
         = link_to t('helpers.links.add'), admins_repo_reviewer_repos_path(resource, reviewer_id: reviewer.id), class: 'btn btn-primary', method: :post

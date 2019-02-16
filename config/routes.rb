@@ -115,6 +115,9 @@ Rails.application.routes.draw do
       resources :reviews, only: %i(index show update destroy)
       resources :reviewers, only: %i(index show edit update)
       resources :reviewees, only: %i(index show)
+      resources :orgs, only: %i(index show) do
+        resources :reviewee_orgs, shallow: :true, only: %i(create destroy)
+      end
       resources :repos, only: %i(index show) do
         resources :reviewer_repos, shallow: :true, only: %i(create destroy)
       end
