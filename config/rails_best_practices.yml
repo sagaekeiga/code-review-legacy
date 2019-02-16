@@ -46,7 +46,8 @@ RemoveUnusedMethodsInControllersCheck: { except_methods: [
   'ErrorsController#not_found',
   'ErrorsController#internal_server_error',
   'ApplicationController#routing_error',
-  'Reviewers::SessionsController#after_sign_out_path_for'
+  'Reviewers::SessionsController#after_sign_out_path_for',
+  'Webhooks::GithubAppsController#handle'
 ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [

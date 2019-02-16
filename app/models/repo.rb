@@ -97,6 +97,13 @@ class Repo < ApplicationRecord
       end
     end
 
+    #
+    # Mergee内のレポジトリを削除する
+    #
+    def find_and_destroy_by(remote_id:)
+      Repo.find_by(remote_id: remote_id)&.destroy
+    end
+
     private
 
     def _set_resource_for_repo(params, resource_type)
