@@ -44,10 +44,6 @@ ja:
         showing: このレポジトリ全体を非公開にする
         hidden: このレポジトリ全体を公開する
         title: レポジトリ
-    wikis:
-      import:
-        success: インポートが完了しました
-        failed: インポートに失敗しました
     settings:
       integrations:
         title: 設定
