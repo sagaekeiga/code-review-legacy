@@ -91,11 +91,13 @@ class Pull < ApplicationRecord
   # Scopes
   # -------------------------------------------------------------------------------
   scope :feed, lambda { |repos|
-    includes(:repo).
+    pulls = includes(:repo).
       joins(:repo).
       request_reviewed.
       merge(repos).
       order(:created_at)
+    pull_ids_with_review = Review.where(pull_id: pulls.pluck(:id)).pluck(:pull_id)
+    pulls.where.not(id: pull_ids_with_review)
   }
 
   # -------------------------------------------------------------------------------
