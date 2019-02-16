@@ -207,6 +207,10 @@ class Pull < ApplicationRecord
     send_request_reviewed_mail
   end
 
+  def need_to_operate?
+    connected? || request_reviewed? || pending? || reviewed?
+  end
+
   private
 
   def send_request_reviewed_mail
