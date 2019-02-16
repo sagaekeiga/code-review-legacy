@@ -7,9 +7,8 @@ class Webhooks::BaseController < ApplicationController
   # 不正な場合 422 エラー
   #
   def check_user_agent
-    unless request.env['HTTP_USER_AGENT'].match?(%r{GitHub-Hookshot/})
-      logger.warn "Invalid webhook agent error: #{request.env['HTTP_USER_AGENT']}"
-      head 422
-    end
+    return if request.env['HTTP_USER_AGENT'].match?(%r{GitHub-Hookshot/})
+    logger.warn "Invalid webhook agent error: #{request.env['HTTP_USER_AGENT']}"
+    head 422
   end
 end
