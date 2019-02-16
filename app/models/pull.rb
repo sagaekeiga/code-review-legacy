@@ -222,7 +222,7 @@ class Pull < ApplicationRecord
   # @return [Boolean]
   #
   def is_work_in_progress?
-    request_reviewed? || pending? || reviewed?
+    request_reviewed? || pending?
   end
 
   private
