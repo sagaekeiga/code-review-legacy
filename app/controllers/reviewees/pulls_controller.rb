@@ -8,9 +8,9 @@ class Reviewees::PullsController < Reviewees::BaseController
   def update
     @pull = current_reviewee.find_with_org(params[:id])
     case @pull.status
-    when 'connected', 'pending', 'reviewed'
+    when 'connected', 'reviewed'
       @pull.request_reviewed!
-    when 'request_reviewed'
+    when 'request_reviewed', 'pending'
       @pull.connected!
     end
     render json: { status: @pull.status }

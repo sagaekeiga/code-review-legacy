@@ -207,8 +207,20 @@ class Pull < ApplicationRecord
     send_request_reviewed_mail
   end
 
+  #
+  # プルリクエストの操作が必要かどうかを返す
+  # @return [Boolean]
+  #
   def need_to_operate?
     connected? || request_reviewed? || pending? || reviewed?
+  end
+
+  #
+  # （レビュワーの作業が）進行中かどうかを返す
+  # @return [Boolean]
+  #
+  def is_work_in_progress?
+    request_reviewed? || pending? || reviewed?
   end
 
   private

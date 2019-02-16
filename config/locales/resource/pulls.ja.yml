@@ -30,7 +30,8 @@ ja:
         empty: プルリクエストがありません。
         set_pulls: 設定する
   statuses:
-    connected: OPEN
-    request_reviewed: OPEN
-    reviewed: Reviewed
+    connected: Open
+    request_reviewed: In Progress
+    pending: In Progress
+    reviewed: In Progress
     completed: Merged/Closed
