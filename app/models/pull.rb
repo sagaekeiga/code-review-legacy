@@ -99,7 +99,7 @@ class Pull < ApplicationRecord
       request_reviewed.
       merge(repos).
       order(:created_at)
-    pull_ids_with_review = Review.where(pull_id: pulls.pluck(:id)).pluck(:pull_id)
+    pull_ids_with_review = Review.where(pull: pulls).pluck(:pull_id)
     pulls.where.not(id: pull_ids_with_review)
   }
 
