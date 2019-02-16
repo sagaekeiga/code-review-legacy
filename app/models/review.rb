@@ -123,32 +123,6 @@ class Review < ApplicationRecord
       pull.pending!
       review
     end
-
-    #
-    # コメントを取得する
-    #
-    def fetch_issue_comments!(params)
-      ActiveRecord::Base.transaction do
-        return false if params[:sender][:type].eql?('Bot')
-        repo = Repo.find_by(name: params[:repository][:name])
-        return false unless repo
-        # ① 該当するPRを取得
-        pull = repo.pulls.find_by(number: params[:issue][:number])
-        # ② ①がなければfalseを返す
-        return false unless pull
-        # ③ ①があればBodyを取得し作成
-        @review = pull.reviews.create!(
-          remote_id: params[:comment][:id],
-          body: params[:comment][:body],
-          event: :issue_comment
-        )
-      end
-      true
-    rescue => e
-      Rails.logger.error e
-      Rails.logger.error e.backtrace.join("\n")
-      false
-    end
   end
 
   # -------------------------------------------------------------------------------

@@ -16,29 +16,36 @@ class Github::EventBranchService
   # Eventごとに処理を走らせる
   #
   def call
-    case @request_event
-    when 'installation_repositories', 'installation' then repository
-    when 'pull_request' then pull_request
-    when 'pull_request_review' then pull_request_review
-    when 'pull_request_review_comment' then pull_request_review_comment
-    when 'issue_comment' then issue_comment
+    case @request_event.to_sym
+    when :installation_repositories, :installation then repository
+    when :pull_request then pull_request
+    when :pull_request_review then pull_request_review
+    when :pull_request_review_comment then pull_request_review_comment
     end
   end
 
   def repository
-    # Add
-    CreateRepoJob.perform_later(@params.to_json) if @params[:repositories_added].present? || @params[:repositories].present?
-    # Remove
-    if @params[:github_app][:repositories_removed].present?
-      @params[:github_app][:repositories_removed].each do |repositories_removed_params|
-        Repo.find_by(remote_id: repositories_removed_params[:id])&.destroy
-      end
+    if add_repository?
+      CreateRepoJob.perform_later(@params.to_json)
+    elsif remove_repository?
+      DestroyRepoJob.perform_later(@params.to_json)
     end
   end
 
+  def add_repository?
+    @params[:repositories_added].present? || @params[:repositories].present?
+  end
+
+  def remove_repository?
+    @params[:github_app][:repositories_removed].present?
+  end
+
   def pull_request
-    return unless @params.dig(:github_app, :pull_request).present?
-    Pull.update_by_pull_request_event!(@params[:github_app][:pull_request])
+    Pull.update_by_pull_request_event!(@params[:github_app][:pull_request]) if present_pull_request?
+  end
+
+  def present_pull_request?
+    @params.dig(:github_app, :pull_request).present?
   end
 
   def pull_request_review
@@ -46,15 +53,14 @@ class Github::EventBranchService
   end
 
   def pull_request_review_comment
-    if params.dig(:comment, :in_reply_to_id)
+    if reply?
       ReviewComment.fetch_reply!(@params)
     else
       ReviewComment.fetch!(@params)
     end
   end
 
-  def issue_comment
-    @github_account = Reviewees::GithubAccount.find_by(owner_id: @params[:issue][:user][:id])
-    Review.fetch_issue_comments!(@params)
+  def reply?
+    params.dig(:comment, :in_reply_to_id).present?
   end
 end
