@@ -73,6 +73,11 @@ class Review < ApplicationRecord
   delegate :token, to: :pull, prefix: true
 
   # -------------------------------------------------------------------------------
+  # Callbacks
+  # -------------------------------------------------------------------------------
+  after_commit :inform_admin
+
+  # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
   class << self
@@ -190,5 +195,12 @@ class Review < ApplicationRecord
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
     false
+  end
+
+  #
+  # レビューが作成さsれた時に管理者に通知を送る
+  #
+  def inform_admin
+    AdminMailer.review(id).deliver_later
   end
 end

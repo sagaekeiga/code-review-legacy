@@ -1,0 +1,5 @@
+= "#{@reviewer.nickname} さんがレビューを作成しました"
+
+%p
+  レビュー:
+  = link_to Settings.admins.reviews.show + @review.id.to_s, Settings.admins.reviews.show + @review.id.to_s

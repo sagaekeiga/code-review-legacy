@@ -190,3 +190,8 @@ ja:
       subject: Mergeeからリポジトリをアサインがされました
     pull_request_notice:
       subject: Pullrequestがレビューリクエストされました
+  admin_mailer:
+    review:
+      subject: レビューが作成されました
+    slack_mail:
+      subject: レビュワーからSlackのメールアドレスが届きました

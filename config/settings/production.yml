@@ -8,6 +8,9 @@ reviewers:
     show: https://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/pulls/
 reviewees:
   dashboard: https://<%= ENV['WEB_DOMAIN'] %>/reviewees/dashboard
+admins:
+  reviews:
+    show: https://<%= ENV['ADMIN_DOMAIN'] %>/admins/reviews/
 links:
   home: https://<%= ENV['WEB_DOMAIN'] %>
   reviewer_repo_show: https://<%= ENV['REVIEWER_DOMAIN'] %>/reviewers/repos/
