@@ -3,7 +3,7 @@ class Webhooks::BaseController < ApplicationController
   before_action :check_user_agent
 
   #
-  # User-Agent が CloudBeds-Webhooks かどうかチェックする。
+  # User-Agent が GitHub-Hookshot かどうかチェックする。
   # 不正な場合 422 エラー
   #
   def check_user_agent
