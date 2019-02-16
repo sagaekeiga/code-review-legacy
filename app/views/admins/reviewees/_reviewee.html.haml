@@ -8,7 +8,7 @@
   %td= reviewee.email
   %td= reviewee.github_account&.user_type
   %td.text-center
-    - if reviewee.orgs.exists?(id: @org.id)
-      = link_to '削除', admins_reviewee_org_path(@org.reviewee_org_id(reviewee.id)), method: :delete, class: 'btn btn-danger'
+    - if reviewee.orgs.exists?(id: org.id)
+      = link_to '削除', admins_reviewee_org_path(org.reviewee_org_id(reviewee.id), org_id: org.id), method: :delete, class: 'btn btn-danger'
     - else
-      = link_to '追加', admins_org_reviewee_orgs_path(org_id: @org.id, reviewee_id: reviewee.id), method: :post, class: 'btn btn-primary'
+      = link_to '追加', admins_org_reviewee_orgs_path(org_id: org.id, reviewee_id: reviewee.id), method: :post, class: 'btn btn-primary'

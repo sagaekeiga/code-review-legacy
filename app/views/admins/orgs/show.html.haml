@@ -26,7 +26,7 @@
               %th= t 'activerecord.attributes.reviewer/github.user_type'
               %th
           %tbody
-          = render @orgs_reviewees
+          = render @orgs_reviewees, org: @org
       %h3 追加
       .panel.panel-default
         %table.table.table-hover.pulls-on-dashboard-wrapper.text-center
@@ -38,4 +38,4 @@
               %th= t 'activerecord.attributes.reviewer/github.user_type'
               %th
           %tbody
-          = render @reviewees
+          = render @reviewees, org: @org

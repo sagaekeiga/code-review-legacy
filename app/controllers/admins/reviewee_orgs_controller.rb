@@ -12,8 +12,8 @@ class Admins::RevieweeOrgsController < Admins::BaseController
   end
 
   def destroy
-    @reviewee_org = RevieweeOrg.find(params[:id])
-    @org = @reviewee_org.org
+    @org = Org.find(params[:org_id])
+    @reviewee_org = @org.reviewee_orgs.find(params[:id])
     @reviewee = @reviewee_org.reviewee
     if @reviewee_org.destroy
       redirect_to [:admins, @org], success: "#{@reviewee.github_account&.nickname}さんをアサインから外しました"
