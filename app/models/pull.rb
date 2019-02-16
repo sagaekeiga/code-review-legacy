@@ -90,12 +90,17 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Scopes
   # -------------------------------------------------------------------------------
+  #
+  # レビュアーがアサインされているレポジトリ and 一度もレビューされていない PRを返す
+  #
   scope :feed, lambda { |repos|
-    includes(:repo).
+    pulls = includes(:repo).
       joins(:repo).
       request_reviewed.
       merge(repos).
       order(:created_at)
+    pull_ids_with_review = Review.where(pull: pulls).pluck(:pull_id)
+    pulls.where.not(id: pull_ids_with_review)
   }
 
   # -------------------------------------------------------------------------------
