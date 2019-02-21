@@ -60,7 +60,7 @@ class ReviewComment < ApplicationRecord
   }
   #
   # - reviewed : reviewer(PR内)のコメント
-  # - replid : reviewer(PR内)のコメントに対する返信
+  # - replied : reviewer(PR内)のコメントに対する返信
   #
   enum event: {
     reviewed: 1000,
@@ -203,11 +203,10 @@ class ReviewComment < ApplicationRecord
         review_comment.update!(read: true)
       end
       comment = { body: body, in_reply_to: in_reply_to_id }
-      res = Github::Request.github_exec_review_comment!(comment.to_json, changed_file.pull)
+      res = Github::Request.reply(comment.to_json, changed_file.pull)
 
-      fail res.body unless res.code == Settings.api.created.status.code
+      fail res if res.is_a?(String)
 
-      res = ActiveSupport::HashWithIndifferentAccess.new(JSON.load(res.body))
       update!(remote_id: res[:id])
     end
     true
