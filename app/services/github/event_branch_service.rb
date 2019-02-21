@@ -19,7 +19,7 @@ class Github::EventBranchService
     case @request_event.to_sym
     when :installation_repositories, :installation then repository
     when :pull_request then pull_request
-    when :pull_request_review then pull_request_review
+    # when :pull_request_review then pull_request_review
     when :pull_request_review_comment then pull_request_review_comment
     end
   end

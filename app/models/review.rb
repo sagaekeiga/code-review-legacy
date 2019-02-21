@@ -75,7 +75,7 @@ class Review < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Callbacks
   # -------------------------------------------------------------------------------
-  after_commit :inform_admin
+  after_commit :inform_admin, on: :create
 
   # -------------------------------------------------------------------------------
   # ClassMethods
@@ -130,25 +130,28 @@ class Review < ApplicationRecord
   # -------------------------------------------------------------------------------
   #
   # リモートのPRにレビューする
+  # @param [String] reason (承認 or 非承認) の理由
   #
   def review!(reason:)
     update!(reason: reason)
-    request_body = { body: body, event: 'COMMENT', comments: [] }
+    request_params = { body: body, event: 'COMMENT' }
+    pending_review_comments = review_comments.where.not(reviewer: nil).pending
 
-    review_comments.where.not(reviewer: nil).pending.each do |review_comment|
-      comment = {
-        path: review_comment.path,
-        position: review_comment.position.to_i,
-        body: review_comment.body
+    request_params[:comments] = pending_review_comments.map do |pending_review_comment|
+      {
+        path: pending_review_comment.path,
+        position: pending_review_comment.position.to_i,
+        body: pending_review_comment.body
       }
-      request_body[:comments] << comment
     end
 
-    request_params = request_body.to_json
-    res = Github::Request.review! params: request_params, pull: pull
+    res = Github::Request.review params: request_params.to_json, pull: pull
 
-    fail res.body unless res.code == Settings.api.success.status.code
-    review_comments.where.not(reviewer: nil).pending.each(&:reviewed!).each(&:completed!)
+    fail res if res.is_a?(String)
+
+    update!(remote_id: res[:id], commit_id: res[:commit_id])
+
+    pending_review_comments.each(&:reviewed!).each(&:completed!)
     comment!
     pull.reviewed!
     ReviewerMailer.approve_review(self).deliver_later

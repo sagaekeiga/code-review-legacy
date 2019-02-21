@@ -5,7 +5,7 @@ module Github
     class << self
       BASE_API_URI = 'https://api.github.com'.freeze
       # POST レビュー送信
-      def review!(params:, pull:)
+      def review(params:, pull:)
         _post sub_url(:review, pull), pull.repo.installation_id, :review, params
       end
 
@@ -153,7 +153,7 @@ module Github
           logger.error "[Github][#{event}] responseMessage => #{res.message}"
           logger.error "[Github][#{event}] subUrl => #{sub_url}"
         end
-        res
+        res = JSON.parse res.body, symbolize_names: true
       end
 
       def _get(sub_url, installation_id, event)

@@ -60,7 +60,7 @@ class ReviewComment < ApplicationRecord
   }
   #
   # - reviewed : reviewer(PR内)のコメント
-  # - replid : reviewer(PR内)のコメントに対する返信
+  # - replied : reviewer(PR内)のコメントに対する返信
   #
   enum event: {
     reviewed: 1000,
