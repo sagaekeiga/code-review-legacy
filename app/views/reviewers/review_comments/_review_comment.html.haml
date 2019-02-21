@@ -7,7 +7,7 @@
     .nickname
       = review_comment.nickname
     .date
-      .text-muted= date_format(review_comment.updated_at)
+      .text-muted= date_format(review_comment.created_at)
     - unless review_comment.read?
       .label.label-danger.unread= I18n.t('reviewers.reviews.read.unread')
       .pull-right
