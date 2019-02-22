@@ -41,7 +41,7 @@
     },
     "REVIEW_APP": {
       "required": true,
-      "value": true
+      "value": "true"
     },
     "SECRET_KEY_BASE": {
       "required": true
