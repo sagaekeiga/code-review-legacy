@@ -1,10 +1,15 @@
-.col-xs-12
-  .container
-    .row
+.container
+  .row
+    .page-header{ 'repo-id': @repo.id }
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+  .row
+    .commit
+      %h2.title= @pull.title
+      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
       .content-show-wrapper
         .page-header
           %h4
-            .pull-right= link_to t('views.back_pullrequest'), @pull.decorate.back_path, class: 'btn btn-default btn-sm'
             = @res['path']
         .panel.panel-default
           .panel-heading
