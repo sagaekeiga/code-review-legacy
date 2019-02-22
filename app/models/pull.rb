@@ -104,11 +104,11 @@ class Pull < ApplicationRecord
   }
 
   scope :open, lambda {
-    where(status: %i(request_reviewed pending reviewed))
+    where(status: %i(request_reviewed pending reviewed)).includes(:reviewers)
   }
 
   scope :closed, lambda {
-    completed.joins(:reviews)
+    completed.joins(:reviews).includes(:reviewers)
   }
   # -------------------------------------------------------------------------------
   # ClassMethods

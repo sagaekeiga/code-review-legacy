@@ -3,3 +3,7 @@
     .pullrequest
       %h4.title
         %strong= link_to pull.title, [:reviewers, pull.repo, pull]
+      %small.text-muted= t 'views.created', date_time: date_format(pull.remote_created_at)
+  %td
+    - if pull.reviewers.present?
+      = image_tag pull.reviewers.first.avatar_url, class: 'img-responsive center-block', style: 'width: 50px;'
