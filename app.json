@@ -4,9 +4,6 @@
     "postdeploy": "bundle exec rails db:migrate db:seed app:dev:sample"
   },
   "env": {
-    "ADMIN_DOMAIN": {
-      "required": true
-    },
     "GITHUB_APP_PAYLOAD_ISS_ID": {
       "required": true
     },
@@ -53,9 +50,6 @@
     "SENDGRID_USERNAME": {
       "required": true
     },
-    "WEB_DOMAIN": {
-      "required": true
-    }
   },
   "formation": {
     "web": {
