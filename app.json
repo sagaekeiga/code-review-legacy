@@ -55,11 +55,11 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "hobby"
     },
     "sidekiq": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "hobby"
     }
   },
   "addons": [
