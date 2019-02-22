@@ -53,10 +53,6 @@
     }
   },
   "formation": {
-    "worker": {
-      "quantity": 1,
-      "size": "Standard-1X"
-    },
     "web": {
       "quantity": 1,
       "size": "Standard-1X"
