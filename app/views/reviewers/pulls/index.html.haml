@@ -11,4 +11,4 @@
             = link_to 'Closed', reviewers_repo_pulls_path(@repo, status: :closed), class: params[:status] == 'closed' ? 'active' : ''
         %table.table
           %tbody
-            = render @pulls
+            = render partial: 'reviewers/pulls/pull', collection: @pulls
