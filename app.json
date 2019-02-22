@@ -60,11 +60,11 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "hobby"
+      "size": "free"
     },
     "sidekiq": {
       "quantity": 1,
-      "size": "hobby"
+      "size": "free"
     }
   },
   "addons": [
