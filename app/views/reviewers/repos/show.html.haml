@@ -1,7 +1,9 @@
 .container
   .row
-    .page-header{ 'repo-id': @repo.id, 'repo-token': @repo.token }
+    .page-header{ 'repo-id': @repo.id }
       %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+    // 検索フォーム
     = form_with url: reviewers_repo_contents_path(@repo), method: :get, local: true, class: 'search-form' do |f|
       .input-group
         = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')

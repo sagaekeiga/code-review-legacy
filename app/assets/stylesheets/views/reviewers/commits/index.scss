@@ -1,0 +1,14 @@
+.reviewers-commits-index {
+  margin-top: $base-margin * 3;
+  .commits {
+    .title {
+      margin-top: $base-margin * 3;
+    }
+    .tab {
+      margin-top: $base-margin;
+    }
+    .list {
+      margin-top: $base-margin;
+    }
+  }
+}

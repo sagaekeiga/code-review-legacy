@@ -3,6 +3,8 @@ class Reviewers::CommitsController < Reviewers::BaseController
   before_action :set_commit, only: %i(show)
   before_action :set_commits, only: %i(index)
   before_action :set_changed_files, only: %i(show)
+  before_action :set_repo, only: %i(index show)
+
   def index
   end
 
@@ -24,6 +26,10 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = @pull.changed_files.where(commit: @commit)
+    @changed_files = ChangedFileDecorator.decorate_collection @pull.changed_files.where(commit: @commit)
+  end
+
+  def set_repo
+    @repo = current_reviewer.repos.friendly.find(params[:repo_id])
   end
 end

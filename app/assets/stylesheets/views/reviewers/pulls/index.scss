@@ -1,0 +1,13 @@
+.reviewers-pulls-index {
+  margin-top: $base-margin * 3;
+  .pull-requests {
+    margin-top: $base-margin * 3;
+  }
+  table {
+    tbody {
+      td {
+        padding: $base-padding * 2;
+      }
+    }
+  }
+}

@@ -1,18 +1,22 @@
-.reviewer-commit-index-wrapper
-  .container
-    .col-xs-12
-      .page-header{ 'pull-id': @pull.id }
-        %h3= @pull.title
-      = render 'reviewers/shared/pulls/tab', pull: @pull
-      .panel.panel-default
-        %table.table.table-hover
-          %tbody
-            - @commits.each do |commit|
-              %tr
-                %td
-                  = link_to commit.message, [:reviewers, @pull, commit], class: 'commit_title'
-                  .break-line.owner_name
-                    = commit.committer_name
-                    = I18n.l(commit.committed_date.to_time, format: :default)
-                %td.text-right
-                  = link_to commit.short_sha, [:reviewers, @pull, commit]
+.container
+  .row
+    .page-header{ 'repo-id': @repo.id }
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+  .row
+    .commits
+      %h2.title= @pull.title
+      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
+      .list
+        .panel.panel-default
+          %table.table.table-hover
+            %tbody
+              - @commits.each do |commit|
+                %tr
+                  %td
+                    = link_to commit.message, [:reviewers, @repo, @pull, commit], class: 'commit_title'
+                    .break-line.owner_name
+                      = commit.committer_name
+                      = I18n.l(commit.committed_date.to_time, format: :default)
+                  %td.text-right
+                    = link_to commit.short_sha, [:reviewers, @repo, @pull, commit]

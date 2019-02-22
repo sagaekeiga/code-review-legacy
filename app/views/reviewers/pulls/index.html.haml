@@ -1,0 +1,15 @@
+.container
+  .row
+    .page-header{ 'repo-id': @repo.id }
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+    .pull-requests
+      .panel.panel-default
+        .panel-heading
+          %h1.panel-title Heading
+        %table.table
+          %tbody
+            - @pulls.each do |pull|
+              %tr
+                %td
+                  = link_to pull.title, [:reviewers, @repo, pull]

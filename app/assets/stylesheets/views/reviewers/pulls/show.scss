@@ -1,0 +1,14 @@
+.reviewers-pulls-show {
+  margin-top: $base-margin * 3;
+  .pullrequest {
+    .title {
+      margin-top: $base-margin * 3;
+    }
+    .tab {
+      margin-top: $base-margin;
+    }
+    .body {
+      margin-top: $base-margin;
+    }
+  }
+}

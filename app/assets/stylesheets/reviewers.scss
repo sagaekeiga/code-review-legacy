@@ -1,14 +1,3 @@
-.reviewers-shared-pulls-tab-wrapper,
-.reviewers-shared-repos-tab-wrapper,
-.reviewee-repo-tab-wrapper {
-  margin-bottom: $base-margin;
-  li {
-    a {
-      color: $color-dark-gray;
-    }
-  }
-}
-
 .reviewer-registration-new-wrapper, .reviewer-session-new-wrapper {
   margin-top: $base-margin * 2;
 }

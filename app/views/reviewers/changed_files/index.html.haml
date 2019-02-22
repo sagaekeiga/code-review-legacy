@@ -1,8 +1,10 @@
-.col-xs-12
-  .container
-    .page-header{ 'pull-id': @pull.id }
-      %h3= @pull.title
-    = render 'reviewers/shared/pulls/tab', pull: @pull
-    .reviews-form-wrapper
-      .reviews-form-card-wrapper
-        = render @changed_files
+.container
+  .row
+    .page-header
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+  .row
+    .changed_files
+      %h2.title= @pull.title
+      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
+      .diffs= render @changed_files
