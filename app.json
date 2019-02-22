@@ -1,7 +1,7 @@
 {
   "name": "mergee",
   "scripts": {
-    "postdeploy": "rails db:migrate db:seed app:dev:sample"
+    "postdeploy": "bundle exec rails db:migrate db:seed app:dev:sample"
   },
   "env": {
     "ADMIN_DOMAIN": {
