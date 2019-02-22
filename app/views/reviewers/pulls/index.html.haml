@@ -6,10 +6,9 @@
     .pull-requests
       .panel.panel-default
         .panel-heading
-          %h1.panel-title Heading
+          %h1.panel-title
+            = link_to 'Open', [:reviewers, @repo, :pulls], class: params[:status] == 'closed' ? '' : 'active'
+            = link_to 'Closed', reviewers_repo_pulls_path(@repo, status: :closed), class: params[:status] == 'closed' ? 'active' : ''
         %table.table
           %tbody
-            - @pulls.each do |pull|
-              %tr
-                %td
-                  = link_to pull.title, [:reviewers, @repo, pull]
+            = render @pulls
