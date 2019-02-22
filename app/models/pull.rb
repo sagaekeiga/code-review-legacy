@@ -103,6 +103,9 @@ class Pull < ApplicationRecord
     pulls.where.not(id: pull_ids_with_review)
   }
 
+  scope :can_see_assgined_reviewer, lambda {
+    where.not(status: :connected)
+  }
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
