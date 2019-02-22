@@ -4,7 +4,12 @@ class Reviewers::PullsController < Reviewers::BaseController
   before_action :set_repo, only: %i(index show)
 
   def index
-    @pulls = @repo.pulls.can_see_assgined_reviewer
+    @pulls =
+      if params[:status] == 'closed'
+        @repo.pulls.closed
+      else
+        @repo.pulls.open
+      end
   end
 
   def show

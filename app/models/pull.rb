@@ -103,8 +103,12 @@ class Pull < ApplicationRecord
     pulls.where.not(id: pull_ids_with_review)
   }
 
-  scope :can_see_assgined_reviewer, lambda {
-    where.not(status: :connected)
+  scope :open, lambda {
+    where(status: %i(request_reviewed pending reviewed))
+  }
+
+  scope :closed, lambda {
+    completed.joins(:reviews)
   }
   # -------------------------------------------------------------------------------
   # ClassMethods

@@ -1,6 +1,7 @@
 {
   "name": "mergee",
   "scripts": {
+    "postdeploy": "rails db:migrate db:seed app:dev:sample"
   },
   "env": {
     "ADMIN_DOMAIN": {
@@ -39,6 +40,10 @@
     "REDIS_URL": {
       "required": true
     },
+    "REVIEW_APP": {
+      "required": true,
+      "value": "true"
+    },
     "SECRET_KEY_BASE": {
       "required": true
     },
@@ -55,11 +60,11 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "hobby"
+      "size": "free"
     },
     "sidekiq": {
       "quantity": 1,
-      "size": "hobby"
+      "size": "free"
     }
   },
   "addons": [
