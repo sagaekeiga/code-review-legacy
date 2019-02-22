@@ -176,7 +176,7 @@ ja:
     synchronizes: 同期
     bytes: "%{byte} Bytes"
     view: View
-    back_pullrequest: Back Pullrequest
+    created: "%{date_time} に作成されました"
   reviewer_mailer:
     comment:
       subject: コメントがつきました。

@@ -58,9 +58,6 @@ ja:
       last_sign_in_at: "最終ログイン %{ago}"
     under_review:
       under_review: 審査中のPR
-    my_page:
-      title: マイページ
-      reviewed_pulls_count: 完了
     pending:
       mail_placeholder: mergee@example.com
       send: 送信
@@ -77,6 +74,10 @@ ja:
       alert:
         danger: Githubに接続してください
     pulls:
+      index:
+        assignee: Assignee
+        open: Open
+        closed: Closed
       show:
         conversation: Conversation
         changed_files: Files Changed

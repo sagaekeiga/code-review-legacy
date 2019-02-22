@@ -2,14 +2,28 @@
   margin-top: $base-margin * 3;
   .pull-requests {
     margin-top: $base-margin * 3;
-    .active {
-      font-weight: bold;
-    }
-    .pullrequest {
-      padding: $base-padding * 2;
-      .title {
+    table {
+      thead {
+        &.color {
+          background-color: $color-sub-gray;
+        }
+        .active {
+          font-weight: bold;
+        }
         a {
           color: $color-black
+        }
+      }
+      tbody {
+        td {
+          .pullrequest {
+            padding: $base-padding;
+            .title {
+              a {
+                color: $color-black
+              }
+            }
+          }
         }
       }
     }
