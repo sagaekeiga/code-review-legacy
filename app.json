@@ -1,12 +1,9 @@
 {
-  "name": "push-request-v2",
+  "name": "mergee",
   "scripts": {
   },
   "env": {
     "ADMIN_DOMAIN": {
-      "required": true
-    },
-    "GITHUB_APP_INSTALLATION_ID": {
       "required": true
     },
     "GITHUB_APP_PAYLOAD_ISS_ID": {
@@ -19,27 +16,6 @@
       "required": true
     },
     "GITHUB_CLIENT_SECRET": {
-      "required": true
-    },
-    "GOOGLE_ANALYTICS_ID": {
-      "required": true
-    },
-    "HEROKU_APP_ID": {
-      "required": true
-    },
-    "HEROKU_APP_NAME": {
-      "required": true
-    },
-    "HEROKU_RELEASE_CREATED_AT": {
-      "required": true
-    },
-    "HEROKU_RELEASE_VERSION": {
-      "required": true
-    },
-    "HEROKU_SLUG_COMMIT": {
-      "required": true
-    },
-    "HEROKU_SLUG_DESCRIPTION": {
       "required": true
     },
     "LANG": {
@@ -72,36 +48,25 @@
     "SENDGRID_USERNAME": {
       "required": true
     },
-    "SENTRY_DSN": {
-      "required": true
-    },
-    "SENTRY_RAVEN_URL": {
-      "required": true
-    },
     "WEB_DOMAIN": {
       "required": true
     }
   },
   "formation": {
-    "worker": {
-      "quantity": 1,
-      "size": "Standard-1X"
-    },
     "web": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "hobby"
     },
     "sidekiq": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "hobby"
     }
   },
   "addons": [
     "heroku-postgresql",
     "heroku-redis",
     "scheduler",
-    "sendgrid",
-    "sentry"
+    "sendgrid"
   ],
   "buildpacks": [
     {
