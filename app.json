@@ -39,6 +39,10 @@
     "REDIS_URL": {
       "required": true
     },
+    "REVIEW_APP": {
+      "required": true,
+      "value": true
+    },
     "SECRET_KEY_BASE": {
       "required": true
     },
