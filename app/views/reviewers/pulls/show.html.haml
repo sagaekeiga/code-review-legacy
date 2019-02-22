@@ -1,89 +1,100 @@
 .container
-  .col-xs-12
-    .page-header{ 'pull-id': @pull.id }
-      %h3= @pull.title
-    = render 'reviewers/shared/pulls/tab', pull: @pull
-    - unless @pending_review
-      .pulls-conversation-wrapper
-        .col-xs-12.col-sm-10
-          .pulls-body-wrapper
-            - if @pull.body?
-              .pull-body-wrapper
-                .panel
-                  .panel-heading= t '.reviewee_comment'
-                  .panel-body
-                    .md-wrapper
-                      = markdown(@pull.body)
-          .pulls-review-comment-wrapper
-            - @reviews.includes(:reviewer).each do |review|
-              - if review.comment?
-                -# 全体へのレビューコメント
-                .review-wrapper
-                  = render 'review', review: review
-              - if review.issue_comment?
-                -# コメント
-                .issue-comment-wrapper
-                  = render 'issue_comment', review: review
-              - review.review_comments.reviewed.each do |review_comment|
-                .col-xs-2.timeline
-                .col-xs-10.timeline
-                  .panel
-                    .panel-heading
-                      .panel-title= review_comment.path
-                    .panel-body
-                      .table-wrapper
-                        %table
-                          %thead
-                            %tr
-                              %th{ scope: 'col' }
-                          - review_comment.target_lines.each_with_index do |line, index|
-                            %tbody
-                              %tr
-                                %td.hidden= index
-                                - if line.start_with?('+')
-                                  %td.markdown-highlight.bg-success.file-code= review_comment.changed_file.decorate.coderay(line)
-                                - elsif line.start_with?('-')
-                                  %td.markdown-highlight.bg-danger.file-code= review_comment.changed_file.decorate.coderay(line)
-                                - elsif line.start_with?('@@')
-                                  %td.markdown-highlight.bg-primary.file-code= simple_format(line)
-                                - else
-                                  %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
-                      .panel-text
-                        -# レビューコメント
-                        - review_comment.target_comments.includes(:reviewer).each.with_index(1) do |target_comment, index|
-                          = render 'review_comments', review_comment: target_comment, index: index
-                          - next unless index == review_comment.target_comments.size
-                          -# 返信コメント（レビューコメント） -- Reply
-                          - target_comment.replies.includes(:reviewer).each.with_index(1) do |reply, index|
-                            = render 'review_comments', review_comment: reply, index: index
-                          -# 返信フォーム
-                          .col-xs-12.reply-wrapper
-                            .reply-hidden-target-element
-                              .col-xs-1
-                                = image_tag current_reviewer.github_account.avatar_url, class: 'review-comment-img avatar img-responsive'
-                              .col-xs-11
-                                %input.form-control.input-reply.input-sm{ placeholder: 'Reply' }
-                            .reply-show-target-element.hidden
-                              .col-xs-12
-                                %textarea.form-control.md-textarea{ placeholder: 'Leave Comment', rows: '5' }
-                                .text-right
-                                  %button{ type: 'button', class: 'btn btn-default reply-cancel-btn' } Cancel
-                                  %button{ type: 'button', class: 'btn btn-primary reply-submit-btn' } Comment
-                                  %input{ type: 'hidden', value: review_comment.id, class: 'root_id' }
-                                  %input{ type: 'hidden', value: review_comment.path, class: 'path' }
-                                  %input{ type: 'hidden', value: review_comment.position, class: 'position' }
-                                  %input{ type: 'hidden', value: current_reviewer.id, class: 'reviewer_id' }
-                                  %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
-                                  %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
-                                  %input{ type: 'hidden', value: review_comment.remote_id, class: 'remote_id' }
-        .col-xs-12.col-sm-2.side
-          .side-wrapper
-            = render 'side', pull: @pull
-        .comment-wrapper
-          - if @reviews.present?
-            // コメントフォーム
-            = render 'comment_form', pull: @pull
-    - else
-      %h1.text-center 審査中
-      %p.text-center 審査が通るまで少々お待ちください
+  .row
+    .page-header{ 'repo-id': @repo.id }
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+  .row
+    .pullrequest
+      %h2.title= @pull.title
+      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
+      .col-sm-6.p-l-0.conversation
+        .body
+          .panel.panel-default
+            .panel-heading= t '.reviewee_comment'
+            .panel-body
+              .md-wrapper
+                = markdown(@pull.body)
+      -# - unless @pending_review
+      -#   .pulls-conversation-wrapper
+      -#     .col-sm-6.p-l-0
+      -#       .pulls-body-wrapper
+      -#         - if @pull.body?
+      -#           .pull-body-wrapper
+      -#             .panel
+      -#               .panel-heading= t '.reviewee_comment'
+      -#               .panel-body
+      -#                 .md-wrapper
+      -#                   = markdown(@pull.body)
+      -#       .pulls-review-comment-wrapper
+              -# - @reviews.includes(:reviewer).each do |review|
+              -#   - if review.comment?
+              -#     -# 全体へのレビューコメント
+              -#     .review-wrapper
+              -#       = render 'review', review: review
+              -#   - if review.issue_comment?
+              -#     -# コメント
+              -#     .issue-comment-wrapper
+              -#       = render 'issue_comment', review: review
+              -#   - review.review_comments.reviewed.each do |review_comment|
+              -#     .col-xs-2.timeline
+              -#     .col-xs-10.timeline
+              -#       .panel
+              -#         .panel-heading
+              -#           .panel-title= review_comment.path
+              -#         .panel-body
+              -#           .table-wrapper
+              -#             %table
+              -#               %thead
+              -#                 %tr
+              -#                   %th{ scope: 'col' }
+              -#               - review_comment.target_lines.each_with_index do |line, index|
+              -#                 %tbody
+              -#                   %tr
+              -#                     %td.hidden= index
+              -#                     - if line.start_with?('+')
+              -#                       %td.markdown-highlight.bg-success.file-code= review_comment.changed_file.decorate.coderay(line)
+              -#                     - elsif line.start_with?('-')
+              -#                       %td.markdown-highlight.bg-danger.file-code= review_comment.changed_file.decorate.coderay(line)
+              -#                     - elsif line.start_with?('@@')
+              -#                       %td.markdown-highlight.bg-primary.file-code= simple_format(line)
+              -#                     - else
+              -#                       %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
+              -#           .panel-text
+              -#             -# レビューコメント
+              -#             - review_comment.target_comments.includes(:reviewer).each.with_index(1) do |target_comment, index|
+              -#               = render 'review_comments', review_comment: target_comment, index: index
+              -#               - next unless index == review_comment.target_comments.size
+              -#               -# 返信コメント（レビューコメント） -- Reply
+              -#               - target_comment.replies.includes(:reviewer).each.with_index(1) do |reply, index|
+              -#                 = render 'review_comments', review_comment: reply, index: index
+              -#               -# 返信フォーム
+              -#               .col-xs-12.reply-wrapper
+              -#                 .reply-hidden-target-element
+              -#                   .col-xs-1
+              -#                     = image_tag current_reviewer.github_account.avatar_url, class: 'review-comment-img avatar img-responsive'
+              -#                   .col-xs-11
+              -#                     %input.form-control.input-reply.input-sm{ placeholder: 'Reply' }
+              -#                 .reply-show-target-element.hidden
+              -#                   .col-xs-12
+              -#                     %textarea.form-control.md-textarea{ placeholder: 'Leave Comment', rows: '5' }
+              -#                     .text-right
+              -#                       %button{ type: 'button', class: 'btn btn-default reply-cancel-btn' } Cancel
+              -#                       %button{ type: 'button', class: 'btn btn-primary reply-submit-btn' } Comment
+              -#                       %input{ type: 'hidden', value: review_comment.id, class: 'root_id' }
+              -#                       %input{ type: 'hidden', value: review_comment.path, class: 'path' }
+              -#                       %input{ type: 'hidden', value: review_comment.position, class: 'position' }
+              -#                       %input{ type: 'hidden', value: current_reviewer.id, class: 'reviewer_id' }
+              -#                       %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
+              -#                       %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
+              -#                       %input{ type: 'hidden', value: review_comment.remote_id, class: 'remote_id' }
+          -# .col-xs-12.col-sm-2.side
+          -#   .side-wrapper
+          -#     = render 'side', pull: @pull
+          -# .comment-wrapper
+          -#   - if @reviews.present?
+          -#     // コメントフォーム
+          -#     = render 'comment_form', pull: @pull
+      -# - else
+      -#   %h1.text-center 審査中
+      -#   %p.text-center 審査が通るまで少々お待ちください
 = javascript_pack_tag 'reply'

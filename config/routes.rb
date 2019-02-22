@@ -83,8 +83,8 @@ Rails.application.routes.draw do
           resources :replies, only: %i(index create update), shallow: true
         end
         resources :comments, only: %i(create update destroy)
-        resources :changed_files, only: %i(index show)
-        resources :commits, only: %i(index show)
+        # resources :changed_files, only: %i(index show)
+        # resources :commits, only: %i(index show)
       end
       resources :send_mails, only: %i(create)
       resources :review_comments, only: %i(create update destroy show)
@@ -94,6 +94,10 @@ Rails.application.routes.draw do
       end
       resources :repos, only: %i(show) do
         resources :contents, only: %i(index)
+        resources :pulls, only: %i(index show), param: :token do
+          resources :commits, only: %i(index show)
+          resources :changed_files, only: %i(index show)
+        end
       end
       resources :reviews, only: %i(index)
     end

@@ -1,38 +1,78 @@
 .container
-  .col-xs-12
-    .page-header{ 'pull-id': @pull.id }
-      %h3= @pull.title
-    .pulls-files-wrapper
-      .col-xs-12.col-sm-10
-        .page-header
-          %h5= @commit.message
-        - if @changed_files.present?
-          - @changed_files.each do |changed_file|
-            .js-blob-wrapper
-              .panel.changed-file-wrapper
-                .panel-heading
-                  .panel-title
-                    .pull-right
-                      = link_to t('views.view'), reviewers_pull_changed_file_path(@pull, changed_file), class: 'btn btn-default btn-sm'
-                    = changed_file.filename
-                .panel-body.file-border{ 'changed-file-id': changed_file.id }
-                  .table-wrapper
-                    %table
-                      %thead
+  .row
+    .page-header{ 'repo-id': @repo.id }
+      %h3= link_to @repo.full_name, [:reviewers, @repo]
+    = render 'reviewers/shared/navbar', repo: @repo
+  .row
+    .commit
+      %h2.title= @pull.title
+      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
+      - if @changed_files.present?
+        - @changed_files.each do |changed_file|
+          .js-blob-wrapper
+            .panel.changed-file-wrapper
+              .panel-heading
+                .panel-title
+                  .pull-right
+                    = link_to t('views.view'), [:reviewers, @repo, @pull, changed_file], class: 'btn btn-default btn-sm'
+                  = changed_file.filename
+              .panel-body.file-border{ 'changed-file-id': changed_file.id }
+                .table-wrapper
+                  %table
+                    %thead
+                      %tr
+                        %th{ scope: 'col' }
+                    - changed_file.patch&.each_line&.with_index do |line, index|
+                      %tbody
                         %tr
-                          %th{ scope: 'col' }
-                      - changed_file.patch&.each_line&.with_index do |line, index|
-                        %tbody
-                          %tr
-                            %td.hidden= index
-                            - if line.start_with?('+')
-                              %td.markdown-highlight.bg-success.file-code= changed_file.decorate.coderay(line)
-                            - elsif line.start_with?('-')
-                              %td.markdown-highlight.bg-danger.file-code= changed_file.decorate.coderay(line)
-                            - elsif line.start_with?('@@')
-                              %td.markdown-highlight.bg-primary.file-code
-                                %pre= line
-                            - else
-                              %td.markdown-highlight.file-code= changed_file.decorate.coderay(line)
-        - else
-          = t '.no_changhed_files'
+                          %td.hidden= index
+                          - if line.start_with?('+')
+                            %td.markdown-highlight.bg-success.file-code= changed_file.decorate.coderay(line)
+                          - elsif line.start_with?('-')
+                            %td.markdown-highlight.bg-danger.file-code= changed_file.decorate.coderay(line)
+                          - elsif line.start_with?('@@')
+                            %td.markdown-highlight.bg-primary.file-code
+                              %pre= line
+                          - else
+                            %td.markdown-highlight.file-code= changed_file.decorate.coderay(line)
+      - else
+        = t '.no_changhed_files'
+
+-# .container
+-#   .col-xs-12
+-#     .page-header{ 'pull-id': @pull.id }
+-#       %h3= @pull.title
+-#     .pulls-files-wrapper
+-#       .col-xs-12.col-sm-10
+-#         .page-header
+-#           %h5= @commit.message
+-#         - if @changed_files.present?
+-#           - @changed_files.each do |changed_file|
+-#             .js-blob-wrapper
+-#               .panel.changed-file-wrapper
+-#                 .panel-heading
+-#                   .panel-title
+-#                     .pull-right
+-#                       = link_to t('views.view'), reviewers_pull_changed_file_path(@pull, changed_file), class: 'btn btn-default btn-sm'
+-#                     = changed_file.filename
+-#                 .panel-body.file-border{ 'changed-file-id': changed_file.id }
+-#                   .table-wrapper
+-#                     %table
+-#                       %thead
+-#                         %tr
+-#                           %th{ scope: 'col' }
+-#                       - changed_file.patch&.each_line&.with_index do |line, index|
+-#                         %tbody
+-#                           %tr
+-#                             %td.hidden= index
+-#                             - if line.start_with?('+')
+-#                               %td.markdown-highlight.bg-success.file-code= changed_file.decorate.coderay(line)
+-#                             - elsif line.start_with?('-')
+-#                               %td.markdown-highlight.bg-danger.file-code= changed_file.decorate.coderay(line)
+-#                             - elsif line.start_with?('@@')
+-#                               %td.markdown-highlight.bg-primary.file-code
+-#                                 %pre= line
+-#                             - else
+-#                               %td.markdown-highlight.file-code= changed_file.decorate.coderay(line)
+-#         - else
+-#           = t '.no_changhed_files'

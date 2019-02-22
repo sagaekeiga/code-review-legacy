@@ -1,28 +1,20 @@
-.reviewers-shared-pulls-tab-wrapper
-  %ul.nav.nav-tabs.nav-justified
-    - unless pending_review
-      .text-right= link_to 'Review', view_check_reviewers_pull_reviews_path(pull), class: 'btn btn-primary everywhere'
-    %li{ class: same_controller_and_action_name?('pulls', 'show') }
-      = link_to reviewers_pull_path(pull), class: 'nav-link' do
-        %i.glyphicon.glyphicon-comment
-        &nbsp;
-        = t 'reviewers.pulls.show.conversation'
-    %li{ class: same_controller_and_action_name?('commits', 'index') }
-      = link_to reviewers_pull_commits_path(pull), class: 'nav-link' do
-        %i.fas.fa-history
-        &nbsp;
-        = t 'reviewers.pulls.show.commits'
-        &nbsp;
-        %span.badge.badge-default= pull.commits.count
-    %li{ class: same_controller_and_action_name?('pulls', 'index') }
-      = link_to reviewers_pull_changed_files_path(pull), class: 'nav-link' do
-        %i.glyphicon.glyphicon-file
-        &nbsp;
-        = t 'reviewers.pulls.show.changed_files'
-        &nbsp;
-        %span.badge.badge-default= pull.files_changed.count
-    %li{ class: same_controller_and_action_name?('contents', 'index') }
-      = link_to [:reviewers, pull.repo], class: 'nav-link' do
-        %i.fas.fa-project-diagram
-        &nbsp;
-        = t 'reviewers.pulls.show.project'
+%ul.nav.nav-tabs
+  %li{ class: same_controller_and_action_name?('pulls', 'show') }
+    = link_to [:reviewers, repo, pull], class: 'nav-link' do
+      %i.glyphicon.glyphicon-comment
+      &nbsp;
+      = t 'reviewers.pulls.show.conversation'
+  %li{ class: same_controller_name?(%w(commits)) }
+    = link_to [:reviewers, repo, pull, :commits], class: 'nav-link' do
+      %i.fas.fa-history
+      &nbsp;
+      = t 'reviewers.pulls.show.commits'
+      &nbsp;
+      %span.badge.badge-default= pull.commits.count
+  %li{ class: same_controller_name?(%w(changed_files)) }
+    = link_to [:reviewers, repo, pull, :changed_files], class: 'nav-link' do
+      %i.glyphicon.glyphicon-file
+      &nbsp;
+      = t 'reviewers.pulls.show.changed_files'
+      &nbsp;
+      %span.badge.badge-default= pull.files_changed.count

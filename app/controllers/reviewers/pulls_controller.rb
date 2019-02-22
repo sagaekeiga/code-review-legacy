@@ -1,6 +1,11 @@
 class Reviewers::PullsController < Reviewers::BaseController
   before_action :set_pull, only: %i(show update)
   before_action :set_changed_files, only: %i(show)
+  before_action :set_repo, only: %i(index show)
+
+  def index
+    @pulls = @repo.pulls
+  end
 
   def show
     @review = Review.new
@@ -18,5 +23,9 @@ class Reviewers::PullsController < Reviewers::BaseController
 
   def set_changed_files
     @changed_files = @pull.files_changed.decorate
+  end
+
+  def set_repo
+    @repo = current_reviewer.repos.friendly.find(params[:repo_id])
   end
 end

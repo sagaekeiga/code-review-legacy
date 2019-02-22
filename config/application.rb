@@ -25,6 +25,7 @@ module Mergee
 
     config.active_support.use_standard_json_time_format = true
     config.paths.add 'lib', eager_load: true
+    config.autoload_paths << Rails.root.join('app/lib')
     config.autoload_paths << Rails.root.join('app/services')
     config.autoload_paths << Rails.root.join('app/decorators')
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]

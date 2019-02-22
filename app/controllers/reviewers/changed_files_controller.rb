@@ -1,6 +1,7 @@
 class Reviewers::ChangedFilesController < Reviewers::BaseController
   before_action :set_pull, only: %i(index show)
   before_action :set_changed_files, only: %i(index)
+  before_action :set_repo, only: %i(index show)
 
   def index
   end
@@ -19,5 +20,9 @@ class Reviewers::ChangedFilesController < Reviewers::BaseController
 
   def set_changed_files
     @changed_files = @pull.files_changed.decorate
+  end
+
+  def set_repo
+    @repo = current_reviewer.repos.friendly.find(params[:repo_id])
   end
 end

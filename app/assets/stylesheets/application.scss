@@ -49,6 +49,11 @@
   @import 'views/reviewers/dashboard';
   @import 'views/reviewees/repos/show';
   @import 'views/reviewers/repos/show';
+  @import 'views/reviewers/pulls/index';
+  @import 'views/reviewers/pulls/show';
+  @import 'views/reviewers/commits/index';
+  @import 'views/reviewers/commits/show';
+  @import 'views/reviewers/changed_files/index';
   @import 'views/reviewers/replies/index';
   @import 'views/reviewers/contents/index';
   @import 'views/reviewers/pending';
