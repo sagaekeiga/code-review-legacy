@@ -8,7 +8,7 @@
       %h2.title= @pull.title
       .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
       - if @changed_files.present?
-        .diffs= render @changed_files
+        .diffs= render partial: 'reviewers/changed_files/changed_file', collection: @changed_files
         -# - @changed_files.each do |changed_file|
         -#   .js-blob-wrapper
         -#     .panel.changed-file-wrapper
