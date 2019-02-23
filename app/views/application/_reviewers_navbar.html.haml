@@ -26,6 +26,9 @@
                 = link_to :reviewers_reviews do
                   レビュー履歴
               %li
+                = link_to :reviewers_check_list do
+                  チェックリスト
+              %li
                 = link_to :destroy_reviewer_session, method: :delete do
                   %i.fa.fa-sign-out-alt
                   = t('helpers.label.log_out')

@@ -14,4 +14,7 @@ class ReviewersController < Reviewers::BaseController
 
   def integrations
   end
+
+  def check_list
+  end
 end
