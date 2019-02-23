@@ -1,6 +1,7 @@
 .md-wrapper {
   font-family: $font-static;
   font-weight: $base-font-weight;
+  word-wrap: break-word;
   h1, h2, h3, h4, h5, h6 {
     margin-top: 24px;
     margin-bottom: 16px;

@@ -18,4 +18,4 @@
       - if reviewer.assigned?(resource)
         = link_to t('helpers.links.destroy'), resource.destroy_reviewer_pull_path(reviewer: reviewer), method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm') }
       - else
-        = link_to t('helpers.links.add'), admins_pull_reviewer_pulls_path(resource, reviewer: reviewer), class: 'btn btn-primary', method: :post
+        = link_to t('helpers.links.add'), admins_pull_reviewer_pulls_path(resource, reviewer_id: reviewer), class: 'btn btn-primary', method: :post
