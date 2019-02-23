@@ -78,7 +78,7 @@ module Github
           per_page: 250
         }.compact
 
-        res = get "#{BASE_API_URI}/repos/#{pull.repo.full_name}/pulls/#{pull.number}/commits?#{queries.to_query}", headers: headers
+        res = get "#{BASE_API_URI}/repos/#{pull.repo_full_name}/pulls/#{pull.number}/commits?#{queries.to_query}", headers: headers
 
         JSON.parse res.body, symbolize_names: true
       end
