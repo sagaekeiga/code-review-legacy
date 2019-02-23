@@ -54,7 +54,7 @@ class ChangedFile < ApplicationRecord
   # deletedなchanged_fileを考慮しているかどうかがcheck_and_updateとの違い
   def self.fetch!(commit)
     ActiveRecord::Base.transaction do
-      res_changed_files = Github::Request.github_exec_fetch_changed_files!(commit)
+      res_changed_files = Github::Request.changed_files!(commit)
       res_changed_files['files'].each do |res_changed_file|
         changed_file = commit.pull.changed_files.with_deleted.find_or_initialize_by(
           commit: commit,
@@ -80,7 +80,7 @@ class ChangedFile < ApplicationRecord
 
   def self.fetch_diff!(pull)
     ActiveRecord::Base.transaction do
-      res_diffs = Github::Request.github_exec_fetch_diff!(pull)
+      res_diffs = Github::Request.diff(pull)
       commit = pull.commits.last
 
       res_diffs['files']&.each do |res_diff|
@@ -113,7 +113,7 @@ class ChangedFile < ApplicationRecord
     review_comments.find_by(position: index, reviewer: reviewer).present?
   end
 
-  def github_exec_fetch_content!
-    Github::Request.github_exec_fetch_changed_file_content!(pull.repo, contents_url)
+  def content
+    Github::Request.changed_file_content(pull.repo, contents_url)
   end
 end

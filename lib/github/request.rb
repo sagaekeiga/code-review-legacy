@@ -15,11 +15,6 @@ module Github
         _post sub_url(:review_comment, pull), pull.repo.installation_id, :review_comment, params
       end
 
-      # GET レポジトリファイルの取得
-      def github_exec_fetch_repo_contents!(repo, path = '')
-        _get "repos/#{repo.full_name}/contents/#{path}", repo.installation_id, :content
-      end
-
       # リポジトリファイルの取得（トップディレクトリ）
       def contents(repo:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents", headers: general_headers(installation_id: repo.installation_id, event: :contents)
@@ -49,7 +44,7 @@ module Github
         _get sub_url, repo.installation_id, :content
       end
 
-      def github_exec_fetch_changed_file_content!(repo, content_url)
+      def changed_file_content(repo, content_url)
         headers = {
           'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(repo.installation_id)}",
@@ -67,61 +62,41 @@ module Github
       end
 
       # GET プルリクエスト取得
-      def github_exec_fetch_pulls!(repo)
+      def pulls(repo)
         _get sub_url_for(repo, :pull), repo.installation_id, :pull
       end
 
-      # GET ISSUE取得
-      def github_exec_fetch_issues!(repo)
-        _get sub_url_for(repo, :issue), repo.installation_id, :issue
-      end
-
       # GET コミット取得
-      def github_exec_fetch_commits!(pull)
-        _get sub_url(:commit, pull), pull.repo.installation_id, :commit
+      def commits(pull:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(pull.repo.installation_id)}",
+          'Accept': set_accept(:commit)
+        }
+
+        queries = {
+          per_page: 250
+        }.compact
+
+        res = get "#{BASE_API_URI}/repos/#{pull.repo.full_name}/pulls/#{pull.number}/commits?#{queries.to_query}", headers: headers
+
+        JSON.parse res.body, symbolize_names: true
       end
 
       # GET 前のコミットのファイル差分取得
       # ref: https://developer.github.com/v3/repos/commits/#get-a-single-commit
-      def github_exec_fetch_changed_files!(commit)
+      def changed_files(commit)
         _get "repos/#{commit.pull.repo_full_name}/commits/#{commit.sha}", commit.pull.repo.installation_id, :changed_file
       end
 
       # GET ファイル差分取得
       # ref: https://developer.github.com/v3/repos/commits/#compare-two-commits
-      def github_exec_fetch_diff!(pull)
+      def diff(pull)
         _get URI.encode("repos/#{pull.repo_full_name}/compare/#{pull.base_label}...#{pull.head_label}"), pull.repo.installation_id, :diff
       end
 
-      # GET 組織取得
-      def github_exec_fetch_orgs!(github_account)
-        _get_credential_resource 'user/orgs', :org, github_account.access_token
-      end
-
-      # GET レビュイーの組織内での役割を取得する
-      def github_exec_fetch_role_in_org!(github_account, org_name)
-        _get_credential_resource "orgs/#{org_name}/memberships/#{github_account.login}", :role_in_org, github_account.access_token
-      end
-
-      def github_exec_fetch_issue_by_number(repo, issue_number)
+      def issue_by_number(repo, issue_number)
         _get "repos/#{repo.full_name}/issues/#{issue_number}", repo.installation_id, :issue_number
-      end
-
-      # GET 対象レポジトリ内のコードを検索する
-      def github_exec_search_contents_scope_repo!(repo, keyword)
-        headers = {
-          'User-Agent': 'Mergee',
-          'Authorization': "token #{get_access_token(repo.installation_id)}",
-          'Accept': set_accept(:search_code)
-        }
-        sub_url = "search/code?q=#{keyword}+in:file+repo:#{repo.full_name}"
-        res = get Settings.api.github.api_domain + sub_url, headers: headers
-        unless res.code == success_code(:search_code)
-          logger.error "[Github][:search_code] responseCode => #{res.code}"
-          logger.error "[Github][:search_code] responseMessage => #{res.message}"
-          logger.error "[Github][:search_code] subUrl => #{sub_url}"
-        end
-        res
       end
 
       private
@@ -161,24 +136,6 @@ module Github
         headers = {
           'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(installation_id)}",
-          'Accept': set_accept(event)
-        }
-
-        res = get Settings.api.github.api_domain + sub_url, headers: headers
-
-        unless res.code == success_code(event)
-          logger.error "[Github][#{event}] responseCode => #{res.code}"
-          logger.error "[Github][#{event}] responseMessage => #{res.message}"
-          logger.error "[Github][#{event}] subUrl => #{sub_url}"
-        end
-        res
-      end
-
-      # Organazation, Membership
-      def _get_credential_resource(sub_url, event, access_token)
-        headers = {
-          'User-Agent': 'Mergee',
-          'Authorization': "token #{access_token}",
           'Accept': set_accept(event)
         }
 
@@ -250,7 +207,6 @@ module Github
         when :issue_comment then "repos/#{pull.repo_full_name}/issues/#{pull.number}/comments"
         when :changed_file then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/files"
         when :review_comment then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/comments"
-        when :commit then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/commits"
         end
       end
 
