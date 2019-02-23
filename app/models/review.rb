@@ -175,6 +175,14 @@ class Review < ApplicationRecord
   end
 
   #
+  # レビュー済みのレビューコメントを返す
+  # @return [ReviewComment::ActiveRecord_AssociationRelation]
+  #
+  def reviewed_comments
+    review_comments.reviewed.includes(:changed_file).order(:path)
+  end
+
+  #
   # レビューが作成さsれた時に管理者に通知を送る
   #
   def inform_admin

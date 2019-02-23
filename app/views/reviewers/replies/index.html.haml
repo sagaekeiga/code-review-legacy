@@ -14,7 +14,7 @@
                 -# 全体へのレビューコメント
                 .review-wrapper
                   = render review
-              - review.review_comments.reviewed.includes(:changed_file).decorate.each.with_index do |review_comment, index|
+              - review.reviewed_comments.decorate.each.with_index do |review_comment, index|
                 %li.step
                   = image_tag review_comment.step_image, class: 'step'
                   %span.path= review_comment.path

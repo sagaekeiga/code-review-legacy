@@ -54,7 +54,7 @@ class ChangedFile < ApplicationRecord
   # deletedなchanged_fileを考慮しているかどうかがcheck_and_updateとの違い
   def self.fetch!(commit)
     ActiveRecord::Base.transaction do
-      res_changed_files = Github::Request.changed_files!(commit)
+      res_changed_files = Github::Request.changed_files(commit)
       res_changed_files['files'].each do |res_changed_file|
         changed_file = commit.pull.changed_files.with_deleted.find_or_initialize_by(
           commit: commit,

@@ -186,7 +186,6 @@ module Github
       def set_accept(event)
         case event
         when :review, :get_access_token then Settings.api.github.request.header.accept.machine_man_preview_json
-        when :issue_comment then Settings.api.github.request.header.accept.machine_man_preview
         when :changed_file, :pull, :content, :issue, :commit, :diff, :org, :role_in_org, :issue_number then Settings.api.github.request.header.accept.symmetra_preview_json
         when :review_comment then Settings.api.github.request.header.accept.squirrel_girl_preview
         when :search_code then Settings.api.github.request.header.accept.text_match_json
@@ -196,7 +195,7 @@ module Github
       # 成功時のレスポンスコード
       def success_code(event)
         case event
-        when :issue_comment, :changed_file, :pull, :review_comment then Settings.api.created.status.code
+        when :changed_file, :pull, :review_comment then Settings.api.created.status.code
         when :content, :commit, :issue, :diff, :review, :org, :role_in_org, :issue_number, :search_code then Settings.api.success.status.code
         end
       end
@@ -204,7 +203,6 @@ module Github
       def sub_url(event, pull)
         case event
         when :review then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/reviews"
-        when :issue_comment then "repos/#{pull.repo_full_name}/issues/#{pull.number}/comments"
         when :changed_file then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/files"
         when :review_comment then "repos/#{pull.repo_full_name}/pulls/#{pull.number}/comments"
         end
@@ -212,7 +210,6 @@ module Github
 
       def sub_url_for(repo, event)
         case event
-        when :issue then "repos/#{repo.full_name}/issues?state=all"
         when :pull then "repos/#{repo.full_name}/pulls"
         end
       end
