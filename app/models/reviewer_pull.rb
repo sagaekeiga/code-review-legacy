@@ -23,6 +23,5 @@ class ReviewerPull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
-  validates :pull_id, uniqueness: true
-  validates :pull_id, uniqueness: { scope: :reviewer_id }
+  validates :reviewer_id, uniqueness: { scope: :pull_id }
 end
