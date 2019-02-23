@@ -116,7 +116,7 @@ class Pull < ApplicationRecord
   # deletedなpullを考慮しているかどうかがupdate_by_pull_request_event!との違い
   def self.fetch!(repo)
     ActiveRecord::Base.transaction do
-      res_pulls = Github::Request.github_exec_fetch_pulls!(repo)
+      res_pulls = Github::Request.pulls(repo)
       res_pulls.each do |res_pull|
         pull = repo.pulls.with_deleted.find_or_initialize_by(
           remote_id: res_pull['id'],

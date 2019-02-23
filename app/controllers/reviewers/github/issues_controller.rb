@@ -7,7 +7,7 @@ class Reviewers::Github::IssuesController < Reviewers::BaseController
     titles = []
     bodies = []
     issue_numbers.each do |issue_number|
-      res = Github::Request.github_exec_fetch_issue_by_number(repo, issue_number)
+      res = Github::Request.issue_by_number(repo, issue_number)
       res = ActiveSupport::HashWithIndifferentAccess.new(res)
       titles << res[:title]
       bodies << res[:body]

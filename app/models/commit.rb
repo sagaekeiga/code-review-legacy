@@ -43,19 +43,19 @@ class Commit < ApplicationRecord
   # -------------------------------------------------------------------------------
   def self.fetch!(pull)
     ActiveRecord::Base.transaction do
-      res_commits = Github::Request.github_exec_fetch_commits!(pull)
+      res_commits = Github::Request.commits(pull: pull)
       res_commits.each do |res_commit|
         update = true
         commit = pull.commits.with_deleted.find_or_initialize_by(
-          sha: res_commit['sha'],
+          sha: res_commit[:sha],
           resource_type: pull.repo_resource_type,
           resource_id: pull.repo_resource_id,
-          committer_name: res_commit['commit']['committer']['name'],
-          committed_date: res_commit['commit']['committer']['date'],
+          committer_name: res_commit[:commit][:committer][:name],
+          committed_date: res_commit[:commit][:committer][:date],
         )
         update = false unless commit.persisted?
         commit.restore if commit.deleted?
-        commit.update_attributes!(message: res_commit['commit']['message'])
+        commit.update_attributes!(message: res_commit[:commit][:message])
         next if update && commit.changed_files.present?
         ChangedFile.fetch!(commit)
         ChangedFile.fetch_diff!(pull)
