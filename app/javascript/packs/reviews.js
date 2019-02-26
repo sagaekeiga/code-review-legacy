@@ -1,7 +1,5 @@
 hoverColor();
 
-hoverCode();
-
 hoverComment();
 
 $('.hljs-addition').click(function() {
@@ -52,31 +50,18 @@ $(document).on('click', '.open-left-side', function () {
 })
 
 function hoverColor() {
-  $('.hljs-addition').each(function(i, elem) {
+  $('.file-code').each(function(i, elem) {
     $(elem).css('cursor','pointer');
-    var color = $(elem).css("color");
+    var color = $(elem).css("background-color");
     $(elem).hover(
       function(){
-        $(this).css({ 'color':'#FFFFFF', 'text-decoration':'none' });
+        $(this).css({ 'background-color':'#f0f0f0', 'text-decoration':'none' });
       },
       function(){
-        $(this).css({ 'color': color, 'text-decoration':'none' });
+        $(this).css({ 'background-color': color, 'text-decoration':'none' });
       }
     )
   })
-};
-
-function hoverCode() {
- $('.code-tr').hover(
-   function(){
-     if ($(this).children($('td')).hasClass('bg-success')) { legacy_bg_class = 'bg-success' }
-     if ($(this).children($('td')).hasClass('bg-primary')) { legacy_bg_class = 'bg-primary' }
-     if ($(this).children($('td')).hasClass('bg-danger')) { legacy_bg_class = 'bg-danger' }
-
-     $(this).children($('td')).addClass('bg-warning').removeClass(legacy_bg_class);
-   },
-   function(){ $(this).children($('td')).addClass(legacy_bg_class).removeClass('bg-warning'); }
-  );
 };
 
 function hoverComment() {
