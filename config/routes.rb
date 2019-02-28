@@ -62,7 +62,6 @@ Rails.application.routes.draw do
   constraints(ReviewerDomainConstraint) do
     root to: 'reviewers#dashboard'
     get '/auth/github/callback', to: 'connects#github'
-    post '/feedbacks', to: 'feedbacks#create'
 
     devise_for :reviewers, path: 'reviewers', controllers: {
       registrations: 'reviewers/registrations',
