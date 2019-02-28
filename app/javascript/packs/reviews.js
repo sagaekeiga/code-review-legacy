@@ -33,7 +33,6 @@ $(document).on('click', '.cancel-update-trigger', function () {
 $(document).on('click', '#submit_review_button', function () {
   $(this).hide();
   $('.loading').removeClass('hidden');
-  // $('form').submit();
 })
 
 $(document).on('click', '.close-left-side', function () {

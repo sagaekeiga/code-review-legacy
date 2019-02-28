@@ -33,7 +33,6 @@
   @import 'issues';
   @import 'reviewers';
   @import 'commits';
-  @import 'changed_files';
   @import 'github';
 
   // Component
@@ -48,9 +47,7 @@
 
   // Views
   @import 'views/reviewers/dashboard';
-  @import 'views/reviewers/check_list';
   @import 'views/reviewees/repos/show';
-  @import 'views/reviewers/repos/show';
   @import 'views/reviewers/pulls/index';
   @import 'views/reviewers/pulls/show';
   @import 'views/reviewers/commits/index';
@@ -66,7 +63,6 @@
   @import 'views/reviewers/reviews/form';
   @import 'views/reviewers/reviews/show';
   @import 'views/reviewers/reviews/tab';
-  @import 'views/reviewers/reviews/index';
   @import 'views/admins/admins';
   @import 'views/admins/reviews/show';
   @import 'views/admins/pulls/show';
