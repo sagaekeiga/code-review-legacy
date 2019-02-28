@@ -1,9 +1,6 @@
 / pullrequest
 #bodyTab.hidden.tab-content
   .pulls-body-wrapper
-    .page-header{ 'pull-id': pull.id }
-      %h1
-        %strong= pull.title
     .panel
       - if pull.body?
         .panel-body
@@ -13,16 +10,10 @@
         チェック項目はありません。
 / issues
 #issueTab.hidden.tab-content
-  .page-header{ 'repo-token': pull.repo_token, 'issue-numbers': numbers.empty? ? 0 : numbers }
-    %h1
-      %strong= pull.title
   #loader.text-center= image_tag 'loader.gif'
   #issueList
 / commits
 #commitsTab.hidden.tab-content
-  .page-header
-    %h1
-      %strong= pull.title
   .panel
     %table.table.table-hover
       %tbody

@@ -36,10 +36,8 @@ ja:
         assign_is: アサインすると他のレビュワーはこのプルリクエストにレビューできなくなります。
       form:
         finish: レビューを完了する
-        review: コード全体へのレビュー
+        review: コード全体へのレビュー(Markdown形式)
         fix_template: フォーム内の文言はそのままレビュイーに伝えられます。
-      new:
-        start_review: レビューを開始しました。
       show:
         reviewing: 審査中です。審査が終了するまで少々お待ちください。
       replies:

@@ -18,7 +18,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def new
     @review = Review.new.decorate
-    flash.now[:success] = t '.start_review'
   end
 
   def create

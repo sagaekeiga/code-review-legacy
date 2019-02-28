@@ -1,20 +1,20 @@
 .container
   .row
     .review
-      .col-sm-8.col-sm-offset-2.workspace
+      .workspace
         = render 'shared/flash_msg'
         = render 'progress_bar', pull: @pull, review: @review
-        = render 'right_sidebar', repo: @pull.repo
         .m-t-10.m-b-4
+          .page-header{ 'pull-id': @pull.id, 'repo-token': @pull.repo_token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
+            %h1
+              %strong= @pull.title
+              %small
+                = link_to '修正する', edit_reviewers_pull_review_path(@pull, @review), class: 'btn btn-primary pull-right'
+            %h3
+              %span.label.label-default= @review.event_i18n
+          .menu= render 'reviewers/reviews/menu', repo: @pull.repo
           / code
           #codeTab.tab-content
-            .page-header{ 'pull-id': @pull.id }
-              %h1
-                %strong= @pull.title
-                %small
-                  = link_to '修正する', edit_reviewers_pull_review_path(@pull, @review), class: 'btn btn-primary pull-right'
-              %h3
-                %span.label.label-default= @review.event_i18n
             .reviews-form-wrapper
               .reviews-form-card-wrapper
                 = render @changed_files
