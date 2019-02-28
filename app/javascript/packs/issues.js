@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  repoId = $('#issueTab').find('.page-header').attr('repo-token')
-  issueNumbers = $('#issueTab').find('.page-header').attr('issue-numbers')
+  repoId = $('.workspace').find('.page-header').attr('repo-token')
+  issueNumbers = $('.workspace').find('.page-header').attr('issue-numbers')
   issueList = $('#issueList')
   if (issueNumbers < 1) {
     issueList.text('issueはありません')

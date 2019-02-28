@@ -4,66 +4,30 @@
       .workspace
         = render 'shared/flash_msg'
         = render 'progress_bar', pull: pull, review: review
-        = render 'reviewers/reviews/right_sidebar', repo: pull.repo
         .m-t-10.m-b-4
+          .page-header{ 'pull-id': pull.id, 'repo-token': pull.repo_token, 'issue-numbers': numbers.empty? ? 0 : numbers }
+            %h1
+              %strong= pull.title
+          .menu= render 'reviewers/reviews/menu', repo: pull.repo
           / code
           #codeTab.tab-content
-            .page-header{ 'pull-id': pull.id }
-              %h1
-                %strong= pull.title
-            .menu.menu--typeA
-              %ul.list-inline.text-center
-                - if controller.action_name.eql?('index')
-                  %li.list{ class: controller.action_name.eql?('index') ? 'active' : '' }
-                    = link_to '#conversationTab', class: "#{same_action_name?('replies')} tab active" do
-                      .text-center
-                        %i.fas.fa-comments
-                        %br
-                        %small replies
-                %li.list{ class: controller.action_name.eql?('index') ? '' : 'active' }
-                  = link_to '#codeTab', class: "#{same_action_name?('view_check')} tab #{ controller.action_name.eql?('index') ? '' : 'active' }" do
-                    .text-center
-                      %i.fas.fa-code
-                      %br
-                      %small code
-                %li.list
-                  = link_to '#bodyTab', class: "#{same_action_name?('view_check')} tab" do
-                    .text-center
-                      %i.glyphicon.glyphicon-comment
-                      %br
-                      %small pullrequest
-                %li.list
-                  = link_to '#issueTab', class: "#{same_action_name?('view_check')} tab" do
-                    .text-center
-                      %i.fas.fa-exclamation-circle
-                      %br
-                      %small issues
-                %li.list
-                  = link_to '#commitsTab', class: "#{same_action_name?('view_check')} tab" do
-                    .text-center.center-block
-                      %i.fas.fa-history
-                      %br
-                      %small commits
-                %li.list
-                  = link_to [:reviewers, repo], class: 'repo', target: '_blank' do
-                    .text-center.center-block
-                      %i.fas.fa-project-diagram
-                      %br
-                      %small repository
             = form_for [:reviewers, pull, review], html: { class: 'form-horizontal', role: 'form' } do |f|
               .sticky-menu
-                .container
+                .container.p-r-0
+                  #title.pull-left.hidden
+                    %h2
+                      %strong= pull.title
                   .text-right.p-r-0.m-t-1
-                    %button#reviewSubmit.btn.btn-primary{ type: 'button' } チェックする
+                    %button#reviewSubmit.btn.btn-primary.m-t-2{ type: 'button' } 提出する
                     #reviewSubmitModal.modal.fade
-                      .modal-dialog
+                      .modal-dialog.modal-lg
                         .modal-content
                           .modal-body
                             %h4.title
                               = t '.review'
                               %small.text-muted= t '.fix_template'
-                            = f.text_area :body, id: 'review_body', class: 'form-control', rows: '5'
-                            .text-left
+                            = f.text_area :body, id: 'review_body', class: 'form-control', rows: '10'
+                            .text-left.m-t-2
                               // @TODO 後で変更するかもしれないので一旦localizeなし
                               %label.check
                                 = check_box_tag :syntax
@@ -81,38 +45,10 @@
                                 = check_box_tag :link
                                 伝え切れない内容は参考リンクを貼って補足できているか。
                           .modal-footer
-                            = f.submit t('.finish'), id: 'submit_review_button', class: 'btn btn-primary', disabled: true
+                            = f.submit t('.finish'), id: 'submit_review_button', class: 'btn btn-primary'
               %i.fa.fa-chevron-circle-right.hidden.open-left-side
               .data_id{ 'pull-id': pull.id, 'reviewer-id': current_reviewer.id }
               .reviews-form-wrapper
                 .reviews-form-card-wrapper.editor
                   = render changed_files
-                  -# .text-right.p-r-0.m-t-1
-                  -#   %button#reviewSubmit.btn.btn-primary{ type: 'button' } チェックする
-                  -#   #reviewSubmitModal.modal.fade
-                  -#     .modal-dialog
-                  -#       .modal-content
-                  -#         .modal-body
-                  -#           .text-left
-                  -#             // @TODO 後で変更するかもしれないので一旦localizeなし
-                  -#             %label.check
-                  -#               = check_box_tag :syntax
-                  -#               誤字はないか。
-                  -#             %br
-                  -#             %label.check
-                  -#               = check_box_tag :expression
-                  -#               開発者が理解しにくい曖昧な表現はないか。
-                  -#             %br
-                  -#             %label.check
-                  -#               = check_box_tag :code
-                  -#               可能な限りソースコードを提示できているか。
-                  -#             %br
-                  -#             %label.check
-                  -#               = check_box_tag :link
-                  -#               伝え切れない内容は参考リンクを貼って補足できているか。
-                  -#         .modal-footer
-                  -#           = f.submit t('.finish'), id: 'submit_review_button', class: 'btn btn-primary', disabled: true
-                  %br
-                  %br
-                  %br
           = render 'reviewers/reviews/tab_contents', repo: repo, pull: pull, commits: commits, numbers: numbers

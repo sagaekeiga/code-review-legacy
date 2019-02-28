@@ -8,7 +8,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = yield :javascript
   %body{ class: "admins-#{controller_name}-#{action_name}" }
-    .container
+    .container-fluid.p-r-0.p-l-0
       = render 'navbar'
     .admin-wrapper
       = yield
