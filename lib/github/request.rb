@@ -22,15 +22,45 @@ module Github
       end
 
       # リポジトリファイルの取得（サブディレクトリ以下）
-      def content(repo:, path:)
+      def content(repo:, path: '')
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        JSON.parse res, symbolize_names: true
+        res = JSON.parse res, symbolize_names: true
+        res[:message] ? res[:message] : res
       end
 
       # ファイル検索
       def search_contents(keyword:, repo:)
         res = get "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}", headers: general_headers(installation_id: repo.installation_id, event: :search_code)
         JSON.parse res, symbolize_names: true
+      end
+
+      #
+      # PR の file changes を返す
+      # @param [Pull] pull
+      # @return [Array<Hash>]
+      #
+      def files(pull:)
+        repo = pull.repo
+
+        queries = {
+          per_page: 300
+        }
+
+        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/#{pull.number}/files?#{queries.to_query}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
+
+        res = JSON.parse res, symbolize_names: true
+        res
+      end
+
+      #
+      # PR の file changes を返す
+      # @param [Pull] pull
+      # @return [Array<Hash>]
+      #
+      def ref_content(url:, installation_id:)
+        res = get url, headers: general_headers(installation_id: installation_id, event: :contents)
+        res = JSON.parse res, symbolize_names: true
+        res[:message] ? res[:message] : res[:content]
       end
 
       # Readmeの取得
@@ -76,7 +106,7 @@ module Github
 
         queries = {
           per_page: 250
-        }.compact
+        }
 
         res = get "#{BASE_API_URI}/repos/#{pull.repo_full_name}/pulls/#{pull.number}/commits?#{queries.to_query}", headers: headers
 

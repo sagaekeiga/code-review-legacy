@@ -235,9 +235,36 @@ class Pull < ApplicationRecord
     request_reviewed? || pending?
   end
 
+  def file_changes
+    data = Github::Request.files pull: self
+    fail data[:message] unless data.is_a?(Array)
+    data.map do |file|
+      content = Github::Request.ref_content(url: file[:contents_url], installation_id: repo.installation_id)
+      FileChange.new(file.merge(content: content))
+    end
+  end
+
   private
 
   def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }
+  end
+
+  class FileChange
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+    include Draper::Decoratable
+
+    attr_accessor :data, :filename, :patch, :content, :pull_id
+
+    #
+    # @param [Hash] data
+    #
+    def initialize(data = {})
+      self.data = data
+      self.filename = data[:filename]
+      self.patch = data[:patch]
+      self.content = data[:content]
+    end
   end
 end
