@@ -148,4 +148,13 @@ class Repo < ApplicationRecord
   def reviewee_org?(current_reviewee)
     resource_type.eql?('Org') && current_reviewee.orgs.exists?(id: resource_id)
   end
+
+  def github_account
+    case resource_type
+    when 'Reviewee'
+      Reviewee.find(resource_id).github_account
+    when 'Org'
+      Org.find(resource_id).reviewees.first.github_account
+    end
+  end
 end

@@ -90,6 +90,7 @@ Rails.application.routes.draw do
         resources :issues, only: %i(index)
       end
       resources :repos, only: %i(show) do
+        post :download
         resources :contents, only: %i(index)
         resources :pulls, only: %i(index show), param: :token do
           resources :commits, only: %i(index show)
