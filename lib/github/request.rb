@@ -141,9 +141,9 @@ module Github
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}", headers: headers
 
         unless res.code == success_code(:repo_zip)
-          logger.error "[Github][#{:repo_zip}] responseCode => #{res.code}"
-          logger.error "[Github][#{:repo_zip}] responseMessage => #{res.message}"
-          logger.error "[Github][#{:repo_zip}] subUrl => #{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}"
+          logger.error "[Github][repo_archive] responseCode => #{res.code}"
+          logger.error "[Github][repo_archive] responseMessage => #{res.message}"
+          logger.error "[Github][repo_archive] subUrl => #{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}"
         end
         res
       end
