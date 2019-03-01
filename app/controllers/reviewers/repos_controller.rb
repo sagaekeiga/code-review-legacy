@@ -8,6 +8,7 @@ class Reviewers::ReposController < Reviewers::BaseController
     @readme = Github::Request.readme repo: @repo
   end
 
+  # POST /reviewers/repos/:repo_id/download
   def download
     pull = @repo.pulls.friendly.find(params[:pull_token])
     zip = Github::Request.repo_archive(repo: @repo, pull: pull)
@@ -15,7 +16,7 @@ class Reviewers::ReposController < Reviewers::BaseController
     zipfile.binmode
     zipfile.write(zip.body)
     zipfile.close
-    send_data(File.read(zipfile.path), filename: "document.zip")
+    send_data(File.read(zipfile.path), filename: "pr-#{pull.commits.last.sha}.zip")
   end
 
   private
