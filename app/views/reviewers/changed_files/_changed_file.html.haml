@@ -12,23 +12,20 @@
               %tr
                 %th{ scope: 'col' }
             %tbody
-              - changed_file.patch.split(/@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
+              - changed_file.patch.split(/^(?!.*REGEXP).*@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
                 %tr.code-tr{ 'data-line-number': code_line_index }
                   %td
                   %td
                   %td.markdown-highlight.bg-primary.hljs-addition.file-code
-                    %pre= changed_file.patch.scan(/@@.*@@/)[code_line_index]
+                    %pre= changed_file.patch.scan(/@@\s.*\s@@/)[code_line_index]
                 - code_line.each_line&.with_index do |line, index|
                   %tr.code-tr{ 'data-line-number': index }
-                    %td= changed_file.deletional_line_number(line: line, code_line_index: code_line_index, index: index)
-                    %td= changed_file.additional_line_number(line: line, code_line_index: code_line_index, index: index)
+                    %td= changed_file.deletional_line_number(line: line, section_num: code_line_index, line_num: index)
+                    %td= changed_file.additional_line_number(line: line, section_num: code_line_index, line_num: index)
                     - if line.start_with?('+')
                       %td.markdown-highlight.bg-success.hljs-addition.file-code= changed_file.coderay(line)
                     - elsif line.start_with?('-')
                       %td.markdown-highlight.bg-danger.hljs-addition.file-code= changed_file.coderay(line)
-                    - elsif line.start_with?('@@')
-                      %td.markdown-highlight.bg-primary.hljs-addition.file-code
-                        %pre= line
                     - else
                       %td.markdown-highlight.file-code= changed_file.coderay(line)
                   - review_comment = changed_file.review_comments.find_by(position: index, reviewer: current_reviewer, status: :pending)

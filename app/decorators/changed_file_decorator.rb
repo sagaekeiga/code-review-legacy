@@ -60,4 +60,69 @@ class ChangedFileDecorator < ApplicationDecorator
   def review_comment_position(index)
     review_comments.find_by(position: index)&.position
   end
+
+  #
+  # 追加行の行数を返す
+  # @param [String] 展開されている行
+  # @param [Integer] セクションの連番 ex. ['@@ -1,2 +1,2 @@', '@@ -3,4 +3,4 @@', ''@@ -5,6 +5,6 @@']
+  # @param [Integer] 展開されている行の連番
+  # @return [Integer]
+  #
+  def additional_line_number(line:, section_num:, line_num:)
+    return '' if line.start_with?('-')
+    # Ex. [1, 2]
+    line_numbers = target_section(section_num).match(/\+.*? /).to_s.strip.gsub('+', '').split(',')
+
+    start_line_number = line_numbers.first.to_i
+    end_line_number = line_numbers.last.to_i + (start_line_number - 1)
+
+    lines_except_deleted_rows = line_num - deleted_rows(section_num: section_num, line_num: line_num)
+
+    (start_line_number..end_line_number).map(&:to_i)[lines_except_deleted_rows]
+  end
+
+  #
+  # 削除行の行数を返す
+  # @param [String] 展開されている行
+  # @param [Integer] セクションの連番 ex. ['@@ -1,2 +1,2 @@', '@@ -3,4 +3,4 @@', '@@ -5,6 +5,6 @@']
+  # @param [Integer] 展開されている行の連番
+  # @return [Integer]
+  #
+  def deletional_line_number(line:, section_num:, line_num:)
+    return '' if line.start_with?('+')
+    # Ex. [1, 2]
+    line_numbers = target_section(section_num).match(/-.*? /).to_s.strip.gsub('-', '').split(',')
+
+    start_line_number = line_numbers.first.to_i
+    end_line_number = line_numbers.last.to_i + start_line_number - 1
+
+    lines_except_added_rows = line_num - added_rows(section_num: section_num, line_num: line_num)
+
+    (start_line_number..end_line_number).map(&:to_i)[lines_except_added_rows]
+  end
+
+  def deleted_rows(section_num:, line_num:)
+    deletional_line_count = 0
+    patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
+      deletional_line_count += 1 if line.start_with?('-')
+      return deletional_line_count if line_num == index
+    end
+  end
+
+  def added_rows(section_num:, line_num:)
+    additional_line_count = 0
+    patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
+      additional_line_count += 1 if line.start_with?('+')
+      return additional_line_count if line_num == index
+    end
+  end
+
+  #
+  # 該当するセクションを返す
+  # @param [Integer] セクションの連番
+  # @return [String]
+  #
+  def target_section(section_num)
+    patch.scan(/@@.*@@/)[section_num]
+  end
 end
