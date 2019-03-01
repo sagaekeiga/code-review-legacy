@@ -71,7 +71,7 @@ class ChangedFileDecorator < ApplicationDecorator
   def additional_line_number(line:, section_num:, line_num:)
     return '' if line.start_with?('-')
     # Ex. [1, 2]
-    line_numbers = target_section(section_num).match(/\+.*? /).to_s.strip.gsub('+', '').split(',')
+    line_numbers = target_section(section_num).match(/\+.*? /).to_s.strip.delete('+').split(',')
 
     start_line_number = line_numbers.first.to_i
     end_line_number = line_numbers.last.to_i + (start_line_number - 1)
@@ -91,7 +91,7 @@ class ChangedFileDecorator < ApplicationDecorator
   def deletional_line_number(line:, section_num:, line_num:)
     return '' if line.start_with?('+')
     # Ex. [1, 2]
-    line_numbers = target_section(section_num).match(/-.*? /).to_s.strip.gsub('-', '').split(',')
+    line_numbers = target_section(section_num).match(/-.*? /).to_s.strip.delete('-').split(',')
 
     start_line_number = line_numbers.first.to_i
     end_line_number = line_numbers.last.to_i + start_line_number - 1
