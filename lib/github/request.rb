@@ -143,7 +143,7 @@ module Github
         unless res.code == success_code(:repo_zip)
           logger.error "[Github][#{:repo_zip}] responseCode => #{res.code}"
           logger.error "[Github][#{:repo_zip}] responseMessage => #{res.message}"
-          logger.error "[Github][#{:repo_zip}] subUrl => https://github.com/#{repo.full_name}/archive/master.zip"
+          logger.error "[Github][#{:repo_zip}] subUrl => #{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}"
         end
         res
       end
