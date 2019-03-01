@@ -235,15 +235,6 @@ class Pull < ApplicationRecord
     request_reviewed? || pending?
   end
 
-  def file_changes
-    data = Github::Request.files pull: self
-    fail data[:message] unless data.is_a?(Array)
-    data.map do |file|
-      content = Github::Request.ref_content(url: file[:contents_url], installation_id: repo.installation_id)
-      FileChange.new(file.merge(content: content))
-    end
-  end
-
   private
 
   def send_request_reviewed_mail
