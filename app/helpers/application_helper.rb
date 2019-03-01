@@ -85,6 +85,9 @@ module ApplicationHelper
   #
   # 行種によってtdを色付けするクラスを返す
   #
+  # @param [String] line 対象の行
+  # @return [String]
+  #
   def lines_number_color(line)
     case line[0]
     when '+' then 'added-rows'

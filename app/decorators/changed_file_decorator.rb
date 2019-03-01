@@ -101,6 +101,12 @@ class ChangedFileDecorator < ApplicationDecorator
     (start_line_number..end_line_number).map(&:to_i)[lines_except_added_rows]
   end
 
+  #
+  # 削除された行数を返す
+  # @param [Integer] section_num セクションの連番
+  # @param [Integer] line_num 現在の行数
+  # @return [Intger]
+  #
   def deleted_rows(section_num:, line_num:)
     deletional_line_count = 0
     patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
@@ -109,6 +115,12 @@ class ChangedFileDecorator < ApplicationDecorator
     end
   end
 
+  #
+  # 追加された行数を返す
+  # @param [Integer] section_num セクションの連番
+  # @param [Integer] line_num 現在の行数
+  # @return [Intger]
+  #
   def added_rows(section_num:, line_num:)
     additional_line_count = 0
     patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
