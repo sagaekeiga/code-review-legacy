@@ -129,6 +129,25 @@ module Github
         _get "repos/#{repo.full_name}/issues/#{issue_number}", repo.installation_id, :issue_number
       end
 
+      # GET レポジトリのZIPファイル
+      # @see https://developer.github.com/v3/repos/contents/#get-archive-link
+      def repo_archive(repo:, pull:)
+        ref = pull.commits.last.sha
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Accept': 'application/json'
+        }
+        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}", headers: headers
+
+        unless res.code == success_code(:repo_zip)
+          logger.error "[Github][repo_archive] responseCode => #{res.code}"
+          logger.error "[Github][repo_archive] responseMessage => #{res.message}"
+          logger.error "[Github][repo_archive] subUrl => #{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}"
+        end
+        res
+      end
+
       private
 
       def general_headers(installation_id:, event:)

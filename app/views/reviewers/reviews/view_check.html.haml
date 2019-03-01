@@ -16,6 +16,15 @@
               = t('.description_is_blank')
         %hr
         .text-center
-          %p= t '.assign_to_pullrequest'
-          %p= t '.assign_is'
+          .panel.panel-default
+            .panel-body
+              %p
+                あなたのエディタでソースコードを見ることができます。
+                %br
+                ※ レビューが終了したらすぐに削除してください。
+              = link_to 'Download', reviewers_repo_download_path(@pull.repo, pull_token: @pull.token), method: :post
+          %p
+            = t '.assign_to_pullrequest'
+            %br
+            = t '.assign_is'
           = link_to t('.next'), file_reviewers_pull_reviews_path(@pull), class: 'btn btn-primary'
