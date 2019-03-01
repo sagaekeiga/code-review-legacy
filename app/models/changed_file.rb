@@ -116,4 +116,38 @@ class ChangedFile < ApplicationRecord
   def content
     Github::Request.changed_file_content(pull.repo, contents_url)
   end
+
+  def additional_line_number(line:, code_line_index:, index:)
+    return '' if line.start_with?('-')
+    border = patch.scan(/@@.*@@/)[code_line_index]
+    line_numbers = border.match(/\+.*? /).to_s.strip.gsub('+', '').split(',')
+    first_numer = line_numbers.first.to_i
+    last_number = line_numbers.last.to_i + first_numer - 1
+    (first_numer..last_number).map(&:to_i)[index - deletional_line_counter(code_line_index: code_line_index, line_number: index)]
+  end
+
+  def deletional_line_number(line:, code_line_index:, index:)
+    return '' if line.start_with?('+')
+    border = patch.scan(/@@.*@@/)[code_line_index]
+    line_numbers = border.match(/-.*? /).to_s.strip.gsub('-', '').split(',')
+    first_numer = line_numbers.first.to_i
+    last_number = line_numbers.last.to_i + first_numer - 1
+    (first_numer..last_number).map(&:to_i)[index - additional_line_counter(code_line_index: code_line_index, line_number: index)]
+  end
+
+  def deletional_line_counter(code_line_index:, line_number:)
+    deletional_line_count = 0
+    patch.split(/@@.*@@.*\n/).reject(&:empty?)[code_line_index].each_line.with_index do |line, index|
+      deletional_line_count += 1 if line.start_with?('-')
+      return deletional_line_count if line_number == index
+    end
+  end
+
+  def additional_line_counter(code_line_index:, line_number:)
+    additional_line_count = 0
+    patch.split(/@@.*@@.*\n/).reject(&:empty?)[code_line_index].each_line.with_index do |line, index|
+      additional_line_count += 1 if line.start_with?('+')
+      return additional_line_count if line_number == index
+    end
+  end
 end

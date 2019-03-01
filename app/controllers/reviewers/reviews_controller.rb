@@ -18,9 +18,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def new
     @review = Review.new.decorate
-    @file_changes = @pull.file_changes
-    # @contents = @pull.contents
-    # @contents = Content.where(repo: @repo, path:)
+    # @file_changes = @pull.file_changes
   end
 
   def create
