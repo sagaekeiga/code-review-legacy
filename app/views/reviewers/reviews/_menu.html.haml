@@ -9,30 +9,33 @@
   %li.list{ class: controller.action_name.eql?('index') ? '' : 'active' }
     = link_to '#codeTab', class: "#{same_action_name?('view_check')} tab #{ controller.action_name.eql?('index') ? '' : 'active' }" do
       .text-center
-        %i.fas.fa-code
-        %br
-        %small code
+        %small
+          %i.fas.fa-code
+          code
+          = changed_files.count
   %li.list
     = link_to '#bodyTab', class: "#{same_action_name?('view_check')} tab" do
       .text-center
-        %i.glyphicon.glyphicon-comment
-        %br
-        %small pullrequest
+        %small
+          %i.glyphicon.glyphicon-comment
+          pullrequest
   %li.list
     = link_to '#issueTab', class: "#{same_action_name?('view_check')} tab" do
       .text-center
-        %i.fas.fa-exclamation-circle
-        %br
-        %small issues
+        %small
+          %i.fas.fa-exclamation-circle
+          issues
+          = numbers.count
   %li.list
     = link_to '#commitsTab', class: "#{same_action_name?('view_check')} tab" do
       .text-center.center-block
-        %i.fas.fa-history
-        %br
-        %small commits
+        %small
+          %i.fas.fa-history
+          commits
+          = commits.count
   %li.list
     = link_to [:reviewers, repo], class: 'repo', target: '_blank' do
       .text-center.center-block
-        %i.fas.fa-project-diagram
-        %br
-        %small repository
+        %small
+          %i.fas.fa-project-diagram
+          repository

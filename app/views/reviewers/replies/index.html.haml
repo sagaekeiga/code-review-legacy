@@ -7,7 +7,7 @@
           .page-header{ 'pull-id': @pull.id, 'repo-token': @pull.repo_token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
             %h1
               %strong= @pull.title
-          .menu= render 'reviewers/reviews/menu', repo: @pull.repo
+          .menu= render 'reviewers/reviews/menu', repo: @pull.repo, changed_files: changed_files, commits: commits, numbers: numbers
           #conversationTab.tab-content.active
             - @reviews.each do |review|
               - if review.comment?

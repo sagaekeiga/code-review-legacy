@@ -2,7 +2,7 @@ hoverColor();
 
 hoverComment();
 
-$('.hljs-addition').click(function() {
+$('.markdown-highlight').click(function() {
   addForm($(this));
 })
 
@@ -121,16 +121,20 @@ function addForm(elem) {
     `)
 
     addingPanelBody = $(`
-      <div class='panel panel-default new-review-comments'>
-        <div class='panel-body'>
-          <textarea
-            name='reviews[body][]'
-            class='form-control md-textarea body'
-            rows='5'
-          >* 提案\n\n* 理由\n\n* 参考（リンク・サンプルコード）</textarea>
-          ${addingButtons.prop('outerHTML')}
-        </div>
-      </div>
+      <tr>
+        <td colspan='3' style='padding: 10px; border: 1px solid #ccc;'>
+          <div class='panel panel-default new-review-comments' style='max-width: 780px;'>
+            <div class='panel-body'>
+              <textarea
+                name='reviews[body][]'
+                class='form-control md-textarea body'
+                rows='5'
+              >* 提案\n\n* 理由\n\n* 参考（リンク・サンプルコード）</textarea>
+              ${addingButtons.prop('outerHTML')}
+            </div>
+          </div>
+        </td>
+      </tr>
     `)
 
     addingPanelBody.insertAfter($(elem).closest('.code-tr'));
@@ -140,7 +144,7 @@ function addForm(elem) {
 
 function removeForm(elem) {
   elem.closest('.panel').prevAll('tr').find('.add-form').removeClass('add-form');
-  elem.closest('.panel').remove();
+  elem.closest('tr').remove();
 };
 
 function createReviewComment(elem) {
@@ -216,7 +220,7 @@ function destroyReviewComment(elem) {
       success: function(data) {
         if (data.status === 'success') {
           elem.closest('.panel').prevAll('tr').find('.add-form').removeClass('add-form');
-          elem.closest('.panel').remove();
+          elem.closest('tr').remove();
           elem.prop('disabled', false);
         }
       }

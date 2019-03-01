@@ -12,16 +12,16 @@
               %tr
                 %th{ scope: 'col' }
             %tbody
-              - changed_file.patch.split(/^(?!.*REGEXP).*@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
+              - changed_file.patch.split(/@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
                 %tr.code-tr{ 'data-line-number': code_line_index }
-                  %td
-                  %td
+                  %td.section-rows
+                  %td.section-rows
                   %td.markdown-highlight.bg-primary.hljs-addition.file-code
                     %pre= changed_file.patch.scan(/@@\s.*\s@@/)[code_line_index]
                 - code_line.each_line&.with_index do |line, index|
                   %tr.code-tr{ 'data-line-number': index }
-                    %td= changed_file.deletional_line_number(line: line, section_num: code_line_index, line_num: index)
-                    %td= changed_file.additional_line_number(line: line, section_num: code_line_index, line_num: index)
+                    %td.index{ class: lines_number_color(line) }= changed_file.deletional_line_number(line: line, section_num: code_line_index, line_num: index)
+                    %td.index{ class: lines_number_color(line) }= changed_file.additional_line_number(line: line, section_num: code_line_index, line_num: index)
                     - if line.start_with?('+')
                       %td.markdown-highlight.bg-success.hljs-addition.file-code= changed_file.coderay(line)
                     - elsif line.start_with?('-')
@@ -32,9 +32,9 @@
                   // レビュワー自身のコメントでPendingなものだけ表示
                   - if review_comment && changed_file.present_review_comment?(index)
                     %tr
-                      %td
+                      %td{ colspan: '3', style: 'padding: 10px;' }
                         .review-comments-wrapper
-                          .panel.panel-default
+                          .panel.panel-default{ style: 'max-width: 780px;' }
                             - if review_comment.pending?
                               .panel-heading
                                 %span.label.label-warning 下書き
