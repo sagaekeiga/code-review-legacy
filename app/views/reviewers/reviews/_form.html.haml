@@ -8,7 +8,7 @@
           .page-header{ 'pull-id': pull.id, 'repo-token': pull.repo_token, 'issue-numbers': numbers.empty? ? 0 : numbers }
             %h1
               %strong= pull.title
-          .menu= render 'reviewers/reviews/menu', repo: pull.repo
+          .menu= render 'reviewers/reviews/menu', repo: pull.repo, changed_files: changed_files, commits: commits, numbers: numbers
           / code
           #codeTab.tab-content
             = form_for [:reviewers, pull, review], html: { class: 'form-horizontal', role: 'form' } do |f|

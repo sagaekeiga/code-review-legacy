@@ -18,6 +18,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def new
     @review = Review.new.decorate
+    # @file_changes = @pull.file_changes
   end
 
   def create

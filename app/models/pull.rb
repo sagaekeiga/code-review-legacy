@@ -240,4 +240,22 @@ class Pull < ApplicationRecord
   def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }
   end
+
+  class FileChange
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+    include Draper::Decoratable
+
+    attr_accessor :data, :filename, :patch, :content, :pull_id
+
+    #
+    # @param [Hash] data
+    #
+    def initialize(data = {})
+      self.data = data
+      self.filename = data[:filename]
+      self.patch = data[:patch]
+      self.content = data[:content]
+    end
+  end
 end

@@ -81,4 +81,17 @@ module ApplicationHelper
   def decode_by_base64(content)
     Base64.decode64(content).force_encoding('UTF-8')
   end
+
+  #
+  # 行種によってtdを色付けするクラスを返す
+  #
+  # @param [String] line 対象の行
+  # @return [String]
+  #
+  def lines_number_color(line)
+    case line[0]
+    when '+' then 'added-rows'
+    when '-' then 'deleted-rows'
+    end
+  end
 end

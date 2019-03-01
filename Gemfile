@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
@@ -59,7 +59,6 @@ group :development do
 end
 
 gem 'activemodel-serializers-xml'
-gem 'acts-as-taggable-on'
 gem 'annotate'
 gem 'audited'
 gem 'autoprefixer-rails'
@@ -81,7 +80,6 @@ gem 'faker-japanese'
 gem 'file_validators'
 gem 'fog'
 gem 'font-awesome-sass'
-gem 'google-analytics-rails'
 gem 'guard'
 gem 'haml-rails'
 gem 'hiredis', require: ['redis', 'redis/connection/hiredis']
@@ -101,7 +99,6 @@ gem 'paranoia'
 gem 'premailer-rails'
 gem 'pundit'
 gem 'rails-i18n'
-gem 'ransack'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'redis'
 gem 'redis-namespace'
@@ -116,7 +113,6 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'coderay'
 gem 'redcarpet'
 gem 'html_truncator', '~> 0.2'
-gem 'ransack'
 gem 'google-analytics-rails'
 gem 'sentry-raven'
 gem 'rubyzip', require: 'zip'
@@ -124,7 +120,6 @@ gem 'rails-highlightjs'
 group :development, :test do
   gem 'bullet'
   gem 'rails-flog', require: "flog"
-  gem 'bullet'
   gem 'database_cleaner'
   gem 'database_rewinder'
   gem 'erb2haml'
@@ -145,7 +140,6 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'bullet'
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'pry-rails'
@@ -154,6 +148,4 @@ end
 gem 'devise'
 gem 'foreman'
 gem 'omniauth'
-gem 'omniauth-facebook'
-gem 'omniauth-google-oauth2', '0.5.0'
-gem 'omniauth-twitter'
+

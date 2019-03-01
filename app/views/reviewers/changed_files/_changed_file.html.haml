@@ -12,36 +12,41 @@
               %tr
                 %th{ scope: 'col' }
             %tbody
-              - changed_file.patch&.each_line&.with_index do |line, index|
-                %tr.code-tr{ 'data-line-number': index }
-                  - if line.start_with?('+')
-                    %td.markdown-highlight.bg-success.hljs-addition.file-code= changed_file.coderay(line)
-                  - elsif line.start_with?('-')
-                    %td.markdown-highlight.bg-danger.hljs-addition.file-code= changed_file.coderay(line)
-                  - elsif line.start_with?('@@')
-                    %td.markdown-highlight.bg-primary.hljs-addition.file-code
-                      %pre= line
-                  - else
-                    %td.markdown-highlight.file-code= changed_file.coderay(line)
-                - review_comment = changed_file.review_comments.find_by(position: index, reviewer: current_reviewer, status: :pending)
-                // レビュワー自身のコメントでPendingなものだけ表示
-                - if review_comment && changed_file.present_review_comment?(index)
-                  %tr
-                    %td
-                      .review-comments-wrapper
-                        .panel.panel-default
-                          - if review_comment.pending?
-                            .panel-heading
-                              %span.label.label-warning 下書き
-                          .panel-body
-                            .panel-text{ 'review-comment-id': changed_file.review_comment_id(index) }
-                              = markdown(changed_file.review_comment_body(index))
-                            - if changed_file.reviewer?(index, current_reviewer) && controller.action_name.in?(%w(new edit))
-                              .flex-row.text-right
-                                %button{ type: 'button', class: 'btn btn-danger card-link destroy-trigger circle', data: { confirm: '本当によろしいですか？' } }
-                                  %span.glyphicon.glyphicon-trash
-                                %button{ type: 'button', class: 'btn btn-primary card-link edit-trigger circle' }
-                                  %span.glyphicon.glyphicon-pencil
-                                = hidden_field_tag 'reviews[changed_file_ids][]', changed_file.id, class: 'changed_file_id'
-                                = hidden_field_tag 'reviews[path][]', changed_file.review_comment_path(index), class: 'path'
-                                = hidden_field_tag 'reviews[position][]', changed_file.review_comment_position(index), class: 'position'
+              - changed_file.patch.split(/@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
+                %tr.code-tr{ 'data-line-number': code_line_index }
+                  %td.section-rows
+                  %td.section-rows
+                  %td.markdown-highlight.bg-primary.hljs-addition.file-code
+                    %pre= changed_file.patch.scan(/@@\s.*\s@@/)[code_line_index]
+                - code_line.each_line&.with_index do |line, index|
+                  %tr.code-tr{ 'data-line-number': index }
+                    %td.index{ class: lines_number_color(line) }= changed_file.deletional_line_number(line: line, section_num: code_line_index, line_num: index)
+                    %td.index{ class: lines_number_color(line) }= changed_file.additional_line_number(line: line, section_num: code_line_index, line_num: index)
+                    - if line.start_with?('+')
+                      %td.markdown-highlight.bg-success.hljs-addition.file-code= changed_file.coderay(line)
+                    - elsif line.start_with?('-')
+                      %td.markdown-highlight.bg-danger.hljs-addition.file-code= changed_file.coderay(line)
+                    - else
+                      %td.markdown-highlight.file-code= changed_file.coderay(line)
+                  - review_comment = changed_file.review_comments.find_by(position: index, reviewer: current_reviewer, status: :pending)
+                  // レビュワー自身のコメントでPendingなものだけ表示
+                  - if review_comment && changed_file.present_review_comment?(index)
+                    %tr
+                      %td{ colspan: '3', style: 'padding: 10px;' }
+                        .review-comments-wrapper
+                          .panel.panel-default{ style: 'max-width: 780px;' }
+                            - if review_comment.pending?
+                              .panel-heading
+                                %span.label.label-warning 下書き
+                            .panel-body
+                              .panel-text{ 'review-comment-id': changed_file.review_comment_id(index) }
+                                = markdown(changed_file.review_comment_body(index))
+                              - if changed_file.reviewer?(index, current_reviewer) && controller.action_name.in?(%w(new edit))
+                                .flex-row.text-right
+                                  %button{ type: 'button', class: 'btn btn-danger card-link destroy-trigger circle', data: { confirm: '本当によろしいですか？' } }
+                                    %span.glyphicon.glyphicon-trash
+                                  %button{ type: 'button', class: 'btn btn-primary card-link edit-trigger circle' }
+                                    %span.glyphicon.glyphicon-pencil
+                                  = hidden_field_tag 'reviews[changed_file_ids][]', changed_file.id, class: 'changed_file_id'
+                                  = hidden_field_tag 'reviews[path][]', changed_file.review_comment_path(index), class: 'path'
+                                  = hidden_field_tag 'reviews[position][]', changed_file.review_comment_position(index), class: 'position'
