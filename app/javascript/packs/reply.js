@@ -3,8 +3,14 @@ $(document).on('click', '.reply-submit-btn', function () {
   submitReply($(this));
 })
 
-$(document).on('click', '.read-btn', function () {
-  updateRead($(this));
+$(document).off('click', '.update-comment-btn')
+$(document).on('click', '.update-comment-btn', function () {
+  updateComment($(this));
+})
+
+$(document).on('click', '.comment-edit', function (e) {
+  e.preventDefault()
+  addUpdateForm($(this));
 })
 
 $(document).on('click', '.thread-button', function () {
@@ -71,26 +77,61 @@ function submitReply(elem) {
   });
 };
 
-function updateRead(elem) {
+function updateComment(elem) {
   elem.prop('disabled', true);
+  commentId = elem.attr('comment-id')
+  body = elem.attr('body')
   $.ajax({
     type: 'PUT',
-    url: `/reviewers/replies/${elem.attr('reply-id')}`,
+    url: `/reviewers/github/review_comments/${commentId}`,
     dataType: 'JSON',
     element: elem,
+    data: {
+      reviewe_comment_id: commentId,
+      body: body
+    },
     success: function (data) {
-      elem.addClass('hidden')
-      readLabel = elem.closest('.pull-right').prevAll('.label')
-      readLabel.addClass('hidden')
-      readMessage = $(`<div class='update-read'><i class='fas fa-check'></i>&nbsp;対応済みにしました</div>`)
-      readMessage.appendTo(elem.closest('.pull-right'))
-      readMessage.delay(3000).fadeOut('slow');
-      panelStep = elem.closest('.panel.step')
-      panelStep.removeClass('unread')
-      img = elem.closest('.comment-line').prevAll('img')
-      img.attr('src', '/assets/checked.png')
-      unread = elem.closest('.comment-line').prevAll('span.unread')
-      unread.removeClass('unread').addClass('read').text('対応済み')
+    }
+  });
+};
+
+function addUpdateForm(elem) {
+  commentId = elem.attr('comment-id')
+  body_class = elem.closest('.panel-text').find('.body')
+  body = body_class.find('.md-wrapper').find('p').text()
+  textarea = $(`
+    <div class='text-right'>
+      <textarea class='form-control'>${body}</textarea>
+      <button class='btn btn-primary update-comment-btn' 'data-comment-id'=${commentId}>更新する</button>
+      <input name='comment_id' type='hidden' value=${commentId} class='comment-id'></input>
+    </div>
+  `)
+  body_class.empty()
+  body_class.wrapInner(textarea)
+};
+
+function updateComment(elem) {
+  elem.prop('disabled', true);
+  commentId = elem.nextAll('.comment-id').val()
+  body = elem.prevAll('textarea').val()
+  $.ajax({
+    type: 'PUT',
+    url: `/reviewers/github/review_comments/${commentId}`,
+    dataType: 'JSON',
+    element: elem,
+    data: {
+      review_comment_id: commentId,
+      body: body
+    },
+    success: function (data) {
+      body = elem.closest('.panel-text').find('.body')
+      if (data.success) {
+        body.empty()
+        marked.setOptions({ breaks : true });
+        body.wrapInner(`<div class='md-wrapper'>${marked(data.body)}</div>`);
+      } else {
+        body.prepend('コメントに失敗しました。');
+      }
     }
   });
 };

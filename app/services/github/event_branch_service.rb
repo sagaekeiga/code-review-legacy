@@ -61,6 +61,6 @@ class Github::EventBranchService
   end
 
   def reply?
-    @params.dig(:comment, :in_reply_to_id).present?
+    @params.dig(:comment, :in_reply_to_id).present? && @params.dig(:changes).nil?
   end
 end

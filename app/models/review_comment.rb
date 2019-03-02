@@ -161,7 +161,7 @@ class ReviewComment < ApplicationRecord
     # Edit
     def fetch_changes!(params, pull, changed_file)
       ActiveRecord::Base.transaction do
-        review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
+        review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
         review_comment.update_attributes!(body: params[:comment][:body])
       end
       true
@@ -236,6 +236,20 @@ class ReviewComment < ApplicationRecord
 
   def count_unread_replies
     replies.unread.count
+  end
+
+  #
+  # Github のコメントを更新する
+  # @return [Boolean]
+  #
+  def remote_update
+    data = Github::Request.update_review_comment(repo: review.pull.repo, review_comment: self)
+    if data.is_a?(String)
+      logger.error "Error: ID#{remote_id} Review Comment update failed for #{data}"
+      false
+    else
+      update(body: data[:body])
+    end
   end
 
   private

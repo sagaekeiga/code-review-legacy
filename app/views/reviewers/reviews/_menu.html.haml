@@ -3,9 +3,9 @@
     %li.list{ class: controller.action_name.eql?('index') ? 'active' : '' }
       = link_to '#conversationTab', class: "#{same_action_name?('replies')} tab active" do
         .text-center
-          %i.fas.fa-comments
-          %br
-          %small replies
+          %small
+            %i.fas.fa-comments
+            replies
   %li.list{ class: controller.action_name.eql?('index') ? '' : 'active' }
     = link_to '#codeTab', class: "#{same_action_name?('view_check')} tab #{ controller.action_name.eql?('index') ? '' : 'active' }" do
       .text-center
