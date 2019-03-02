@@ -43,8 +43,6 @@
                           = render review_comment.target_comments
                       .panel-footer
                         .text-right
-                          .menu.code-button{ 'repo-id': @pull.repo.id, 'changed-file-id': review_comment.changed_file.id }
-                            %i.fas.fa-code
                           .menu.thread-button{ class: review_comment.set_active }
                             %i.far.fa-comments{ class: review_comment.set_active }
                       // Reply
@@ -83,4 +81,3 @@
 = javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'
 = javascript_pack_tag 'reply'
-= javascript_pack_tag 'changed-files'
