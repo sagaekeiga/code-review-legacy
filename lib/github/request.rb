@@ -71,11 +71,16 @@ module Github
 
       # PATCH レビューコメントを更新する
       def update_review_comment(repo:, review_comment:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Accept': set_accept(:content)
+        }
+
         attributes = {
           body: review_comment.body
         }.to_json
-        res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/comments/#{review_comment.remote_id}",
-          headers: general_headers(installation_id: repo.installation_id, event: :contents), body: attributes
+        res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/comments/#{review_comment.remote_id}", headers: headers, body: attributes
         res = JSON.parse res, symbolize_names: true
         res.dig(:message) ? res[:message] : res
       end
