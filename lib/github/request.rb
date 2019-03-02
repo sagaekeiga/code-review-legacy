@@ -69,9 +69,15 @@ module Github
         JSON.parse res, symbolize_names: true
       end
 
-      # GET 差分ファイルの内容
-      def github_exec_fetch_content_by_cf!(repo, sub_url)
-        _get sub_url, repo.installation_id, :content
+      # PATCH レビューコメントを更新する
+      def update_review_comment(repo:, review_comment:)
+        attributes = {
+          body: review_comment.body
+        }.to_json
+        res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/comments/#{review_comment.remote_id}",
+          headers: general_headers(installation_id: repo.installation_id, event: :contents), body: attributes
+        res = JSON.parse res, symbolize_names: true
+        res.dig(:message) ? res[:message] : res
       end
 
       def changed_file_content(repo, content_url)

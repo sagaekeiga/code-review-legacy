@@ -2,16 +2,18 @@
   = markdown(review_comment.body)
 - if review_comment.replied?
   .panel-text
+    .pull-right
+      .dropdown
+        %i.fas.fa-ellipsis-v.dropdown-toggle{ 'aria-expanded': 'false', 'data-toggle': 'dropdown' }
+        %ul.text-right.dropdown-menu{role: "menu"}
+          %li
+            %a.comment-edit{ href: '#', 'comment-id': review_comment.id } 編集
     .image
       = image_tag review_comment.avatar, class: 'img-responsive img-circle'
     .nickname
       = review_comment.nickname
     .date
       .text-muted= date_format(review_comment.created_at)
-    - unless review_comment.read?
-      .label.label-danger.unread= I18n.t('reviewers.reviews.read.unread')
-      .pull-right
-        %button.btn.btn-primary.read-btn{ type: 'button', 'reply-id': review_comment.id }= t 'reviewers.reviews.read.reading'
     .replies-line{ class: review_comment.last?(review_comment.comment) }
       .body
         .md-wrapper= markdown(review_comment.body)

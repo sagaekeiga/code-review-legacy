@@ -109,12 +109,17 @@ class ReviewComment < ApplicationRecord
         filename:  params[:comment][:path]
       )
 
+      Rails.logger.debug "fetch1"
       # 編集時の取得
       if params[:changes].present?
+        Rails.logger.debug "fetch2"
         return ReviewComment.fetch_changes!(params, pull, changed_file)
+        Rails.logger.debug "fetch3"
       end
 
+      Rails.logger.debug "fetch4"
       review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
+      Rails.logger.debug "fetch5"
       review_comment.update_attributes!(
         body: params[:comment][:body],
         remote_id: params[:comment][:id]
@@ -161,7 +166,8 @@ class ReviewComment < ApplicationRecord
     # Edit
     def fetch_changes!(params, pull, changed_file)
       ActiveRecord::Base.transaction do
-        review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
+        Rails.logger.debug "fetch_changes"
+        review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
         review_comment.update_attributes!(body: params[:comment][:body])
       end
       true
@@ -236,6 +242,20 @@ class ReviewComment < ApplicationRecord
 
   def count_unread_replies
     replies.unread.count
+  end
+
+  #
+  # Github のコメントを更新する
+  # @return [Boolean]
+  #
+  def remote_update
+    data = Github::Request.update_review_comment(repo: review.pull.repo, review_comment: self)
+    if data.is_a?(String)
+      logger.error "Error: ID#{remote_id} Review Comment update failed for #{data}"
+      false
+    else
+      update(body: data[:body])
+    end
   end
 
   private

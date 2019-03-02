@@ -86,7 +86,7 @@ Rails.application.routes.draw do
       resources :send_mails, only: %i(create)
       resources :review_comments, only: %i(create update destroy show)
       namespace :github do
-        resource :changed_files, only: %i(show)
+        resources :review_comments, only: %i(update)
         resources :issues, only: %i(index)
       end
       resources :repos, only: %i(show) do
