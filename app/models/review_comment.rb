@@ -109,17 +109,12 @@ class ReviewComment < ApplicationRecord
         filename:  params[:comment][:path]
       )
 
-      Rails.logger.debug "fetch1"
       # 編集時の取得
       if params[:changes].present?
-        Rails.logger.debug "fetch2"
         return ReviewComment.fetch_changes!(params, pull, changed_file)
-        Rails.logger.debug "fetch3"
       end
 
-      Rails.logger.debug "fetch4"
       review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
-      Rails.logger.debug "fetch5"
       review_comment.update_attributes!(
         body: params[:comment][:body],
         remote_id: params[:comment][:id]
@@ -166,7 +161,6 @@ class ReviewComment < ApplicationRecord
     # Edit
     def fetch_changes!(params, pull, changed_file)
       ActiveRecord::Base.transaction do
-        Rails.logger.debug "fetch_changes"
         review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
         review_comment.update_attributes!(body: params[:comment][:body])
       end

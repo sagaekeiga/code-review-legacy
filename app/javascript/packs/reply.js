@@ -99,7 +99,6 @@ function addUpdateForm(elem) {
   commentId = elem.attr('comment-id')
   body_class = elem.closest('.panel-text').find('.body')
   body = body_class.find('.md-wrapper').find('p').text()
-  console.log(body)
   textarea = $(`
     <div class='text-right'>
       <textarea class='form-control'>${body}</textarea>
