@@ -37,7 +37,7 @@
                           .panel.panel-default{ style: 'max-width: 780px;' }
                             - if review_comment.pending?
                               .panel-heading
-                                %span.label.label-warning 下書き
+                                %span.label.label-warning= review_comment.decorate.status
                             .panel-body
                               .panel-text{ 'review-comment-id': changed_file.review_comment_id(index) }
                                 = markdown(changed_file.review_comment_body(index))

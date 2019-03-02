@@ -158,23 +158,6 @@ class Review < ApplicationRecord
   end
 
   #
-  # リモートのISSUEまたはPRにレビューする
-  #
-  def github_exec_issue_comment!
-    ActiveRecord::Base.transaction do
-      body = { 'body': self.body }
-      res = Github::Request.github_exec_issue_comment!(body.to_json, pull)
-      fail res.body unless res.code == Settings.api.created.status.code
-      save!
-    end
-    true
-  rescue => e
-    Rails.logger.error e
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
-
-  #
   # レビュー済みのレビューコメントを返す
   # @return [ReviewComment::ActiveRecord_AssociationRelation]
   #
