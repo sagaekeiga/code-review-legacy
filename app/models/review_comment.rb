@@ -45,7 +45,7 @@ class ReviewComment < ApplicationRecord
   has_one :comment, through: :comment_tree, source: :comment
 
   has_many :reply_trees, class_name: 'ReviewCommentTree', foreign_key: :comment_id, dependent: :destroy
-  has_many :replies, through: :reply_trees,  source: :reply
+  has_many :replies, -> { order(:created_at) }, through: :reply_trees, source: :reply
 
   # -------------------------------------------------------------------------------
   # Enumerables

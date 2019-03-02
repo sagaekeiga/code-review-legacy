@@ -41,4 +41,8 @@ class ReviewCommentDecorator < ApplicationDecorator
   def set_unread
     has_unread_replies? ? 'unread' : ''
   end
+
+  def status
+    review.present? ? '審査中' : '下書き'
+  end
 end

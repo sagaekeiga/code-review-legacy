@@ -33,7 +33,7 @@
                                 %td.markdown-highlight.bg-primary.hljs-addition.file-code
                                   %pre= line
                               - else
-                                %td.markdown-highlight.hljs-addition.file-code= changed_file.coderay(line)
+                                %td.markdown-highlight.file-code= changed_file.coderay(line)
                             - review_comment = changed_file.review_comments.find_by(position: index, reviewer: @review.reviewer, status: :pending)
                             // レビュワー自身のコメントでPendingなものだけ表示
                             - if review_comment && changed_file.present_review_comment?(index) && review_comment.pending?

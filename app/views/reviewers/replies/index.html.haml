@@ -7,7 +7,7 @@
           .page-header{ 'pull-id': @pull.id, 'repo-token': @pull.repo_token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
             %h1
               %strong= @pull.title
-          .menu= render 'reviewers/reviews/menu', repo: @pull.repo, changed_files: changed_files, commits: commits, numbers: numbers
+          .menu= render 'reviewers/reviews/menu', repo: @pull.repo, changed_files: @changed_files, commits: @commits, numbers: @numbers
           #conversationTab.tab-content.active
             - @reviews.each do |review|
               - if review.comment?
@@ -43,12 +43,10 @@
                           = render review_comment.target_comments
                       .panel-footer
                         .text-right
-                          .menu.code-button{ 'repo-id': @pull.repo.id, 'changed-file-id': review_comment.changed_file.id }
-                            %i.fas.fa-code
                           .menu.thread-button{ class: review_comment.set_active }
                             %i.far.fa-comments{ class: review_comment.set_active }
                       // Reply
-                      .replies-wrapper{ class: review_comment.set_hidden(:unread_replies) }
+                      .replies-wrapper
                         .panel
                           .panel-body{ class: review_comment.set_hidden(:replies) }
                             - if review_comment.replies.present?
@@ -83,4 +81,3 @@
 = javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'
 = javascript_pack_tag 'reply'
-= javascript_pack_tag 'changed-files'
