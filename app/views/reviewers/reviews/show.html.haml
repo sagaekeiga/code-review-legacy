@@ -5,24 +5,24 @@
         = render 'shared/flash_msg'
         = render 'progress_bar', pull: @pull, review: @review
         .m-t-10.m-b-4
-          .page-header{ 'pull-id': @pull.id, 'repo-token': @pull.repo_token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
+          .page-header{ 'pull-id': @pull.id, 'repo-token': @repo.token, 'issue-numbers': @numbers.empty? ? 0 : @numbers }
             %h1
               %strong= @pull.title
               %small
                 = link_to '修正する', edit_reviewers_pull_review_path(@pull, @review), class: 'btn btn-primary pull-right'
             %h3
               %span.label.label-default= @review.event_i18n
-          .menu= render 'reviewers/reviews/menu', repo: @pull.repo, changed_files: @changed_files, commits: @commits, numbers: @numbers
+          .menu= render 'reviewers/reviews/menu', repo: @repo, changed_files: @changed_files, commits: @commits, numbers: @numbers
           / code
           #codeTab.tab-content
             .reviews-form-wrapper
               .reviews-form-card-wrapper
-                = render @changed_files
+                = render partial: 'reviewers/pull/changed_files/changed_file', collection: @changed_files, locals: { repo: @repo, pull: @pull }
             // コード全体へのレビュー
             %h4.m-t-10 全体へのコメント
             .panel
               .panel-body.gray-space
                 = markdown(@review.body)
-          = render 'reviewers/reviews/tab_contents', repo: @pull.repo, pull: @pull, commits: @commits, numbers: @numbers
+          = render 'reviewers/reviews/tab_contents', repo: @repo, pull: @pull, commits: @commits, numbers: @numbers
 = javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'

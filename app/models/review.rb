@@ -114,7 +114,8 @@ class Review < ApplicationRecord
         event: :pending
       )
       review.save!
-      review_comments = review.reviewer.review_comments.pending.order(:created_at).where(changed_file: pull.changed_files)
+      changed_files = pull.changed_files
+      review_comments = review.reviewer.review_comments.pending.order(:created_at).where(sha: changed_files.map(&:sha))
       review_comments.each do |review_comment|
         review_comment.review = review
         review_comment.reviewed!
