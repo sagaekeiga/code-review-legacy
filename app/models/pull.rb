@@ -131,7 +131,6 @@ class Pull < ApplicationRecord
           remote_created_at: res_pull['created_at']
         )
         pull.restore if pull&.deleted?
-        Commit.fetch!(pull)
       end
     end
   rescue => e
