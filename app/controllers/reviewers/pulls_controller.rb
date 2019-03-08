@@ -27,7 +27,7 @@ class Reviewers::PullsController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = @pull.files_changed.decorate
+    @changed_files = ChangedFileDecorator.decorate_collection @pull.changed_files
   end
 
   def set_repo

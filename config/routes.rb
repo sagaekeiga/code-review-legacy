@@ -93,8 +93,8 @@ Rails.application.routes.draw do
         post :download
         resources :contents, only: %i(index)
         resources :pulls, only: %i(index show), param: :token do
-          resources :commits, only: %i(index show)
-          resources :changed_files, only: %i(index show)
+          resources :commits, only: %i(index show), param: :sha
+          resources :changed_files, only: %i(index show), param: :sha
         end
       end
       resources :reviews, only: %i(index)
