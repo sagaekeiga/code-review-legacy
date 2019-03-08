@@ -63,7 +63,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = ChangedFileDecorator.decorate_collection @pull.changed_files
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @pull.changed_files
   end
 
   def set_review
@@ -71,7 +71,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_commits
-    @commits = CommitDecorator.decorate_collection @pull.commits
+    @commits = Pull::CommitDecorator.decorate_collection @pull.commits
   end
 
   def set_numbers

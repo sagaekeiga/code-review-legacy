@@ -25,4 +25,4 @@
                 = commit.committer_name
                 = I18n.l(commit.committed_date.to_time, format: :default)
             %td.text-right
-              = link_to commit.short_sha, [:reviewers, repo, pull, commit]
+              = link_to commit.short_sha, reviewers_repo_pull_commit_path(repo, pull, commit.sha)
