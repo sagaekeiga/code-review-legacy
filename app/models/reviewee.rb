@@ -40,7 +40,6 @@ class Reviewee < ApplicationRecord
   has_one :github_account, class_name: 'Reviewees::GithubAccount'
   has_many :repos, as: :resource
   has_many :pulls, as: :resource
-  has_many :commits, as: :resource
   has_many :reviewee_orgs
   has_many :orgs, through: :reviewee_orgs
 

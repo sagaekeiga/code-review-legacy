@@ -41,9 +41,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :resource, polymorphic: true
   belongs_to :repo
-  has_many :changed_files, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :commits, dependent: :destroy
   has_many :reviewer_pulls, dependent: :destroy
   has_many :reviewers, through: :reviewer_pulls, source: :reviewer
   # -------------------------------------------------------------------------------
@@ -170,7 +168,6 @@ class Pull < ApplicationRecord
       # たまに同時作成されて重複が起こる。ここは最新の方を「物理」削除する
       dup_pulls = Pull.where(remote_id: pull.remote_id)
       dup_pulls.order(created_at: :desc).last.really_destroy! if dup_pulls.count > 1
-      Commit.fetch!(pull)
     end
     true
   rescue => e
@@ -191,11 +188,6 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   def reviewer? current_reviewer
     reviewer == current_reviewer
-  end
-
-  # 最新のファイル差分を取得する
-  def files_changed
-    @changed_files = changed_files.where(commit: commits.last).compared.order(created_at: :asc)
   end
 
   # stateのパラメータに対応したstatusに更新する
