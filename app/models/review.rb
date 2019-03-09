@@ -147,7 +147,6 @@ class Review < ApplicationRecord
     end
 
     res = Github::Request.review params: request_params.to_json, pull: pull
-
     fail res if res.is_a?(String)
 
     update!(remote_id: res[:id], commit_id: res[:commit_id])
@@ -155,7 +154,23 @@ class Review < ApplicationRecord
     pending_review_comments.each(&:reviewed!).each(&:completed!)
     comment!
     pull.reviewed!
+
+    # ReviewComment に remote_id を更新する
+    data = Github::Request.review_comments review: self
+    data.each.with_index do |review_comment, index|
+      pending_review_comments[index].update!(remote_id: review_comment[:id])
+    end
+
+    # レビュアーに審査通過（GithubにPOST）したことを通知する
     ReviewerMailer.approve_review(self).deliver_later
+  end
+
+  #
+  # レポジトリを返す
+  # @return [Repo]
+  #
+  def repo
+    pull.repo
   end
 
   #

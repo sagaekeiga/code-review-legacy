@@ -76,6 +76,7 @@ class ReviewComment < ApplicationRecord
   validates :remote_id, uniqueness: true, allow_nil: true, on: %i(create)
   validates :body,      presence: true
   validates :path,      presence: true
+  validates :sha,       presence: true
 
   # -------------------------------------------------------------------------------
   # Scopes
@@ -96,22 +97,14 @@ class ReviewComment < ApplicationRecord
         number: params[:pull_request][:number]
       )
 
-      commit = pull.commits.find_by(
-        sha: params[:comment][:commit_id]
-      )
+      review = Review.where(commit_id: params[:comment][:commit_id]).last
 
-      changed_file = commit.changed_files.find_by(
-        pull: pull,
-        event: :compared,
-        filename:  params[:comment][:path]
-      )
-
-      # 編集時の取得
+      # PR 編集時の取得
       if params[:changes].present?
         return ReviewComment.fetch_changes!(params, pull, changed_file)
       end
 
-      review_comment = ReviewComment.find_or_initialize_by(_comment_params(params, changed_file))
+      review_comment = review.review_comments.find_or_initialize_by(_comment_attributes(params))
       review_comment.update_attributes!(
         body: params[:comment][:body],
         remote_id: params[:comment][:id]
@@ -127,21 +120,18 @@ class ReviewComment < ApplicationRecord
           number: params[:pull_request][:number]
         )
 
-        commit = pull.commits.find_by(
-          sha: params[:comment][:commit_id]
-        )
-
-        changed_file = commit.changed_files.find_by(
-          pull: pull,
-          event: :compared,
-          filename:  params[:comment][:path]
-        )
+        review = Review.find_by(commit_id: params[:comment][:commit_id])
 
         review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
         reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
+
+        sha = review.review_comments.last.sha
+
         reply_params = _reply_params(params, changed_file, review_comment)
         reply_params = reply.persisted? ? reply_params : reply_params.merge(reviewer: nil)
-        reply.update_attributes!(reply_params)
+
+        reply.update_attributes!(reply_params.merge(sha: sha))
+
 
 
         review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
@@ -253,22 +243,20 @@ class ReviewComment < ApplicationRecord
 
   class << self
 
-    def _comment_params(params, changed_file)
+    def _comment_attributes(params)
       {
         remote_id: nil,
         path: params[:comment][:path],
-        position: params[:comment][:position],
-        changed_file: changed_file
+        position: params[:comment][:position]
       }
     end
 
-    def _reply_params(params, changed_file, review_comment)
+    def _reply_params(params, review_comment)
       {
         status: :completed,
         event: :replied,
         path: params[:comment][:path],
         position: params[:comment][:position],
-        changed_file: changed_file,
         body: params[:comment][:body],
         reviewer: review_comment.reviewer,
         review: review_comment.review,
