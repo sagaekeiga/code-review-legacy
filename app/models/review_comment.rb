@@ -91,18 +91,7 @@ class ReviewComment < ApplicationRecord
 
   class << self
     def fetch!(params)
-
-      pull = Pull.find_by(
-        remote_id: params[:pull_request][:id],
-        number: params[:pull_request][:number]
-      )
-
       review = Review.where(commit_id: params[:comment][:commit_id]).last
-
-      # PR 編集時の取得
-      if params[:changes].present?
-        return ReviewComment.fetch_changes!(params, pull, changed_file)
-      end
 
       review_comment = review.review_comments.find_or_initialize_by(_comment_attributes(params))
       review_comment.update_attributes!(
@@ -111,42 +100,8 @@ class ReviewComment < ApplicationRecord
       )
     end
 
-    # リプライレスポンスの取得
-    def fetch_reply!(params)
-      ActiveRecord::Base.transaction do
-
-        pull = Pull.find_by(
-          remote_id: params[:pull_request][:id],
-          number: params[:pull_request][:number]
-        )
-
-        review = Review.find_by(commit_id: params[:comment][:commit_id])
-
-        review_comment = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:in_reply_to_id])
-        reply = ReviewComment.find_or_initialize_by(remote_id: params[:comment][:id])
-
-        sha = review.review_comments.last.sha
-
-        reply_params = _reply_params(params, changed_file, review_comment)
-        reply_params = reply.persisted? ? reply_params : reply_params.merge(reviewer: nil)
-
-        reply.update_attributes!(reply_params.merge(sha: sha))
-
-
-
-        review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
-        review_comment_tree.save!
-        ReviewerMailer.comment(reply).deliver_later if params[:sender][:type].eql?('User') && reply.present?
-      end
-      true
-    rescue => e
-      Rails.logger.error e
-      Rails.logger.error e.backtrace.join("\n")
-      false
-    end
-
     # Edit
-    def fetch_changes!(params, pull, changed_file)
+    def fetch_changes!(params)
       ActiveRecord::Base.transaction do
         review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
         review_comment.update_attributes!(body: params[:comment][:body])
