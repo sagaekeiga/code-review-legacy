@@ -90,20 +90,35 @@ class ReviewComment < ApplicationRecord
   # -------------------------------------------------------------------------------
 
   class << self
-    def fetch!(params)
-      review = Review.where(commit_id: params[:comment][:commit_id]).last
+    #
+    # Github上で作成されたレビューコメントをMergee上でも作成する
+    # ただし、該当するレビューが存在しなければ作成しない
+    # @param [Hash] params Webhookの中身
+    #
+    def fetch_reply!(params)
+      review_comment = ReviewComment.find_by(remote_id: params[:comment][:in_reply_to_id])
+      return if review_comment.nil?
 
-      review_comment = review.review_comments.find_or_initialize_by(_comment_attributes(params))
-      review_comment.update_attributes!(
-        body: params[:comment][:body],
-        remote_id: params[:comment][:id]
-      )
+      ActiveRecord::Base.transaction do
+        reply = ReviewComment.new(_reply_params(params, review_comment))
+        reply.save!
+        ReviewerMailer.comment(reply).deliver_later
+      end
+      true
+    rescue => e
+      Rails.logger.error e
+      Rails.logger.error e.backtrace.join("\n")
+      false
     end
 
-    # Edit
+    #
+    # Github上でレビューコメントの更新内容を Mergee に反映する
+    # @param [Hash] params Webhookの中身
+    #
     def fetch_changes!(params)
+      review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
+      return if review_comment.nil?
       ActiveRecord::Base.transaction do
-        review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
         review_comment.update_attributes!(body: params[:comment][:body])
       end
       true
@@ -181,6 +196,14 @@ class ReviewComment < ApplicationRecord
   end
 
   #
+  # PR を返す
+  # @return [Pull]
+  #
+  def pull
+    review.pull
+  end
+
+  #
   # Github のコメントを更新する
   # @return [Boolean]
   #
@@ -198,26 +221,19 @@ class ReviewComment < ApplicationRecord
 
   class << self
 
-    def _comment_attributes(params)
-      {
-        remote_id: nil,
-        path: params[:comment][:path],
-        position: params[:comment][:position]
-      }
-    end
-
     def _reply_params(params, review_comment)
       {
-        status: :completed,
+        remote_id: params[:comment][:id],
+        body: params[:comment][:body],
         event: :replied,
         path: params[:comment][:path],
         position: params[:comment][:position],
-        body: params[:comment][:body],
-        reviewer: review_comment.reviewer,
-        review: review_comment.review,
-        remote_id: params[:comment][:id],
-        in_reply_to_id: params[:comment][:in_reply_to_id]
+        sha: review_comment.sha,
+        in_reply_to_id: params[:comment][:in_reply_to_id],
+        status: :completed,
+        review_id: review_comment.review.id
       }
     end
+
   end
 end

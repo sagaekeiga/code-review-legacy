@@ -4,7 +4,7 @@ class ReviewerMailer < ApplicationMailer
     @reply = reply
     return if reply.review.nil?
     @reviewer = reply.review.reviewer
-    @pull = reply.changed_file.pull
+    @pull = reply.pull
     mail(to: @reviewer.email)
   end
 
