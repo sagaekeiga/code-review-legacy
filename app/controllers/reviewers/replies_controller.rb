@@ -16,7 +16,7 @@ class Reviewers::RepliesController < Reviewers::BaseController
 
   def create
     review_comment = ReviewComment.find(params[:review_comment_id])
-    review_comment =  ReviewComment.new(reply_params(review_comment))
+    review_comment = ReviewComment.new(reply_params(review_comment))
 
     if review_comment.reply!
       render json: reply_response(review_comment: review_comment, github_account: review_comment.reviewer)
