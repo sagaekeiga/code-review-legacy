@@ -204,6 +204,23 @@ class ReviewComment < ApplicationRecord
   end
 
   #
+  # PR を返す
+  # コミットIDを返す
+  # @reuturn [Integer]
+  #
+  def commit_id
+    review.commit_id
+  end
+
+  #
+  # コメントした差分を返す
+  # @return [Pull::ChangedFile]
+  #
+  def changed_file
+    pull.changed_files.detect { |changed_file| changed_file.sha == sha }
+  end
+
+  #
   # Github のコメントを更新する
   # @return [Boolean]
   #
