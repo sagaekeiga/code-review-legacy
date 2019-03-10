@@ -3,8 +3,10 @@ require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 
 class Reviewers::RepliesController < Reviewers::BaseController
+  before_action :set_pull, only: %i(index)
+  before_action :set_repo, only: %i(index)
+
   def index
-    @pull = Pull.friendly.find(params[:pull_token]).decorate
     @numbers = @pull.body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
     @commits = Pull::CommitDecorator.decorate_collection @pull.commits
     @changed_files = Pull::ChangedFileDecorator.decorate_collection @pull.changed_files
@@ -32,6 +34,14 @@ class Reviewers::RepliesController < Reviewers::BaseController
   end
 
   private
+
+  def set_pull
+    @pull = Pull.friendly.find(params[:pull_token]).decorate
+  end
+
+  def set_repo
+    @repo = @pull.repo
+  end
 
   def reply_params(review_comment)
     {

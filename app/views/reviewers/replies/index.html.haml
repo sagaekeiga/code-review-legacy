@@ -76,7 +76,7 @@
             #codeTab.hidden.tab-content
               .reviews-form-wrapper
                 .reviews-form-card-wrapper.editor
-                  = render @changed_files
+                  = render partial: 'reviewers/pull/changed_files/changed_file', collection: @changed_files, locals: { repo: @repo, pull: @pull }
             = render 'reviewers/reviews/tab_contents', repo: @pull.repo, pull: @pull, commits: @commits, numbers: @numbers
 = javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'
