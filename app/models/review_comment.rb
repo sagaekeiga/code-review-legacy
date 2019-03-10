@@ -97,11 +97,16 @@ class ReviewComment < ApplicationRecord
     #
     def fetch_reply!(params)
       review_comment = ReviewComment.find_by(remote_id: params[:comment][:in_reply_to_id])
-      return if review_comment.nil?
+      reply = ReviewComment.find_by(remote_id: params[:comment][:id])
+      # @MEMO Githubからの返信かどうかを返す
+      #       Mergee側で作成したコメントのwebhookでないかどうか
+      return if review_comment.nil? || reply.present?
 
       ActiveRecord::Base.transaction do
         reply = ReviewComment.new(_reply_params(params, review_comment))
         reply.save!
+        review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
+        review_comment_tree.save!
         ReviewerMailer.comment(reply).deliver_later
       end
       true
@@ -133,7 +138,6 @@ class ReviewComment < ApplicationRecord
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
-
   def reviewer?(current_reviewer)
     reviewer == current_reviewer
   end
@@ -158,9 +162,11 @@ class ReviewComment < ApplicationRecord
       if in_reply_to_id
         review_comment = ReviewComment.find_by(remote_id: in_reply_to_id)
         review_comment.update!(read: true)
+        review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: self)
+        review_comment_tree.save!
       end
       comment = { body: body, in_reply_to: in_reply_to_id }
-      res = Github::Request.reply(comment.to_json, changed_file.pull)
+      res = Github::Request.reply(comment.to_json, pull)
 
       fail res if res.is_a?(String)
 
