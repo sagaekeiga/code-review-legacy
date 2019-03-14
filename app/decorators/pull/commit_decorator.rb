@@ -1,4 +1,4 @@
-class CommitDecorator < ApplicationDecorator
+class Pull::CommitDecorator < ApplicationDecorator
   delegate_all
 
   def short_sha

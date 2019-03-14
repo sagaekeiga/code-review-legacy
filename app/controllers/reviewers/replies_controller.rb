@@ -6,8 +6,8 @@ class Reviewers::RepliesController < Reviewers::BaseController
   def index
     @pull = Pull.friendly.find(params[:pull_token]).decorate
     @numbers = @pull.body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
-    @commits = @pull.commits.decorate
-    @changed_files = @pull.files_changed.decorate
+    @commits = CommitDecorator.decorate_collection @pull.commits
+    @changed_files = ChangedFileDecorator.decorate_collection @pull.changed_files
     @review = current_reviewer.reviews.find(params[:id] || params[:review_id]).decorate
     @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
   end

@@ -24,7 +24,6 @@ class Org < ApplicationRecord
   has_many :reviewees, through: :reviewee_orgs
   has_many :repos, as: :resource
   has_many :pulls, as: :resource
-  has_many :commits, as: :resource
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------

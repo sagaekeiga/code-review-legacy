@@ -36,7 +36,6 @@ class ReviewComment < ApplicationRecord
   # Relations
   # -------------------------------------------------------------------------------
   belongs_to :review, optional: true
-  belongs_to :changed_file
   belongs_to :reviewer, optional: true
 
   has_one :comment_tree, class_name: 'ReviewCommentTree', foreign_key: :reply_id, dependent: :destroy

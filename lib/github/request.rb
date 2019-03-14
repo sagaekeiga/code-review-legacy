@@ -107,7 +107,7 @@ module Github
         _get sub_url_for(repo, :pull), repo.installation_id, :pull
       end
 
-      # GET コミット取得
+      # GET コミット一覧取得
       def commits(pull:)
         headers = {
           'User-Agent': 'Mergee',
@@ -120,6 +120,23 @@ module Github
         }
 
         res = get "#{BASE_API_URI}/repos/#{pull.repo_full_name}/pulls/#{pull.number}/commits?#{queries.to_query}", headers: headers
+
+        JSON.parse res.body, symbolize_names: true
+      end
+
+      # 単体のコミットを取得
+      def commit(pull:, sha:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(pull.repo.installation_id)}",
+          'Accept': set_accept(:commit)
+        }
+
+        queries = {
+          per_page: 250
+        }
+
+        res = get "#{BASE_API_URI}/repos/#{pull.repo_full_name}/commits/#{sha}?#{queries.to_query}", headers: headers
 
         JSON.parse res.body, symbolize_names: true
       end

@@ -1,4 +1,4 @@
-class ChangedFileDecorator < ApplicationDecorator
+class Pull::ChangedFileDecorator < ApplicationDecorator
   delegate_all
 
   # 言語をシンボルで返す
@@ -33,7 +33,7 @@ class ChangedFileDecorator < ApplicationDecorator
 
   # シンタックスハイライトで返す
   def coderay(line)
-    CodeRay.scan(line, object.decorate.symbolized_lang).div.html_safe
+    CodeRay.scan(line, symbolized_lang).div.html_safe
   end
 
   # レビューコメントがあるかどうかを返す

@@ -18,7 +18,7 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def set_commit
-    @commit = @pull.commits.find(params[:id])
+    @commit = @pull.find_commit(params[:sha])
   end
 
   def set_commits
@@ -26,7 +26,7 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = ChangedFileDecorator.decorate_collection @pull.changed_files.where(commit: @commit)
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @commit.file_changes
   end
 
   def set_repo
