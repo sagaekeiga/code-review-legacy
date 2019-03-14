@@ -4,8 +4,8 @@ executors:
     docker:
       - image: circleci/ruby:2.6.0-node-browsers-legacy
         environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 4
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
           DB_HOST: localhost
