@@ -53,5 +53,15 @@
         }
       }
     }
+    .description {
+      margin-top: $base-margin * 3;
+      letter-spacing: 1px;
+    }
+    .title, .add {
+      letter-spacing: 1px;
+    }
+    img {
+      padding: $base-padding * 5;
+    }
   }
 }

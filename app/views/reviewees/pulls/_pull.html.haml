@@ -1,20 +1,12 @@
-%tr
-  %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
-  %td.text-center= link_to pull.repo_full_name, pull.repo.decorate.remote_url, target: 'blank'
-  %td
-    - if pull.changed_files.none?
-      %button{ type: 'button', class: 'btn btn-block btn-outline-danger' }
-        %i.fas.fa-times-circle
-        &nbsp;
-        WIP
-    - else
-      %button{ type: 'button', class: "btn btn-block #{I18n.t("views.statuses.text.colors.#{pull.status}")}" }
-        %i.fas{ class: t("views.statuses.icons.#{pull.status}") }
-        &nbsp;
-        = t "views.statuses.text.#{pull.status}"
-  %td
-    - unless pull.changed_files.none?
-      %button{ type: 'button',
-        class: "btn btn-block #{t("views.statuses.buttons.colors.#{pull.status}")} update-pull-button",
-        'pull-id': pull.id,
-        'repo-id': pull.repo.id }= t "views.statuses.buttons.#{pull.status}"
+%tbody
+  %tr.pull-list
+    %td{ class: pull.completed? ? 'add-merged-color' : 'add-success-color' }= t "statuses.#{pull.status}"
+    %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
+    %td= date_format(pull.remote_created_at)
+    %td
+      - if pull.need_to_operate?
+        .onoffswitch
+          %input.onoffswitch-checkbox.update-pull-button{ checked: pull.is_work_in_progress? ? true : false, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
+          %label.onoffswitch-label{ for: "reviewStatusSwitch#{pull.id}" }
+            %span.onoffswitch-inner
+            %span.onoffswitch-switch

@@ -8,6 +8,7 @@
 #  name            :string
 #  private         :boolean
 #  resource_type   :string
+#  template        :boolean
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -45,6 +46,7 @@ class Repo < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :private, default: false
+  attribute :template, default: false
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
