@@ -139,6 +139,9 @@ workflows:
       - bundle_dependencies:
           requires:
             - checkout_code
+      - test_danger:
+          requires:
+            - bundle_dependencies
       - test_rubocop:
           requires:
             - bundle_dependencies
