@@ -35,6 +35,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def show
+    @repo = @pull.repo
   end
 
   def edit

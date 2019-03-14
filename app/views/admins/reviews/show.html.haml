@@ -15,7 +15,7 @@
             .js-blob-wrapper
               .panel.panel-default.changed-file-list-wrapper
                 .panel-heading.changed-file-name= changed_file.filename
-                .panel-body.file-border{ 'changed-file-id': changed_file.id }
+                .panel-body.file-border{ 'sha': changed_file.sha }
                   .panel-text
                     .table-wrapper
                       %table
@@ -34,7 +34,7 @@
                                   %pre= line
                               - else
                                 %td.markdown-highlight.file-code= changed_file.coderay(line)
-                            - review_comment = changed_file.review_comments.find_by(position: index, reviewer: @review.reviewer, status: :pending)
+                            - review_comment = ReviewComment.find_by(position: index, reviewer: @review.reviewer, status: :pending)
                             // レビュワー自身のコメントでPendingなものだけ表示
                             - if review_comment && changed_file.present_review_comment?(index) && review_comment.pending?
                               %tr

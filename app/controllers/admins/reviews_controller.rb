@@ -7,7 +7,7 @@ class Admins::ReviewsController < Admins::BaseController
 
   def show
     @pull = @review.pull
-    @changed_files = @review.pull.files_changed.decorate
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @review.pull.changed_files
   end
 
   def update
@@ -27,7 +27,7 @@ class Admins::ReviewsController < Admins::BaseController
   rescue => e
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
-    @changed_files = @review.pull.files_changed
+    @changed_files = @review.pull.changed_files
     flash[:danger] = '承認に失敗しました'
     render :show
   end

@@ -53,14 +53,15 @@ class Github::EventBranchService
   end
 
   def pull_request_review_comment
-    if reply?
-      ReviewComment.fetch_reply!(@params)
-    else
-      ReviewComment.fetch!(@params)
-    end
+    return ReviewComment.fetch_changes!(@param) if changed_review_comment?
+    ReviewComment.fetch_reply!(@params) if reply?
   end
 
   def reply?
-    @params.dig(:comment, :in_reply_to_id).present? && @params.dig(:changes).nil?
+    @params.dig(:comment, :in_reply_to_id).present?
+  end
+
+  def changed_review_comment?
+    @params.dig(:changes).present?
   end
 end

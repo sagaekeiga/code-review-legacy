@@ -90,7 +90,7 @@ function addForm(elem) {
   if (!$(elem).hasClass('add-form')) {
     var position = $(elem).closest('.code-tr').attr('data-line-number');
     var path = $(elem).closest('.changed-file-list-wrapper').find('.changed-file-name').text();
-    var changed_file_id = $(elem).closest('.file-border').attr('changed-file-id');
+    var sha = $(elem).closest('.file-border').attr('sha');
     positionHiddenField = $('<input>').attr({
         type: 'hidden',
         name: 'reviews[position][]',
@@ -105,9 +105,9 @@ function addForm(elem) {
     });
     changedFileIdHiddenField = $('<input>').attr({
         type: 'hidden',
-        name: 'reviews[changed_file_ids][]',
-        value: changed_file_id,
-        class: 'changed_file_id'
+        name: 'reviews[sha][]',
+        value: sha,
+        class: 'sha'
     });
     // input追加
     addingButtons = $(`
@@ -159,7 +159,7 @@ function createReviewComment(elem) {
     data: {
       path: elem.nextAll('.path').val(),
       position: elem.nextAll('.position').val(),
-      changed_file_id: elem.nextAll('.changed_file_id').val(),
+      sha: elem.nextAll('.sha').val(),
       body: elem.closest('.flex-row').prevAll('textarea').val(),
       reviewer_id: $('.data_id').attr('reviewer-id')
     },

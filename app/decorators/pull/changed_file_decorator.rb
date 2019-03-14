@@ -4,28 +4,17 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   # 言語をシンボルで返す
   def symbolized_lang
     case File.extname(filename)
-    when '.rb', '.rake'
-      :ruby
-    when '.cc', '.cp', '.cpp', '.cxx', '.c'
-      :c
-    when '.py'
-      :python
-    when '.js', '.coffee'
-      :javascript
-    when '.java'
-      :java
-    when '.html'
-      :html
-    when '.php'
-      :php
-    when '.sass', '.scss'
-      :sass
-    when '.css'
-      :css
-    when '.yml'
-      :yaml
-    when '.haml'
-      :html
+    when '.rb', '.rake' then :ruby
+    when '.cc', '.cp', '.cpp', '.cxx', '.c' then :c
+    when '.py' then :python
+    when '.js', '.coffee' then :javascript
+    when '.java' then :java
+    when '.html' then :html
+    when '.php' then :php
+    when '.sass', '.scss' then :sass
+    when '.css' then :css
+    when '.yml' then :yaml
+    when '.haml' then :html
     else
       :html
     end
@@ -38,27 +27,27 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
 
   # レビューコメントがあるかどうかを返す
   def present_review_comment?(index)
-    review_comments.find_by(position: index).present?
+    ReviewComment.find_by(sha: sha, position: index, path: filename).present?
   end
 
   # レビューコメントのIDを返す
   def review_comment_id(index)
-    review_comments.find_by(position: index)&.id
+    ReviewComment.find_by(sha: sha, position: index, path: filename)&.id
   end
 
   # レビューコメントを返す
   def review_comment_body(index)
-    review_comments.find_by(position: index)&.body
+    ReviewComment.find_by(sha: sha, position: index, path: filename)&.body
   end
 
   # レビューコメントのパスを返す
   def review_comment_path(index)
-    review_comments.find_by(position: index)&.path
+    ReviewComment.find_by(sha: sha, position: index, path: filename)&.path
   end
 
   # レビューコメントのポジションを返す
   def review_comment_position(index)
-    review_comments.find_by(position: index)&.position
+    ReviewComment.find_by(sha: sha, position: index, path: filename)&.position
   end
 
   #

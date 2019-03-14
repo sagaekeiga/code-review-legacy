@@ -34,6 +34,15 @@ module Github
         JSON.parse res, symbolize_names: true
       end
 
+      # レビューのコメント一覧を返す
+      def review_comments(review:)
+        repo = review.repo
+        pull = review.pull
+        end_point = "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/#{pull.number}/reviews/#{review.remote_id}/comments"
+        res = get end_point, headers: general_headers(installation_id: repo.installation_id, event: :review)
+        JSON.parse res, symbolize_names: true
+      end
+
       #
       # PR の file changes を返す
       # @param [Pull] pull
