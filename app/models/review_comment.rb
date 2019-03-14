@@ -96,8 +96,7 @@ class ReviewComment < ApplicationRecord
     # @param [Hash] params Webhookの中身
     #
     def fetch_reply!(params)
-      review_comment = ReviewComment.find_by(remote_id: params[:comment][:in_reply_to_id])
-      return if review_comment.nil?
+      return unless review_comment = ReviewComment.find_by(remote_id: params[:comment][:in_reply_to_id])
 
       ActiveRecord::Base.transaction do
         reply = ReviewComment.new(_reply_params(params, review_comment))
@@ -116,8 +115,7 @@ class ReviewComment < ApplicationRecord
     # @param [Hash] params Webhookの中身
     #
     def fetch_changes!(params)
-      review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
-      return if review_comment.nil?
+      return unless review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
       ActiveRecord::Base.transaction do
         review_comment.update_attributes!(body: params[:comment][:body])
       end
