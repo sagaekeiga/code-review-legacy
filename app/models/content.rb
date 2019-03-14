@@ -44,32 +44,18 @@ class Content
     # @return [Content]
     # @raise [RuntimeError] 取得失敗時に発生。Cloudbeds からのエラーメッセージ
     #
-    def find(repo:, path:)
+    def find_by(repo:, path:)
       data = Github::Request.content(repo: repo, path: path)
       fail data if data.is_a?(String)
       load(data)
     end
 
-    def initializes(contents:)
-      dir_and_file_contents = []
-      file_contents = []
-      dir_contents = []
-      contents.each do |content|
-        sort_before_content = new(
-          name: content[:name],
-          path: content[:path],
-          content: content[:content],
-          type: content[:type].eql?('dir') ? :dir : :file
-        )
-        if sort_before_content.dir?
-          dir_contents << sort_before_content
-        else
-          file_contents << sort_before_content
-        end
+    def where(repo:, path: '')
+      data = Github::Request.contents(repo: repo, path: path)
+      fail data if data.is_a?(String)
+      data.map do |content|
+        load(content)
       end
-      dir_and_file_contents << dir_contents
-      dir_and_file_contents << file_contents
-      dir_and_file_contents.flatten!.reject(&:blank?)
     end
 
     #

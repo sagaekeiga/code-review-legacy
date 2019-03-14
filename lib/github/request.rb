@@ -16,8 +16,8 @@ module Github
       end
 
       # リポジトリファイルの取得（トップディレクトリ）
-      def contents(repo:)
-        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents", headers: general_headers(installation_id: repo.installation_id, event: :contents)
+      def contents(repo:, path: '')
+        res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
         JSON.parse res, symbolize_names: true
       end
 
@@ -69,7 +69,7 @@ module Github
       def ref_content(url:, installation_id:)
         res = get url, headers: general_headers(installation_id: installation_id, event: :contents)
         res = JSON.parse res, symbolize_names: true
-        res[:message] ? res[:message] : res[:content]
+        res[:message] ? res[:message] : res
       end
 
       # Readmeの取得

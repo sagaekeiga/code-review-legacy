@@ -7,4 +7,4 @@
     .changed_files
       %h2.title= @pull.title
       .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
-      .diffs= render @changed_files
+      .diffs= render partial: 'reviewers/pull/changed_files/changed_file', collection: @changed_files, locals: { repo: @repo, pull: @pull }

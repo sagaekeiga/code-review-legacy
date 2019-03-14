@@ -10,18 +10,16 @@
       .content-show-wrapper
         .page-header
           %h4
-            = @res['path']
+            = @content.path
         .panel.panel-default
-          .panel-heading
-            %b= t 'views.bytes', byte: @res['size']
           .table-wrapper
             %table
               %thead
                 %tr
                   %th{ scope: 'col' }
-              - if @res['content']
-                - decode_by_base64(@res['content'])&.each_line&.with_index do |line, index|
+              - if @content.content
+                - decode_by_base64(@content.content)&.each_line&.with_index do |line, index|
                   %tbody
                     %tr
                       %td.index= index
-                      %td.file-code= coderay(line, @res['path'])
+                      %td.file-code= coderay(line, @content.path)
