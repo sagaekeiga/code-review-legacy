@@ -145,12 +145,12 @@ workflows:
       - test_rubocop:
           requires:
             - bundle_dependencies
-      - test_rails_best_practices:
-          requires:
-            - bundle_dependencies
-      - test_brakeman:
-          requires:
-            - bundle_dependencies
-      - test_rspec:
-          requires:
-            - bundle_dependencies
+    #   - test_rails_best_practices:
+    #       requires:
+    #         - bundle_dependencies
+    #   - test_brakeman:
+    #       requires:
+    #         - bundle_dependencies
+    #   - test_rspec:
+    #       requires:
+    #         - bundle_dependencies
