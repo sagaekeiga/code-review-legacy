@@ -4,8 +4,8 @@ executors:
     docker:
       - image: circleci/ruby:2.6.0-node-browsers-legacy
         environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 4
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
           DB_HOST: localhost
@@ -53,6 +53,17 @@ jobs:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
+  test_danger:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run danger
+          command: bundle exec danger
 
   test_rubocop:
     executor: default
@@ -128,6 +139,9 @@ workflows:
       - bundle_dependencies:
           requires:
             - checkout_code
+      - test_danger:
+          requires:
+            - bundle_dependencies
       - test_rubocop:
           requires:
             - bundle_dependencies
