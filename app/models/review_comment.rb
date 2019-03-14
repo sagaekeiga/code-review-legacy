@@ -9,7 +9,7 @@
 #  path           :string
 #  position       :integer
 #  read           :boolean
-#  sha            :string
+#  sha            :string           default(""), not null
 #  status         :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -100,13 +100,11 @@ class ReviewComment < ApplicationRecord
       reply = ReviewComment.find_by(remote_id: params[:comment][:id])
       # @MEMO Githubからの返信かどうかを返す
       #       Mergee側で作成したコメントのwebhookでないかどうか
-      return if review_comment.nil? || reply.present?
+      return if !review_comment || reply
 
       ActiveRecord::Base.transaction do
-        reply = ReviewComment.new(_reply_params(params, review_comment))
-        reply.save!
-        review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: reply)
-        review_comment_tree.save!
+        reply = ReviewComment.create!(_reply_params(params, review_comment))
+        ReviewCommentTree.create!(comment: review_comment, reply: reply)
         ReviewerMailer.comment(reply).deliver_later
       end
       true
@@ -121,8 +119,7 @@ class ReviewComment < ApplicationRecord
     # @param [Hash] params Webhookの中身
     #
     def fetch_changes!(params)
-      review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
-      return if review_comment.nil?
+      return unless review_comment = ReviewComment.find_by(remote_id: params[:comment][:id])
       ActiveRecord::Base.transaction do
         review_comment.update_attributes!(body: params[:comment][:body])
       end
@@ -162,8 +159,7 @@ class ReviewComment < ApplicationRecord
       if in_reply_to_id
         review_comment = ReviewComment.find_by(remote_id: in_reply_to_id)
         review_comment.update!(read: true)
-        review_comment_tree = ReviewCommentTree.new(comment: review_comment, reply: self)
-        review_comment_tree.save!
+        ReviewCommentTree.create!(comment: review_comment, reply: self)
       end
       comment = { body: body, in_reply_to: in_reply_to_id }
       res = Github::Request.reply(comment.to_json, pull)

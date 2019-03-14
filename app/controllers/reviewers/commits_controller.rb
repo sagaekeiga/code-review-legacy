@@ -26,7 +26,7 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = FileChangeDecorator.decorate_collection @commit.file_changes
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @commit.file_changes
   end
 
   def set_repo
