@@ -1,5 +1,5 @@
 class AddShaToReviewComments < ActiveRecord::Migration[5.2]
   def change
-    add_column :review_comments, :sha, :string, null: false
+    add_column :review_comments, :sha, :string, null: false, default: ''
   end
 end
