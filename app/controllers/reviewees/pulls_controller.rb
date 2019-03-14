@@ -1,10 +1,6 @@
 class Reviewees::PullsController < Reviewees::BaseController
   skip_before_action :verify_authenticity_token, only: %i(update)
 
-  def index
-    @pulls = current_reviewee.viewable_pulls.page(params[:page])
-  end
-
   def update
     @pull = current_reviewee.find_with_org(params[:id])
     case @pull.status

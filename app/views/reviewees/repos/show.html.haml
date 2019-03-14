@@ -7,24 +7,30 @@
         %span.full_name
           = @repo.full_name.truncate(40)
         %i.fab.fa-github
-      %table.table.table-hover.m-t-4
-        %thead
-          %tr.pull-list-header
-            %th= t('.status')
-            %th= t('.title')
-            %th= t('.created')
-            %th= t('.review_status')
-        - @pulls.each_with_index do |pull, i|
-          %tbody
-            %tr.pull-list{ class: i % 2 == 0 ? 'add-light-blue' : '' }
-              %td{ class: pull.completed? ? 'add-merged-color' : 'add-success-color' }= t "statuses.#{pull.status}"
-              %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
-              %td= date_format(pull.remote_created_at)
-              %td
-                - if pull.need_to_operate?
-                  .onoffswitch
-                    %input.onoffswitch-checkbox.update-pull-button{ checked: pull.is_work_in_progress? ? true : false, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/
-                    %label.onoffswitch-label{ for: "reviewStatusSwitch#{pull.id}" }
-                      %span.onoffswitch-inner
-                      %span.onoffswitch-switch
+      - if @repo.template
+        %table.table.table-hover.m-t-4
+          %thead
+            %tr.pull-list-header
+              %th= t('.status')
+              %th= t('.title')
+              %th= t('.created')
+              %th= t('.review_status')
+          = render partial: 'reviewees/pulls/pull', collection: @pulls, locals: { repo: @repo, pull: @pull }
+      - else
+        %p.description
+          リポジトリにテンプレートを追加しましょう。
+          %br
+          テンプレートに沿って作成されたプルリクエストはコードの可読性を高め、より質の高いコードレビューを受けることができます。
+        .md-wrapper
+          .page-header
+            %h3.title プルリクエストの説明文のテンプレート
+          %p.add
+            以下のリンクからテンプレートをダウンロードして.githubディレクトリ配下にテンプレートを追加してください。
+            (例:
+            %code .github/PULL_REQUEST_TEMPLATE.md
+            )
+          %p= link_to 'ダウンロード', download_reviewees_repos_path(file_name: 'PULL_REQUEST_TEMPLATE.md'), class: 'btn btn-primary'
+          = image_tag '/pr-template-example.png', class: 'img-responsive center-block'
+          %hr
+          .text-center= link_to '設定を完了する', reviewees_repo_template_path(@repo), method: :put, class: 'btn btn-primary'
 = javascript_pack_tag 'update-resource'

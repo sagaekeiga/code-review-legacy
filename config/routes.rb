@@ -43,9 +43,10 @@ Rails.application.routes.draw do
       get :dashboard
       get :integrations
       get 'settings/integrations'
-      resources :pulls, only: %i(index)
       resources :repos, shallow: true, only: %i(index show) do
         resources :pulls, only: %i(update)
+        get :download, on: :collection
+        put :template
       end
     end
 
