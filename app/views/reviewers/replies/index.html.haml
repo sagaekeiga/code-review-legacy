@@ -61,8 +61,8 @@
                               %input{ type: 'hidden', value: review_comment.review.id, class: 'review_id' }
                               %input{ type: 'hidden', value: review_comment.path, class: 'path' }
                               %input{ type: 'hidden', value: review_comment.position, class: 'position' }
-                              %input{ type: 'hidden', value: review_comment.changed_file.id, class: 'changed_file_id' }
-                              %input{ type: 'hidden', value: review_comment.changed_file.commit_id, class: 'commit_id' }
+                              %input{ type: 'hidden', value: review_comment.changed_file.sha, class: 'sha' }
+                              %input{ type: 'hidden', value: review_comment.commit_id, class: 'commit_id' }
                       // Contents
                       .code-wrapper.hidden
                         .panel
@@ -76,7 +76,7 @@
             #codeTab.hidden.tab-content
               .reviews-form-wrapper
                 .reviews-form-card-wrapper.editor
-                  = render @changed_files
+                  = render partial: 'reviewers/pull/changed_files/changed_file', collection: @changed_files, locals: { repo: @repo, pull: @pull }
             = render 'reviewers/reviews/tab_contents', repo: @pull.repo, pull: @pull, commits: @commits, numbers: @numbers
 = javascript_pack_tag 'issues'
 = javascript_pack_tag 'review-tab'

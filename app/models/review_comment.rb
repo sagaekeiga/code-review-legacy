@@ -96,11 +96,15 @@ class ReviewComment < ApplicationRecord
     # @param [Hash] params Webhookの中身
     #
     def fetch_reply!(params)
-      return unless review_comment = ReviewComment.find_by(remote_id: params[:comment][:in_reply_to_id])
+      review_comment = ReviewComment.find_by(remote_id: params[:comment][:in_reply_to_id])
+      reply = ReviewComment.find_by(remote_id: params[:comment][:id])
+      # @MEMO Githubからの返信かどうかを返す
+      #       Mergee側で作成したコメントのwebhookでないかどうか
+      return if !review_comment || reply
 
       ActiveRecord::Base.transaction do
-        reply = ReviewComment.new(_reply_params(params, review_comment))
-        reply.save!
+        reply = ReviewComment.create!(_reply_params(params, review_comment))
+        ReviewCommentTree.create!(comment: review_comment, reply: reply)
         ReviewerMailer.comment(reply).deliver_later
       end
       true
@@ -131,7 +135,6 @@ class ReviewComment < ApplicationRecord
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
-
   def reviewer?(current_reviewer)
     reviewer == current_reviewer
   end
@@ -156,9 +159,10 @@ class ReviewComment < ApplicationRecord
       if in_reply_to_id
         review_comment = ReviewComment.find_by(remote_id: in_reply_to_id)
         review_comment.update!(read: true)
+        ReviewCommentTree.create!(comment: review_comment, reply: self)
       end
       comment = { body: body, in_reply_to: in_reply_to_id }
-      res = Github::Request.reply(comment.to_json, changed_file.pull)
+      res = Github::Request.reply(comment.to_json, pull)
 
       fail res if res.is_a?(String)
 
@@ -199,6 +203,23 @@ class ReviewComment < ApplicationRecord
   #
   def pull
     review.pull
+  end
+
+  #
+  # PR を返す
+  # コミットIDを返す
+  # @reuturn [Integer]
+  #
+  def commit_id
+    review.commit_id
+  end
+
+  #
+  # コメントした差分を返す
+  # @return [Pull::ChangedFile]
+  #
+  def changed_file
+    pull.changed_files.detect { |changed_file| changed_file.sha == sha }
   end
 
   #

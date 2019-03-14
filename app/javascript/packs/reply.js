@@ -38,7 +38,7 @@ function submitReply(elem) {
       review_comment_id: elem.nextAll('.review_comment_id').val(),
       path: elem.nextAll('.path').val(),
       position: elem.nextAll('.position').val(),
-      changed_file_id: elem.nextAll('.changed_file_id').val(),
+      sha: elem.nextAll('.sha').val(),
       body: elem.closest('.submit').prevAll('.input').find('textarea').val(),
       commit_id: elem.nextAll('.commit_id').val()
     },

@@ -178,7 +178,7 @@ class Review < ApplicationRecord
   # @return [ReviewComment::ActiveRecord_AssociationRelation]
   #
   def reviewed_comments
-    review_comments.reviewed.includes(:changed_file).order(:path)
+    review_comments.reviewed.order(:path)
   end
 
   #

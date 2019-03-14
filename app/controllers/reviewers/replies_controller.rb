@@ -3,20 +3,20 @@ require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 
 class Reviewers::RepliesController < Reviewers::BaseController
+  before_action :set_pull, only: %i(index)
+  before_action :set_repo, only: %i(index)
+
   def index
-    @pull = Pull.friendly.find(params[:pull_token]).decorate
     @numbers = @pull.body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
-    @commits = CommitDecorator.decorate_collection @pull.commits
-    @changed_files = ChangedFileDecorator.decorate_collection @pull.changed_files
+    @commits = Pull::CommitDecorator.decorate_collection @pull.commits
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @pull.changed_files
     @review = current_reviewer.reviews.find(params[:id] || params[:review_id]).decorate
     @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
   end
 
   def create
     review_comment = ReviewComment.find(params[:review_comment_id])
-    changed_file = ChangedFile.find(params[:changed_file_id])
-
-    review_comment = changed_file.review_comments.new(reply_params(review_comment))
+    review_comment = ReviewComment.new(reply_params(review_comment))
 
     if review_comment.reply!
       render json: reply_response(review_comment: review_comment, github_account: review_comment.reviewer)
@@ -33,9 +33,18 @@ class Reviewers::RepliesController < Reviewers::BaseController
 
   private
 
+  def set_pull
+    @pull = Pull.friendly.find(params[:pull_token]).decorate
+  end
+
+  def set_repo
+    @repo = @pull.repo
+  end
+
   def reply_params(review_comment)
     {
       event: :replied,
+      sha: params[:sha],
       position: params[:position],
       path: params[:path]&.gsub('\n', ''),
       body: params[:body],
