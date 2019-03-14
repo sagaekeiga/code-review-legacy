@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_093250) do
+ActiveRecord::Schema.define(version: 2019_03_03_090210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,41 +30,6 @@ ActiveRecord::Schema.define(version: 2019_01_10_093250) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
-  end
-
-  create_table "changed_files", force: :cascade do |t|
-    t.bigint "pull_id"
-    t.bigint "commit_id"
-    t.string "filename"
-    t.integer "additions"
-    t.integer "deletions"
-    t.integer "difference"
-    t.string "contents_url"
-    t.text "patch"
-    t.integer "event"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["commit_id"], name: "index_changed_files_on_commit_id"
-    t.index ["deleted_at"], name: "index_changed_files_on_deleted_at"
-    t.index ["pull_id"], name: "index_changed_files_on_pull_id"
-  end
-
-  create_table "commits", force: :cascade do |t|
-    t.integer "resource_id"
-    t.string "resource_type"
-    t.bigint "pull_id"
-    t.string "sha"
-    t.string "message"
-    t.string "committer_name"
-    t.string "committed_date"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_commits_on_deleted_at"
-    t.index ["pull_id"], name: "index_commits_on_pull_id"
-    t.index ["resource_id"], name: "index_commits_on_resource_id"
-    t.index ["resource_type"], name: "index_commits_on_resource_type"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -142,7 +107,6 @@ ActiveRecord::Schema.define(version: 2019_01_10_093250) do
   create_table "review_comments", force: :cascade do |t|
     t.bigint "reviewer_id"
     t.bigint "review_id"
-    t.bigint "changed_file_id"
     t.text "body"
     t.string "path"
     t.integer "position"
@@ -154,7 +118,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_093250) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["changed_file_id"], name: "index_review_comments_on_changed_file_id"
+    t.string "sha", null: false
     t.index ["deleted_at"], name: "index_review_comments_on_deleted_at"
     t.index ["review_id"], name: "index_review_comments_on_review_id"
     t.index ["reviewer_id"], name: "index_review_comments_on_reviewer_id"
@@ -316,11 +280,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_093250) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "changed_files", "commits"
-  add_foreign_key "changed_files", "pulls"
-  add_foreign_key "commits", "pulls"
   add_foreign_key "pulls", "repos"
-  add_foreign_key "review_comments", "changed_files"
   add_foreign_key "review_comments", "reviewers"
   add_foreign_key "review_comments", "reviews"
   add_foreign_key "reviewees_github_accounts", "reviewees"
