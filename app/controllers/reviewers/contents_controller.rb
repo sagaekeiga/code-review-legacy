@@ -1,4 +1,3 @@
-require 'github/request.rb'
 class Reviewers::ContentsController < Reviewers::BaseController
   before_action :set_repo, only: %i(index)
 
@@ -8,16 +7,9 @@ class Reviewers::ContentsController < Reviewers::BaseController
       return
     end
     if params[:type] == 'dir' || params[:type].nil?
-      res = Github::Request.content repo: @repo, path: params[:path]
-      @contents = Content.initializes contents: res
+      @contents = Content.where(repo: @repo, path: params[:path])
     else
-      res = Github::Request.content repo: @repo, path: params[:path]
-      @content = Content.new(
-        name: res[:name],
-        path: res[:path],
-        content: res[:content],
-        type: :file
-      )
+      @content = Content.find_by(repo: @repo, path: params[:path])
     end
   end
 

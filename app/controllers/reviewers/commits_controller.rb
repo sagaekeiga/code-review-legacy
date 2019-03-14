@@ -22,7 +22,7 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def set_commits
-    @commits = @pull.commits.decorate
+    @commits = Pull::CommitDecorator.decorate_collection @pull.commits
   end
 
   def set_changed_files

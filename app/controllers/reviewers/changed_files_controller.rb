@@ -8,8 +8,7 @@ class Reviewers::ChangedFilesController < Reviewers::BaseController
 
   def show
     @pull = Pull.friendly.find(params[:pull_token])
-    @changed_file = @pull.changed_files.find(params[:id])
-    @res = @changed_file.content
+    @content = @pull.changed_file(url: params[:contents_url])
   end
 
   private
@@ -19,7 +18,7 @@ class Reviewers::ChangedFilesController < Reviewers::BaseController
   end
 
   def set_changed_files
-    @changed_files = @pull.files_changed.decorate
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @pull.changed_files
   end
 
   def set_repo
