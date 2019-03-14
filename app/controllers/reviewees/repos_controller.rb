@@ -10,9 +10,9 @@ class Reviewees::ReposController < Reviewees::BaseController
   end
 
   def download
-    filepath = Rails.root.join('public', 'templates', params[:file_name])
-    stat = File::stat(filepath)
-    send_file(filepath, filename: params[:file_name], length: stat.size)
+    filepath = Rails.root.join('public', 'templates', 'PULL_REQUEST_TEMPLATE.md')
+    stat = File.stat(filepath)
+    send_file(filepath, filename: 'PULL_REQUEST_TEMPLATE.md', length: stat.size)
   end
 
   def template
