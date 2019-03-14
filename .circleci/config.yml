@@ -54,6 +54,17 @@ jobs:
           paths:
             - vendor/bundle
 
+  test_danger:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run danger
+          command: bundle exec danger
+
   test_rubocop:
     executor: default
     steps:
