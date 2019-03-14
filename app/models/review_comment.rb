@@ -9,7 +9,7 @@
 #  path           :string
 #  position       :integer
 #  read           :boolean
-#  sha            :string
+#  sha            :string           not null
 #  status         :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
