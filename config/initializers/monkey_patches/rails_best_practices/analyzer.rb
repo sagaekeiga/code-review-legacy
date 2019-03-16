@@ -19,7 +19,7 @@ module RailsBestPractices
       parse_files.each do |file|
         begin
           puts file if @options['debug']
-          target_file = @change_files.detect { |changed_file| changed_file.filename == file } 
+          target_file = @change_files.detect { |changed_file| changed_file.filename == file }
           target_file_content = Base64.decode64(target_file.content).force_encoding('UTF-8')
 
           @runner.send(process, file, target_file_content)
