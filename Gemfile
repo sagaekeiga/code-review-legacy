@@ -135,7 +135,6 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'timecop'
   gem 'webmock'
-  gem 'danger'
 end
 
 group :development do
