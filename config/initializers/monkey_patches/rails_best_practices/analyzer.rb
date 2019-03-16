@@ -62,5 +62,20 @@ module RailsBestPractices
       end
     end
 
+    # Output the analyze result.
+    def output
+      output_json_errors
+    end
+
+    # output errors with json format.
+    def output_json_errors
+      errors.map do |err|
+        {
+          filename:    err.filename,
+          line_number: err.line_number,
+          message:     err.message
+        }
+      end
+    end
   end
 end
