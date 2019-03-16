@@ -65,9 +65,7 @@ module RailsBestPractices
 
     # Output the analyze result.
     def output
-      output_json_errors.each do |err|
-
-      end
+      output_json_errors
     end
 
     # output errors with json format.

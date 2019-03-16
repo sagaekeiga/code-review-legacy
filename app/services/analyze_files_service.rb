@@ -11,9 +11,6 @@ class AnalyzeFilesService
     @pull = pull
   end
 
-  #
-  # Eventごとに処理を走らせる
-  #
   def call
     rails_best_practices pull: @pull
   end
