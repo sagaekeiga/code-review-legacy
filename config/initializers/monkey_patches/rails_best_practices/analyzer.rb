@@ -17,7 +17,7 @@ module RailsBestPractices
       @zipfile = zipfile
       Zip::File.open(zipfile.path) do |zip|
         @entries = zip.map do |entry|
-          entry if entry.ftype == :file
+          entry if entry.ftype == :file && %w[.rb .erb .rake .rhtml .haml .slim .builder .rxml .rabl].include?(File.extname(entry.name))
         end.reject(&:blank?)
       end
 
@@ -28,7 +28,7 @@ module RailsBestPractices
       @options['only'] ||= []
     end
 
-    def process(process)
+    def process(process) 
       parse_files.each do |file|
         begin
           puts file if @options['debug']
