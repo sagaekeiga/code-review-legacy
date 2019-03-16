@@ -1,8 +1,9 @@
 class AnalyzeFilesService
   private_class_method :new
 
-  def self.call(pull:)
-    new(pull: pull).send(:call)
+  def self.call(pull_remote_id:)
+    return unless pull = Pull.find_by(remote_id: pull_remote_id)
+    new(pull: pull).send(:call) if pull.repo.analysis
   end
 
   private
