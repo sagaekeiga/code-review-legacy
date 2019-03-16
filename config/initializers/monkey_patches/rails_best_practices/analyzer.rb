@@ -60,8 +60,6 @@ module RailsBestPractices
 
         files.compact
       end
-      puts "pparse_files: #{@parse_files}"
-      @parse_files
     end
 
   end
