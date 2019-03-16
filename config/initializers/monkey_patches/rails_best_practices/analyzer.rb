@@ -4,7 +4,7 @@ module RailsBestPractices
     #
     # @param [String] path where to generate the configuration yaml file
     # @param [Hash] options
-    def initialize(path, options = {}, pull:)
+    def initialize(path, options = {}, pull)
       @path = File.expand_path(path || '.')
       # @MEMO 差分ファイルに対してのみ解析をかける
       @pull = pull

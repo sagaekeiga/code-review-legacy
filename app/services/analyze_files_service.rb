@@ -17,7 +17,7 @@ class AnalyzeFilesService
   end
 
   def rails_best_practices(pull:)
-    analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
+    analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, @pull)
     analyzer.analyze
     outputs = analyzer.output
     params = { body: outputs.to_s }.to_json
