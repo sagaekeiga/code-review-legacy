@@ -1,14 +1,4 @@
 module RailsBestPractices
-
-  # RailsBestPractices Analyzer helps you to analyze your rails code, according to best practices on https://rails-bestpractices.
-  # if it finds any violatioins to best practices, it will give you some readable suggestions.
-  #
-  # The analysis process is partitioned into two parts,
-  #
-  # 1. prepare process, it checks only model and mailer files, do some preparations, such as remember model names and associations.
-  # 2. review process, it checks all files, according to configuration, it really check if codes violate the best practices, if so, remember the violations.
-  #
-  # After analyzing, output the violations.
   class Analyzer
     # initialize
     #
@@ -17,7 +7,7 @@ module RailsBestPractices
     def initialize(path, options = {})
       @path = File.expand_path(path || '.')
       # @MEMO 差分ファイルに対してのみ解析をかける
-      @change_files = Pull.first.changed_files
+      @change_files = Pull.last.changed_files 
 
       @options = options
       @options['exclude'] ||= []
