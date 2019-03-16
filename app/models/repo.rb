@@ -54,6 +54,7 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   delegate :resource_type, to: :repo, prefix: true
   delegate :resource_id, to: :repo, prefix: true
+  delegate :analysis, to: :repo, prefix: true
 
   # -------------------------------------------------------------------------------
   # ClassMethods
