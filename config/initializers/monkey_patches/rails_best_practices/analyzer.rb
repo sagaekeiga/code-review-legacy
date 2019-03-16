@@ -7,7 +7,7 @@ module RailsBestPractices
     def initialize(path, options = {})
       @path = File.expand_path(path || '.')
       # @MEMO 差分ファイルに対してのみ解析をかける
-      @change_files = Pull.last.changed_files 
+      @change_files = Pull.last.changed_files
 
       @options = options
       @options['exclude'] ||= []
