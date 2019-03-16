@@ -16,9 +16,7 @@ module RailsBestPractices
     # @param [Hash] options
     def initialize(path, options = {})
       @path = File.expand_path(path || '.')
-      # puts @path
-      # plain_output(@path, 'red')
-      # @contents = Github::Request.files(pull: Pull.first)
+      # @MEMO 差分ファイルに対してのみ解析をかける
       @change_files = Pull.first.changed_files
 
       @options = options
@@ -29,17 +27,11 @@ module RailsBestPractices
     def process(process)
       parse_files.each do |file|
         begin
-          puts "file #{file}"
-          puts file.class
-
           puts file if @options['debug']
-          # ana_file = File.read(file)
-          puts 1111
           target_file = @change_files.detect { |changed_file| changed_file.path == file }
-          puts 2222
-          ana_file = target_file.content
+          target_file_content = target_file.content
 
-          @runner.send(process, file, ana_file)
+          @runner.send(process, file, target_file_content)
         rescue StandardError
           if @options['debug']
             warning = "#{file} looks like it's not a valid Ruby file.  Skipping..."
@@ -56,9 +48,7 @@ module RailsBestPractices
     def parse_files
       @parse_files ||= begin
         files = @change_files.map{ |content| content.filename }
-        # files = expand_dirs_to_files(@path)
         files = file_sort(files)
-        puts files
 
         if @options['only'].present?
           files = file_accept(files, @options['only'])
