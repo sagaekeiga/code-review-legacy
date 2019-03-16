@@ -8,7 +8,20 @@ module RailsBestPractices
       @path = File.expand_path(path || '.')
       # @MEMO 差分ファイルに対してのみ解析をかける
       @pull = pull
-      @change_files = @pull.changed_files
+      # @change_files = @pull.changed_files
+      @zip = Github::Request.repo_archive(repo: @pull.repo, pull: @pull)
+      zipfile = Tempfile.new('file')
+      zipfile.binmode
+      zipfile.write(@zip.body)
+      zipfile.close
+      @zipfile = zipfile
+      Zip::File.open(zipfile.path) do |zip|
+        @entries = zip.map do |entry|
+          entry if entry.ftype == :file
+        end.reject(&:blank?)
+      end
+
+      puts @entries
 
       @options = options
       @options['exclude'] ||= []
@@ -19,8 +32,8 @@ module RailsBestPractices
       parse_files.each do |file|
         begin
           puts file if @options['debug']
-          target_file = @change_files.detect { |changed_file| changed_file.filename == file }
-          target_file_content = Base64.decode64(target_file.content).force_encoding('UTF-8')
+          target_file = @entries.detect { |entry| entry.name == file }
+          target_file_content = Base64.decode64(target_file.get_input_stream.read).force_encoding('UTF-8')
 
           @runner.send(process, file, target_file_content)
         rescue StandardError
@@ -38,7 +51,7 @@ module RailsBestPractices
     # @return [Array] all files for parsing
     def parse_files
       @parse_files ||= begin
-        files = @change_files.map{ |content| content.filename }
+        files = @entries.map { |entry| entry.name }
         files = file_sort(files)
 
         if @options['only'].present?
@@ -78,5 +91,17 @@ module RailsBestPractices
         }
       end
     end
+
+    #
+    # zipファイルを解凍したフォルダを返す
+    #
+    def expand_dirs_to_files(zipfile)
+      Zip::File.open(zipfile.path) do |zip|
+        zip.each do |entry|
+          entry.name if entry.ftype == :file
+        end
+      end
+    end
+
   end
 end
