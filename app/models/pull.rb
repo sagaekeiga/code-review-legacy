@@ -235,6 +235,14 @@ class Pull < ApplicationRecord
   end
 
   #
+  # オーナ名/レポジトリ名 を返す
+  # @return [String]
+  #
+  def full_name
+    repo.full_name
+  end
+
+  #
   # Pull にひもづくコミット一覧を返す
   # @return [Array<Pull::Commit>]
   #

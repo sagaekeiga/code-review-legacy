@@ -4,10 +4,11 @@ module RailsBestPractices
     #
     # @param [String] path where to generate the configuration yaml file
     # @param [Hash] options
-    def initialize(path, options = {})
+    def initialize(path, options = {}, pull:)
       @path = File.expand_path(path || '.')
       # @MEMO 差分ファイルに対してのみ解析をかける
-      @change_files = Pull.last.changed_files
+      @pull = Pull.last
+      @change_files = @pull.changed_files
 
       @options = options
       @options['exclude'] ||= []
@@ -64,7 +65,9 @@ module RailsBestPractices
 
     # Output the analyze result.
     def output
-      puts output_json_errors
+      output_json_errors.each do |err|
+
+      end
     end
 
     # output errors with json format.
