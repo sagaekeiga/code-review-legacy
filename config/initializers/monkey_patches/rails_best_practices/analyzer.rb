@@ -46,7 +46,7 @@ module RailsBestPractices
       analyze_vcs
     end
 
-    def process(process) 
+    def process(process)
       parse_files.each do |file|
         begin
           puts file if @options['debug']
