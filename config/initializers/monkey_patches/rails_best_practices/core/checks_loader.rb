@@ -7,7 +7,7 @@ module RailsBestPractices
 
       # read the checks from yaml config.
       def checks_from_config
-        @checks ||= YAML.load @config.get_input_stream.read.to_s
+        @checks ||= YAML.load @config.get_input_stream.read.to_s.force_encoding('UTF-8')
       end
 
     end

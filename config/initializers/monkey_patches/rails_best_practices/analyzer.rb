@@ -9,6 +9,7 @@ module RailsBestPractices
       @options = options
       @options['exclude'] ||= []
       @options['only'] ||= []
+      @options['debug'] ||= true
       # @MEMO 差分ファイルに対してのみ解析をかける
       @pull = pull
       @zip = Github::Request.repo_archive(repo: @pull.repo, pull: @pull)
@@ -18,10 +19,12 @@ module RailsBestPractices
       zipfile.close
       @zipfile = zipfile
       Zip::File.open(zipfile.path) do |zip|
-        @entries = zip.map do |entry|
+        @entries = zip.map.with_index do |entry, index|
+          @path = entry.name if index == 0
           @options['config'] = entry if entry.name.include?('rails_best_practices.yml')
           entry if entry.ftype == :file && %w[.rb .erb .rake .rhtml .haml .slim .builder .rxml .rabl].include?(File.extname(entry.name))
         end.reject(&:blank?)
+        puts @entries
       end
     end
 
@@ -49,7 +52,7 @@ module RailsBestPractices
         begin
           puts file if @options['debug']
           target_file = @entries.detect { |entry| entry.name == file }
-          target_file_content = target_file.get_input_stream.read
+          target_file_content = target_file.get_input_stream.read.to_s.force_encoding('UTF-8')
 
           @runner.send(process, file, target_file_content)
         rescue StandardError
@@ -76,6 +79,7 @@ module RailsBestPractices
 
         # By default, tmp, vender, spec, test, features are ignored.
         %w[vendor spec test features tmp].each do |dir|
+          puts File.join(@path, dir)
           files = file_ignore(files, File.join(@path, dir)) unless @options[dir]
         end
 

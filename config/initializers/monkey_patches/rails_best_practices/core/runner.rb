@@ -60,9 +60,6 @@ module RailsBestPractices
         reviews = Array(options[:reviews])
 
         checks_loader = ChecksLoader.new(@config)
-        puts "===================== aaaaaaa =========================="
-        puts checks_loader
-        puts "===================== aaaaaaa =========================="
         @lexicals = lexicals.empty? ? checks_loader.load_lexicals : lexicals
         @prepares = prepares.empty? ? load_prepares : prepares
         @reviews = reviews.empty? ? checks_loader.load_reviews : reviews
