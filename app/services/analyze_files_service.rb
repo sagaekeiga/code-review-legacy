@@ -21,13 +21,13 @@ class AnalyzeFilesService
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     outputs = analyzer.output
-    outputs.each do |output|
+    return unless outputs.empty?
+    outputs.map do |output|
       "### #{output[:message]}
       * #{output[:filename]}"
     end
     header = "## Rails Best Practice"
-    header += outputs
-    return unless outputs.empty?
+    header += outputs.join
     params = { body: outputs.to_s }.to_json
     Github::Request.issue_comment(params, pull)
   end
