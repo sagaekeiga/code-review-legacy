@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_16_110443) do
+ActiveRecord::Schema.define(version: 2019_03_17_114002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 2019_03_16_110443) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "issue_comments", force: :cascade do |t|
+    t.bigint "pull_id"
+    t.integer "remote_id"
+    t.text "body"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_issue_comments_on_pull_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -282,6 +292,7 @@ ActiveRecord::Schema.define(version: 2019_03_16_110443) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "issue_comments", "pulls"
   add_foreign_key "pulls", "repos"
   add_foreign_key "review_comments", "reviewers"
   add_foreign_key "review_comments", "reviews"
