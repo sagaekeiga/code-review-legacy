@@ -26,9 +26,7 @@ class AnalyzeFilesService
       "### #{output[:message]}
       * #{output[:filename]}"
     end
-    header = "## Rails Best Practice"
-    header += outputs.join
-    params = { body: header.to_s }.to_json
+    params = { body: I18n.t('analysis.template', rbp_outputs: outputs.join ).to_s }.to_json
     Github::Request.issue_comment(params, pull)
   end
 end

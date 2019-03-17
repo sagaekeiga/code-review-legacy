@@ -195,3 +195,7 @@ ja:
       subject: レビューが作成されました
     slack_mail:
       subject: レビュワーからSlackのメールアドレスが届きました
+  analysis:
+    template: |
+      "### Rails Best Practices" |
+      %{rbp_outputs} |
