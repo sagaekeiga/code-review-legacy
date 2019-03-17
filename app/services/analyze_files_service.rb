@@ -27,6 +27,7 @@ class AnalyzeFilesService
       * #{output[:filename]}"
     end
     params = { body: I18n.t('analysis.template', rbp_outputs: outputs.join ).gsub('"', '').to_s }.to_json
-    Github::Request.issue_comment(params, pull)
+    data = Github::Request.issue_comment(params, pull)
+    Rails.logger.info data
   end
 end
