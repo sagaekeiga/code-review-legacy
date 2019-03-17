@@ -197,5 +197,5 @@ ja:
       subject: レビュワーからSlackのメールアドレスが届きました
   analysis:
     template: |
-      "### Rails Best Practices" |
-      %{rbp_outputs} |
+      "### Rails Best Practices"
+      %{rbp_outputs}
