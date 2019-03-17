@@ -31,7 +31,6 @@ class AnalyzeFilesService
     if issue_comment.persisted?
       data = Github::Request.update_issue_comment(params, pull)
       issue_comment.update(
-        remote_id: data[:id],
         body: data[:body]
       )
     else
