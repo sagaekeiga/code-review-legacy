@@ -22,7 +22,7 @@ class AnalyzeFilesService
     analyzer.analyze
     outputs = analyzer.output
     return unless outputs.present?
-    outputs.map do |output|
+    outputs = outputs.map do |output|
       "### #{output[:message]}
       * #{output[:filename]}"
     end
