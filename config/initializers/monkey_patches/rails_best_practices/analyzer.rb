@@ -24,7 +24,6 @@ module RailsBestPractices
           @options['config'] = entry if entry.name.include?('rails_best_practices.yml')
           entry if entry.ftype == :file && %w[.rb .erb .rake .rhtml .haml .slim .builder .rxml .rabl].include?(File.extname(entry.name))
         end.reject(&:blank?)
-        puts @entries
       end
     end
 
@@ -79,7 +78,6 @@ module RailsBestPractices
 
         # By default, tmp, vender, spec, test, features are ignored.
         %w[vendor spec test features tmp].each do |dir|
-          puts File.join(@path, dir)
           files = file_ignore(files, File.join(@path, dir)) unless @options[dir]
         end
 
