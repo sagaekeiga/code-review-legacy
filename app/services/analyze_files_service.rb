@@ -28,7 +28,7 @@ class AnalyzeFilesService
     end
     header = "## Rails Best Practice"
     header += outputs.join
-    params = { body: outputs.to_s }.to_json
+    params = { body: header.to_s }.to_json
     Github::Request.issue_comment(params, pull)
   end
 end
