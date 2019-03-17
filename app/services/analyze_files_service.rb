@@ -21,7 +21,7 @@ class AnalyzeFilesService
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     outputs = analyzer.output
-    return unless outputs.empty?
+    return unless outputs.present?
     outputs.map do |output|
       "### #{output[:message]}
       * #{output[:filename]}"
