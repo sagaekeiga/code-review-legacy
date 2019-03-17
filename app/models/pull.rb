@@ -42,6 +42,7 @@ class Pull < ApplicationRecord
   belongs_to :resource, polymorphic: true
   belongs_to :repo
   has_many :reviews, dependent: :destroy
+  has_many :issue_comments, dependent: :destroy
   has_many :reviewer_pulls, dependent: :destroy
   has_many :reviewers, through: :reviewer_pulls, source: :reviewer
   # -------------------------------------------------------------------------------
