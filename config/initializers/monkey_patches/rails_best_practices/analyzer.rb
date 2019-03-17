@@ -6,9 +6,11 @@ module RailsBestPractices
     # @param [Hash] options
     def initialize(path, options = {}, pull:)
       @path = File.expand_path(path || '.')
+      @options = options
+      @options['exclude'] ||= []
+      @options['only'] ||= []
       # @MEMO 差分ファイルに対してのみ解析をかける
       @pull = pull
-      # @change_files = @pull.changed_files
       @zip = Github::Request.repo_archive(repo: @pull.repo, pull: @pull)
       zipfile = Tempfile.new('file')
       zipfile.binmode
@@ -17,15 +19,29 @@ module RailsBestPractices
       @zipfile = zipfile
       Zip::File.open(zipfile.path) do |zip|
         @entries = zip.map do |entry|
+          @options['config'] = entry if entry.name.include?('rails_best_practices.yml')
           entry if entry.ftype == :file && %w[.rb .erb .rake .rhtml .haml .slim .builder .rxml .rabl].include?(File.extname(entry.name))
         end.reject(&:blank?)
       end
+    end
 
-      puts @entries
-
-      @options = options
-      @options['exclude'] ||= []
-      @options['only'] ||= []
+    # Analyze rails codes.
+    #
+    # there are two steps to check rails codes,
+    #
+    # 1. prepare process, check all model and mailer files.
+    # 2. review process, check all files.
+    #
+    # if there are violations to rails best practices, output them.
+    #
+    # @param [String] path the directory of rails project
+    # @param [Hash] options
+    def analyze
+      Core::Runner.base_path = @path
+      Core::Runner.config = @options['config']
+      @runner = Core::Runner.new
+      analyze_source_codes
+      analyze_vcs
     end
 
     def process(process) 
@@ -33,7 +49,7 @@ module RailsBestPractices
         begin
           puts file if @options['debug']
           target_file = @entries.detect { |entry| entry.name == file }
-          target_file_content = Base64.decode64(target_file.get_input_stream.read).force_encoding('UTF-8')
+          target_file_content = target_file.get_input_stream.read
 
           @runner.send(process, file, target_file_content)
         rescue StandardError
