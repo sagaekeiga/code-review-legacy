@@ -4,7 +4,7 @@
 #
 #  id         :bigint(8)        not null, primary key
 #  body       :text
-#  url        :string
+#  status     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  pull_id    :bigint(8)

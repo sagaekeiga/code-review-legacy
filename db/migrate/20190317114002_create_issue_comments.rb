@@ -4,7 +4,7 @@ class CreateIssueComments < ActiveRecord::Migration[5.2]
       t.belongs_to :pull, foreign_key: true
       t.integer :remote_id
       t.text :body
-      t.string :url
+      t.integer :status
       t.timestamps
     end
   end
