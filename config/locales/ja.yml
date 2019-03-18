@@ -204,4 +204,6 @@ ja:
       "| %{filename_line_number} | ❌  |"
     template: |
       "# Rails Best Practices"
+      Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.
+      Found %{errors_count} warnings.
       %{rbp_outputs}

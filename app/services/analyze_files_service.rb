@@ -28,7 +28,7 @@ class AnalyzeFilesService
       I18n.t('analysis.thead', message: message, tds: target_outputs.map { |target_output| I18n.t('analysis.td', filename_line_number: filename_line_number(target_output[:filename], target_output[:line_number], analyzer)) }.join )
     end
 
-    params = { body: I18n.t('analysis.template', rbp_outputs: outputs.join ).gsub('"', '').to_s }.to_json
+    params = { body: I18n.t('analysis.template', rbp_outputs: outputs.join ).gsub('"', '').to_s, errors_count: outputs.count }.to_json
     issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
     if issue_comment.persisted?
       data = Github::Request.update_issue_comment(params, pull)
