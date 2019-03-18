@@ -200,7 +200,8 @@ ja:
       "| %{message} |  |"
       "|:---|:---:|"
       %{tds}
-    td: "| %{filename_line_number} | ❌  |"
+    td: |
+      "| %{filename_line_number} | ❌  |"
     template: |
       "# Rails Best Practices"
       %{rbp_outputs}
