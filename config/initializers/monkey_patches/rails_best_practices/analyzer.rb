@@ -46,6 +46,10 @@ module RailsBestPractices
       analyze_vcs
     end
 
+    def app_name
+      @path
+    end
+
     def process(process)
       parse_files.each do |file|
         begin

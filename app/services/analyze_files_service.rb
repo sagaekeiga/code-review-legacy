@@ -22,10 +22,12 @@ class AnalyzeFilesService
     analyzer.analyze
     outputs = analyzer.output
     return unless outputs.present?
-    outputs = outputs.map do |output|
-      "### #{output[:message]}
-      * #{output[:filename]}"
+    messages = outputs.map { |output| output[:message] }.uniq
+    outputs = messages.map do |message|
+      target_outputs = outputs.select { |output| output[:message] == message }
+      I18n.t('analysis.thead', message: message, tds: target_outputs.map { |target_output| I18n.t('analysis.td', filename_line_number: filename_line_number(target_output[:filename], target_output[:line_number], analyzer)) }.join )
     end
+
     params = { body: I18n.t('analysis.template', rbp_outputs: outputs.join ).gsub('"', '').to_s }.to_json
     issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
     if issue_comment.persisted?
@@ -42,5 +44,9 @@ class AnalyzeFilesService
       issue_comment.save
     end
     Rails.logger.info data
+  end
+
+  def filename_line_number(filename, line_number, analyzer)
+    filename.gsub("#{analyzer.app_name}", '') + ":#{line_number}"
   end
 end
