@@ -30,7 +30,10 @@ class AnalyzeFilesService
         end
         { body: I18n.t('analysis.template', rbp_outputs: format_outputs.join, errors_count: outputs.count).gsub('"', '').to_s }.to_json
       else
-        { body: "***Fixed***" }
+        { body: "
+          # Rails Best Practices
+          ***Fixed***
+          " }.to_json
       end
     issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
     if issue_comment.persisted?
