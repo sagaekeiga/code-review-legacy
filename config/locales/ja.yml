@@ -208,3 +208,6 @@ ja:
       "Found **%{errors_count}** warnings."
       ""
       %{rbp_outputs}
+    fixed: |
+      "# Rails Best Practices"
+      "***Fixed***"
