@@ -34,7 +34,7 @@ module Github
       end
 
       # リポジトリファイルの取得（トップディレクトリ）
-      def contents(repo:, path: '') 
+      def contents(repo:, path: '')
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
         JSON.parse res, symbolize_names: true
       end

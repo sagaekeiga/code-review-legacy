@@ -13,22 +13,25 @@ class AnalyzeFilesService
     @pull = pull
   end
 
-  def call 
-    rails_best_practices pull: @pull 
+  def call
+    rails_best_practices pull: @pull
   end
 
-  def rails_best_practices(pull:) 
+  def rails_best_practices(pull:)
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     outputs = analyzer.output
-    return unless outputs.present?
-    messages = outputs.map { |output| output[:message] }.uniq
-    format_outputs = messages.map do |message|
-      target_outputs = outputs.select { |output| output[:message] == message }
-      I18n.t('analysis.thead', message: message, tds: target_outputs.map { |target_output| I18n.t('analysis.td', filename_line_number: filename_line_number(target_output[:filename], target_output[:line_number], analyzer)) }.join )
-    end
-
-    params = { body: I18n.t('analysis.template', rbp_outputs: format_outputs.join, errors_count: outputs.count).gsub('"', '').to_s }.to_json
+    params =
+      if outputs.present?
+        messages = outputs.map { |output| output[:message] }.uniq
+        format_outputs = messages.map do |message|
+          target_outputs = outputs.select { |output| output[:message] == message }
+          I18n.t('analysis.thead', message: message, tds: target_outputs.map { |target_output| I18n.t('analysis.td', filename_line_number: filename_line_number(target_output[:filename], target_output[:line_number], analyzer)) }.join )
+        end
+        { body: I18n.t('analysis.template', rbp_outputs: format_outputs.join, errors_count: outputs.count).gsub('"', '').to_s }.to_json
+      else
+        { body: "***Fixed***" }
+      end
     issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
     if issue_comment.persisted?
       data = Github::Request.update_issue_comment(params, pull)
