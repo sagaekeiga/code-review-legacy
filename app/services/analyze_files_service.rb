@@ -13,11 +13,11 @@ class AnalyzeFilesService
     @pull = pull
   end
 
-  def call
-    rails_best_practices pull: @pull
+  def call 
+    rails_best_practices pull: @pull 
   end
 
-  def rails_best_practices(pull:)
+  def rails_best_practices(pull:) 
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     outputs = analyzer.output
