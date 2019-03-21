@@ -100,19 +100,23 @@ module RailsBestPractices
 
     # Output the analyze result.
     def output
-      output_json_errors
-    end
-
-    # output errors with json format.
-    def output_json_errors
       errors.map do |err|
-        {
-          filename:    err.filename,
-          line_number: err.line_number,
-          message:     err.message
-        }
+        err[:filename].gsub!("#{analyzer.app_name}", '')
+        RailsBestPractices::Error.new(err)
       end
     end
+
+    # # output errors with json format.
+    # def output_json_errors
+    #   errors.map do |err|
+    #     # {
+    #     #   filename:    err.filename,
+    #     #   line_number: err.line_number,
+    #     #   message:     err.message
+    #     # }
+    #     RailsBestPractices::Error.new(err)
+    #   end
+    # end
 
     #
     # zipファイルを解凍したフォルダを返す
