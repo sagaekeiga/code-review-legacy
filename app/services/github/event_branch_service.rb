@@ -41,7 +41,9 @@ class Github::EventBranchService
   end
 
   def pull_request
-    Pull.update_by_pull_request_event!(@params[:github_app][:pull_request]) if present_pull_request?
+    return unless present_pull_request?
+    Pull.update_by_pull_request_event!(@params[:github_app][:pull_request])
+    AnalyzeFilesService.call(pull_remote_id: @params[:github_app][:pull_request][:id])
   end
 
   def present_pull_request?

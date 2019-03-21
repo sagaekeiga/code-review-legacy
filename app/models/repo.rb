@@ -3,6 +3,7 @@
 # Table name: repos
 #
 #  id              :bigint(8)        not null, primary key
+#  analysis        :boolean
 #  deleted_at      :datetime
 #  full_name       :string
 #  name            :string
@@ -47,11 +48,13 @@ class Repo < ApplicationRecord
   # -------------------------------------------------------------------------------
   attribute :private, default: false
   attribute :template, default: false
+  attribute :analysis, default: false
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
   delegate :resource_type, to: :repo, prefix: true
   delegate :resource_id, to: :repo, prefix: true
+  delegate :analysis, to: :repo, prefix: true
 
   # -------------------------------------------------------------------------------
   # ClassMethods
