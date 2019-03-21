@@ -101,7 +101,7 @@ module RailsBestPractices
     # Output the analyze result.
     def output
       errors.map do |err|
-        err[:filename].gsub!("#{analyzer.app_name}", '')
+        err.filename.gsub!("#{analyzer.app_name}", '')
         RailsBestPractices::Error.new(err)
       end
     end
