@@ -73,7 +73,7 @@ class AnalyzeFilesService
       else
         I18n.t('analysis.fixed')
       end
-    { body: body.gsub('"', '').to_s }.to_json
+    { body: body.delete('"').to_s }.to_json
   end
 
   #
