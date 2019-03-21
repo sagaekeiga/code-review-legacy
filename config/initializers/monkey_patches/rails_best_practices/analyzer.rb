@@ -102,7 +102,6 @@ module RailsBestPractices
     def output
       errors.map do |err|
         err.filename.gsub!("#{app_name}", '')
-        Rails.logger.debug err.to_yaml
         RailsBestPractices::Error.new(
           {
             filename:    err.filename,

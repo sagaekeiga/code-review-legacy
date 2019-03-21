@@ -30,7 +30,6 @@ class AnalyzeFilesService
     else
       create_issue_comment(params, pull, issue_comment)
     end
-    Rails.logger.info data
   end
 
   #
@@ -46,6 +45,7 @@ class AnalyzeFilesService
       body: data[:body]
     )
     issue_comment.save
+    Rails.logger.info "[Success][Create][Analysis] #{data}"
   end
 
   #
@@ -59,6 +59,7 @@ class AnalyzeFilesService
     issue_comment.update(
       body: data[:body]
     )
+    Rails.logger.info "[Success][Update][Analysis] #{data}"
   end
 
   #
