@@ -1,10 +1,10 @@
 .col-xs-12.p-r-0.p-l-0
   .container-fluid.p-r-0.p-l-0
     %nav.aside-left-nav
-      = link_to [:reviewees, @repo], class: 'aside-item current' do
+      = link_to [:reviewees, @repo], class: 'aside-item' do
         %i.fab.fa-hubspot
         .title Pulls
-      = link_to reviewees_repo_settings_path(@repo), class: 'aside-item' do
+      = link_to reviewees_repo_settings_path(@repo), class: 'aside-item current' do
         %i.fas.fa-cogs
         .title Settings
     %main.app-main

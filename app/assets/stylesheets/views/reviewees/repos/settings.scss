@@ -14,6 +14,7 @@
       display: block;
       margin: auto;
       padding: $base-padding * 3;
+      text-decoration: none;
       &.current {
         color: #555;
         background-color: $color-white;
