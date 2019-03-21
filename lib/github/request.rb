@@ -15,6 +15,14 @@ module Github
         _post sub_url(:review_comment, pull), pull.repo.installation_id, :review_comment, params
       end
 
+      # POST コメント送信
+      def issue_comment(params, pull)
+        url = "#{BASE_API_URI}/repos/#{pull.full_name}/issues/#{pull.number}/comments"
+        logger.info "[Pullrequest][#{pull.remote_id}][issue_comment] #{params}"
+        res = post url, headers: general_headers(installation_id: pull.installation_id, event: :contents), body: params
+        JSON.parse res, symbolize_names: true
+      end
+
       # リポジトリファイルの取得（トップディレクトリ）
       def contents(repo:, path: '')
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
