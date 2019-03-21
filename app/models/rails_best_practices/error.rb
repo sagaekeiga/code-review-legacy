@@ -8,9 +8,9 @@ class RailsBestPractices::Error < RailsBestPractice
 
   class << self
     def initialize(data = {})
-      self.filename = data.filename
-      self.line_number = data.line_number
-      self.message = data.message
+      self.filename = data[:filename]
+      self.line_number = data[:line_number]
+      self.message = data[:message]
     end
 
     #
