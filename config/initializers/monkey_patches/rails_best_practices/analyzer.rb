@@ -102,18 +102,24 @@ module RailsBestPractices
     def output
       errors.map do |err|
         err.filename.gsub!("#{app_name}", '')
-        RailsBestPractices::Error.new(err.attributes)
+        RailsBestPractices::Error.new(
+          {
+            filename:    err.filename,
+            line_number: err.line_number,
+            message:     err.message
+          }
+        )
       end
     end
 
     # # output errors with json format.
     # def output_json_errors
     #   errors.map do |err|
-    #     # {
-    #     #   filename:    err.filename,
-    #     #   line_number: err.line_number,
-    #     #   message:     err.message
-    #     # }
+        # {
+        #   filename:    err.filename,
+        #   line_number: err.line_number,
+        #   message:     err.message
+        # }
     #     RailsBestPractices::Error.new(err)
     #   end
     # end
