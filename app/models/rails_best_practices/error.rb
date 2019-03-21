@@ -8,15 +8,15 @@ class RailsBestPractices::Error < RailsBestPractice
 
   class << self
     def initialize(data = {})
-      self.filename = data[:filename]
-      self.line_number = data[:line_number]
-      self.message = data[:message]
+      self.filename = data.filename
+      self.line_number = data.line_number
+      self.message = data.message
     end
 
     #
     # テーブル一覧を返す
     # @param [Array<RailsBestPractices::Error>] data RailsBestPractices::Error 配列
-    # @return [String]
+    # @return [Array<Strings>]
     #
     def tables(data)
       uniq_message_errors.map do |uniq_message_error|
