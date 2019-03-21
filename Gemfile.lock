@@ -681,19 +681,6 @@ GEM
     crass (1.0.4)
     css_parser (1.6.0)
       addressable
-    danger (6.0.1)
-      claide (~> 1.0)
-      claide-plugins (>= 0.9.2)
-      colored2 (~> 3.1)
-      cork (~> 0.1)
-      faraday (~> 0.9)
-      faraday-http-cache (~> 1.0)
-      git (~> 1.5)
-      kramdown (~> 2.0)
-      kramdown-parser-gfm (~> 1.0)
-      no_proxy_fix
-      octokit (~> 4.7)
-      terminal-table (~> 1)
     database_cleaner (1.7.0)
     database_rewinder (0.8.3)
     debug_inspector (0.0.3)
@@ -1347,7 +1334,6 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   config
   connection_pool
-  danger
   database_cleaner
   database_rewinder
   devise

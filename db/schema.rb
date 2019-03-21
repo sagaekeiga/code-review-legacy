@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_17_114002) do
+ActiveRecord::Schema.define(version: 2019_03_21_113302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(version: 2019_03_17_114002) do
     t.index ["repo_id"], name: "index_pulls_on_repo_id"
     t.index ["resource_id"], name: "index_pulls_on_resource_id"
     t.index ["resource_type"], name: "index_pulls_on_resource_type"
+  end
+
+  create_table "repo_analyses", force: :cascade do |t|
+    t.bigint "repo_id"
+    t.bigint "static_analysis_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repo_id"], name: "index_repo_analyses_on_repo_id"
+    t.index ["static_analysis_id"], name: "index_repo_analyses_on_static_analysis_id"
   end
 
   create_table "repos", force: :cascade do |t|
@@ -284,6 +293,13 @@ ActiveRecord::Schema.define(version: 2019_03_17_114002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reviewer_id"], name: "index_send_mails_on_reviewer_id"
+  end
+
+  create_table "static_analyses", force: :cascade do |t|
+    t.string "title"
+    t.integer "search_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", force: :cascade do |t|

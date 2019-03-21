@@ -47,7 +47,8 @@ Rails.application.routes.draw do
         resources :pulls, only: %i(update)
         get :download, on: :collection
         put :template
-        resources :analyses, only: %i(index)
+        get :settings
+        resources :repo_analyses, only: %i(create destroy)
       end
     end
 

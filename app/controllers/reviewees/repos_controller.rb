@@ -1,5 +1,5 @@
 class Reviewees::ReposController < Reviewees::BaseController
-  before_action :set_repo, only: %i(update show template)
+  before_action :set_repo, only: %i(update show template settings)
 
   def index
     @repos = current_reviewee.viewable_repos.page(params[:page])
@@ -18,6 +18,9 @@ class Reviewees::ReposController < Reviewees::BaseController
   def template
     @repo.update(template: true)
     redirect_to [:reviewees, @repo], success: '設定を完了しました'
+  end
+
+  def settings
   end
 
   private

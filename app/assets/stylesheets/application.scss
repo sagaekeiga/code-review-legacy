@@ -46,8 +46,8 @@
 
   // Views
   @import 'views/reviewers/dashboard';
-  @import 'views/reviewees/analyses/index';
   @import 'views/reviewees/repos/show';
+  @import 'views/reviewees/repos/settings';
   @import 'views/reviewers/pulls/index';
   @import 'views/reviewers/repos/show';
   @import 'views/reviewers/pulls/show';
