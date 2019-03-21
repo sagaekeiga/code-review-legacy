@@ -19,7 +19,7 @@ class RailsBestPractices::Error < RailsBestPractice
     # @return [Array<Strings>]
     #
     def tables(data)
-      uniq_message_errors.map do |uniq_message_error|
+      uniq_message_errors(data).map do |uniq_message_error|
         uniq_message_error.table(data)
       end
     end
