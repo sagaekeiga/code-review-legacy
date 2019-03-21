@@ -79,6 +79,7 @@ class Pull < ApplicationRecord
   delegate :full_name, to: :repo, prefix: true
   delegate :private, to: :repo, prefix: true
   delegate :token, to: :repo, prefix: true
+  delegate :analysis, to: :repo, prefix: true
 
   # -------------------------------------------------------------------------------
   # Attributes
