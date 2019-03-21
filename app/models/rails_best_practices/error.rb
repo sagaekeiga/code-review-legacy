@@ -30,7 +30,7 @@ class RailsBestPractices::Error < RailsBestPractice
     # @return [Array<RailsBestPractices::Error>]
     #
     def uniq_message_errors(data)
-      data.map(&:messages).uniq.map do |message|
+      data.map(&:message).uniq.map do |message|
         new({ message: message })
       end
     end
