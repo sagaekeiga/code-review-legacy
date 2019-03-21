@@ -20,36 +20,70 @@ class AnalyzeFilesService
   def rails_best_practices(pull:)
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
-    outputs = analyzer.output
-    params =
-      if outputs.present?
-        messages = outputs.map { |output| output[:message] }.uniq
-        format_outputs = messages.map do |message|
-          target_outputs = outputs.select { |output| output[:message] == message }
-          I18n.t('analysis.thead', message: message, tds: target_outputs.map { |target_output| I18n.t('analysis.td', filename_line_number: filename_line_number(target_output[:filename], target_output[:line_number], analyzer)) }.join )
-        end
-        { body: I18n.t('analysis.template', rbp_outputs: format_outputs.join, errors_count: outputs.count).gsub('"', '').to_s }.to_json
-      else
-        { body: I18n.t('analysis.fixed').gsub('"', '').to_s }.to_json
-      end
+    errors = analyzer.output
+    params = outputs_to_json(errors)
+
     issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
+
     if issue_comment.persisted?
-      data = Github::Request.update_issue_comment(params, pull)
-      issue_comment.update(
-        body: data[:body]
-      )
+      update_issue_comment(params, pull, issue_comment)
     else
-      data = Github::Request.issue_comment(params, pull)
-      issue_comment.assign_attributes(
-        remote_id: data[:id],
-        body: data[:body]
-      )
-      issue_comment.save
+      create_issue_comment(params, pull, issue_comment)
     end
-    Rails.logger.info data
   end
 
-  def filename_line_number(filename, line_number, analyzer)
-    filename.gsub("#{analyzer.app_name}", '') + ":#{line_number}"
+  #
+  # 静的解析の結果コメントを作成する
+  # @param [String] params コメント内容のJSON
+  # @param [Pull] pull プルリクエスト
+  # @param [IssueComment] issue_comment 静的解析の結果コメント
+  #
+  def create_issue_comment(params, pull, issue_comment)
+    data = Github::Request.issue_comment(params, pull)
+    issue_comment.assign_attributes(
+      remote_id: data[:id],
+      body: data[:body]
+    )
+    issue_comment.save
+    Rails.logger.info "[Success][Create][Analysis] #{data}"
+  end
+
+  #
+  # 静的解析の結果コメントを更新する
+  # @param [String] params コメント内容のJSON
+  # @param [Pull] pull プルリクエスト
+  # @param [IssueComment] issue_comment 静的解析の結果コメント
+  #
+  def update_issue_comment(params, pull, issue_comment)
+    data = Github::Request.update_issue_comment(params, pull)
+    issue_comment.update(
+      body: data[:body]
+    )
+    Rails.logger.info "[Success][Update][Analysis] #{data}"
+  end
+
+  #
+  # 解析結果をJSONにして返す
+  # @param [Array] outputs 解析結果
+  # @return [String]
+  #
+  def outputs_to_json(errors)
+    body =
+      if errors.present?
+        tables(errors)
+      else
+        I18n.t('analysis.fixed')
+      end
+    { body: body.delete('"').to_s }.to_json
+  end
+
+  #
+  # 解析結果をコメント用（Markdown対応）に整形した文字列を返す
+  # @param [Array] errors 解析結果
+  # @return [String]
+  #
+  def tables(errors)
+    tables = RailsBestPractices::Error.tables(errors)
+    I18n.t('analysis.template', tables: tables.join, errors_count: errors.count)
   end
 end

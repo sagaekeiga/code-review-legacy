@@ -53,7 +53,8 @@ RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [
   'Repo#reviewee?',
   'Repo#reviewee_org?',
-  'Content#types'
+  'Content#types',
+  'RailsBestPractices::Error#table_data'
 ] }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }
 ReplaceInstanceVariableWithLocalVariableCheck: { }
