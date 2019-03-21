@@ -20,7 +20,7 @@
                 %td= static_analysis.title
                 %td
                   .onoffswitch
-                    %input.onoffswitch-checkbox.update-repo-analysis-button{ checked: @repo.introduced(static_analysis) ? true : false, name: 'onoffswitch', type: 'checkbox', 'repo-analysis-id': @repo.analysis_id(static_analysis), 'repo-id': @repo.id, 'search-name': static_analysis.search_name, id: "analysisSwitch#{@repo.id}" }/
+                    %input.onoffswitch-checkbox.update-repo-analysis-button{ checked: @repo.introduced?(static_analysis) ? true : false, name: 'onoffswitch', type: 'checkbox', 'repo-analysis-id': @repo.analysis_id(static_analysis), 'repo-id': @repo.id, 'search-name': static_analysis.search_name, id: "analysisSwitch#{@repo.id}" }/
                     %label.onoffswitch-label{ for: "analysisSwitch#{@repo.id}" }
                       %span.onoffswitch-inner
                       %span.onoffswitch-switch
