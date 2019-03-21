@@ -1,4 +1,4 @@
-.reviewees-repos-show {
+.reviewees-analyses-index {
   .aside-left-nav {
     width: 70px;
     background: #555;
@@ -99,7 +99,7 @@
       }
       .onoffswitch {
         position: relative;
-        width: $base-height-lg - 1;
+        width: 80px;
         -webkit-user-select:none;
         -moz-user-select:none;
         -ms-user-select: none;
@@ -115,8 +115,7 @@
         border-radius: $base-margin + 4;
       }
       .onoffswitch-inner {
-        display:
-        block;
+        display: block;
         width: 200%;
         margin-left: -100%;
         transition: margin 0.2s ease-in 0s;
@@ -134,13 +133,13 @@
         box-sizing: border-box;
       }
       .onoffswitch-inner:before {
-        content: "Request";
+        content: "ON";
         padding-left: $base-font-size - 2;
         background-color: $color-switch-on;
         color: $bg-color-github-panel;
       }
       .onoffswitch-inner:after {
-        content: "Cancel";
+        content: "OFF";
         padding-right: $base-font-size - 2;
         background-color: $color-switch-off-gray;
         color: $bg-color-github-panel;
@@ -154,7 +153,7 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        right: $base-height + 15;
+        right: 45px;
         border: $base-letter solid $color-switch-off-gray;
         border-radius: $base-margin + 4;
         transition: all 0.2s ease-in 0s;
