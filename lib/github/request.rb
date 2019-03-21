@@ -23,6 +23,16 @@ module Github
         JSON.parse res, symbolize_names: true
       end
 
+      def update_issue_comment(params, pull)
+        comment = pull.issue_comments.analysis.first
+        Rails.logger.debug "omment.remote_id: #{comment.remote_id}"
+        url = "#{BASE_API_URI}/repos/#{pull.full_name}/issues/comments/#{comment.remote_id}"
+        Rails.logger.debug url
+        logger.info "[Pullrequest][#{pull.remote_id}][issue_comment] #{params}"
+        res = patch url, headers: general_headers(installation_id: pull.installation_id, event: :contents), body: params
+        JSON.parse res, symbolize_names: true
+      end
+
       # リポジトリファイルの取得（トップディレクトリ）
       def contents(repo:, path: '')
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)

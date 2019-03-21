@@ -196,6 +196,18 @@ ja:
     slack_mail:
       subject: レビュワーからSlackのメールアドレスが届きました
   analysis:
+    thead: |
+      "| %{message} |  |"
+      "|:---|:---:|"
+      %{tds}
+    td: |
+      "| %{filename_line_number} | ❌  |"
     template: |
-      "### Rails Best Practices"
+      "# Rails Best Practices"
+      Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.
+      "Found **%{errors_count}** warnings."
+      ""
       %{rbp_outputs}
+    fixed: |
+      "# Rails Best Practices"
+      "***Fixed***"

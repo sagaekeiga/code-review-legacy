@@ -38,12 +38,16 @@ module RailsBestPractices
     #
     # @param [String] path the directory of rails project
     # @param [Hash] options
-    def analyze 
+    def analyze
       Core::Runner.base_path = @path
       Core::Runner.config = @options['config']
       @runner = Core::Runner.new
       analyze_source_codes
       analyze_vcs
+    end
+
+    def app_name
+      @path
     end
 
     def process(process)
