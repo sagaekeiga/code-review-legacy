@@ -307,6 +307,7 @@ class Pull < ApplicationRecord
       head_sha: head_sha,
       status: 'in_progress',
       output: {
+        title: 'Pending',
         summary: 'The OpenCI analysis is in progress.'
       }
     }.to_json
