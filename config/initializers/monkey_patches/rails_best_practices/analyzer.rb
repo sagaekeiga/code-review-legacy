@@ -106,7 +106,7 @@ module RailsBestPractices
           {
             path:       err.filename,
             start_line: err.line_number,
-            end_line:   err.end_line,
+            end_line:   err.line_number,
             message:    err.message,
             title: 'Rails Best Practices'
           }
