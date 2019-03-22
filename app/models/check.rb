@@ -4,8 +4,8 @@ class Check
 
   attribute :path,                :string
   attribute :annotation_level,    :string, default: 'warning'
-  attribute :start_line,          :string
-  attribute :end_line,            :string
+  attribute :start_line,          :integer
+  attribute :end_line,            :integer
   attribute :message,             :string
   attribute :title,               :string
 
