@@ -331,7 +331,7 @@ class Pull < ApplicationRecord
       output: check_run_outputs
     }.to_json
 
-    Rails.logger.debug attributes
+    # Rails.logger.debug attributes
     data = Github::Request.update_check_runs(pull: self, attributes: attributes)
     Rails.logger.info "[Success][Update][CheckRuns] #{data}"
   end
