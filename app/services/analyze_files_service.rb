@@ -23,7 +23,7 @@ class AnalyzeFilesService
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     pull.checks = analyzer.output
-    summary = outputs_to_json(errors).delete('"').to_s
+    # summary = outputs_to_json(errors).delete('"').to_s
     pull.update_check_runs
   end
 end
