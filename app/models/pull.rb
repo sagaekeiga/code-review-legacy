@@ -320,7 +320,7 @@ class Pull < ApplicationRecord
   #
   # 静的解析を走らせる通知を更新する
   #
-  def update_check_runs
+  def update_check_runs(errors)
 
     attributes = {
       name: 'openci',
@@ -328,28 +328,28 @@ class Pull < ApplicationRecord
       status: 'completed',
       conclusion: check_run_conclusion,
       completed_at: Time.zone.now,
-      output: check_run_outputs
+      output: check_run_outputs(errors)
     }.to_json
 
     data = Github::Request.update_check_runs(pull: self, attributes: attributes)
     Rails.logger.info "[Success][Update][CheckRuns] #{data}"
   end
 
-  def check_run_conclusion
-    checked_error ? 'success' : 'failure'
-  end
-
-  def check_run_outputs
-    {
-      title: 'openci',
-      summary: checked_error ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!'
-    }
-  end
-
   private
 
   def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }
+  end
+
+  def check_run_conclusion
+    checked_error ? 'failure' : 'success'
+  end
+
+  def check_run_outputs(errors)
+    {
+      title: checked_error ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
+      summary: checked_error ? errors : 'Great!'
+    }
   end
 
   class Commit

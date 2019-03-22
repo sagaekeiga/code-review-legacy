@@ -34,7 +34,7 @@ class AnalyzeFilesService
     else
       create_issue_comment(params, pull, issue_comment)
     end
-    pull.update_check_runs
+    pull.update_check_runs(params)
   end
 
   #
