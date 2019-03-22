@@ -25,6 +25,8 @@ class AnalyzeFilesService
     errors = analyzer.output
     params = outputs_to_json(errors)
 
+    pull.checked_error = errors.present? ? true : false
+
     issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
 
     if issue_comment.persisted?

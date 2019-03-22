@@ -25,9 +25,7 @@ module Github
 
       def update_issue_comment(params, pull)
         comment = pull.issue_comments.analysis.first
-        Rails.logger.debug "omment.remote_id: #{comment.remote_id}"
         url = "#{BASE_API_URI}/repos/#{pull.full_name}/issues/comments/#{comment.remote_id}"
-        Rails.logger.debug url
         logger.info "[Pullrequest][#{pull.remote_id}][issue_comment] #{params}"
         res = patch url, headers: general_headers(installation_id: pull.installation_id, event: :contents), body: params
         JSON.parse res, symbolize_names: true
@@ -214,6 +212,8 @@ module Github
         }
 
         res = post "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs", headers: headers, body: attributes
+
+        JSON.parse res.body, symbolize_names: true
       end
 
       # PATCH Integration の check を更新する
@@ -225,8 +225,9 @@ module Github
           'Authorization': "token #{get_access_token(repo.installation_id)}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
-
         res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs/#{pull.check_run_id}", headers: headers, body: attributes
+
+        JSON.parse res.body, symbolize_names: true
       end
 
 
