@@ -226,7 +226,7 @@ module Github
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
 
-        res = post "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs/:check_run_id", headers: headers, body: attributes
+        res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs/#{pull.check_run_id}", headers: headers, body: attributes
       end
 
 

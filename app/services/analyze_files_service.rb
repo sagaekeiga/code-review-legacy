@@ -1,9 +1,10 @@
 class AnalyzeFilesService
   private_class_method :new
 
-  def self.call(pull_remote_id:)
-    pull = Pull.find_by(remote_id: pull_remote_id)
+  def self.call(params:)
+    pull = Pull.find_by(remote_id: params[:github_app][:pull_request][:id])
     return unless pull
+    pull.head_sha = params[:github_app][:pull_request][:head][:sha]
     new(pull: pull).send(:call) if pull.repo_analysis
   end
 
@@ -14,6 +15,7 @@ class AnalyzeFilesService
   end
 
   def call
+    @pull.create_check_runs
     rails_best_practices pull: @pull if @pull.has_rbp?
   end
 
@@ -30,6 +32,7 @@ class AnalyzeFilesService
     else
       create_issue_comment(params, pull, issue_comment)
     end
+    pull.update_check_runs
   end
 
   #

@@ -43,7 +43,7 @@ class Github::EventBranchService
   def pull_request
     return unless present_pull_request?
     Pull.update_by_pull_request_event!(@params[:github_app][:pull_request])
-    AnalyzeFilesService.call(pull_remote_id: @params[:github_app][:pull_request][:id])
+    AnalyzeFilesService.call(params: params)
   end
 
   def present_pull_request?

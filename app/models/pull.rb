@@ -85,7 +85,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attr_accessor :head_sha
+  attr_accessor :head_sha, :check_run_id
   attribute :status, default: statuses[:connected]
 
   # -------------------------------------------------------------------------------
@@ -309,6 +309,24 @@ class Pull < ApplicationRecord
     }.to_json
 
     data = Github::Request.create_check_runs(pull: self, attributes: attributes)
+    assign_attributes(check_run_id: data[:id])
+    Rails.logger.info data
+  end
+
+  #
+  # 静的解析を走らせる通知を更新する
+  #
+  def update_check_runs
+
+    attributes = {
+      name: 'openci',
+      head_sha: head_sha,
+      status: 'completed',
+      conclusion: 'success',
+      completed_at: Time.zone.now
+    }.to_json
+
+    data = Github::Request.update_check_runs(pull: self, attributes: attributes)
     Rails.logger.info data
   end
 
