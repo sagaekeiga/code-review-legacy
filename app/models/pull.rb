@@ -349,14 +349,14 @@ class Pull < ApplicationRecord
     {
       title: checked_error ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
       summary: checked_error ? errors : 'Great!',
-      annotations: {
+      annotations: [
         path: 'app/models/pull.rb',
         annotation_level: 'warning',
         title: 'Spell Checker',
         message: 'Check your spelling for aples',
         start_line: 88,
         end_line: 88
-      }
+      ]
     }
   end
 
