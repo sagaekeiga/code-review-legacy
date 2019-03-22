@@ -342,15 +342,19 @@ class Pull < ApplicationRecord
   end
 
   def check_run_conclusion
-    checked_error ? 'failure' : 'success'
+    has_errors? ? 'failure' : 'success'
   end
 
   def check_run_outputs
     {
-      title: checks.present? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
-      summary: checks.present? ? 'OK' : 'Great!',
+      title: has_errors? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
+      summary: has_errors? ? 'OK' : 'Great!',
       annotations: [annotations]
     }
+  end
+
+  def has_errors?
+    checks.present?
   end
 
   def annotations
