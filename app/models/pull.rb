@@ -349,7 +349,7 @@ class Pull < ApplicationRecord
     {
       title: has_errors? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
       summary: has_errors? ? 'OK' : 'Great!',
-      annotations: [annotations]
+      annotations: annotations
     }
   end
 
