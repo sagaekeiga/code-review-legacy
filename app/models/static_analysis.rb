@@ -19,7 +19,7 @@ class StaticAnalysis < ApplicationRecord
   # -------------------------------------------------------------------------------
   # 検索名
   #
-  # - search_name: Rails Best Practices
+  # - rails_best_practices: Rails Best Practices
   #
   enum search_name: {
     rails_best_practices: 1000
