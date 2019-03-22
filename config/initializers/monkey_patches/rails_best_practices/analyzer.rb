@@ -105,8 +105,8 @@ module RailsBestPractices
         Check.new(
           {
             path:       err.filename,
-            start_line: err.line_number.to_i,
-            end_line:   err.line_number.to_i,
+            start_line: err.line_number,
+            end_line:   err.line_number,
             message:    err.message,
             title: 'Rails Best Practices'
           }

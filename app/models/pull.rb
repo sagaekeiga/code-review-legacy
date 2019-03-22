@@ -359,7 +359,12 @@ class Pull < ApplicationRecord
   end
 
   def annotations
-    checks.map(&:attributes)
+    checks.map do |check|
+      check.merge(
+        start_line: check.start_line.to_i,
+        end_line: check.end_line.to_i
+      )
+    end
   end
 
   class Commit
