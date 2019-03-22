@@ -301,11 +301,13 @@ class Pull < ApplicationRecord
   # 静的解析を走らせる通知をPRに表示する
   #
   def create_check_runs
+
     attributes = {
-      name: 'openci'
+      name: 'openci',
       head_sha: head_sha,
-      status: 'queued'
-    }
+      status: 'in_progress'
+    }.to_json
+
     data = Github::Request.create_check_runs(pull: self, attributes: attributes)
     Rails.logger.info data
   end

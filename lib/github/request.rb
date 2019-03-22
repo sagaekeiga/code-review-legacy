@@ -210,13 +210,23 @@ module Github
         headers = {
           'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(repo.installation_id)}",
-          'Accept': 'application/json'
+          'Accept': 'application/vnd.github.antiope-preview+json'
         }
 
         res = post "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs", headers: headers, body: attributes
       end
 
-      def update_check_runs
+      # PATCH Integration の check を更新する
+      def update_check_runs(pull:, attributes:)
+        repo = pull.repo
+
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+
+        res = post "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs/:check_run_id", headers: headers, body: attributes
       end
 
 
