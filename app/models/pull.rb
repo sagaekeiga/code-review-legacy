@@ -305,7 +305,10 @@ class Pull < ApplicationRecord
     attributes = {
       name: 'openci',
       head_sha: head_sha,
-      status: 'in_progress'
+      status: 'in_progress',
+      output: {
+        summary: 'The OpenCI analysis is in progress.'
+      }
     }.to_json
 
     data = Github::Request.create_check_runs(pull: self, attributes: attributes)
@@ -316,7 +319,7 @@ class Pull < ApplicationRecord
   #
   # 静的解析を走らせる通知を更新する
   #
-  def update_check_runs(errors)
+  def update_check_runs
 
     attributes = {
       name: 'openci',
@@ -324,7 +327,7 @@ class Pull < ApplicationRecord
       status: 'completed',
       conclusion: check_run_conclusion,
       completed_at: Time.zone.now,
-      outputs: check_run_outputs
+      output: check_run_outputs
     }.to_json
 
     data = Github::Request.update_check_runs(pull: self, attributes: attributes)
