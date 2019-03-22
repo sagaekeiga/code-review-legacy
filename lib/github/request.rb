@@ -203,6 +203,24 @@ module Github
         res
       end
 
+      # POST Integration の check を作成する
+      def create_check_runs(pull:, attributes:)
+        repo = pull.repo
+
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Accept': 'application/json'
+        }
+
+        res = post "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs", headers: headers, body: attributes
+      end
+
+      def update_check_runs
+      end
+
+
+
       private
 
       def general_headers(installation_id:, event:)

@@ -85,6 +85,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
+  attr_accessor :head_sha
   attribute :status, default: statuses[:connected]
 
   # -------------------------------------------------------------------------------
@@ -294,6 +295,19 @@ class Pull < ApplicationRecord
   #
   def has_rbp?
     repo.has_rbp?
+  end
+
+  #
+  # 静的解析を走らせる通知をPRに表示する
+  #
+  def create_check_runs
+    attributes = {
+      name: 'openci'
+      head_sha: head_sha,
+      status: 'queued'
+    }
+    data = Github::Request.create_check_runs(pull: self, attributes: attributes)
+    Rails.logger.info data
   end
 
   private
