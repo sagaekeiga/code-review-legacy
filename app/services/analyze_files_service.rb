@@ -23,7 +23,7 @@ class AnalyzeFilesService
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     errors = analyzer.output
-    summary = outputs_to_json
+    summary = outputs_to_json(errors)
     params = { body: summary.delete('"').to_s }.to_json
 
     pull.checked_error = errors.present? ? true : false
