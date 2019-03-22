@@ -23,7 +23,8 @@ class AnalyzeFilesService
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     errors = analyzer.output
-    params = outputs_to_json(errors)
+    summary = outputs_to_json
+    params = { body: summary.delete('"').to_s }.to_json
 
     pull.checked_error = errors.present? ? true : false
 
@@ -34,7 +35,7 @@ class AnalyzeFilesService
     else
       create_issue_comment(params, pull, issue_comment)
     end
-    pull.update_check_runs(params)
+    pull.update_check_runs(summary)
   end
 
   #
@@ -72,14 +73,8 @@ class AnalyzeFilesService
   # @param [Array] outputs 解析結果
   # @return [String]
   #
-  def outputs_to_json(errors)
-    body =
-      if errors.present?
-        tables(errors)
-      else
-        I18n.t('analysis.fixed')
-      end
-    { body: body.delete('"').to_s }.to_json
+  def outputs_to_json(errors) 
+    errors.present? ? tables(errors) :  I18n.t('analysis.fixed')
   end
 
   #

@@ -285,7 +285,7 @@ class Pull < ApplicationRecord
   #
   def changed_file(url:)
     data = Github::Request.ref_content(url: url, installation_id: installation_id)
-    fail data if data.is_a?(String) 
+    fail data if data.is_a?(String)
     Content.load(data)
   end
 
