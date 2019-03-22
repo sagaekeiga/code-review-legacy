@@ -299,6 +299,7 @@ class Pull < ApplicationRecord
 
   #
   # 静的解析を走らせる通知をPRに表示する
+  # @param [Symbol] 静的解析名
   #
   def create_check_runs_by(analysis)
 
@@ -319,6 +320,7 @@ class Pull < ApplicationRecord
 
   #
   # 静的解析を走らせる通知を更新する
+  # @param [Symbol] 静的解析名
   #
   def update_check_runs_by(analysis)
 
@@ -345,6 +347,10 @@ class Pull < ApplicationRecord
     has_errors? ? 'failure' : 'success'
   end
 
+  #
+  # 解析結果を返す
+  # @return [Hash]
+  #
   def check_run_outputs
     {
       title: check_run_title,
@@ -353,24 +359,45 @@ class Pull < ApplicationRecord
     }
   end
 
+  #
+  # エラー（注意）を配列で返す
+  # @return [Array<Check>]
+  #
   def has_errors?
     checks.present?
   end
 
+  #
+  # エラー（注意）を配列で返す
+  # @return [Array<Check>]
+  #
   def annotations
     checks.map(&:attributes)
   end
 
+  #
+  # 静的解析名を返す
+  # @param [Symbol] 静的解析名
+  # @return [String]
+  #
   def analysis_name(analysis)
     case analysis
     when :rbp then 'rails_best_practices'
     end
   end
 
+  #
+  # detailページのタイトルを返す
+  # @return [String]
+  #
   def check_run_title
     has_errors? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!'
   end
 
+  #
+  # detailページの説明文を返す
+  # @return [String]
+  #
   def check_run_summary
     if has_errors?
       "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>Found #{checks.count} warnings."
