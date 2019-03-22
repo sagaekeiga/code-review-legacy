@@ -348,7 +348,15 @@ class Pull < ApplicationRecord
   def check_run_outputs(errors)
     {
       title: checked_error ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
-      summary: checked_error ? errors : 'Great!'
+      summary: checked_error ? errors : 'Great!',
+      annotations: {
+        path: 'app/models/pull.rb',
+        annotation_level: 'warning',
+        title: 'Spell Checker',
+        message: 'Check your spelling for aples',
+        start_line: 88,
+        end_line: 88
+      }
     }
   end
 
