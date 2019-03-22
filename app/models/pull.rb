@@ -303,7 +303,7 @@ class Pull < ApplicationRecord
   def create_check_runs_by(analysis)
 
     attributes = {
-      name: 'openci',
+      name: "openci:#{analysis_name(analysis)}",
       head_sha: head_sha,
       status: 'in_progress',
       output: {

@@ -15,12 +15,11 @@ class AnalyzeFilesService
   end
 
   def call 
-    @pull.create_check_runs
     rails_best_practices pull: @pull if @pull.has_rbp?
   end
 
   def rails_best_practices(pull:) 
-    @pull.create_check_runs_by(:rbp)
+    pull.create_check_runs_by(:rbp)
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     pull.checks = analyzer.output
