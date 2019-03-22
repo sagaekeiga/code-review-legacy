@@ -10,15 +10,15 @@ class AnalyzeFilesService
 
   private
 
-  def initialize(pull:) 
+  def initialize(pull:)
     @pull = pull
   end
 
-  def call 
+  def call
     rails_best_practices pull: @pull if @pull.has_rbp?
   end
 
-  def rails_best_practices(pull:) 
+  def rails_best_practices(pull:)
     pull.create_check_runs_by(:rbp)
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze

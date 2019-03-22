@@ -303,7 +303,7 @@ class Pull < ApplicationRecord
   def create_check_runs_by(analysis)
 
     attributes = {
-      name: "openci:#{analysis_name(analysis)}",
+      name: "openci: #{analysis_name(analysis)}",
       head_sha: head_sha,
       status: 'in_progress',
       output: {
@@ -323,7 +323,7 @@ class Pull < ApplicationRecord
   def update_check_runs_by(analysis)
 
     attributes = {
-      name: "openci:#{analysis_name(analysis)}",
+      name: "openci: #{analysis_name(analysis)}",
       head_sha: head_sha,
       status: 'completed',
       conclusion: check_run_conclusion,
@@ -347,8 +347,8 @@ class Pull < ApplicationRecord
 
   def check_run_outputs
     {
-      title: has_errors? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
-      summary: has_errors? ? 'OK' : 'Great!',
+      title: check_run_title,
+      summary: check_run_summary,
       annotations: annotations
     }
   end
@@ -364,6 +364,18 @@ class Pull < ApplicationRecord
   def analysis_name(analysis)
     case analysis
     when :rbp then 'rails_best_practices'
+    end
+  end
+
+  def check_run_title
+    has_errors? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!'
+  end
+
+  def check_run_summary
+    if has_errors?
+      "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>Found #{checks.count} warnings."
+    else
+      "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>No warning found. Cool!"
     end
   end
 
