@@ -23,21 +23,17 @@
   @import 'font-awesome';
 
   @import 'layouts/default';
+  @import 'layouts/reviewees';
   @import 'dashboard';
-  @import 'pulls';
   @import 'reviewees';
   @import 'settings';
   @import 'reviews';
-  @import 'side_bar';
   @import 'contents';
-  @import 'issues';
   @import 'reviewers';
-  @import 'commits';
   @import 'github';
 
   // Component
   @import 'components/navbar';
-  @import 'components/switch';
   @import 'components/code';
   @import 'components/markdown';
   @import 'components/buttons';
@@ -48,6 +44,7 @@
   // Views
   @import 'views/reviewers/dashboard';
   @import 'views/reviewees/repos/show';
+  @import 'views/reviewees/repos/settings';
   @import 'views/reviewers/pulls/index';
   @import 'views/reviewers/repos/show';
   @import 'views/reviewers/pulls/show';

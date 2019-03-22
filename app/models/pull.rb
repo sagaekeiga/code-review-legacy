@@ -288,6 +288,14 @@ class Pull < ApplicationRecord
     Content.load(data)
   end
 
+  #
+  # Rails Best Practices を導入しているかどうかを返す
+  # @return [Boolean]
+  #
+  def has_rbp?
+    repo.has_rbp?
+  end
+
   private
 
   def send_request_reviewed_mail

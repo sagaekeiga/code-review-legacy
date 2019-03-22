@@ -14,7 +14,7 @@ class AnalyzeFilesService
   end
 
   def call
-    rails_best_practices pull: @pull
+    rails_best_practices pull: @pull if @pull.has_rbp?
   end
 
   def rails_best_practices(pull:)

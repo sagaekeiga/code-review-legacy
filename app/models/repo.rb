@@ -35,6 +35,8 @@ class Repo < ApplicationRecord
   has_many :pulls, dependent: :destroy
   has_many :reviewer_repos, dependent: :destroy
   has_many :reviewers, through: :reviewer_repos, source: :reviewer
+  has_many :repo_analyses, dependent: :destroy
+  has_many :static_analyses, through: :repo_analyses, source: :static_analysis
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -145,11 +147,39 @@ class Repo < ApplicationRecord
     end
   end
 
+  #
+  # Rails Best Practices を導入しているかどうかを返す
+  # @return [Boolean]
+  #
+  def has_rbp?
+    repo_analyses.exists?(
+      static_analysis: StaticAnalysis.rails_best_practices.first
+    )
+  end
+
   def reviewee?(current_reviewee)
     resource_type.eql?('Reviewee') && resource_id.eql?(current_reviewee.id)
   end
 
   def reviewee_org?(current_reviewee)
     resource_type.eql?('Org') && current_reviewee.orgs.exists?(id: resource_id)
+  end
+
+  #
+  # 該当する 静的解析が導入されているかどうかを返す
+  # @param [StaticAnalysis] static_analysis 静的解析
+  # @return [Boolean]
+  #
+  def introduced?(static_analysis)
+    repo_analyses.exists?(static_analysis_id: static_analysis.id)
+  end
+
+  #
+  # 該当する静的解析を導入していれば、その解析ツールの id を返す
+  # @param [StaticAnalysis] static_analysis 静的解析
+  # @return [Integer/NilClass]
+  #
+  def analysis_id(static_analysis)
+    repo_analyses.find_by(static_analysis_id: static_analysis.id)&.id
   end
 end
