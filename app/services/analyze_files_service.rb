@@ -20,10 +20,10 @@ class AnalyzeFilesService
   end
 
   def rails_best_practices(pull:) 
+    @pull.create_check_runs_by(:rbp)
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
     pull.checks = analyzer.output
-    # summary = outputs_to_json(errors).delete('"').to_s
-    pull.update_check_runs
+    pull.update_check_runs_by(:rbp)
   end
 end

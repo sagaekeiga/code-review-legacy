@@ -300,7 +300,7 @@ class Pull < ApplicationRecord
   #
   # 静的解析を走らせる通知をPRに表示する
   #
-  def create_check_runs
+  def create_check_runs_by(analysis)
 
     attributes = {
       name: 'openci',
@@ -320,10 +320,10 @@ class Pull < ApplicationRecord
   #
   # 静的解析を走らせる通知を更新する
   #
-  def update_check_runs
+  def update_check_runs_by(analysis)
 
     attributes = {
-      name: 'openci',
+      name: "openci:#{analysis_name(analysis)}",
       head_sha: head_sha,
       status: 'completed',
       conclusion: check_run_conclusion,
@@ -331,7 +331,6 @@ class Pull < ApplicationRecord
       output: check_run_outputs
     }.to_json
 
-    # Rails.logger.debug attributes
     data = Github::Request.update_check_runs(pull: self, attributes: attributes)
     Rails.logger.info "[Success][Update][CheckRuns] #{data}"
   end
@@ -360,6 +359,12 @@ class Pull < ApplicationRecord
 
   def annotations
     checks.map(&:attributes)
+  end
+
+  def analysis_name(analysis)
+    case analysis
+    when :rbp then 'rails_best_practices'
+    end
   end
 
   class Commit
