@@ -85,7 +85,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attr_accessor :head_sha, :check_run_id, :checked_error
+  attr_accessor :head_sha, :check_run_id, :checks
   attribute :status, default: statuses[:connected]
 
   # -------------------------------------------------------------------------------
@@ -320,7 +320,7 @@ class Pull < ApplicationRecord
   #
   # 静的解析を走らせる通知を更新する
   #
-  def update_check_runs(errors)
+  def update_check_runs
 
     attributes = {
       name: 'openci',
@@ -328,7 +328,7 @@ class Pull < ApplicationRecord
       status: 'completed',
       conclusion: check_run_conclusion,
       completed_at: Time.zone.now,
-      output: check_run_outputs(errors)
+      output: check_run_outputs
     }.to_json
 
     data = Github::Request.update_check_runs(pull: self, attributes: attributes)
@@ -345,19 +345,16 @@ class Pull < ApplicationRecord
     checked_error ? 'failure' : 'success'
   end
 
-  def check_run_outputs(errors)
+  def check_run_outputs
     {
-      title: checked_error ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
-      summary: checked_error ? errors : 'Great!',
-      annotations: [
-        path: 'app/models/pull.rb',
-        annotation_level: 'warning',
-        title: 'Spell Checker',
-        message: 'Check your spelling for aples',
-        start_line: 88,
-        end_line: 88
-      ]
+      title: checks.present? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!',
+      summary: checks.present? ? 'OK' : 'Great!',
+      annotations: [annotations]
     }
+  end
+
+  def annotations
+    checks.map(&:attributes)
   end
 
   class Commit

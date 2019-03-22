@@ -22,68 +22,8 @@ class AnalyzeFilesService
   def rails_best_practices(pull:)
     analyzer = RailsBestPractices::Analyzer.new(ARGV.first, {}, pull: @pull)
     analyzer.analyze
-    errors = analyzer.output
+    pull.checks = analyzer.output
     summary = outputs_to_json(errors).delete('"').to_s
-    params = { body: summary }.to_json
-
-    pull.checked_error = errors.present? ? true : false
-
-    issue_comment = pull.issue_comments.find_or_initialize_by(status: :analysis)
-
-    if issue_comment.persisted?
-      update_issue_comment(params, pull, issue_comment)
-    else
-      create_issue_comment(params, pull, issue_comment)
-    end
-    pull.update_check_runs(summary)
-  end
-
-  #
-  # 静的解析の結果コメントを作成する
-  # @param [String] params コメント内容のJSON
-  # @param [Pull] pull プルリクエスト
-  # @param [IssueComment] issue_comment 静的解析の結果コメント
-  #
-  def create_issue_comment(params, pull, issue_comment)
-    data = Github::Request.issue_comment(params, pull)
-    issue_comment.assign_attributes(
-      remote_id: data[:id],
-      body: data[:body]
-    )
-    issue_comment.save
-    Rails.logger.info "[Success][Create][Analysis] #{data}"
-  end
-
-  #
-  # 静的解析の結果コメントを更新する
-  # @param [String] params コメント内容のJSON
-  # @param [Pull] pull プルリクエスト
-  # @param [IssueComment] issue_comment 静的解析の結果コメント
-  #
-  def update_issue_comment(params, pull, issue_comment)
-    data = Github::Request.update_issue_comment(params, pull)
-    issue_comment.update(
-      body: data[:body]
-    )
-    Rails.logger.info "[Success][Update][Analysis] #{data}"
-  end
-
-  #
-  # 解析結果をJSONにして返す
-  # @param [Array] outputs 解析結果
-  # @return [String]
-  #
-  def outputs_to_json(errors) 
-    errors.present? ? tables(errors) :  I18n.t('analysis.fixed')
-  end
-
-  #
-  # 解析結果をコメント用（Markdown対応）に整形した文字列を返す
-  # @param [Array] errors 解析結果
-  # @return [String]
-  #
-  def tables(errors)
-    tables = RailsBestPractices::Error.tables(errors)
-    I18n.t('analysis.template', tables: tables.join, errors_count: errors.count)
+    pull.update_check_runs
   end
 end

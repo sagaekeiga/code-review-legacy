@@ -102,11 +102,13 @@ module RailsBestPractices
     def output
       errors.map do |err|
         err.filename.gsub!("#{app_name}", '')
-        RailsBestPractices::Error.new(
+        Check.new(
           {
-            filename:    err.filename,
-            line_number: err.line_number,
-            message:     err.message
+            path:       err.filename,
+            start_line: err.line_number,
+            end_line:   err.end_line,
+            message:    err.message,
+            title: 'Rails Best Practices'
           }
         )
       end
