@@ -355,7 +355,7 @@ class Pull < ApplicationRecord
         title: 'Spell Checker',
         message: 'Check your spelling for aples',
         start_line: 88,
-        end_line: 88
+        end_line: 92
       ]
     }
   end
