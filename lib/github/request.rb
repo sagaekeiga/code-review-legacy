@@ -201,7 +201,7 @@ module Github
         res
       end
 
-      # POST Integration の check を作成する
+      # POST Integration の check run を作成する
       def create_check_runs(attributes:)
         headers = {
           'User-Agent': 'Mergee',
@@ -224,7 +224,7 @@ module Github
         JSON.parse res.body, symbolize_names: true
       end
 
-      # PATCH Integration の check を更新する
+      # PATCH Integration の check run を更新する
       def update_check_runs(attributes:)
         headers = {
           'User-Agent': 'Mergee',
