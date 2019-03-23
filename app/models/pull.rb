@@ -85,7 +85,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
-  attr_accessor :head_sha, :check_run_id, :checks
+  attr_accessor :head_sha, :check_run_id, :checks, :analysis
   attribute :status, default: statuses[:connected]
 
   # -------------------------------------------------------------------------------
@@ -299,196 +299,25 @@ class Pull < ApplicationRecord
 
   #
   # 静的解析を走らせる通知をPRに表示する
-  # @param [Symbol] 静的解析名
+  # @return [Boolean]
   #
-  def create_check_runs_by(analysis)
-
-    attributes = {
-      name: "openci: #{analysis_name(analysis)}",
-      head_sha: head_sha,
-      status: 'in_progress',
-      output: {
-        title: 'Pending',
-        summary: 'The OpenCI analysis is in progress.'
-      }
-    }.to_json
-
-    data = Github::Request.create_check_runs(pull: self, attributes: attributes)
-    self.check_run_id = data[:id]
-    Rails.logger.info "[Success][Create][CheckRuns] #{data}"
+  def create_check_runs
+    check_run = CheckRun.new(self.attributes.merge(status: :in_progress))
+    check_run.save
   end
 
   #
   # 静的解析を走らせる通知を更新する
-  # @param [Symbol] 静的解析名
+  # @return [Boolean]
   #
-  def update_check_runs_by(analysis)
-
-    attributes = {
-      name: "openci: #{analysis_name(analysis)}",
-      head_sha: head_sha,
-      status: 'completed',
-      conclusion: check_run_conclusion,
-      completed_at: Time.zone.now,
-      output: check_run_outputs
-    }.to_json
-
-    data = Github::Request.update_check_runs(pull: self, attributes: attributes)
-    Rails.logger.info "[Success][Update][CheckRuns] #{data}"
+  def update_check_runs
+    check_run = CheckRun.new(self.attributes.merge(status: :completed))
+    check_run.save
   end
 
   private
 
   def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }
-  end
-
-  def check_run_conclusion
-    has_errors? ? 'failure' : 'success'
-  end
-
-  #
-  # 解析結果を返す
-  # @return [Hash]
-  #
-  def check_run_outputs
-    {
-      title: check_run_title,
-      summary: check_run_summary,
-      annotations: annotations
-    }
-  end
-
-  #
-  # エラー（注意）を配列で返す
-  # @return [Array<Check>]
-  #
-  def has_errors?
-    checks.present?
-  end
-
-  #
-  # エラー（注意）を配列で返す
-  # @return [Array<Check>]
-  #
-  def annotations
-    checks.map(&:attributes)
-  end
-
-  #
-  # 静的解析名を返す
-  # @param [Symbol] 静的解析名
-  # @return [String]
-  #
-  def analysis_name(analysis)
-    case analysis
-    when :rbp then 'rails_best_practices'
-    end
-  end
-
-  #
-  # detailページのタイトルを返す
-  # @return [String]
-  #
-  def check_run_title
-    has_errors? ? 'Your tests failed on OpenCI' : 'Your tests passed on OpenCI!'
-  end
-
-  #
-  # detailページの説明文を返す
-  # @return [String]
-  #
-  def check_run_summary
-    if has_errors?
-      "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>Found #{checks.count} warnings."
-    else
-      "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>No warning found. Cool!"
-    end
-  end
-
-  class Commit
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-    include Draper::Decoratable
-
-    attr_accessor :data, :filename, :patch, :content, :pull_id
-    attr_accessor :data, :sha, :committer_name, :message, :committed_date
-
-    #
-    # @param [Hash] data
-    #
-    def initialize(data = {})
-      self.data = data
-      self.sha = data[:sha]
-      self.committer_name = data[:commit][:committer][:name]
-      self.message = data[:commit][:message]
-      self.committed_date = data[:commit][:committer][:date]
-    end
-
-    #
-    # コミットに紐付く差分ファイルを返す
-    # @return [Array<ChangedFile>]
-    #
-    def file_changes
-      data[:files].map do |file|
-        ChangedFile.new(file)
-      end
-    end
-  end
-
-  class ChangedFile
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-    include Draper::Decoratable
-
-    attr_accessor :data, :sha, :filename, :patch, :content, :pull_id, :contents_url, :installation_id
-
-    #
-    # @param [Hash] data
-    #
-    def initialize(data = {})
-      self.data = data
-      self.installation_id = data[:installation_id]
-      self.sha = data[:sha]
-      self.filename = data[:filename]
-      self.patch = data[:patch]
-      self.content = data[:content]
-      self.contents_url = data[:contents_url]
-    end
-
-    #
-    # 差分ファイルの行にされたコメントを返す
-    # @return <ReviewComment>
-    #
-    def find_review_comment_by(position:, reviewer:)
-      ReviewComment.find_by(
-        sha: sha,
-        position: position,
-        reviewer: reviewer,
-        status: :pending
-      )
-    end
-
-    #
-    # 差分ファイルの全コードを返す
-    # @return [String]
-    #
-    def content
-      data = Github::Request.ref_content(url: contents_url, installation_id: installation_id)
-      data[:content]
-    end
-
-    #
-    # 差分ファイルにコメントが存在し、
-    # そのコメントをしたレビュアーと現在のレビュアーが一致するかどうかを返す
-    #
-    # @param [Integer] index
-    # @param [Reviewer] reviewer
-    #
-    # @return [Boolean]
-    #
-    def reviewer?(index, reviewer)
-      ReviewComment.find_by(position: index, sha: sha, path: filename)&.reviewer&.present?
-    end
   end
 end

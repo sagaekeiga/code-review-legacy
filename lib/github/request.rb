@@ -202,30 +202,30 @@ module Github
       end
 
       # POST Integration の check を作成する
-      def create_check_runs(pull:, attributes:)
-        repo = pull.repo
-
+      def create_check_runs(attributes:)
         headers = {
           'User-Agent': 'Mergee',
-          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Authorization': "token #{get_access_token(attributes.slice(:installation_id))}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
 
-        res = post "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs", headers: headers, body: attributes
+        res = post "#{BASE_API_URI}/repos/#{attributes.slice(:repo_full_name)}/check-runs",
+          headers: headers,
+          body: attributes.except(:installation_id, :repo_full_name, :id).to_json
 
         JSON.parse res.body, symbolize_names: true
       end
 
       # PATCH Integration の check を更新する
-      def update_check_runs(pull:, attributes:)
-        repo = pull.repo
-
+      def update_check_runs(attributes:)
         headers = {
           'User-Agent': 'Mergee',
-          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Authorization': "token #{get_access_token(attributes.slice(:installation_id))}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
-        res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/check-runs/#{pull.check_run_id}", headers: headers, body: attributes
+        res = patch "#{BASE_API_URI}/repos/#{attributes.slice(:repo_full_name)}/check-runs/#{attributes.slice(:id)}",
+          headers: headers,
+          body: attributes.except(:installation_id, :repo_full_name, :id).to_json
 
         JSON.parse res.body, symbolize_names: true
       end
