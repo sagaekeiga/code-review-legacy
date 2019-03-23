@@ -5,7 +5,7 @@ class AnalyzeFilesService
     pull = Pull.find_by(remote_id: params[:github_app][:pull_request][:id])
     return unless pull
     pull.head_sha = params[:github_app][:pull_request][:head][:sha]
-    new(pull: pull).send(:call) if pull.repo_analysis
+    new(pull: pull).send(:call)
   end
 
   private
