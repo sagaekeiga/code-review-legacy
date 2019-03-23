@@ -302,7 +302,6 @@ class Pull < ApplicationRecord
   # @return [Boolean]
   #
   def create_check_runs
-    # Rails.logger.debug "attributes: #{check_run_params}"
     check_run = CheckRun.new(check_run_params)
     check_run_id = check_run.save
     self.check_run_id = check_run_id

@@ -220,8 +220,8 @@ module Github
         )
 
         res = post "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs",
-          headers: headers,
-          body: body.to_json
+                headers: headers,
+                body: body.to_json
 
         JSON.parse res.body, symbolize_names: true
       end
@@ -238,12 +238,12 @@ module Github
           :analysis_name,
           :analysis,
           :installation_id,
-          :repo_full_name,
+          :repo_full_name
         )
 
         res = patch "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs/#{attributes[:id]}",
-          headers: headers,
-          body: attributes.except(:installation_id, :repo_full_name, :id).to_json
+              headers: headers,
+              body: body.to_json
 
         JSON.parse res.body, symbolize_names: true
       end
