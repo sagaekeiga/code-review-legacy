@@ -219,9 +219,7 @@ module Github
           :completed_at
         )
 
-        res = post "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs",
-                headers: headers,
-                body: body.to_json
+        res = post "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs", headers: headers, body: body.to_json
 
         JSON.parse res.body, symbolize_names: true
       end
@@ -241,14 +239,10 @@ module Github
           :repo_full_name
         )
 
-        res = patch "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs/#{attributes[:id]}",
-              headers: headers,
-              body: body.to_json
+        res = patch "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs/#{attributes[:id]}", headers: headers, body: body.to_json
 
         JSON.parse res.body, symbolize_names: true
       end
-
-
 
       private
 

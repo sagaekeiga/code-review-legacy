@@ -172,14 +172,6 @@ class CheckRun
     checks.map(&:attributes)
   end
 
-  def convert_completed_at
-    case status.to_s
-    when 'completed' then Time.zone.now
-    else
-      nil
-    end
-  end
-
   #
   # detailページの説明文を返す
   # @return [String]
