@@ -302,8 +302,10 @@ class Pull < ApplicationRecord
   # @return [Boolean]
   #
   def create_check_runs
-    check_run = CheckRun.new(self.attributes.merge(status: :in_progress))
-    check_run.save
+    # Rails.logger.debug "attributes: #{check_run_params}"
+    check_run = CheckRun.new(check_run_params)
+    check_run_id = check_run.save
+    self.check_run_id = check_run_id
   end
 
   #
@@ -311,11 +313,23 @@ class Pull < ApplicationRecord
   # @return [Boolean]
   #
   def update_check_runs
-    check_run = CheckRun.new(self.attributes.merge(status: :completed))
+    check_run = CheckRun.new(check_run_params.merge(status: :completed))
     check_run.save
   end
 
   private
+
+  def check_run_params
+    {
+      checks: checks,
+      analysis: analysis,
+      head_sha: head_sha,
+      status: :in_progress,
+      installation_id: installation_id,
+      repo_full_name: repo.full_name,
+      id: check_run_id
+    }
+  end
 
   def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }

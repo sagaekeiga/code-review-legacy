@@ -205,13 +205,23 @@ module Github
       def create_check_runs(attributes:)
         headers = {
           'User-Agent': 'Mergee',
-          'Authorization': "token #{get_access_token(attributes.slice(:installation_id))}",
+          'Authorization': "token #{get_access_token(attributes[:installation_id])}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
 
-        res = post "#{BASE_API_URI}/repos/#{attributes.slice(:repo_full_name)}/check-runs",
+        body = attributes.except(
+          :analysis_name,
+          :analysis,
+          :installation_id,
+          :repo_full_name,
+          :id,
+          :conclusion,
+          :completed_at
+        )
+
+        res = post "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs",
           headers: headers,
-          body: attributes.except(:installation_id, :repo_full_name, :id).to_json
+          body: body.to_json
 
         JSON.parse res.body, symbolize_names: true
       end
@@ -220,10 +230,18 @@ module Github
       def update_check_runs(attributes:)
         headers = {
           'User-Agent': 'Mergee',
-          'Authorization': "token #{get_access_token(attributes.slice(:installation_id))}",
+          'Authorization': "token #{get_access_token(attributes[:installation_id])}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
-        res = patch "#{BASE_API_URI}/repos/#{attributes.slice(:repo_full_name)}/check-runs/#{attributes.slice(:id)}",
+
+        body = attributes.except(
+          :analysis_name,
+          :analysis,
+          :installation_id,
+          :repo_full_name,
+        )
+
+        res = patch "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs/#{attributes[:id]}",
           headers: headers,
           body: attributes.except(:installation_id, :repo_full_name, :id).to_json
 
