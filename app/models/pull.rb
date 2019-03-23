@@ -85,6 +85,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
+  attr_accessor :head_sha, :check_run_id, :checks, :analysis
   attribute :status, default: statuses[:connected]
 
   # -------------------------------------------------------------------------------
@@ -296,95 +297,40 @@ class Pull < ApplicationRecord
     repo.has_rbp?
   end
 
+  #
+  # 静的解析を走らせる通知をPRに表示する
+  # @return [Boolean]
+  #
+  def create_check_runs
+    check_run = CheckRun.new(check_run_params)
+    check_run_id = check_run.save
+    self.check_run_id = check_run_id
+  end
+
+  #
+  # 静的解析を走らせる通知を更新する
+  # @return [Boolean]
+  #
+  def update_check_runs
+    check_run = CheckRun.new(check_run_params.merge(status: :completed))
+    check_run.save
+  end
+
   private
+
+  def check_run_params
+    {
+      checks: checks,
+      analysis: analysis,
+      head_sha: head_sha,
+      status: :in_progress,
+      installation_id: installation_id,
+      repo_full_name: repo.full_name,
+      id: check_run_id
+    }
+  end
 
   def send_request_reviewed_mail
     self.repo.reviewers.each { |reviewer| ReviewerMailer.pull_request_notice(reviewer, self).deliver_later }
-  end
-
-  class Commit
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-    include Draper::Decoratable
-
-    attr_accessor :data, :filename, :patch, :content, :pull_id
-    attr_accessor :data, :sha, :committer_name, :message, :committed_date
-
-    #
-    # @param [Hash] data
-    #
-    def initialize(data = {})
-      self.data = data
-      self.sha = data[:sha]
-      self.committer_name = data[:commit][:committer][:name]
-      self.message = data[:commit][:message]
-      self.committed_date = data[:commit][:committer][:date]
-    end
-
-    #
-    # コミットに紐付く差分ファイルを返す
-    # @return [Array<ChangedFile>]
-    #
-    def file_changes
-      data[:files].map do |file|
-        ChangedFile.new(file)
-      end
-    end
-  end
-
-  class ChangedFile
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-    include Draper::Decoratable
-
-    attr_accessor :data, :sha, :filename, :patch, :content, :pull_id, :contents_url, :installation_id
-
-    #
-    # @param [Hash] data
-    #
-    def initialize(data = {})
-      self.data = data
-      self.installation_id = data[:installation_id]
-      self.sha = data[:sha]
-      self.filename = data[:filename]
-      self.patch = data[:patch]
-      self.content = data[:content]
-      self.contents_url = data[:contents_url]
-    end
-
-    #
-    # 差分ファイルの行にされたコメントを返す
-    # @return <ReviewComment>
-    #
-    def find_review_comment_by(position:, reviewer:)
-      ReviewComment.find_by(
-        sha: sha,
-        position: position,
-        reviewer: reviewer,
-        status: :pending
-      )
-    end
-
-    #
-    # 差分ファイルの全コードを返す
-    # @return [String]
-    #
-    def content
-      data = Github::Request.ref_content(url: contents_url, installation_id: installation_id)
-      data[:content]
-    end
-
-    #
-    # 差分ファイルにコメントが存在し、
-    # そのコメントをしたレビュアーと現在のレビュアーが一致するかどうかを返す
-    #
-    # @param [Integer] index
-    # @param [Reviewer] reviewer
-    #
-    # @return [Boolean]
-    #
-    def reviewer?(index, reviewer)
-      ReviewComment.find_by(position: index, sha: sha, path: filename)&.reviewer&.present?
-    end
   end
 end

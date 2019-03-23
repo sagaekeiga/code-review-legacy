@@ -25,9 +25,7 @@ module Github
 
       def update_issue_comment(params, pull)
         comment = pull.issue_comments.analysis.first
-        Rails.logger.debug "omment.remote_id: #{comment.remote_id}"
         url = "#{BASE_API_URI}/repos/#{pull.full_name}/issues/comments/#{comment.remote_id}"
-        Rails.logger.debug url
         logger.info "[Pullrequest][#{pull.remote_id}][issue_comment] #{params}"
         res = patch url, headers: general_headers(installation_id: pull.installation_id, event: :contents), body: params
         JSON.parse res, symbolize_names: true
@@ -201,6 +199,49 @@ module Github
           logger.error "[Github][repo_archive] subUrl => #{BASE_API_URI}/repos/#{repo.full_name}/zipball/#{ref}"
         end
         res
+      end
+
+      # POST Integration の check run を作成する
+      def create_check_runs(attributes:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(attributes[:installation_id])}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+
+        body = attributes.except(
+          :analysis_name,
+          :analysis,
+          :installation_id,
+          :repo_full_name,
+          :id,
+          :conclusion,
+          :completed_at
+        )
+
+        res = post "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs", headers: headers, body: body.to_json
+
+        JSON.parse res.body, symbolize_names: true
+      end
+
+      # PATCH Integration の check run を更新する
+      def update_check_runs(attributes:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(attributes[:installation_id])}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+
+        body = attributes.except(
+          :analysis_name,
+          :analysis,
+          :installation_id,
+          :repo_full_name
+        )
+
+        res = patch "#{BASE_API_URI}/repos/#{attributes[:repo_full_name]}/check-runs/#{attributes[:id]}", headers: headers, body: body.to_json
+
+        JSON.parse res.body, symbolize_names: true
       end
 
       private
