@@ -100,6 +100,9 @@ class CheckRun
     end
   end
 
+  #
+  # Check Run 作成用の attributes をセットする
+  #
   def load_for_insert
     assign_attributes(
       analysis_name: convert_analysis_name,
@@ -107,6 +110,9 @@ class CheckRun
     )
   end
 
+  #
+  # Check Run 更新用の attributes をセットする
+  #
   def load_for_update
     assign_attributes(
       name: "openci: #{convert_analysis_name}",
@@ -122,7 +128,6 @@ class CheckRun
 
   #
   # 静的解析名を返す
-  # @param [Symbol] analysis 静的解析名
   # @return [String]
   #
   def convert_analysis_name
@@ -131,12 +136,16 @@ class CheckRun
     end
   end
 
+  #
+  # 静的解析結果の 成否 を返す
+  # @return [String]
+  #
   def convert_conclusion
     has_errors? ? 'failure' : 'success'
   end
 
   #
-  # 解析結果を返す
+  # 解析結果の タイトル・要約・注釈 を返す
   # @return [Hash]
   #
   def convert_output
@@ -156,8 +165,8 @@ class CheckRun
   end
 
   #
-  # エラー（注意）を配列で返す
-  # @return [Array<Check>]
+  # エラー（注釈）があるかどうかを返す
+  # @return [Boolean]
   #
   def has_errors?
     checks.present?
@@ -168,7 +177,6 @@ class CheckRun
   # @return [Array<Check>]
   #
   def convert_annotations
-    Rails.logger.debug "convert_annotations"
     checks.map(&:attributes)
   end
 
@@ -184,6 +192,10 @@ class CheckRun
     end
   end
 
+  #
+  # [失敗時] detailページの説明文 解析ツールによって文言を変更して返す
+  # @return [String]
+  #
   def failure_summary_by
     case analysis
     when 'rbp'
@@ -191,6 +203,10 @@ class CheckRun
     end
   end
 
+  #
+  # [成功事] detailページの説明文 解析ツールによって文言を変更して返す
+  # @return [String]
+  #
   def success_summary_by
     case analysis
     when 'rbp'
