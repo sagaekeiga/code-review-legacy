@@ -3,7 +3,6 @@
 # Table name: repos
 #
 #  id              :bigint(8)        not null, primary key
-#  analysis        :boolean          default(FALSE)
 #  deleted_at      :datetime
 #  full_name       :string
 #  name            :string
