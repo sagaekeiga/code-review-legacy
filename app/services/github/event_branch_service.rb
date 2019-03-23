@@ -21,7 +21,6 @@ class Github::EventBranchService
     when :pull_request then pull_request
     when :pull_request_review then pull_request_review
     when :pull_request_review_comment then pull_request_review_comment
-    when :check_suite then check_suite
     end
   end
 
