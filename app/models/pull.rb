@@ -308,8 +308,9 @@ class Pull < ApplicationRecord
   def run_rubocop
     changed_files = self.changed_files
     checks = changed_files.map do |changed_file|
+      content = Base64.decode64(changed_file.content).force_encoding('UTF-8') if changed_file.content.present?
       attributes = {
-        content: changed_file.content,
+        content: content,
         filename: changed_file.filename
       }
       offences = Rubocop.run(attributes)
@@ -319,9 +320,9 @@ class Pull < ApplicationRecord
         check = Check.new(
           {
             path:       changed_file.filename,
-            start_line: offence[:location][:begin_pos],
-            end_line:   offence[:location][:begin_pos],
-            message:    offence[:message],
+            start_line: offence.location.begin.line,
+            end_line:   offence.location.begin.line,
+            message:    offence.message,
             title: 'RuboCop'
           }
         )

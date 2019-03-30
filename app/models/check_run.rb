@@ -177,9 +177,10 @@ class CheckRun
   #
   # エラー（注意）を配列で返す
   # @return [Array<Check>]
+  # @MEMO チェック項目は50個までの制限あり
   #
   def convert_annotations
-    checks.map(&:attributes)
+    checks.first(50).map(&:attributes)
   end
 
   #
@@ -203,7 +204,7 @@ class CheckRun
     when 'rbp'
       "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>Found #{checks.count} warnings."
     when 'rubocop'
-      "#{checks.count} offenses detected"
+      "#{checks.count} offenses detected<br>More than 50 of the offense does not appear"
     end
   end
 

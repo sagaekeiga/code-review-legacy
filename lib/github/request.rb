@@ -34,20 +34,20 @@ module Github
       # リポジトリファイルの取得（トップディレクトリ）
       def contents(repo:, path: '')
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        JSON.parse res, symbolize_names: true
+        res = JSON.parse res.body, symbolize_names: true
       end
 
       # リポジトリファイルの取得（サブディレクトリ以下）
       def content(repo:, path: '')
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/contents/#{path}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        res = JSON.parse res, symbolize_names: true
+        res = JSON.parse res.body, symbolize_names: true
         res[:message] ? res[:message] : res
       end
 
       # ファイル検索
       def search_contents(keyword:, repo:)
         res = get "#{BASE_API_URI}/search/code?q=#{keyword}+in:file+repo:#{repo.full_name}", headers: general_headers(installation_id: repo.installation_id, event: :search_code)
-        JSON.parse res, symbolize_names: true
+        JSON.parse res.body, symbolize_names: true
       end
 
       # レビューのコメント一覧を返す
@@ -56,7 +56,7 @@ module Github
         pull = review.pull
         end_point = "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/#{pull.number}/reviews/#{review.remote_id}/comments"
         res = get end_point, headers: general_headers(installation_id: repo.installation_id, event: :review)
-        JSON.parse res, symbolize_names: true
+        JSON.parse res.body, symbolize_names: true
       end
 
       #
@@ -72,8 +72,7 @@ module Github
         }
 
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/#{pull.number}/files?#{queries.to_query}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        logger.debug res
-        JSON.parse res, symbolize_names: true
+        JSON.parse res.body, symbolize_names: true
       end
 
       #
@@ -83,14 +82,14 @@ module Github
       #
       def ref_content(url:, installation_id:)
         res = get url, headers: general_headers(installation_id: installation_id, event: :contents)
-        res = JSON.parse res, symbolize_names: true
+        res = JSON.parse res.body, symbolize_names: true
         res[:message] ? res[:message] : res
       end
 
       # Readmeの取得
       def readme(repo:)
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/readme", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-        JSON.parse res, symbolize_names: true
+        res = JSON.parse res.body, symbolize_names: true
       end
 
       # PATCH レビューコメントを更新する
@@ -105,7 +104,7 @@ module Github
           body: review_comment.body
         }.to_json
         res = patch "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/comments/#{review_comment.remote_id}", headers: headers, body: attributes
-        res = JSON.parse res, symbolize_names: true
+        res = JSON.parse res.body, symbolize_names: true
         res.dig(:message) ? res[:message] : res
       end
 
