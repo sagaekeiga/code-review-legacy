@@ -308,7 +308,6 @@ class Pull < ApplicationRecord
   def run_rubocop
     changed_files = self.changed_files
     checks = changed_files.map do |changed_file|
-      changed_file
       attributes = {
         content: changed_file.content,
         filename: changed_file.filename

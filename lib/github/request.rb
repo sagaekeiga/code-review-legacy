@@ -72,9 +72,8 @@ module Github
         }
 
         res = get "#{BASE_API_URI}/repos/#{repo.full_name}/pulls/#{pull.number}/files?#{queries.to_query}", headers: general_headers(installation_id: repo.installation_id, event: :contents)
-
-        res = JSON.parse res, symbolize_names: true
-        res
+        logger.debug res
+        JSON.parse res, symbolize_names: true
       end
 
       #
