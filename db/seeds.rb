@@ -8,3 +8,7 @@ StaticAnalysis.create(
   title: 'Rails Best Practices',
   search_name: :rails_best_practices
 )
+StaticAnalysis.create(
+  title: 'RuboCop',
+  search_name: :rubocop
+)

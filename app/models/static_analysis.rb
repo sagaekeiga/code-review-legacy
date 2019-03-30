@@ -20,8 +20,10 @@ class StaticAnalysis < ApplicationRecord
   # 検索名
   #
   # - rails_best_practices: Rails Best Practices
+  # - rubocop: RuboCop
   #
   enum search_name: {
-    rails_best_practices: 1000
+    rails_best_practices: 1000,
+    rubocop:              2000
   }
 end
