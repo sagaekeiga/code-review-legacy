@@ -43,7 +43,7 @@ class Github::EventBranchService
   def pull_request
     return unless present_pull_request?
     Pull.update_by_pull_request_event!(@params[:github_app][:pull_request])
-    AnalyzeCodeJob.perform_later(@params.to_json)
+    # AnalyzeCodeJob.perform_later(@params.to_json)
   end
 
   def present_pull_request?

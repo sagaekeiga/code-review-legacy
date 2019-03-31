@@ -9,7 +9,7 @@ module RailsBestPractices
       @options = options
       @options['exclude'] ||= []
       @options['only'] ||= []
-      @options['debug'] ||= true
+      # @options['debug'] ||= true
       # @MEMO 差分ファイルに対してのみ解析をかける
       @pull = pull
       @zip = Github::Request.repo_archive(repo: @pull.repo, pull: @pull)

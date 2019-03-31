@@ -156,6 +156,16 @@ class Repo < ApplicationRecord
     )
   end
 
+  #
+  # RuboCop を導入しているかどうかを返す
+  # @return [Boolean]
+  #
+  def has_rubocop?
+    repo_analyses.exists?(
+      static_analysis: StaticAnalysis.rubocop.first
+    )
+  end
+
   def reviewee?(current_reviewee)
     resource_type.eql?('Reviewee') && resource_id.eql?(current_reviewee.id)
   end

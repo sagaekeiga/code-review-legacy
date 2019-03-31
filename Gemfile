@@ -8,21 +8,13 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -32,93 +24,69 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
-end
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
+# gem 'rack-cors'
 
-group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'web-console', '>= 3.3.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'pg', '~> 0.18'
-group :development, :test do
-  gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
-end
-
-group :development do
-end
-
-gem 'activemodel-serializers-xml'
 gem 'annotate'
-gem 'audited'
-gem 'autoprefixer-rails'
-gem 'awesome_print'
-gem 'aws-sdk'
-gem 'bcrypt-ruby'
-gem 'bootstrap-generators'
-gem 'bootstrap-kaminari-views'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'carrierwave'
 gem 'dotenv-rails'
 gem 'config'
-gem 'connection_pool'
 gem 'draper'
 gem 'enum_help'
 gem 'factory_bot_rails'
 gem 'faker'
 gem 'faker-japanese'
-gem 'file_validators'
-gem 'fog'
 gem 'font-awesome-sass'
-gem 'guard'
 gem 'haml-rails'
-gem 'hiredis', require: ['redis', 'redis/connection/hiredis']
 gem 'httparty'
 gem 'i18n-tasks'
-gem 'inky-rb', require: 'inky'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'jquery-ui-rails'
 gem 'json'
-gem 'jwt'
 gem 'kaminari'
 gem 'meta-tags'
-gem 'oj'
-gem 'oj_mimic_json'
 gem 'paranoia'
-gem 'premailer-rails'
-gem 'pundit'
 gem 'rails-i18n'
-gem 'recaptcha', require: 'recaptcha/rails'
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-objects'
 gem 'rmagick'
 gem 'sidekiq'
 gem 'webpacker', '~> 3.5'
-gem 'omniauth-github'
-gem 'paranoia'
+
+# Mailer
+gem 'premailer-rails'
+gem 'inky-rb', require: 'inky'
+
+# Markdown
 gem 'marked-rails'
-gem 'friendly_id', '~> 5.1.0'
 gem 'coderay'
 gem 'redcarpet'
 gem 'html_truncator', '~> 0.2'
+gem 'rails-highlightjs'
+
+# Auth
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-github'
+
+gem 'foreman'
 gem 'google-analytics-rails'
 gem 'sentry-raven'
+gem 'friendly_id', '~> 5.1.0'
 gem 'rubyzip', require: 'zip'
-gem 'rails-highlightjs'
+
+# Analysis
+gem 'rubocop', require: false
+gem 'bullet'
+gem 'rails_best_practices'
+gem 'brakeman', require: false
+
 group :development, :test do
-  gem 'bullet'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rails-flog', require: "flog"
   gem 'database_cleaner'
   gem 'database_rewinder'
@@ -129,23 +97,23 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-request_describer'
-  gem 'rubocop', require: false
   gem 'simplecov', require: false
-  gem 'rails_best_practices'
-  gem 'brakeman', require: false
   gem 'timecop'
   gem 'webmock'
 end
 
 group :development do
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'hirb'
-  gem 'hirb-unicode'
   gem 'pry-rails'
 end
 
-gem 'devise'
-gem 'foreman'
-gem 'omniauth'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 

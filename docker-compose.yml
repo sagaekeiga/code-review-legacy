@@ -28,6 +28,7 @@ services:
       - cache
     volumes:
       - ".:/app:cached"
+      - bundle_install:/usr/local/bundle
     stdin_open: true
     tty: true
   # --------------------------------------------------------------------------------
@@ -52,3 +53,6 @@ services:
     links:
       - db
       - cache
+volumes:
+  bundle_install:
+    driver: local
