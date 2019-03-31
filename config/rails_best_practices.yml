@@ -57,7 +57,8 @@ RemoveUnusedMethodsInModelsCheck: { except_methods: [
   'RailsBestPractices::Error#table_data',
   'Repo#has_rbp?',
   'Repo#introduced?',
-  'Repo#analysis_id'
+  'Repo#analysis_id',
+  'Repo#has_rubocop?'
 ] }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }
 ReplaceInstanceVariableWithLocalVariableCheck: { }
