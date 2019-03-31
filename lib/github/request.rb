@@ -242,6 +242,14 @@ module Github
         JSON.parse res.body, symbolize_names: true
       end
 
+      def rubocop_yml(pull:)
+        url = "#{BASE_API_URI}/repos/#{pull.repo_full_name}/contents/.rubocop.yml?ref=#{pull.commits.last.sha}"
+        res = Github::Request.ref_content(url: url, installation_id: pull.installation_id)
+        fail res if res.is_a?(String)
+        return Base64.decode64(res[:content]).force_encoding('UTF-8') if res[:content]
+        res[:content]
+      end
+
       private
 
       def general_headers(installation_id:, event:)

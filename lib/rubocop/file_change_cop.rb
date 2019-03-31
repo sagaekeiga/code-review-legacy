@@ -1,7 +1,8 @@
 class Rubocop < Pronto::Runner
   class FileChangeCop
-    def initialize(file_change)
+    def initialize(file_change, pull)
       @file_change = file_change
+      @pull = pull
     end
 
     def messages
@@ -30,8 +31,23 @@ class Rubocop < Pronto::Runner
     def config
       @config ||= begin
         store = ::RuboCop::ConfigStore.new
+        # Rails.logger.info "store: #{store}"
         store.options_config = ENV['RUBOCOP_CONFIG'] if ENV['RUBOCOP_CONFIG']
-        store.for(path)
+        # Rails.logger.info "ENV['RUBOCOP_CONFIG']: #{ENV['RUBOCOP_CONFIG']}"
+        # Rails.logger.info "store.for(path): #{store.for(path)}"
+        # Rails.logger.ap "path: #{path}"
+        # sss = store.for(path)
+        # ddd ||= begin
+        #   hash_rubocop_yml = YAML.load Github::Request.rubocop_yml(pull: @pull)
+        #   puts hash_rubocop_yml
+        #   RuboCop::Config.new(hash_rubocop_yml, '.rubocop.yml')
+        # end
+        # Rails.logger.info sss.class == ddd.class
+        hash_rubocop_yml = YAML.load Github::Request.rubocop_yml(pull: @pull)
+        config = RuboCop::Config.new(hash_rubocop_yml, '.rubocop.yml')
+        config = RuboCop::ConfigLoader.merge_with_default(config, '.rubocop.yml')
+        Rails.logger.ap config
+        config
       end
     end
 
@@ -52,7 +68,7 @@ class Rubocop < Pronto::Runner
 
     def processed_source
       @processed_source ||=
-        ::RuboCop::ProcessedSource.new(content, '2.6'.to_f, path)
+        ::RuboCop::ProcessedSource.new(content, config.target_ruby_version, path)
     end
 
     def level(severity)

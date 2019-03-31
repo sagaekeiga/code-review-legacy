@@ -313,7 +313,7 @@ class Pull < ApplicationRecord
         content: content,
         filename: changed_file.filename
       }
-      offences = Rubocop.run(attributes)
+      offences = Rubocop.run(attributes, self)
       next if offences.nil?
       checks = offences.map do |offence|
         Rails.logger.info "[Offence][Attributes]: #{offence}"

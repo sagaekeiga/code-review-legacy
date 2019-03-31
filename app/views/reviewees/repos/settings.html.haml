@@ -13,15 +13,16 @@
           %span.full_name
             = @repo.full_name.truncate(40)
       .app-domainant
-        %table.table.table-hover.m-t-4
-          - StaticAnalysis.all.each do |static_analysis|
-            %tbody
-              %tr
-                %td= static_analysis.title
-                %td
-                  .onoffswitch
-                    %input.onoffswitch-checkbox.update-repo-analysis-button{ checked: @repo.introduced?(static_analysis) ? true : false, name: 'onoffswitch', type: 'checkbox', 'repo-analysis-id': @repo.analysis_id(static_analysis), 'repo-id': @repo.id, 'search-name': static_analysis.search_name, id: "analysisSwitch#{static_analysis.id}" }/
-                    %label.onoffswitch-label{ for: "analysisSwitch#{static_analysis.id}" }
-                      %span.onoffswitch-inner
-                      %span.onoffswitch-switch
+        開発中....
+        -# %table.table.table-hover.m-t-4
+        -#   - StaticAnalysis.all.each do |static_analysis|
+        -#     %tbody
+        -#       %tr
+        -#         %td= static_analysis.title
+        -#         %td
+        -#           .onoffswitch
+        -#             %input.onoffswitch-checkbox.update-repo-analysis-button{ checked: @repo.introduced?(static_analysis) ? true : false, name: 'onoffswitch', type: 'checkbox', 'repo-analysis-id': @repo.analysis_id(static_analysis), 'repo-id': @repo.id, 'search-name': static_analysis.search_name, id: "analysisSwitch#{static_analysis.id}" }/
+        -#             %label.onoffswitch-label{ for: "analysisSwitch#{static_analysis.id}" }
+        -#               %span.onoffswitch-inner
+        -#               %span.onoffswitch-switch
 = javascript_pack_tag 'update-resource'
