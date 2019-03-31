@@ -298,21 +298,59 @@ class Pull < ApplicationRecord
   end
 
   #
+  # RuboCop を導入しているかどうかを返す
+  # @return [Boolean]
+  #
+  def has_rubocop?
+    repo.has_rubocop?
+  end
+
+  def run_rubocop
+    changed_files = self.changed_files
+    checks = changed_files.map do |changed_file|
+      content = Base64.decode64(changed_file.content).force_encoding('UTF-8') if changed_file.content.present?
+      attributes = {
+        content: content,
+        filename: changed_file.filename
+      }
+      offences = Rubocop.run(attributes, self)
+      next if offences.nil?
+      checks = offences.map do |offence|
+        Rails.logger.info "[Offence][Attributes]: #{offence}"
+        check = Check.new(
+          {
+            path:       changed_file.filename,
+            start_line: offence.location.begin.line,
+            end_line:   offence.location.begin.line,
+            message:    offence.message,
+            title: 'RuboCop'
+          }
+        )
+      end
+    end.flatten
+  end
+
+  #
   # 静的解析を走らせる通知をPRに表示する
   # @return [Boolean]
   #
   def create_check_runs
     check_run = CheckRun.new(check_run_params)
     check_run_id = check_run.save
-    self.check_run_id = check_run_id
+    check_run_id
   end
 
   #
   # 静的解析を走らせる通知を更新する
   # @return [Boolean]
   #
-  def update_check_runs
-    check_run = CheckRun.new(check_run_params.merge(status: :completed))
+  def update_check_runs(check_run_id)
+    check_run = CheckRun.new(
+      check_run_params.merge(
+        id: check_run_id,
+        status: :completed
+      )
+    )
     check_run.save
   end
 
@@ -326,7 +364,7 @@ class Pull < ApplicationRecord
       status: :in_progress,
       installation_id: installation_id,
       repo_full_name: repo.full_name,
-      id: check_run_id
+      id: nil
     }
   end
 

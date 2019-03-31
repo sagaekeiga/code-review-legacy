@@ -93,6 +93,7 @@ class CheckRun
 
     if result.dig(:message)
       Rails.logger.error "[Failure][Update][CheckRuns] #{result}"
+      Rails.logger.info "[CheckRuns][Output] #{output}"
       false
     else
       Rails.logger.info "[Success][Update][CheckRuns] #{result}"
@@ -133,6 +134,7 @@ class CheckRun
   def convert_analysis_name
     case self.analysis
     when 'rbp' then 'rails_best_practices'
+    when 'rubocop' then 'rubocop'
     end
   end
 
@@ -175,9 +177,10 @@ class CheckRun
   #
   # エラー（注意）を配列で返す
   # @return [Array<Check>]
+  # @MEMO チェック項目は50個までの制限あり
   #
   def convert_annotations
-    checks.map(&:attributes)
+    checks.first(50).map(&:attributes)
   end
 
   #
@@ -200,6 +203,8 @@ class CheckRun
     case analysis
     when 'rbp'
       "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>Found #{checks.count} warnings."
+    when 'rubocop'
+      "#{checks.count} offenses detected<br>More than 50 of the offense does not appear"
     end
   end
 
@@ -211,6 +216,8 @@ class CheckRun
     case analysis
     when 'rbp'
       "Please go to https://rails-bestpractices.com to see more useful Rails Best Practices.<br><br>No warning found. Cool!"
+    when 'rubocop'
+      'No offenses detected'
     end
   end
 end
