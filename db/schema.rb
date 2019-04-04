@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_23_100811) do
+ActiveRecord::Schema.define(version: 2019_03_31_080239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -269,6 +269,15 @@ ActiveRecord::Schema.define(version: 2019_03_23_100811) do
     t.index ["reviewer_id"], name: "index_reviewers_github_accounts_on_reviewer_id"
   end
 
+  create_table "reviewers_profiles", force: :cascade do |t|
+    t.bigint "reviewer_id"
+    t.string "company"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reviewer_id"], name: "index_reviewers_profiles_on_reviewer_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "pull_id"
     t.bigint "reviewer_id"
@@ -313,6 +322,7 @@ ActiveRecord::Schema.define(version: 2019_03_23_100811) do
   add_foreign_key "review_comments", "reviews"
   add_foreign_key "reviewees_github_accounts", "reviewees"
   add_foreign_key "reviewers_github_accounts", "reviewers"
+  add_foreign_key "reviewers_profiles", "reviewers"
   add_foreign_key "reviews", "pulls"
   add_foreign_key "reviews", "reviewers"
   add_foreign_key "send_mails", "reviewers"

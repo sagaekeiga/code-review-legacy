@@ -1,0 +1,11 @@
+.container.forms
+  .row
+    = form_with model: @profile do |f|
+      %p プロフィールを入力してください。
+      .form-group
+        = f.label :company
+        = f.text_field :company, class: 'form-control'
+      .form-group
+        = f.label :body
+        = f.text_area :body, class: 'form-control', rows: '30', placeholders: t('placehoders.')
+      = f.submit class: 'btn btn-primary'

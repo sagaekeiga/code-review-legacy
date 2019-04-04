@@ -12,6 +12,9 @@ class ReviewersController < Reviewers::BaseController
     redirect_to :reviewers_dashboard unless current_reviewer.pending?
   end
 
+  def profile
+  end
+
   def integrations
   end
 

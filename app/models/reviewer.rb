@@ -49,6 +49,7 @@ class Reviewer < ApplicationRecord
   has_many :pulls, through: :reviewer_pulls, source: :pull
   has_many :send_mails
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
+  has_one :profile, class_name: 'Reviewers::Profile'
 
   # -------------------------------------------------------------------------------
   # Delegations
@@ -115,5 +116,13 @@ class Reviewer < ApplicationRecord
     pulls = self.pulls.reviewed_in_month
     pulls.each { |pull| changed_files_count += pull.changed_files.size }
     changed_files_count * Settings.rewards.price
+  end
+
+  #
+  # プロフィールを書いたかどうかを返す
+  # @return [Boolean]
+  #
+  def wrote_profile?
+    profile && profile.persisted?
   end
 end

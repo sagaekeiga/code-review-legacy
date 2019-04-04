@@ -23,6 +23,11 @@
                 %span.caret.uncertified
             %ul.dropdown-menu
               %li
+                - if current_reviewer.wrote_profile?
+                  = link_to 'プロフィール編集', edit_reviewers_profile_path(current_reviewer.profile.id)
+                - else
+                  = link_to 'プロフィール登録', :new_reviewers_profile
+              %li
                 = link_to :reviewers_reviews do
                   レビュー履歴
               %li

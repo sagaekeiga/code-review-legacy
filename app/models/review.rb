@@ -60,6 +60,7 @@ class Review < ApplicationRecord
   # -------------------------------------------------------------------------------
   attribute :event, default: events[:pending]
   attribute :body, default: I18n.t('reviewers.reviews.attributes.default_html')
+  # .insert( "\n<a href='#{Settings.reviewers.}'>レビュアーのプロフィールを見る</a>")
 
   # -------------------------------------------------------------------------------
   # Validations
