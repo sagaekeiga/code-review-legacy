@@ -10,14 +10,13 @@
   %body{ class: "#{controller_name}-#{action_name}" }
     .container-fluid.p-r-0.p-l-0
       = render 'navbar'
-    .top-wrapper
-      .container.top
-        - unless controller_name == 'welcome'
-          .container-fluid.body-container
-            - !content_for?(:flash) && flash && flash.each do |key, message|
-              .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
-                %strong= message
-        = yield
+    .container-fluid.p-r-0.p-l-0
+      - unless controller_name == 'welcome'
+        .container-fluid.body-container
+          - !content_for?(:flash) && flash && flash.each do |key, message|
+            .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+              %strong= message
+      = yield
     .footer
       .container-fluid
         .text-center
