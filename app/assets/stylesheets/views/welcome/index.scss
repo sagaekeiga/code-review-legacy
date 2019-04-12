@@ -1,149 +1,130 @@
 .welcome-index {
-  .container-fluid.top {
-    padding: 0px;
-    margin: 0px;
-    font-family: $font-static;
-    /*
-        Demo
-    */
-    .container-fluid.landing {
-      background-color: $color-white;
-      color: $color-github-black;
-      .landing-wrapper {
-        .right-block {
-          letter-spacing: $base-padding;
-          h1 {
-            margin-top: $base-margin * 4;
-            margin-bottom: $base-margin * 4;
-            font-size: $base-font-size * 4;
-            font-weight: $base-font-weight * 4;
-          }
-          .description {
-            color: $color-switch-off-gray;
-          }
-          .sub-line {
-            font-size: $base-sl-font-size;
-            margin-top: $base-margin * 2;
-            margin-bottom: $base-margin;
-            color: $color-white;
-          }
-          .panel.panel-default {
-            margin-top: $base-margin;
-            background-color: $color-github-black;
-            border-color: $color-github-black;
-          }
-          hr {
-            color: $color-github-black;
-            margin-bottom: $base-margin * 3;
-          }
-        }
-        .signup {
-          letter-spacing: $base-padding;
-          margin-top: $base-margin * 6;
-        }
-      }
-      @media (max-width: $screen-xs-max) {
-        .landing-wrapper {
-          h1 {
-            margin-top: $base-margin * 3;
-            font-size: $base-font-size * 4;
-            font-weight: $base-font-weight * 4;
-          }
-          .sub-line {
-            font-size: $base-font-size * 1.1;
-            margin-bottom: $base-margin;
-          }
-        }
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  /*
+    Head
+  */
+  .container-fluid.head {
+    background-color: $color-white;
+    color: $color-github-black;
+    h1 {
+      letter-spacing: 3px;
+      margin-top: $base-margin * 12;
+      margin-bottom: $base-margin * 12;
+      font-weight: bold;
+      vertical-align: middle;
+      font-size: 5rem;
+      .one {
+        font-size: 1.7em;
       }
     }
-    /*
-        Demo
-    */
-    .container-fluid.demo {
-      background-color: $color-sub-blue;
-      color: $color-white;
-      .demo-wrapper {
+    .right-block {
+      letter-spacing: 1px;
+      .sub-title {
+        margin-bottom: $base-margin;
+      }
+      .description {
+        color: $color-switch-off-gray;
+        line-height: 30px;
+        font-size: $base-font-size * 1.3;
+      }
+      .signup {
+        margin-top: $base-margin * 2;
+      }
+    }
+    @media (max-width: $screen-xs-max) {
+      .landing-wrapper {
         h1 {
-          margin-top: $base-margin * 4;
+          margin-top: $base-margin * 3;
           font-size: $base-font-size * 4;
           font-weight: $base-font-weight * 4;
         }
         .sub-line {
-          font-size: $base-sl-font-size;
-          margin-top: $base-margin * 2;
+          font-size: $base-font-size * 1.1;
           margin-bottom: $base-margin;
-          color: $color-white;
-        }
-        .panel.panel-default {
-          margin-top: $base-margin;
-          background-color: $color-github-black;
-          border-color: $color-github-black;
-        }
-        hr {
-          color: $color-github-black;
-          margin-bottom: $base-margin * 3;
-        }
-      }
-      @media (max-width: $screen-xs-max) {
-        .demo-wrapper {
-          h1 {
-            margin-top: $base-margin * 3;
-            font-size: $base-font-size * 4;
-            font-weight: $base-font-weight * 4;
-          }
-          .sub-line {
-            font-size: $base-font-size * 1.1;
-            margin-bottom: $base-margin;
-          }
         }
       }
     }
-    /*
-        Get Started
-    */
-    .container-fluid.get-started {
-      padding: 0;
-      margin-bottom: - $base-margin;
-      color: $color-white;
-      background-color: $color-github-black;
-      .container {
+  }
+  /*
+    Reviewers
+  */
+  .container-fluid.reviewers {
+    margin-top: $base-margin * 6;
+    border-top: 2px solid $color-grey;
+    color: $color-github-black;
+    h1 {
+      letter-spacing: 3px;
+      margin-top: $base-margin * 6;
+      margin-bottom: $base-margin * 6;
+      font-weight: bold;
+      vertical-align: middle;
+      font-size: 3rem;
+    }
+    .right-block {
+      letter-spacing: 1px;
+      .sub-title {
+        margin-bottom: $base-margin;
+      }
+      .description {
+        color: $color-switch-off-gray;
+        line-height: 30px;
+        font-size: $base-font-size * 1.3;
+      }
+      .signup {
+        margin-top: $base-margin * 2;
+      }
+    }
+    .current-reviewers {
+      color: $color-switch-off-gray;
+      letter-spacing: 3px;
+    }
+    .reviewer-counts {
+      font-size: 6rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+    @media (max-width: $screen-xs-max) {
+      .demo-wrapper {
         h1 {
-          margin-top: $base-margin * 4;
+          margin-top: $base-margin * 3;
           font-size: $base-font-size * 4;
           font-weight: $base-font-weight * 4;
         }
-        .start-wrapper {
-          h1 {
-            font-size: $base-font-size * 4;
-            font-weight: $base-font-weight * 4;
-          }
-          .start-line {
-            margin-top: $base-margin * 2;
-            font-size: $base-font-size * 1.2;
-            margin-bottom: $base-margin * 4;
-          }
-          .col-xs-12 {
-            padding: 0;
-            margin-bottom: $base-margin * 5;
-            .col-xs-6 {
-              font-size: $base-font-size * 1.1;
-              .target {
-                margin-bottom: $base-margin / 4;
-              }
-            }
-          }
+        .sub-line {
+          font-size: $base-font-size * 1.1;
+          margin-bottom: $base-margin;
         }
       }
-      @media (max-width: $screen-xs-max) {
-        .container {
-          .start-wrapper {
-            h1 {
-              margin-top: $base-margin * 3;
-            }
-            .start-line {
-              font-size: $base-font-size;
-              margin-bottom: $base-margin * 2;
-            }
+    }
+  }
+  /*
+      Intro
+  */
+  .container-fluid.introduction {
+    border-top: 2px solid $color-grey;
+    margin-top: $base-margin * 6;
+    padding: 0;
+    margin-bottom: $base-margin * 6;
+    color: $color-white;
+    .container {
+      h1 {
+        margin-top: $base-margin * 4;
+        font-size: $base-font-size * 4;
+        font-weight: $base-font-weight * 4;
+      }
+      .signup {
+        margin-top: $base-margin * 6;
+      }
+    }
+    @media (max-width: $screen-xs-max) {
+      .container {
+        .start-wrapper {
+          h1 {
+            margin-top: $base-margin * 3;
+          }
+          .start-line {
+            font-size: $base-font-size;
+            margin-bottom: $base-margin * 2;
           }
         }
       }
