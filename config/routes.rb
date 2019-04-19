@@ -32,12 +32,15 @@ Rails.application.routes.draw do
     get '/term', to: 'welcome#term'
     get '/privacy', to: 'welcome#privacy'
     get '/auth/github/callback', to: 'connects#github'
+    get '/reviewer', to: 'welcome#profile'
 
     devise_for :reviewees, path: 'reviewees', controllers: {
       registrations: 'reviewees/registrations',
       confirmations: 'reviewees/confirmations',
       sessions: 'reviewees/sessions'
     }
+
+    resources :reviewers, only: %i(show)
 
     namespace :reviewees do
       get :dashboard

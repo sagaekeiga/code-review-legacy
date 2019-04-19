@@ -125,4 +125,8 @@ class Reviewer < ApplicationRecord
   def wrote_profile?
     profile && profile.persisted?
   end
+
+  def profile_url
+    "\n\n\n\n<a href='#{Settings.reviewers.profile}#{id}'>レビュアーのプロフィールを見る</a>"
+  end
 end

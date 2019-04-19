@@ -23,8 +23,4 @@ class Reviewers::Profile < ApplicationRecord
   # Relations
   # -------------------------------------------------------------------------------
   belongs_to :reviewer
-
-  def private_profile_url
-    "\n<a href='#{Settings.reviewers.profile}'>レビュアーのプロフィールを見る</a>"
-  end
 end
