@@ -3,6 +3,7 @@ class CreateReviewersProfiles < ActiveRecord::Migration[5.2]
     create_table :reviewers_profiles do |t|
       t.belongs_to :reviewer, foreign_key: true
       t.string :company
+      t.integer :status
       t.text :body
       t.timestamps
     end

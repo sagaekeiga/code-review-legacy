@@ -126,6 +126,11 @@ class Reviewer < ApplicationRecord
     profile && profile.persisted?
   end
 
+  #
+  # レビュアーのプロフィールURLを返す
+  #
+  # @return [String]
+  #
   def profile_url
     "\n\n\n\n<a href='#{Settings.reviewers.profile}#{id}'>レビュアーのプロフィールを見る</a>"
   end

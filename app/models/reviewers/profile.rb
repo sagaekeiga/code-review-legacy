@@ -5,6 +5,7 @@
 #  id          :bigint(8)        not null, primary key
 #  body        :text
 #  company     :string
+#  status      :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  reviewer_id :bigint(8)
@@ -23,4 +24,16 @@ class Reviewers::Profile < ApplicationRecord
   # Relations
   # -------------------------------------------------------------------------------
   belongs_to :reviewer
+  # -------------------------------------------------------------------------------
+  # Enumerables
+  # -------------------------------------------------------------------------------
+  # ステータス
+  #
+  # - hidden         : 非公開
+  # - published      : 公開
+  #
+  enum status: {
+    hidden:    1000,
+    published: 2000
+  }
 end

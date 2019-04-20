@@ -28,6 +28,6 @@ class Reviewers::ProfilesController < Reviewers::BaseController
   private
 
   def profile_params
-    params.require(:reviewers_profile).permit(:company, :body)
+    params.require(:reviewers_profile).permit(:company, :body, :status)
   end
 end

@@ -272,6 +272,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_080239) do
   create_table "reviewers_profiles", force: :cascade do |t|
     t.bigint "reviewer_id"
     t.string "company"
+    t.integer "status"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
