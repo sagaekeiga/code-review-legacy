@@ -32,12 +32,15 @@ Rails.application.routes.draw do
     get '/term', to: 'welcome#term'
     get '/privacy', to: 'welcome#privacy'
     get '/auth/github/callback', to: 'connects#github'
+    get '/reviewer', to: 'welcome#profile'
 
     devise_for :reviewees, path: 'reviewees', controllers: {
       registrations: 'reviewees/registrations',
       confirmations: 'reviewees/confirmations',
       sessions: 'reviewees/sessions'
     }
+
+    resources :reviewers, only: %i(show)
 
     namespace :reviewees do
       get :dashboard
@@ -75,6 +78,8 @@ Rails.application.routes.draw do
     namespace :reviewers do
       get *%i(dashboard integrations pending check_list)
       get 'settings/integrations'
+      get :my_page
+      resources :profiles, only: %i(new create edit update)
       resources :pulls, only: %i(show), param: :token do
         get :files
         resources :reviews, only: %i(create show edit update) do

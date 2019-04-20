@@ -1,7 +1,7 @@
 ja:
   activerecord:
     models:
-      reviewer: レビュワー
+      reviewer: レビュアー
       user_profile: GitHubアカウント
     attributes:
       reviewer:
@@ -34,6 +34,9 @@ ja:
         public_gists: 公開Gist
         reviewee_created_at: GitHub登録日
         reviewee_updated_at: GitHub更新日
+      reviewers/profile:
+        company: 会社名
+        body: 経歴・開発してきたもの
   enums:
     reviewer:
       gender:

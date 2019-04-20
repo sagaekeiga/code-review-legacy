@@ -55,13 +55,16 @@
   @import 'views/reviewers/changed_files/show';
   @import 'views/reviewers/replies/index';
   @import 'views/reviewers/contents/index';
+  @import 'views/reviewers/profiles/form';
   @import 'views/reviewers/pending';
+  @import 'views/reviewers/my_page';
   @import 'views/welcome/term';
   @import 'views/welcome/privacy';
   @import 'views/welcome/index';
   @import 'views/reviewers/reviews/form';
   @import 'views/reviewers/reviews/show';
   @import 'views/reviewers/reviews/tab';
+  @import 'views/reviewers/show';
   @import 'views/admins/admins';
   @import 'views/admins/reviews/show';
   @import 'views/admins/pulls/show';

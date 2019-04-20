@@ -8,8 +8,15 @@ class ReviewersController < Reviewers::BaseController
     @pending_reviews = current_reviewer.reviews.pending.includes(:pull)
   end
 
+  def show
+    @reviewer = Reviewer.find(params[:id])
+  end
+
   def pending
     redirect_to :reviewers_dashboard unless current_reviewer.pending?
+  end
+
+  def profile
   end
 
   def integrations

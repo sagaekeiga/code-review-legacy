@@ -135,7 +135,7 @@ class Review < ApplicationRecord
   #
   def review!(reason:)
     update!(reason: reason)
-    request_params = { body: body, event: 'COMMENT' }
+    request_params = { body: body.insert(-1, reviewer.profile_url), event: 'COMMENT' }
     pending_review_comments = review_comments.where.not(reviewer: nil).pending
 
     request_params[:comments] = pending_review_comments.map do |pending_review_comment|
