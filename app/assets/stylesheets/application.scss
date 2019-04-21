@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require jquery-ui
  *= require_self
  */
 
@@ -58,6 +59,7 @@
   @import 'views/reviewers/profiles/form';
   @import 'views/reviewers/pending';
   @import 'views/reviewers/my_page';
+  @import 'views/reviewers/skill';
   @import 'views/welcome/term';
   @import 'views/welcome/privacy';
   @import 'views/welcome/index';
@@ -68,6 +70,7 @@
   @import 'views/admins/admins';
   @import 'views/admins/reviews/show';
   @import 'views/admins/pulls/show';
+  @import 'views/sessions/new';
 
 
 .m-t-0 { margin-top: 0; }

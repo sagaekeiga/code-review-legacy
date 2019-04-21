@@ -45,6 +45,8 @@ class Pull < ApplicationRecord
   has_many :issue_comments, dependent: :destroy
   has_many :reviewer_pulls, dependent: :destroy
   has_many :reviewers, through: :reviewer_pulls, source: :reviewer
+  has_many :pull_tags, dependent: :destroy
+  has_many :tags, through: :pull_tags, source: :tag
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -134,6 +136,7 @@ class Pull < ApplicationRecord
           remote_created_at: res_pull['created_at']
         )
         pull.restore if pull&.deleted?
+        pull.create_or_destroy_tags
       end
     end
   rescue => e
@@ -170,12 +173,22 @@ class Pull < ApplicationRecord
       # たまに同時作成されて重複が起こる。ここは最新の方を「物理」削除する
       dup_pulls = Pull.where(remote_id: pull.remote_id)
       dup_pulls.order(created_at: :desc).last.really_destroy! if dup_pulls.count > 1
+      pull.create_or_destroy_tags
     end
     true
   rescue => e
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
     false
+  end
+
+  def create_or_destroy_tags
+    keywords = title.scan(/\[(.+?)\]/)
+    return if keywords.empty?
+    tags = Tag.c_ins_where(name: keywords)
+    return if tags.nil?
+    tags.each { |tag| pull_tags.create(tag: tag) }
+    pull_tags.where.not(tag: tags).delete_all
   end
 
   # 月内に行ったレビューのプルリクエストを返す

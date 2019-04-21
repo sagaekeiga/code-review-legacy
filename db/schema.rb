@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_31_080239) do
+ActiveRecord::Schema.define(version: 2019_04_20_125909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 2019_03_31_080239) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_orgs_on_deleted_at"
+  end
+
+  create_table "pull_tags", force: :cascade do |t|
+    t.bigint "pull_id"
+    t.bigint "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_pull_tags_on_pull_id"
+    t.index ["tag_id"], name: "index_pull_tags_on_tag_id"
   end
 
   create_table "pulls", force: :cascade do |t|
@@ -223,6 +232,16 @@ ActiveRecord::Schema.define(version: 2019_03_31_080239) do
     t.datetime "updated_at", null: false
     t.index ["repo_id"], name: "index_reviewer_repos_on_repo_id"
     t.index ["reviewer_id"], name: "index_reviewer_repos_on_reviewer_id"
+  end
+
+  create_table "reviewer_tags", force: :cascade do |t|
+    t.bigint "reviewer_id"
+    t.bigint "tag_id"
+    t.integer "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reviewer_id"], name: "index_reviewer_tags_on_reviewer_id"
+    t.index ["tag_id"], name: "index_reviewer_tags_on_tag_id"
   end
 
   create_table "reviewers", force: :cascade do |t|

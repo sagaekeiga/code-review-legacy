@@ -16,6 +16,11 @@ class ReviewersController < Reviewers::BaseController
     redirect_to :reviewers_dashboard unless current_reviewer.pending?
   end
 
+  def skill
+    @reviewer = current_reviewer
+    @reviewer_tags = current_reviewer.reviewer_tags.includes(:tag)
+  end
+
   def profile
   end
 
