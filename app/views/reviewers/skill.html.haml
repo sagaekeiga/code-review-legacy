@@ -11,7 +11,7 @@
           - @reviewer_tags.each do |reviewer_tag|
             %tr
               %td
-                %input.form-control.autocomplete{ name: 'reviewer[tags][][name]', autocomplete: 'off', value: reviewer_tag.tag.name }
+                %input.form-control.autocomplete{ name: 'reviewer[tags][][name]', autocomplete: 'off', value: reviewer_tag.name }
               %td
                 %select.form-control{ name: 'reviewer[tags][][year]' }
                   %option{ value: 0, selected: 0 == reviewer_tag.year } 1年未満

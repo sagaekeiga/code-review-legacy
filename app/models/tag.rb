@@ -33,7 +33,7 @@ class Tag < ApplicationRecord
     # @return [Tag::ActiveRecord_Relation]
     #
     def match_by(initial)
-      Tag.where("name ILIKE '#{initial}%'")
+      Tag.where("name ILIKE ?", "#{initial}%")
     end
   end
 end

@@ -96,12 +96,12 @@ class Pull < ApplicationRecord
   #
   # レビュアーがアサインされているレポジトリ and 一度もレビューされていない PRを返す
   #
-  scope :feed, lambda { |reviewer|
-    pulls = joins(:repo).
-      request_reviewed.
-      merge(reviewer.repos)
-    pulls.where.not(id: Review.where(pull: pulls).pluck(:pull_id)).order(:created_at)
-  }
+  # scope :feed, lambda { |reviewer|
+  #   pulls = joins(:repo).
+  #     request_reviewed.
+  #     merge(reviewer.repos)
+  #   pulls.where.not(id: Review.where(pull: pulls).pluck(:pull_id)).order(:created_at)
+  # }
 
   scope :matched_by_tag, lambda { |reviewer|
     pulls = joins(:repo, :pull_tags).

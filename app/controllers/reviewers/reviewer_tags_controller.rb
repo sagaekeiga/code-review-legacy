@@ -10,14 +10,8 @@ class Reviewers::ReviewerTagsController < Reviewers::BaseController
   end
 
   def destroy
-    reviewer_tag = ReviewerTag.find(params[:id])
+    reviewer_tag = current_reviewer.reviewer_tags.find(params[:id])
     reviewer_tag.destroy
     head 204
-  end
-
-  private
-
-  def reviewer_params
-    params.require(:reviewer).permit(:tags)
   end
 end
