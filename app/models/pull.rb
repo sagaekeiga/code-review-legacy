@@ -190,6 +190,9 @@ class Pull < ApplicationRecord
     false
   end
 
+  #
+  # プルリクエストにひもづくタグの更新を行う
+  #
   def create_or_destroy_tags
     keywords = title.scan(/\[(.+?)\]/)
     return if keywords.empty?
