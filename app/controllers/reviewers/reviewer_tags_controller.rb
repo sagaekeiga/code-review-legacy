@@ -1,6 +1,7 @@
 class Reviewers::ReviewerTagsController < Reviewers::BaseController
+  skip_before_action :set_skill!, only: %i(update)
+  skip_before_action :check_reviewer_status, only: %i(update)
   def update
-    # Rails.logger.debug "reviewer_params: #{params[:reviewer]}"
     if current_reviewer.create_or_destroy_tags(params[:reviewer])
       redirect_to reviewers_dashboard_url, success: t('.success')
     else

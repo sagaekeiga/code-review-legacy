@@ -68,7 +68,6 @@ function deleteForm(elem) {
 function autoComplete(elem) {
   elem.autocomplete({
     source: '/tags/autocomplete',
-    // delay: 500,
     minLength: 2,
     focus: function(event, ui) {
       elem.val(ui.item.name);

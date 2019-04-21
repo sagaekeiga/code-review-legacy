@@ -1,10 +1,11 @@
 class ReviewersController < Reviewers::BaseController
   skip_before_action :connect_github!, only: %i(integrations)
-  skip_before_action :check_reviewer_status, only: %i(pending integrations)
+  skip_before_action :set_skill!, only: %i(skill integrations)
+  skip_before_action :check_reviewer_status, only: %i(skill pending integrations)
 
   def dashboard
     @repos = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10).decorate
-    @pulls = Pull.feed(current_reviewer.repos).page(params[:page])
+    @pulls = Pull.matched_by_tag(current_reviewer).page(params[:page])
     @pending_reviews = current_reviewer.reviews.pending.includes(:pull)
   end
 

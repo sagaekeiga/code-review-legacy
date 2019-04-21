@@ -136,13 +136,19 @@ class Reviewer < ApplicationRecord
     "\n\n\n\n<a href='#{Settings.reviewers.profile}#{id}'>レビュアーのプロフィールを見る</a>"
   end
 
+  #
+  # タグの作成・更新・削除して成功すればtrueを返す
+  #
+  # @param [Hash] params
+  #
+  # @return [Boolean]
+  #
   def create_or_destroy_tags(params)
     return false if params[:tags].nil?
     tag_ids = params[:tags].map do |params_tag|
       tag = Tag.c_ins_where(name: params_tag[:name]).first
       reviewer_tag = reviewer_tags.find_or_initialize_by(tag: tag)
       reviewer_tag.assign_attributes(year: params_tag[:year].to_i)
-      Rails.logger.debug "reviewer_tag: #{reviewer_tag.attributes}"
       reviewer_tag.save
       tag.id
     end
