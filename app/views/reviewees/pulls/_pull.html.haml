@@ -4,6 +4,9 @@
     %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
     %td= date_format(pull.remote_created_at)
     %td
+      - pull.tags.each do |tag|
+        %span.label.label-warning= tag.name
+    %td
       - if pull.need_to_operate?
         .onoffswitch
           %input.onoffswitch-checkbox.update-pull-button{ checked: pull.is_work_in_progress? ? true : false, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "reviewStatusSwitch#{pull.id}" }/

@@ -50,7 +50,8 @@ class Reviewer < ApplicationRecord
   has_many :send_mails
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
   has_one :profile, class_name: 'Reviewers::Profile'
-
+  has_many :reviewer_tags, dependent: :destroy
+  has_many :tags, through: :reviewer_tags, source: :tag
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
@@ -133,5 +134,25 @@ class Reviewer < ApplicationRecord
   #
   def profile_url
     "\n\n\n\n<a href='#{Settings.reviewers.profile}#{id}'>レビュアーのプロフィールを見る</a>"
+  end
+
+  #
+  # タグの作成・更新・削除して成功すればtrueを返す
+  #
+  # @param [Hash] params
+  #
+  # @return [Boolean]
+  #
+  def create_or_destroy_tags(params)
+    return false if params[:tags].nil?
+    tag_ids = params[:tags].map do |params_tag|
+      tag = Tag.c_ins_where(name: params_tag[:name]).first
+      reviewer_tag = reviewer_tags.find_or_initialize_by(tag: tag)
+      reviewer_tag.assign_attributes(year: params_tag[:year].to_i)
+      reviewer_tag.save
+      tag.id
+    end
+    reviewer_tags.where.not(tag_id: tag_ids).delete_all
+    true
   end
 end

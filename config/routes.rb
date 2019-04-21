@@ -69,6 +69,10 @@ Rails.application.routes.draw do
     root to: 'reviewers#dashboard'
     get '/auth/github/callback', to: 'connects#github'
 
+    resources :tags, only: [] do
+      get :autocomplete, on: :collection
+    end
+
     devise_for :reviewers, path: 'reviewers', controllers: {
       registrations: 'reviewers/registrations',
       confirmations: 'reviewers/confirmations',
@@ -76,9 +80,18 @@ Rails.application.routes.draw do
     }
 
     namespace :reviewers do
-      get *%i(dashboard integrations pending check_list)
+      get *%i(
+        dashboard
+        integrations
+        pending
+        skill
+        check_list
+      )
       get 'settings/integrations'
       get :my_page
+      resources :reviewer_tags, only: %i(destroy) do
+        patch :update, on: :collection
+      end
       resources :profiles, only: %i(new create edit update)
       resources :pulls, only: %i(show), param: :token do
         get :files

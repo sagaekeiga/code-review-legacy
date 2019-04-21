@@ -1,0 +1,36 @@
+.container
+  .col-sm-6.col-sm-offset-3
+    = form_with model: @reviewer, url: reviewers_reviewer_tags_path, html: { class: 'form-horizontal' }, local: true do |f|
+      %p.text-center スキルを登録してください
+      %table.table.table-responsive
+        %thead.text-center
+          %td スキル
+          %td 経験年数
+          %td
+        %tbody#addForm
+          - @reviewer_tags.each do |reviewer_tag|
+            %tr
+              %td
+                %input.form-control.autocomplete{ name: 'reviewer[tags][][name]', autocomplete: 'off', value: reviewer_tag.name }
+              %td
+                %select.form-control{ name: 'reviewer[tags][][year]' }
+                  %option{ value: 0, selected: 0 == reviewer_tag.year } 1年未満
+                  %option{ value: 1, selected: 1 == reviewer_tag.year } 1年
+                  %option{ value: 2, selected: 2 == reviewer_tag.year } 2年
+                  %option{ value: 3, selected: 3 == reviewer_tag.year } 3年
+                  %option{ value: 4, selected: 4 == reviewer_tag.year } 4年
+                  %option{ value: 5, selected: 5 == reviewer_tag.year } 5年
+                  %option{ value: 6, selected: 6 == reviewer_tag.year } 6年
+                  %option{ value: 7, selected: 7 == reviewer_tag.year } 7年
+                  %option{ value: 8, selected: 8 == reviewer_tag.year } 8年
+                  %option{ value: 9, selected: 9 == reviewer_tag.year } 9年
+                  %option{ value: 10, selected: 10 == reviewer_tag.year } 10年以上
+              %td
+                %i.fa.fa-times.delete-icon{ 'aria-hidden': 'true', 'data-reviewer-tag-id': reviewer_tag.id }
+      .text-right
+        %button{ type: 'button', id: 'addButton', class: 'btn btn-primary' } 追加
+      %hr
+      .form-group.text-center
+        = f.submit t('helpers.links.sign_up'), class: 'btn btn-primary'
+        %br
+= javascript_pack_tag 'skill'

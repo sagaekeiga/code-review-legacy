@@ -17,9 +17,10 @@ ja:
   reviewees:
     repos:
       show:
-        status: STATUS
+        status: ステータス
         title: タイトル
         created: 作成日
+        tag: タグ
         review_status: レビューステータス
   reviewers:
     repos:

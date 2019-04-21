@@ -3,7 +3,8 @@
 //= require jquery.turbolinks
 //= require turbolinks
 //= require bootstrap
-//=require jquery_ujs
+//= require jquery_ujs
+//= require jquery-ui
 //= require highlight_pack
 //= require marked
 //= require_tree .
