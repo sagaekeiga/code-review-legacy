@@ -5,7 +5,7 @@ class ReviewersController < Reviewers::BaseController
 
   def dashboard
     @repos = current_reviewer.repos.includes(:resource).order(updated_at: :desc).limit(10).decorate
-    @pulls = Pull.matched_by_tag(current_reviewer).page(params[:page])
+    @pulls = Pull.feed(current_reviewer).page(params[:page])
     @pending_reviews = current_reviewer.reviews.pending.includes(:pull)
   end
 
