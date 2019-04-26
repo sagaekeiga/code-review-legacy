@@ -1,22 +1,72 @@
-.container
-  .row
-    .page-header{ 'repo-id': @repo.id }
-      %h3= link_to @repo.full_name, [:reviewers, @repo]
-    = render 'reviewers/shared/navbar', repo: @repo
-  .row
-    .commits
-      %h2.title= @pull.title
-      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
-      .list
-        .panel.panel-default
-          %table.table.table-hover
-            %tbody
-              - @commits.each do |commit|
-                %tr
-                  %td
-                    = link_to commit.message, reviewers_repo_pull_commit_path(@repo, @pull, commit.sha), class: 'commit_title'
-                    .break-line.owner_name
-                      = commit.committer_name
-                      = I18n.l(commit.committed_date.to_time, format: :default)
-                  %td.text-right
-                    = link_to commit.short_sha, reviewers_repo_pull_commit_path(@repo, @pull, commit.sha)
+.col-xs-12.p-r-0.p-l-0
+  .container-fluid.p-r-0.p-l-0
+    %nav.aside-left-nav
+      = link_to :root, class: 'aside-item' do
+        %i.fas.fa-tachometer-alt
+        .title
+          %small Dashboard
+      = link_to :reviewers_pulls, class: 'aside-item current' do
+        %i.fab.fa-hubspot
+        .title
+          %small Pulls
+      = link_to :reviewers_reviews, class: 'aside-item' do
+        %i.fas.fa-history
+        .title
+          %small Reviews
+      = link_to '#', class: 'aside-item' do
+        %i.fas.fa-cogs
+        .title
+          %small Settings
+    %main.app-main
+      %header.main-header
+        .title
+          %span.full_name
+            %small= link_to @repo.full_name, [:reviewers, @repo]
+      .app-domainant
+        %aside.app-aside
+          %nav.aside-left-menu
+            .aside-activity
+              %header
+              %ul.projects
+                %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@pull.repo, pull_token: @pull.token), method: :post, class: 'btn btn-block btn-primary'
+        .main-display
+          .above-main-content
+            %h2.title= @pull.title
+            .menu
+              %ul.list-inline.text-left
+                %li.list
+                  = link_to [:reviewers, @repo, @pull], class: 'tab' do
+                    .text-center
+                      %small
+                        %i.fas.fa-comments
+                        Conversation
+                %li.list.active
+                  = link_to [:reviewers, @repo, @pull, :commits], class: 'tab active' do
+                    .text-center
+                      %small
+                        %i.fas.fa-align-justify
+                        Commits
+                        = @pull.commits.count
+                %li.list
+                  = link_to [:reviewers, @repo, @pull, :changed_files], class: 'tab' do
+                    .text-center
+                      %small
+                        %i.fas.fa-code
+                        Files Changed
+                        = @pull.changed_files.count
+          .main-body
+            .dashboard
+              .commits
+                .list
+                  .panel.panel-default
+                    %table.table.table-hover
+                      %tbody
+                        - @commits.each do |commit|
+                          %tr
+                            %td
+                              = link_to commit.message, reviewers_repo_pull_commit_path(@repo, @pull, commit.sha), class: 'commit_title'
+                              .break-line.owner_name
+                                = commit.committer_name
+                                = I18n.l(commit.committed_date.to_time, format: :default)
+                            %td.text-right
+                              = link_to commit.short_sha, reviewers_repo_pull_commit_path(@repo, @pull, commit.sha)

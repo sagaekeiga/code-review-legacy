@@ -21,7 +21,8 @@
       %header.main-header
         .title
           %span.full_name
-            %small= link_to @repo.full_name, [:reviewers, @repo]
+            %small
+              = link_to @repo.full_name, [:reviewers, @repo]
       .app-domainant
         %aside.app-aside
           %nav.aside-left-menu
