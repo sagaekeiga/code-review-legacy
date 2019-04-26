@@ -1,19 +1,68 @@
-.container
-  .row
-    .page-header{ 'repo-id': @repo.id }
-      %h3= link_to @repo.full_name, [:reviewers, @repo]
-    = render 'reviewers/shared/navbar', repo: @repo
-  .row
-    .pullrequest
-      %h2.title= @pull.title
-      .tab= render 'reviewers/shared/pulls/tab', pull: @pull, repo: @repo
-      .col-sm-8.p-l-0.conversation
-        .body
-          .panel.panel-default
-            .panel-heading= t '.reviewee_comment'
-            .panel-body
-              .md-wrapper
-                = markdown(@pull.body)
+.col-xs-12.p-r-0.p-l-0
+  .container-fluid.p-r-0.p-l-0
+    %nav.aside-left-nav
+      = link_to :root, class: 'aside-item' do
+        %i.fas.fa-tachometer-alt
+        .title
+          %small Dashboard
+      = link_to :reviewers_pulls, class: 'aside-item current' do
+        %i.fab.fa-hubspot
+        .title
+          %small Pulls
+      = link_to :reviewers_reviews, class: 'aside-item' do
+        %i.fas.fa-history
+        .title
+          %small Reviews
+      = link_to '#', class: 'aside-item' do
+        %i.fas.fa-cogs
+        .title
+          %small Settings
+    %main.app-main
+      %header.main-header
+        .title
+          %span.full_name
+            %small= link_to @repo.full_name, [:reviewers, @repo]
+      .app-domainant
+        %aside.app-aside
+          %nav.aside-left-menu
+            .aside-activity
+              %header
+              %ul.projects
+                %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@pull.repo, pull_token: @pull.token), method: :post, class: 'btn btn-block btn-primary'
+        .main-display
+          .above-main-content
+            %h2.title= @pull.title
+            .menu
+              %ul.list-inline.text-left
+                %li.list.active
+                  = link_to [:reviewers, @repo, @pull], class: 'tab active' do
+                    .text-center
+                      %small
+                        %i.fas.fa-comments
+                        Conversation
+                %li.list
+                  = link_to [:reviewers, @repo, @pull, :commits], class: 'tab' do
+                    .text-center
+                      %small
+                        %i.fas.fa-align-justify
+                        Commits
+                        = @pull.commits.count
+                %li.list
+                  = link_to [:reviewers, @repo, @pull, :changed_files], class: 'tab' do
+                    .text-center
+                      %small
+                        %i.fas.fa-code
+                        Files Changed
+                        = @pull.changed_files.count
+          .main-body
+            .dashboard
+              .col-sm-8.p-l-0.conversation
+                .body
+                  .panel.panel-default
+                    .panel-heading= t '.reviewee_comment'
+                    .panel-body
+                      .md-wrapper
+                        = markdown(@pull.body)
       -# - unless @pending_review
       -#   .pulls-conversation-wrapper
       -#     .col-sm-6.p-l-0

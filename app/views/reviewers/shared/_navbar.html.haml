@@ -1,3 +1,0 @@
-%ul.nav.nav-tabs
-  %li{ class: same_controller_name?(%w(repos contents)) }= link_to 'Code', [:reviewers, repo]
-  %li{ class: same_controller_name?(%w(pulls commits changed_files)) }= link_to 'Pull requests', reviewers_repo_pulls_path(repo)
