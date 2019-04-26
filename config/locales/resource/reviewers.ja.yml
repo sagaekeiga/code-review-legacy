@@ -56,6 +56,10 @@ ja:
       assigned_pull: アサインできるPullrequestが表示されています
       reward_in_month: 今月の報酬
       yen: 円/月
+      pr_title: タイトル
+      repo_title: リポジトリ
+      tag: タグ
+      created: 作成日
     left_side_bar:
       assigned_repo: アサインされたリポジトリ
       last_sign_in_at: "最終ログイン %{ago}"

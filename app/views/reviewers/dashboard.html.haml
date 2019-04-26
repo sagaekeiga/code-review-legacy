@@ -1,39 +1,41 @@
-.reviewer-dashboard-wrapper
-  .col-xs-2
-    .left-sidebar.hidden-xs
-      - if @repos
-        = render 'left_side_bar', repos: @repos
-  .col-xs-10
-    .container
-      %main.main
-        %table.table.table-hover.pulls-on-dashboard-wrapper
+.col-xs-12.p-r-0.p-l-0
+  .container-fluid.p-r-0.p-l-0
+    %nav.aside-left-nav
+      = link_to :root, class: 'aside-item current' do
+        %i.fas.fa-tachometer-alt
+        .title
+          %small Dashboard
+      = link_to :reviewers_pulls, class: 'aside-item' do
+        %i.fab.fa-hubspot
+        .title
+          %small Pulls
+      = link_to :reviewers_reviews, class: 'aside-item' do
+        %i.fas.fa-history
+        .title
+          %small Reviews
+      = link_to '#', class: 'aside-item' do
+        %i.fas.fa-cogs
+        .title
+          %small Settings
+    %main.app-main
+      %header.main-header
+        .title
+          %span.full_name Pullrequests
+      .app-domainant
+        %table.table.table-hover
           %thead
-            %tr
-              %th.col-sm-6
-                = t 'activerecord.models.pull'
-                .descrition
-                  %i.fas.fa-check
-                  %span= t '.assigned_pull'
+            %tr.pull-list-header
+              %th= t('.pr_title')
+              %th= t('.repo_title')
+              %th= t('.created')
+              %th= t('.tag')
           %tbody
             - @pulls.each_with_index do |pull, i|
-              %tr{ class: i % 2 == 0 ? 'add-light-blue' : 'add-light-white' }
+              %tr.pull-list
+                %td= link_to pull.title&.truncate(20), view_check_reviewers_pull_reviews_path(pull), class: 'pull-title'
+                %td= link_to pull.repo.decorate.name_including_orgs, class: 'repo-path'
+                %td= date_format(pull.remote_created_at)
                 %td
-                  %p= link_to pull.title&.truncate(20), view_check_reviewers_pull_reviews_path(pull), class: 'pull-title'
-                  %small= link_to pull.repo.decorate.name_including_orgs, class: 'repo-path'
-
-        .text-center= paginate @pulls
-
-      .sidebar
-        .sidebar-item.sidebar-item-fixed
-          .reward
-            .title.text-muted
-              %i.fas.fa-yen-sign
-              %strong= t '.reward_in_month'
-            .panel
-              .panel-default
-                .panel-body
-                  .price
-                    = current_reviewer.monthly_reward.to_s(:delimited)
-                    %span.text-muted.yen= t '.yen'
-          - if @pending_reviews
-            = render 'under_review', pending_reviews: @pending_reviews
+                  - pull.tags.each do |tag|
+                    %span.label.label-warning= tag.name
+= javascript_pack_tag 'update-resource'

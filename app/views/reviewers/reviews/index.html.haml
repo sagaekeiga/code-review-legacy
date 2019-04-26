@@ -1,13 +1,34 @@
-.container
-  %table.table
-    %thead
-      %tr
-        %th{scope: "col"} タイトル
-        %th{scope: "col"} ステータス
-        %th{scope: "col"} 更新日
-    %tbody
-      - @reviews.each do |review|
-        %tr.text-center
-          %td= link_to review.pull_title, review.path
-          %td= review.event_i18n
-          %td= l review.updated_at
+.col-xs-12.p-r-0.p-l-0
+  .container-fluid.p-r-0.p-l-0
+    %nav.aside-left-nav
+      = link_to :root, class: 'aside-item' do
+        %i.fas.fa-tachometer-alt
+        .title
+          %small Dashboard
+      = link_to :reviewers_pulls, class: 'aside-item' do
+        %i.fab.fa-hubspot
+        .title
+          %small Pulls
+      = link_to :reviewers_reviews, class: 'aside-item current' do
+        %i.fas.fa-history
+        .title Reviews
+      = link_to '#', class: 'aside-item' do
+        %i.fas.fa-cogs
+        .title Settings
+    %main.app-main
+      %header.main-header
+        .title
+          %span.full_name Reviews
+      .app-domainant
+        %table.table.table-hover
+          %thead
+            %tr.pull-list-header
+              %th{ scope: 'col' } タイトル
+              %th{ scope: 'col' } ステータス
+              %th{ scope: 'col' } 更新日
+          %tbody
+            - @reviews.each do |review|
+              %tr.text-center.pull-list
+                %td= link_to review.pull_title, review.path
+                %td= review.event_i18n
+                %td= l review.updated_at

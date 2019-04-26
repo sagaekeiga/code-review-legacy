@@ -1,30 +1,59 @@
 .reviewers-pulls-index {
-  margin-top: $base-margin * 3;
-  .pull-requests {
-    margin-top: $base-margin * 3;
-    table {
-      thead {
-        &.color {
-          background-color: $color-sub-gray;
+  .app-main {
+    .main-header {
+      .title {
+        margin-left: $base-padding * 5;
+        font-size: $base-font-size * 1.5;
+        letter-spacing: 1px;
+      }
+    }
+    .app-domainant {
+      table {
+        .add-light-blue {
+          background-color: $color-light-blue;
         }
-        .active {
+        .add-success-color {
+          color: $base-color-green;
           font-weight: bold;
         }
-        a {
-          color: $color-black
+        .add-merged-color {
+          color: $color-darker-gray;
+          font-weight: lighter;
         }
-      }
-      tbody {
-        td {
-          .pullrequest {
-            padding: $base-padding;
-            .title {
-              a {
-                color: $color-black
-              }
+        .pull-list {
+          a {
+            display: block;
+            height: $base-height + 10;
+            padding: $base-margin + 4 0;
+          }
+          td {
+            padding: 0 0 0 20px;
+            height: $base-height + 30;
+            .pull-title {
+              font-size: $base-font-size * 1.5;
             }
           }
         }
+        &.table thead tr th {
+          text-align: left;
+        }
+        .pull-list-header {
+          color: $color-literal-gray;
+          th {
+            font-weight: lighter;
+            padding-left: $base-margin + 4;
+          }
+        }
+      }
+      .description {
+        margin-top: $base-margin * 3;
+        letter-spacing: 1px;
+      }
+      .title, .add {
+        letter-spacing: 1px;
+      }
+      img {
+        padding: $base-padding * 5;
       }
     }
   }
