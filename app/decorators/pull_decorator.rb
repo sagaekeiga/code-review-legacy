@@ -40,6 +40,14 @@ class PullDecorator < ApplicationDecorator
     end
   end
 
+  def status_for_reviewer
+    completed? ? '完了' : '未完了'
+  end
+
+  def label
+    completed? ? 'success' : 'danger'
+  end
+
   # レポジトリアサイン削除アクションのパスを返す
   def destroy_reviewer_pull_path(reviewer:)
     reviewer_pull = reviewer_pulls.find_by(reviewer: reviewer)

@@ -93,7 +93,7 @@ Rails.application.routes.draw do
         patch :update, on: :collection
       end
       resources :profiles, only: %i(new create edit update)
-      resources :pulls, only: %i(show), param: :token do
+      resources :pulls, only: %i(index show), param: :token do
         get :files
         resources :reviews, only: %i(create show edit update) do
           collection do
