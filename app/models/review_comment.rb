@@ -182,7 +182,7 @@ class ReviewComment < ApplicationRecord
       path: path,
       position: position,
       in_reply_to_id: nil
-    ).includes(:reviewer, :comment)
+    )
   end
 
   def last_reply_remote_id

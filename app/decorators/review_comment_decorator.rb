@@ -10,7 +10,7 @@ class ReviewCommentDecorator < ApplicationDecorator
 
   # 最後のリプライであればlastクラスを返す。lastクラスはステップラインを非表示にする。
   def last?(review_comment)
-    object.id&.eql?(replies.last&.id) ? 'last' : ''
+    object.id&.eql?(review_comment.replies.last&.id) ? 'last' : ''
   end
 
   def step_image
