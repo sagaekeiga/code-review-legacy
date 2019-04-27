@@ -19,21 +19,6 @@ ja:
         comment: 審査通過済み
   reviewers:
     reviews:
-      sidebars:
-        titles:
-          view_check: 動作確認
-          new: レビューの新規作成
-          show: 詳細
-          edit: レビューの修正
-          replies: リプライ対応
-          complete: 完了
-        working: 作業中
-        select_review: レビューを選択する
-      view_check:
-        next: レビューを開始する
-        description_is_blank: 説明はありません
-        assign_to_pullrequest: レビューを開始するとあなたにプルリクエストがアサインされます。
-        assign_is: アサインすると他のレビュワーはこのプルリクエストにレビューできなくなります。
       form:
         finish: レビューを完了する
         review: コード全体へのレビュー(Markdown形式)
@@ -45,9 +30,6 @@ ja:
         assigned: アサインしました
         failed: レビューに失敗しました
         updated: レビューを更新しました
-      read:
-        unread: 未対応
-        reading: 対応済みにする
       attributes:
         default_html: "Mergeeへようこそ！\n\nここにコメントを挿入してください\n\n***\nコメントをさらに深く掘り下げたい場合は、コメントに返信することができます。"
 

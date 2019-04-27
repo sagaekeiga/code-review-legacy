@@ -22,14 +22,6 @@ class PullDecorator < ApplicationDecorator
     id_param ? h.reviewers_pull_review_replies_path(pull, review_id: id_param) : '#'
   end
 
-  def check_view_check
-    if reviewer_pulls.present?
-      'complete'
-    elsif controller.action_name.eql?('view_check')
-      'active'
-    end
-  end
-
   def check_replies
     if completed?
       'complete'
