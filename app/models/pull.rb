@@ -379,6 +379,13 @@ class Pull < ApplicationRecord
     check_run.save
   end
 
+  def issues
+    numbers = body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
+    numbers.map do |number|
+      Issue.find_by(repo: repo, id: number)
+    end
+  end
+
   private
 
   def check_run_params

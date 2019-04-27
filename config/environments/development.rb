@@ -14,7 +14,8 @@ Rails.application.configure do
   config.eager_load = false
 
   # Show full error reports.
-  config.consider_all_requests_local = false
+  BetterErrors::Middleware.allow_ip! '0.0.0.0/0'
+  config.consider_all_requests_local = true
 
   config.another_logger = Logger.new(Rails.root.join('log/foo.log'))
 

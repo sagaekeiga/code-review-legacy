@@ -177,7 +177,8 @@ module Github
       end
 
       def issue_by_number(repo, issue_number)
-        _get "repos/#{repo.full_name}/issues/#{issue_number}", repo.installation_id, :issue_number
+        res = _get "repos/#{repo.full_name}/issues/#{issue_number}", repo.installation_id, :issue_number
+        JSON.parse res.body, symbolize_names: true
       end
 
       # GET レポジトリのZIPファイル

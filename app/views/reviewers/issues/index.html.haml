@@ -21,7 +21,8 @@
       %header.main-header
         .title
           %span.full_name
-            %small= link_to @repo.full_name, [:reviewers, @repo]
+            %small
+              = link_to @repo.full_name, [:reviewers, @repo]
       .app-domainant
         %aside.app-aside
           %nav.aside-left-menu
@@ -40,14 +41,14 @@
                       %small
                         %i.fas.fa-comments
                         Conversation
-                %li.list.active
-                  = link_to [:reviewers, @repo, @pull, :commits], class: 'tab active' do
+                %li.list
+                  = link_to [:reviewers, @repo, @pull, :commits], class: 'tab' do
                     .text-center
                       %small
                         %i.fas.fa-align-justify
                         Commits
-                %li.list
-                  = link_to [:reviewers, @pull, :issues], class: 'tab' do
+                %li.list.active
+                  = link_to [:reviewers, @pull, :issues], class: 'tab active' do
                     .text-center
                       %small
                         %i.fas.fa-file
@@ -60,17 +61,18 @@
                         Files Changed
           .main-body
             .dashboard
-              .commits
-                .list
-                  .panel.panel-default
-                    %table.table.table-hover
-                      %tbody
-                        - @commits.each do |commit|
-                          %tr
-                            %td
-                              = link_to commit.message, reviewers_repo_pull_commit_path(@repo, @pull, commit.sha), class: 'commit_title'
-                              .break-line.owner_name
-                                = commit.committer_name
-                                = I18n.l(commit.committed_date.to_time, format: :default)
-                            %td.text-right
-                              = link_to commit.short_sha, reviewers_repo_pull_commit_path(@repo, @pull, commit.sha)
+              .col-sm-8.p-l-0.conversation
+                .body
+                  - @issues.each do |issue|
+                    %h4
+                      = issue.title
+                      %span.text-muted
+                        = issue.number
+                    .panel.panel-default
+                      .panel-body
+                        .md-wrapper
+                          - if issue.body.present?
+                            = markdown(issue.body)
+                          - else
+                            .text-muted No description provided.
+= javascript_pack_tag 'reply'
