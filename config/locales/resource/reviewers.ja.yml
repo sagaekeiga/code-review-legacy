@@ -60,11 +60,6 @@ ja:
       repo_title: リポジトリ
       tag: タグ
       created: 作成日
-    left_side_bar:
-      assigned_repo: アサインされたリポジトリ
-      last_sign_in_at: "最終ログイン %{ago}"
-    under_review:
-      under_review: 審査中のPR
     pending:
       mail_placeholder: mergee@example.com
       send: 送信

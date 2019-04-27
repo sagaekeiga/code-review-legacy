@@ -58,6 +58,57 @@
       flex: 1 1 auto;
       overflow: hidden;
       padding: $base-padding * 5;
+      aside.app-aside {
+        -webkit-box-flex: 0;
+        box-flex: 0;
+        -webkit-flex: 0 0 auto;
+        flex: 0 0 auto;
+        display: -webkit-box;
+        display: box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        box-orient: vertical;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        .aside-activity {
+          display: -webkit-box;
+          display: box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-orient: vertical;
+          box-orient: vertical;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          -webkit-box-flex: 1;
+          box-flex: 1;
+          -webkit-flex: 1 0 1px;
+          flex: 1 0 1px;
+          font-size: 1px;
+          margin-left: 15px;
+          ul.projects {
+            li {
+              list-style: none;
+            }
+          }
+        }
+      }
+      .main-display {
+        min-width: 0;
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        .above-main-content {
+          margin: 0 15px;
+        }
+        .main-body {
+          padding: 0 15px 100px;
+          height: 70vh;
+          overflow-x: auto;
+          overflow-y: scroll;
+        }
+      }
     }
   }
 }
