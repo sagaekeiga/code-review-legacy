@@ -17,14 +17,6 @@ class ReviewCommentDecorator < ApplicationDecorator
     has_unread_replies? ? 'warning.png' : 'checked.png'
   end
 
-  def set_read_message
-    if has_unread_replies?
-      content_tag(:span, (I18n.t 'reviewers.reviews.replies.unread_messages', message_count: count_unread_replies), class: 'unread')
-    else
-      content_tag(:span, (I18n.t 'reviewers.reviews.replies.read_messages'), class: 'read')
-    end
-  end
-
   def set_active
     has_unread_replies? ? 'active' : ''
   end

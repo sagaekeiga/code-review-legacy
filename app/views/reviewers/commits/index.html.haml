@@ -31,7 +31,7 @@
                 %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@pull.repo, pull_token: @pull.token), method: :post, class: 'btn btn-block btn-primary'
         .main-display
           .above-main-content
-            %h2.title= @pull.title
+            %h1.title= @pull.title
             .menu
               %ul.list-inline.text-left
                 %li.list

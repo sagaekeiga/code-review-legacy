@@ -17,11 +17,7 @@ class Reviewers::PullsController < Reviewers::BaseController
   end
 
   def show
-    @review = Review.new
-    @pull = Pull.friendly.find(params[:token]).decorate
-    @pending_review = @pull.reviews.pending.first
-    @double_review_comments = @pull.reviews.map { |review| review.review_comments.includes(:reviewer) }
-    @reviews = @pull.reviews.where(event: %i(comment issue_comment))
+    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
   end
 
   private
