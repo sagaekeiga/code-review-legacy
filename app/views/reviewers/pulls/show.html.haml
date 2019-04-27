@@ -73,10 +73,9 @@
                             = render review
                         - review.reviewed_comments.decorate.each.with_index do |review_comment, index|
                           %li.step
-                            = image_tag review_comment.step_image, class: 'step'
-                            %span.path= review_comment.path
                             .comment-line
-                              .panel.step{ class: review_comment.set_unread }
+                              .panel.step
+                                .panel-heading= review_comment.path
                                 .panel-body
                                   .code-wrapper
                                     %table
@@ -100,7 +99,7 @@
                                 // Reply
                                 .replies-wrapper
                                   .panel
-                                    .panel-body{ class: review_comment.set_hidden(:replies) }
+                                    .panel-body
                                       - if review_comment.replies.present?
                                         = render review_comment.replies.includes(:comment, :reviewer)&.decorate
                                     .panel-footer
