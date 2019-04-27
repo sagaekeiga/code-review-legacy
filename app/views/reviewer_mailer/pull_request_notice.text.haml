@@ -1,4 +1,6 @@
 = @pull.title
 'がレビューリクエストされました。'
 
-= link_to 'プルリクエストを確認する', Settings.reviewers.top + "reviewers/pulls/#{@pull.token.to_s}/reviews/view_check"
+%br
+プルリクエストを確認する
+= Settings.reviewers.top + "reviewers/repos/#{@pull.repo.token}/pulls/#{@pull.token.to_s}"

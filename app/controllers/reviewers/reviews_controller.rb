@@ -1,20 +1,16 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show edit update)
-  before_action :set_pull, only: %i(view_check new create show edit update)
+  before_action :set_pull, only: %i(new create show edit update)
   before_action :set_repo, only: %i(new)
   before_action :check_show, only: %i(show edit)
   before_action :check_assign, only: %i(new edit show)
   before_action :set_numbers, only: %i(new show edit)
   before_action :set_commits, only: %i(new show edit)
   before_action :set_changed_files, only: %i(new create show edit)
-  before_action :set_reviews, only: %i(view_check new create show edit update)
+  before_action :set_reviews, only: %i(new create show edit update)
 
   def index
     @reviews = current_reviewer.reviews.includes(:pull).order(updated_at: :desc).decorate
-  end
-
-  def view_check
-    @review = Review.new.decorate
   end
 
   def new
@@ -61,7 +57,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def check_assign
-    return redirect_to view_check_reviewers_pull_reviews_path(@pull), warning: t('reviewers.reviews.messages.already') unless current_reviewer.assign_to!(@pull)
+    return redirect_to [:reviewers, @repo, @pull], warning: t('reviewers.reviews.messages.already') unless current_reviewer.assign_to!(@pull)
   end
 
   def check_show

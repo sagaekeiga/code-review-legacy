@@ -71,53 +71,48 @@
                           -# 全体へのレビューコメント
                           .review-wrapper
                             = render review
-                        - review.reviewed_comments.decorate.each.with_index do |review_comment, index|
-                          %li.step
-                            = image_tag review_comment.step_image, class: 'step'
-                            %span.path= review_comment.path
-                            .comment-line
-                              .panel.step{ class: review_comment.set_unread }
-                                .panel-body
-                                  .code-wrapper
-                                    %table
-                                      %thead
-                                        %tr
-                                          %th{ scope: 'col' }
-                                      - review_comment.target_lines.each_with_index do |line, index|
-                                        %tbody
+                          - review.reviewed_comments.decorate.each.with_index do |review_comment, index|
+                            %li.step
+                              .comment-line
+                                .panel.step
+                                  .panel-heading= review_comment.path
+                                  .panel-body
+                                    .code-wrapper
+                                      %table
+                                        %thead
                                           %tr
-                                            %td.hidden= index
-                                            - if line.start_with?('+')
-                                              %td.markdown-highlight.bg-success.file-code= review_comment.changed_file.decorate.coderay(line)
-                                            - elsif line.start_with?('-')
-                                              %td.markdown-highlight.bg-danger.file-code= review_comment.changed_file.decorate.coderay(line)
-                                            - elsif line.start_with?('@@')
-                                              %td.markdown-highlight.bg-primary.file-code= simple_format(line)
-                                            - else
-                                              %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
-                                  .panel-text
-                                    = render review_comment.target_comments.decorate
-                                .panel-footer
-                                  .text-right
-                                    .menu.thread-button{ class: review_comment.set_active }
-                                      %i.far.fa-comments{ class: review_comment.set_active }
-                                // Reply
-                                .replies-wrapper
-                                  .panel
-                                    .panel-body{ class: review_comment.set_hidden(:replies) }
-                                      - if review_comment.replies.present?
-                                        = render review_comment.replies.includes(:comment, :reviewer)&.decorate
-                                    .panel-footer
-                                      .input
-                                        %textarea{ type: 'text', class: 'form-control' }
-                                      .submit
-                                        %button{ type: 'button', class: 'btn btn-primary reply-submit-btn' } 返信する
-                                        %input{ type: 'hidden', value: @pull.token, class: 'pull_token' }
-                                        %input{ type: 'hidden', value: review_comment.id, class: 'review_comment_id' }
-                                        %input{ type: 'hidden', value: review_comment.review.id, class: 'review_id' }
-                                        %input{ type: 'hidden', value: review_comment.path, class: 'path' }
-                                        %input{ type: 'hidden', value: review_comment.position, class: 'position' }
-                                        %input{ type: 'hidden', value: review_comment.changed_file.sha, class: 'sha' }
-                                        %input{ type: 'hidden', value: review_comment.commit_id, class: 'commit_id' }
-                      .bottom-line
+                                            %th{ scope: 'col' }
+                                        - review_comment.target_lines.each_with_index do |line, index|
+                                          %tbody
+                                            %tr
+                                              %td.hidden= index
+                                              - if line.start_with?('+')
+                                                %td.markdown-highlight.bg-success.file-code= review_comment.changed_file.decorate.coderay(line)
+                                              - elsif line.start_with?('-')
+                                                %td.markdown-highlight.bg-danger.file-code= review_comment.changed_file.decorate.coderay(line)
+                                              - elsif line.start_with?('@@')
+                                                %td.markdown-highlight.bg-primary.file-code= simple_format(line)
+                                              - else
+                                                %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
+                                    .panel-text
+                                      = render review_comment.target_comments.decorate
+                                  // Reply
+                                  .replies-wrapper
+                                    .panel
+                                      .panel-body
+                                        - if review_comment.replies.present?
+                                          = render review_comment.replies.includes(:comment, :reviewer)&.decorate
+                                      .panel-footer
+                                        .input
+                                          %textarea{ type: 'text', class: 'form-control' }
+                                        .submit
+                                          %button{ type: 'button', class: 'btn btn-primary reply-submit-btn' } 返信する
+                                          %input{ type: 'hidden', value: @pull.token, class: 'pull_token' }
+                                          %input{ type: 'hidden', value: review_comment.id, class: 'review_comment_id' }
+                                          %input{ type: 'hidden', value: review_comment.review.id, class: 'review_id' }
+                                          %input{ type: 'hidden', value: review_comment.path, class: 'path' }
+                                          %input{ type: 'hidden', value: review_comment.position, class: 'position' }
+                                          %input{ type: 'hidden', value: review_comment.changed_file.sha, class: 'sha' }
+                                          %input{ type: 'hidden', value: review_comment.commit_id, class: 'commit_id' }
+                          .bottom-line
 = javascript_pack_tag 'reply'

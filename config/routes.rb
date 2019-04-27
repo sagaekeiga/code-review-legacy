@@ -97,10 +97,9 @@ Rails.application.routes.draw do
         get :files
         resources :reviews, only: %i(create show edit update) do
           collection do
-            get :view_check
             get :file, to: 'reviews#new'
           end
-          resources :replies, only: %i(create update), shallow: true
+          resources :replies, only: %i(create), shallow: true
         end
         resources :comments, only: %i(create update destroy)
       end

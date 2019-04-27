@@ -8,7 +8,6 @@
 #  event          :integer
 #  path           :string
 #  position       :integer
-#  read           :boolean
 #  sha            :string           default(""), not null
 #  status         :integer
 #  created_at     :datetime         not null
@@ -187,14 +186,6 @@ class ReviewComment < ApplicationRecord
 
   def last_reply_remote_id
     replies.present? ? replies.last.remote_id : remote_id
-  end
-
-  def has_unread_replies?
-    replies.unread.present?
-  end
-
-  def count_unread_replies
-    replies.unread.count
   end
 
   #
