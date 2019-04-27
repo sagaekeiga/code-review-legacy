@@ -40,9 +40,6 @@ ja:
         fix_template: フォーム内の文言はそのままレビュイーに伝えられます。
       show:
         reviewing: 審査中です。審査が終了するまで少々お待ちください。
-      replies:
-        unread_messages: "%{message_count} 件の未対応メッセージがあります。返信してください。"
-        read_messages: 対応済み
       messages:
         already: すでに他のユーザーがアサインしています
         assigned: アサインしました

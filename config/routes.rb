@@ -100,7 +100,7 @@ Rails.application.routes.draw do
             get :view_check
             get :file, to: 'reviews#new'
           end
-          resources :replies, only: %i(index create update), shallow: true
+          resources :replies, only: %i(create update), shallow: true
         end
         resources :comments, only: %i(create update destroy)
       end

@@ -10,19 +10,11 @@ class ReviewCommentDecorator < ApplicationDecorator
 
   # 最後のリプライであればlastクラスを返す。lastクラスはステップラインを非表示にする。
   def last?(review_comment)
-    object.id&.eql?(review_comment.replies.last&.id) ? 'last' : ''
+    object.id&.eql?(replies.last&.id) ? 'last' : ''
   end
 
   def step_image
     has_unread_replies? ? 'warning.png' : 'checked.png'
-  end
-
-  def set_read_message
-    if has_unread_replies?
-      content_tag(:span, (I18n.t 'reviewers.reviews.replies.unread_messages', message_count: count_unread_replies), class: 'unread')
-    else
-      content_tag(:span, (I18n.t 'reviewers.reviews.replies.read_messages'), class: 'read')
-    end
   end
 
   def set_active
