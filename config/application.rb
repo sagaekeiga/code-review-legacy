@@ -47,7 +47,6 @@ module Mergee
 
       g.stylesheets false
       g.javascripts false
-      g.helper :irodori_helper
     end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1

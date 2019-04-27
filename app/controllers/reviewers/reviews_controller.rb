@@ -4,8 +4,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_repo, only: %i(new)
   before_action :check_show, only: %i(show edit)
   before_action :check_assign, only: %i(new edit show)
-  before_action :set_numbers, only: %i(new show edit)
-  before_action :set_commits, only: %i(new show edit)
+  before_action :set_commits, only: %i(show edit)
   before_action :set_changed_files, only: %i(new create show edit)
   before_action :set_reviews, only: %i(new create show edit update)
 
@@ -74,10 +73,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_commits
     @commits = Pull::CommitDecorator.decorate_collection @pull.commits
-  end
-
-  def set_numbers
-    @numbers = @pull.body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
   end
 
   def review_params

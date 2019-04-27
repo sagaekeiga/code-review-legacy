@@ -2,7 +2,6 @@ class Reviewers::CommitsController < Reviewers::BaseController
   before_action :set_pull, only: %i(index show)
   before_action :set_commit, only: %i(show)
   before_action :set_commits, only: %i(index)
-  before_action :set_changed_files, only: %i(show)
   before_action :set_repo, only: %i(index show)
 
   def index
@@ -23,10 +22,6 @@ class Reviewers::CommitsController < Reviewers::BaseController
 
   def set_commits
     @commits = Pull::CommitDecorator.decorate_collection @pull.commits
-  end
-
-  def set_changed_files
-    @changed_files = Pull::ChangedFileDecorator.decorate_collection @commit.file_changes
   end
 
   def set_repo

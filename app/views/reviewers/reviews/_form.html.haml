@@ -48,14 +48,18 @@
                       %small
                         %i.fas.fa-align-justify
                         Commits
-                        = @pull.commits.count
+                %li.list
+                  = link_to [:reviewers, @pull, :issues], class: 'tab' do
+                    .text-center
+                      %small
+                        %i.fas.fa-file
+                        Issues
                 %li.list.active
                   = link_to file_reviewers_pull_reviews_path(@pull), class: 'tab active' do
                     .text-center
                       %small
                         %i.fas.fa-code
                         Files Changed
-                        = @pull.changed_files.count
           .main-body
             .dashboard
               .review

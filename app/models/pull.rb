@@ -379,6 +379,26 @@ class Pull < ApplicationRecord
     check_run.save
   end
 
+  #
+  # プルリクエストが紐づけている issue 一覧を返す
+  #
+  # @return [Array<Issue>]
+  #
+  def issues
+    issue_numbers.map do |issue_number|
+      Issue.find_by(repo: repo, id: issue_number)
+    end
+  end
+
+  #
+  # プルリクエストが紐づけている issue ナンバー一覧を返す
+  #
+  # @return [Array<Integer>]
+  #
+  def issue_numbers
+    body.scan(/#\d+/)&.map { |num| num.delete('#').to_i }
+  end
+
   private
 
   def check_run_params
