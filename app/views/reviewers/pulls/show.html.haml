@@ -97,10 +97,6 @@
                                               %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
                                   .panel-text
                                     = render review_comment.target_comments.decorate
-                                .panel-footer
-                                  .text-right
-                                    .menu.thread-button{ class: review_comment.set_active }
-                                      %i.far.fa-comments{ class: review_comment.set_active }
                                 // Reply
                                 .replies-wrapper
                                   .panel

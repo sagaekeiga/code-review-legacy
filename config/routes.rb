@@ -99,7 +99,7 @@ Rails.application.routes.draw do
           collection do
             get :file, to: 'reviews#new'
           end
-          resources :replies, only: %i(create update), shallow: true
+          resources :replies, only: %i(create), shallow: true
         end
         resources :comments, only: %i(create update destroy)
       end

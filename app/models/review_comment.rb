@@ -188,14 +188,6 @@ class ReviewComment < ApplicationRecord
     replies.present? ? replies.last.remote_id : remote_id
   end
 
-  def has_unread_replies?
-    replies.unread.present?
-  end
-
-  def count_unread_replies
-    replies.unread.count
-  end
-
   #
   # PR を返す
   # @return [Pull]
