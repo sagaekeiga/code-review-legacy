@@ -49,7 +49,7 @@
                         Commits
                         = @pull.commits.count
                 %li.list
-                  = link_to [:reviewers, @repo, @pull, :changed_files], class: 'tab' do
+                  = link_to file_reviewers_pull_reviews_path(@pull), class: 'tab' do
                     .text-center
                       %small
                         %i.fas.fa-code

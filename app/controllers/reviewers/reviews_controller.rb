@@ -1,6 +1,7 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_review, only: %i(show edit update)
   before_action :set_pull, only: %i(view_check new create show edit update)
+  before_action :set_repo, only: %i(new)
   before_action :check_show, only: %i(show edit)
   before_action :check_assign, only: %i(new edit show)
   before_action :set_numbers, only: %i(new show edit)
@@ -25,7 +26,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     ActiveRecord::Base.transaction do
       @review = current_reviewer.reviews.ready_to_review!(@pull, params[:review][:body])
     end
-    redirect_to [:reviewers, @pull, @review], success: t('.success')
+    redirect_to [:reviewers, @pull], success: t('.success')
   rescue => e
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
@@ -53,6 +54,10 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_pull
     @pull = Pull.friendly.find(params[:pull_token]).decorate
+  end
+
+  def set_repo
+    @repo = @pull.repo
   end
 
   def check_assign

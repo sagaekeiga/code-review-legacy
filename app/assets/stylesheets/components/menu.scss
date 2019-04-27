@@ -1,0 +1,30 @@
+.menu {
+  background-color: $color-white;
+  .list-inline {
+    margin-left: 0px;
+  }
+  li {
+    list-style: none;
+    padding: $base-padding * 2 $base-padding * 4;
+    &.active{
+      border-bottom: 3px solid #ccc;
+    }
+    a, .menu {
+      text-decoration: none;
+      color: $color-dark-gray;
+      font-weight: bold;
+      font-size: $base-font-size * 1.3;
+      i {
+        color: $color-dark-gray;
+        padding-right: $base-padding;
+        &.active {
+          color: $color-line;
+        }
+      }
+    }
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
