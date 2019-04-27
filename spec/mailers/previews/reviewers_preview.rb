@@ -3,7 +3,6 @@ class ReviewersPreview < ActionMailer::Preview
     reviewer = Reviewer.first
     pull = Pull.first
 
-
     ReviewerMailer.pull_request_notice(reviewer, pull)
   end
 end

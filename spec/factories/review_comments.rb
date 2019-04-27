@@ -8,7 +8,6 @@
 #  event          :integer
 #  path           :string
 #  position       :integer
-#  read           :boolean
 #  sha            :string           default(""), not null
 #  status         :integer
 #  created_at     :datetime         not null
