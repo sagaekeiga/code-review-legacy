@@ -95,7 +95,8 @@ Rails.application.routes.draw do
       resources :profiles, only: %i(new create edit update)
       resources :pulls, only: %i(index show), param: :token do
         get :files
-        resources :reviews, only: %i(create show edit update) do
+        resources :reviewer_pulls, only: %i(create)
+        resources :reviews, only: %i(create update) do
           collection do
             get :file, to: 'reviews#new'
           end

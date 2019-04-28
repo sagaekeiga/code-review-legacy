@@ -1,12 +1,12 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_review, only: %i(show edit update)
-  before_action :set_pull, only: %i(new create show edit update)
+  before_action :set_review, only: %i(show update)
+  before_action :set_pull, only: %i(new create show update)
   before_action :set_repo, only: %i(new)
-  before_action :check_show, only: %i(show edit)
-  before_action :check_assign, only: %i(new edit show)
-  before_action :set_commits, only: %i(show edit)
-  before_action :set_changed_files, only: %i(new create show edit)
-  before_action :set_reviews, only: %i(new create show edit update)
+  before_action :check_show, only: %i(show)
+  before_action :check_assign, only: %i(new show)
+  before_action :set_commits, only: %i(show)
+  before_action :set_changed_files, only: %i(new create show)
+  before_action :set_reviews, only: %i(new create show update)
 
   def index
     @reviews = current_reviewer.reviews.includes(:pull).order(updated_at: :desc).decorate
@@ -34,9 +34,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     @repo = @pull.repo
   end
 
-  def edit
-  end
-
   def update
     if @review.update(review_params)
       redirect_to [:reviewers, @pull, @review], success: t('reviewers.reviews.messages.updated')
@@ -56,7 +53,7 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def check_assign
-    return redirect_to [:reviewers, @repo, @pull], warning: t('reviewers.reviews.messages.already') unless current_reviewer.assign_to!(@pull)
+    return redirect_to [:reviewers, @repo, @pull, :changed_files] unless current_reviewer.assigned?(@pull)
   end
 
   def check_show

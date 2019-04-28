@@ -98,7 +98,7 @@ class Reviewer < ApplicationRecord
     end
   end
 
-  def assign_to!(pull)
+  def assign_to(pull)
     ActiveRecord::Base.transaction do
       return true if assigned?(pull)
       reviewer_pull = reviewer_pulls.new(pull: pull)
