@@ -26,6 +26,11 @@ class Reviewers::PullsController < Reviewers::BaseController
   end
 
   def set_repo
-    @repo = current_reviewer.repos.friendly.find(params[:repo_id]) if params[:repo_id]
+    @repo =
+      if params[:repo_id]
+        current_reviewer.repos.friendly.find(params[:repo_id]) if params[:repo_id]
+      else
+        @pull.repo
+      end
   end
 end

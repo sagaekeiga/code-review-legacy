@@ -71,6 +71,7 @@
         box-orient: vertical;
         -webkit-flex-direction: column;
         flex-direction: column;
+        padding-top: $base-padding * 5;
         .aside-activity {
           display: -webkit-box;
           display: box;

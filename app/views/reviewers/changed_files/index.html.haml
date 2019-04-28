@@ -28,10 +28,13 @@
             .aside-activity
               %header
               %ul.projects
-                %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@pull.repo, pull_token: @pull.token), method: :post, class: 'btn btn-block btn-primary'
+                %li
+                  %p アサインするとコードレビューすることができます
+                  = link_to 'アサインする', reviewers_pull_reviewer_pulls_path(@pull), method: :post, class: 'btn btn-block btn-primary'
         .main-display
           .above-main-content
-            %h2.title= @pull.title
+            = render 'shared/flash'
+            %h1.title= @pull.title
             .menu
               %ul.list-inline.text-left
                 %li.list
@@ -50,7 +53,7 @@
                   = link_to [:reviewers, @pull, :issues], class: 'tab' do
                     .text-center
                       %small
-                        %i.fas.fa-align-justify
+                        %i.fas.fa-file
                         Issues
                 %li.list.active
                   = link_to [:reviewers, @repo, @pull, :changed_files], class: 'tab active' do
