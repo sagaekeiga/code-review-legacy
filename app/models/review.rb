@@ -158,7 +158,6 @@ class Review < ApplicationRecord
     # ReviewComment に remote_id を更新する
     data = Github::Request.review_comments review: self
     data.each.with_index do |review_comment, index|
-      Rails.logger.debug "review_comment: #{review_comment}"
       pending_review_comments[index].update!(
         remote_id: review_comment[:id],
         diff_hunk: review_comment[:diff_hunk]
