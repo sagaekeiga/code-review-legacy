@@ -34,6 +34,7 @@
                   %span.label{ class: "label-#{@pull.reviews.last.decorate.label_color}" }= @pull.reviews.last.event_i18n
         .main-display
           .above-main-content
+            = render 'shared/flash'
             %h1.title= @pull.title
             .menu
               %ul.list-inline.text-left
@@ -74,9 +75,7 @@
                     .conversation-wrapper
                       - @reviews.each do |review|
                         - if review.comment?
-                          -# 全体へのレビューコメント
-                          .review-wrapper
-                            = render review
+                          = render review
                           - review.reviewed_comments.decorate.each.with_index do |review_comment, index|
                             %li.step
                               .comment-line

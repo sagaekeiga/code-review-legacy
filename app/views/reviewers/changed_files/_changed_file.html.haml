@@ -18,7 +18,7 @@
                   %td.section-rows
                   %td.markdown-highlight.bg-primary.hljs-addition.file-code
                     %pre= changed_file.patch.scan(/@@\s.*\s@@/)[code_line_index]
-                - code_line.each_line&.with_index do |line, index|
+                - code_line.each_line&.with_index(1) do |line, index|
                   %tr.code-tr{ 'data-line-number': index }
                     %td.index{ class: lines_number_color(line) }= changed_file.deletional_line_number(line: line, section_num: code_line_index, line_num: index)
                     %td.index{ class: lines_number_color(line) }= changed_file.additional_line_number(line: line, section_num: code_line_index, line_num: index)

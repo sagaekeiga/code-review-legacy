@@ -62,8 +62,8 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
     # Ex. [1, 2]
     line_numbers = target_section(section_num).match(/\+.*? /).to_s.strip.delete('+').split(',')
 
-    start_line_number = line_numbers.first.to_i
-    end_line_number = line_numbers.last.to_i + (start_line_number - 1)
+    start_line_number = line_numbers.first.to_i - 1
+    end_line_number = line_numbers.last.to_i + start_line_number
 
     lines_except_deleted_rows = line_num - deleted_rows(section_num: section_num, line_num: line_num)
 
@@ -82,8 +82,8 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
     # Ex. [1, 2]
     line_numbers = target_section(section_num).match(/-.*? /).to_s.strip.delete('-').split(',')
 
-    start_line_number = line_numbers.first.to_i
-    end_line_number = line_numbers.last.to_i + start_line_number - 1
+    start_line_number = line_numbers.first.to_i - 1
+    end_line_number = line_numbers.last.to_i + start_line_number
 
     lines_except_added_rows = line_num - added_rows(section_num: section_num, line_num: line_num)
 
@@ -100,8 +100,9 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
     deletional_line_count = 0
     patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
       deletional_line_count += 1 if line.start_with?('-')
-      return deletional_line_count if line_num == index
+      return deletional_line_count if line_num - 1 == index
     end
+    0
   end
 
   #
@@ -116,6 +117,7 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
       additional_line_count += 1 if line.start_with?('+')
       return additional_line_count if line_num == index
     end
+    0
   end
 
   #
