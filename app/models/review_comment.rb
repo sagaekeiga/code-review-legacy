@@ -5,6 +5,7 @@
 #  id             :bigint(8)        not null, primary key
 #  body           :text
 #  deleted_at     :datetime
+#  diff_hunk      :text
 #  event          :integer
 #  path           :string
 #  position       :integer
@@ -140,14 +141,15 @@ class ReviewComment < ApplicationRecord
 
   # レビューコメント対象のコードを返す
   def target_lines
+    lines = diff_hunk.lines
     if position > 3
-      changed_file.patch&.lines[(position - 3)..position]
+      lines[(position - 3)..position]
     elsif position > 2
-      changed_file.patch&.lines[(position - 2)..position]
+      lines[(position - 2)..position]
     elsif position > 1
-      changed_file.patch&.lines[(position - 1)..position]
+      lines[(position - 1)..position]
     else
-      [] << changed_file.patch&.lines[position]
+      [] << lines[position]
     end
   end
 
@@ -205,12 +207,12 @@ class ReviewComment < ApplicationRecord
     review.commit_id
   end
 
-  #
-  # コメントした差分を返す
-  # @return [Pull::ChangedFile]
-  #
-  def changed_file
-    pull.changed_files.detect { |changed_file| changed_file.sha == sha }
+  def repo_full_name
+    review.pull.repo.full_name
+  end
+
+  def installation_id
+    review.pull.installation_id
   end
 
   #
@@ -241,7 +243,8 @@ class ReviewComment < ApplicationRecord
         sha: review_comment.sha,
         in_reply_to_id: params[:comment][:in_reply_to_id],
         status: :completed,
-        review_id: review_comment.review.id
+        review_id: review_comment.review.id,
+        diff_hunk: params[:comment][:diff_hunk]
       }
     end
 

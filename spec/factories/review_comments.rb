@@ -5,6 +5,7 @@
 #  id             :bigint(8)        not null, primary key
 #  body           :text
 #  deleted_at     :datetime
+#  diff_hunk      :text
 #  event          :integer
 #  path           :string
 #  position       :integer

@@ -16,7 +16,7 @@ class Reviewers::PullsController < Reviewers::BaseController
   end
 
   def show
-    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
+    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at)
   end
 
   private

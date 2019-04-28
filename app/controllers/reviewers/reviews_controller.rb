@@ -9,11 +9,11 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   before_action :set_reviews, only: %i(new create show update)
 
   def index
-    @reviews = current_reviewer.reviews.includes(:pull).order(updated_at: :desc).decorate
+    @reviews = current_reviewer.reviews.includes(:pull).order(updated_at: :desc)
   end
 
   def new
-    @review = Review.new.decorate
+    @review = Review.new
   end
 
   def create
@@ -77,6 +77,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
   end
 
   def set_reviews
-    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at).decorate
+    @reviews = current_reviewer.reviews.where(pull_id: @pull.id).order(:created_at)
   end
 end

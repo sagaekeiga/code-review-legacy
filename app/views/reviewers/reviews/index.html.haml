@@ -28,7 +28,7 @@
               %th{ scope: 'col' } 更新日
           %tbody
             - @reviews.each do |review|
-              %tr.text-center.pull-list
-                %td= link_to review.pull_title, review.path
+              %tr.text-left.pull-list
+                %td= link_to review.pull_title, [:reviewers, review.pull]
                 %td= review.event_i18n
                 %td= l review.updated_at

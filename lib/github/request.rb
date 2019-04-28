@@ -23,6 +23,16 @@ module Github
         JSON.parse res, symbolize_names: true
       end
 
+      def review_comment(review_comment:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(review_comment.installation_id)}",
+          'Accept': set_accept(:content)
+        }
+        res = get "#{BASE_API_URI}/repos/#{review_comment.repo_full_name}/pulls/comments/#{review_comment.remote_id}"
+        JSON.parse res.body, symbolize_names: true
+      end
+
       def update_issue_comment(params, pull)
         comment = pull.issue_comments.analysis.first
         url = "#{BASE_API_URI}/repos/#{pull.full_name}/issues/comments/#{comment.remote_id}"

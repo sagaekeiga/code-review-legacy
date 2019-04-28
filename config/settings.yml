@@ -2,8 +2,6 @@ reviews:
   body: PullRequestへようこそ！私はあなたにインラインでいくつかのコメントを残しました。
     ほとんどはスタイルを改善するコメントですが、コメントをさらに主観的にするため開発中です。
     インラインで問題に返信してもらったり、特定のタイプのフィードバックを多かれ少なかれ見たいと思ったらお知らせください。
-qiita:
-  about_install_github_app: https://qiita.com/k_s/private/3b5354aab17edc6af33a
 github:
   web_domain: https://github.com/
 site:
@@ -22,3 +20,4 @@ contents:
     extnames: ['.jpg', '.png', '.jpeg', '.gif', '.pdf']
 rewards:
   price: 10
+
