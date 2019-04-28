@@ -184,7 +184,7 @@ module Github
       # GET レポジトリのZIPファイル
       # @see https://developer.github.com/v3/repos/contents/#get-archive-link
       def repo_archive(repo:, pull:)
-        ref = pull.commits.last.sha
+        ref = pull.present? ? pull.commits.last.sha : 'master'
         headers = {
           'User-Agent': 'Mergee',
           'Authorization': "token #{get_access_token(repo.installation_id)}",

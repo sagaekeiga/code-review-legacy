@@ -1,31 +1,3 @@
--# .container
--#   .row
--#     .page-header{ 'repo-id': @repo.id }
--#       %h3= link_to @repo.full_name, [:reviewers, @repo]
--#     = render 'reviewers/shared/navbar', repo: @repo
--#     // 検索フォーム
--#     = form_with url: reviewers_repo_contents_path(@repo), method: :get, local: true, class: 'search-form' do |f|
--#       .input-group
--#         = f.text_field :keyword, value: params[:keyword], class: 'form-control', placeholder: t('reviewers.contents.index.placeholder')
--#         %span.input-group-btn
--#           = f.submit t('reviewers.contents.index.search'), class: 'btn btn-primary'
--#     .panel.panel-default
--#       %table.table.table-hover
--#         %tbody
--#           - @contents.each do |content|
--#             %tr
--#               %td.file-name.col-sm-11
--#                 = link_to reviewers_repo_contents_path(@repo, path: content[:path], type: content[:type]) do
--#                   %i.fas{ class: content[:type].eql?('dir') ? 'fa-folder' : 'fa-file' }
--#                   &nbsp;
--#                   = content[:name]
--#     -if @readme[:content].present?
--#       .panel.panel-default
--#         .panel-heading= @readme[:name]
--#         .panel-body
--#           .md-wrapper
--#             = markdown(Base64.decode64(@readme[:content]).force_encoding('UTF-8'))
-
 .col-xs-12.p-r-0.p-l-0
   .container-fluid.p-r-0.p-l-0
     %nav.aside-left-nav
@@ -56,32 +28,9 @@
             .aside-activity
               %header
               %ul.projects
-                %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@repo, pull_token: @pull.token), method: :post, class: 'btn btn-block btn-primary'
+                %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@repo), method: :post, class: 'btn btn-block btn-primary'
         .main-display
           .above-main-content
-            -# %h2.title= @pull.title
-            -# .menu
-            -#   %ul.list-inline.text-left
-            -#     %li.list.active
-            -#       = link_to [:reviewers, @repo, @pull], class: 'tab active' do
-            -#         .text-center
-            -#           %small
-            -#             %i.fas.fa-comments
-            -#             Conversation
-            -#     %li.list
-            -#       = link_to [:reviewers, @repo, @pull, :commits], class: 'tab' do
-            -#         .text-center
-            -#           %small
-            -#             %i.fas.fa-align-justify
-            -#             Commits
-            -#             = @pull.commits.count
-            -#     %li.list
-            -#       = link_to [:reviewers, @repo, @pull, :changed_files], class: 'tab' do
-            -#         .text-center
-            -#           %small
-            -#             %i.fas.fa-code
-            -#             Files Changed
-            -#             = @pull.changed_files.count
           .main-body
             .dashboard
               -if @readme[:content].present?
