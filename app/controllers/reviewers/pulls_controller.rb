@@ -3,16 +3,7 @@ class Reviewers::PullsController < Reviewers::BaseController
   before_action :set_repo, only: %i(show)
 
   def index
-    if params[:repo_id]
-      @pulls =
-      if params[:status] == 'closed'
-        @repo.pulls.closed
-      else
-        @repo.pulls.open
-      end
-    else
-      @pulls = current_reviewer.pulls.includes(:repo).decorate
-    end
+    @pulls = current_reviewer.pulls.includes(:repo).decorate
   end
 
   def show

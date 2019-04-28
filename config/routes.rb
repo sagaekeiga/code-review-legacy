@@ -88,18 +88,14 @@ Rails.application.routes.draw do
         check_list
       )
       get 'settings/integrations'
-      get :my_page
       resources :reviewer_tags, only: %i(destroy) do
         patch :update, on: :collection
       end
       resources :profiles, only: %i(new create edit update)
       resources :pulls, only: %i(index show), param: :token do
-        get :files
         resources :reviewer_pulls, only: %i(create)
         resources :reviews, only: %i(create update) do
-          collection do
-            get :file, to: 'reviews#new'
-          end
+          get :file, to: 'reviews#new', on: :collection
           resources :replies, only: %i(create), shallow: true
         end
         resources :comments, only: %i(create update destroy)
@@ -112,13 +108,11 @@ Rails.application.routes.draw do
       end
       resources :repos, only: %i(show) do
         post :download
-        resources :contents, only: %i(index)
         resources :pulls, only: %i(index show), param: :token do
           resources :commits, only: %i(index show), param: :sha
           resources :changed_files, only: %i(index show), param: :sha
         end
       end
-      resources :reviews, only: %i(index)
     end
   end
 
