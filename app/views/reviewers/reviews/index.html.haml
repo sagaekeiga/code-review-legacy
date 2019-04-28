@@ -23,12 +23,17 @@
         %table.table.table-hover
           %thead
             %tr.pull-list-header
-              %th{ scope: 'col' } タイトル
               %th{ scope: 'col' } ステータス
+              %th{ scope: 'col' } タイトル
+              %th{ scope: 'col' } 行数
+              %th{ scope: 'col' } 報酬
               %th{ scope: 'col' } 更新日
           %tbody
             - @reviews.each do |review|
               %tr.text-left.pull-list
+                %td
+                  %span.label{ class: "label-#{review.label_color}" }= review.event_i18n
                 %td= link_to review.pull_title, [:reviewers, review.pull]
-                %td= review.event_i18n
+                %td= review.pull.decorate.lines
+                %td= review.pull.decorate.reward
                 %td= l review.updated_at
