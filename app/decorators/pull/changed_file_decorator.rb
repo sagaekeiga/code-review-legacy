@@ -98,7 +98,7 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   #
   def deleted_rows(section_num:, line_num:)
     deletional_line_count = 0
-    patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
+    patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index(1) do |line, index|
       deletional_line_count += 1 if line.start_with?('-')
       return deletional_line_count if line_num == index
     end
