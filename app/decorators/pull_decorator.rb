@@ -40,6 +40,18 @@ class PullDecorator < ApplicationDecorator
     completed? ? 'success' : 'danger'
   end
 
+  def lines
+    if model.addtions.nil? || model.deletions.nil?
+      0
+    else
+      model.addtions + model.deletions
+    end
+  end
+
+  def reward
+    lines * Settings.rewards.price
+  end
+
   # レポジトリアサイン削除アクションのパスを返す
   def destroy_reviewer_pull_path(reviewer:)
     reviewer_pull = reviewer_pulls.find_by(reviewer: reviewer)

@@ -2,6 +2,8 @@
   %tr.pull-list
     %td{ class: pull.completed? ? 'add-merged-color' : 'add-success-color' }= t "statuses.#{pull.status}"
     %td= link_to pull.title&.truncate(40), pull.decorate.remote_url, target: 'blank'
+    %td= pull.lines
+    %td= pull.reward
     %td= date_format(pull.remote_created_at)
     %td
       - pull.tags.each do |tag|

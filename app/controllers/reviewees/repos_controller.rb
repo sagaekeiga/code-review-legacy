@@ -6,7 +6,7 @@ class Reviewees::ReposController < Reviewees::BaseController
   end
 
   def show
-    @pulls = @repo.pulls.order(remote_created_at: :desc).includes(:pull_tags, :tags)
+    @pulls = PullDecorator.decorate_collection @repo.pulls.order(remote_created_at: :desc).includes(:pull_tags, :tags)
   end
 
   def download

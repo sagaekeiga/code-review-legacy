@@ -3,9 +3,11 @@
 # Table name: pulls
 #
 #  id                :bigint(8)        not null, primary key
+#  addtions          :integer
 #  base_label        :string
 #  body              :string
 #  deleted_at        :datetime
+#  deletions         :integer
 #  head_label        :string
 #  number            :integer          not null
 #  remote_created_at :datetime         not null
@@ -89,6 +91,8 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   attr_accessor :head_sha, :check_run_id, :checks, :analysis
   attribute :status, default: statuses[:connected]
+  attribute :addtions, default: 0
+  attribute :deletions, default: 0
 
   # -------------------------------------------------------------------------------
   # Scopes
@@ -129,20 +133,22 @@ class Pull < ApplicationRecord
   def self.fetch!(repo)
     ActiveRecord::Base.transaction do
       res_pulls = Github::Request.pulls(repo)
-      res_pulls.each do |res_pull|
+      res_pulls.each do |data|
         pull = repo.pulls.with_deleted.find_or_initialize_by(
-          remote_id: res_pull['id'],
+          remote_id: data['id'],
           resource_type: repo.resource_type,
           resource_id: repo.resource_id
         )
         pull.update_attributes!(
-          remote_id:  res_pull['id'],
-          number:     res_pull['number'],
-          title:      res_pull['title'],
-          body:       res_pull['body'],
-          head_label: res_pull['head']['label'],
-          base_label: res_pull['base']['label'],
-          remote_created_at: res_pull['created_at']
+          remote_id:  data['id'],
+          number:     data['number'],
+          title:      data['title'],
+          body:       data['body'],
+          head_label: data['head']['label'],
+          base_label: data['base']['label'],
+          addtions:   data['addtions'],
+          deletions:  data['deletions'],
+          remote_created_at: data['created_at']
         )
         pull.restore if pull&.deleted?
         pull.create_or_destroy_tags
@@ -176,6 +182,8 @@ class Pull < ApplicationRecord
         resource_id: resource.id,
         head_label: params['head']['label'],
         base_label: params['base']['label'],
+        addtions:   params['additions'],
+        deletions:  params['deletions'],
         remote_created_at: params['created_at']
       )
       pull.update_status_by!(params[:state])
