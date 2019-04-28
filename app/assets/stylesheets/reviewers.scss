@@ -8,7 +8,7 @@
     background: #555;
     display: inline-block;
     float: left;
-    height: 100vh;
+    height: 100%;
     text-align: center;
     a.aside-item {
       font-size: $base-font-size * 1.5;
@@ -56,7 +56,6 @@
       box-flex: 1;
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
-      overflow: hidden;
       padding: $base-padding * 5;
       aside.app-aside {
         -webkit-box-flex: 0;
@@ -105,9 +104,6 @@
         }
         .main-body {
           padding: 0 15px 100px;
-          height: 70vh;
-          overflow-x: auto;
-          overflow-y: scroll;
         }
       }
     }

@@ -20,7 +20,7 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
     end
   end
 
-  # シンタックスハイライトで返す
+  # # シンタックスハイライトで返す
   def coderay(line)
     CodeRay.scan(line, symbolized_lang).div.html_safe
   end

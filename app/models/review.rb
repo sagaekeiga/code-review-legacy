@@ -158,7 +158,10 @@ class Review < ApplicationRecord
     # ReviewComment に remote_id を更新する
     data = Github::Request.review_comments review: self
     data.each.with_index do |review_comment, index|
-      pending_review_comments[index].update!(remote_id: review_comment[:id])
+      pending_review_comments[index].update!(
+        remote_id: review_comment[:id],
+        diff_hunk: review_comment[:diff_hunk]
+      )
     end
 
     # レビュアーに審査通過（GithubにPOST）したことを通知する

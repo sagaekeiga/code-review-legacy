@@ -91,13 +91,13 @@
                                             %tr
                                               %td.hidden= index
                                               - if line.start_with?('+')
-                                                %td.markdown-highlight.bg-success.file-code= review_comment.changed_file.decorate.coderay(line)
+                                                %td.markdown-highlight.bg-success.file-code= review_comment.coderay(line)
                                               - elsif line.start_with?('-')
-                                                %td.markdown-highlight.bg-danger.file-code= review_comment.changed_file.decorate.coderay(line)
+                                                %td.markdown-highlight.bg-danger.file-code= review_comment.coderay(line)
                                               - elsif line.start_with?('@@')
                                                 %td.markdown-highlight.bg-primary.file-code= simple_format(line)
                                               - else
-                                                %td.markdown-highlight.file-code= review_comment.changed_file.decorate.coderay(line)
+                                                %td.markdown-highlight.file-code= review_comment.coderay(line)
                                     .panel-text
                                       = render review_comment.target_comments.decorate
                                   // Reply
@@ -116,7 +116,7 @@
                                           %input{ type: 'hidden', value: review_comment.review.id, class: 'review_id' }
                                           %input{ type: 'hidden', value: review_comment.path, class: 'path' }
                                           %input{ type: 'hidden', value: review_comment.position, class: 'position' }
-                                          %input{ type: 'hidden', value: review_comment.changed_file.sha, class: 'sha' }
+                                          %input{ type: 'hidden', value: review_comment.sha, class: 'sha' }
                                           %input{ type: 'hidden', value: review_comment.commit_id, class: 'commit_id' }
                           .bottom-line
 = javascript_pack_tag 'reply'
