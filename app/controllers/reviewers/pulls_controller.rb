@@ -1,6 +1,6 @@
 class Reviewers::PullsController < Reviewers::BaseController
   before_action :set_pull, only: %i(show)
-  before_action :set_repo, only: %i(index show)
+  before_action :set_repo, only: %i(show)
 
   def index
     if params[:repo_id]
