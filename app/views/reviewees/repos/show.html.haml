@@ -19,6 +19,8 @@
               %tr.pull-list-header
                 %th= t('.status')
                 %th= t('.title')
+                %th= t('.lines')
+                %th= t('.reward')
                 %th= t('.created')
                 %th= t('.tag')
                 %th= t('.review_status')
@@ -26,6 +28,8 @@
               %tr.pull-list
                 %td Example
                 %td [Ruby]Hoge
+                %td 200
+                %td 2000
                 %td= date_format(Time.zone.now)
                 %td
                   %span.label.label-warning Ruby

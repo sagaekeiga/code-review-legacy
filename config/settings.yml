@@ -21,4 +21,4 @@ contents:
     basenames: ['DS_Store']
     extnames: ['.jpg', '.png', '.jpeg', '.gif', '.pdf']
 rewards:
-  price: 200
+  price: 10

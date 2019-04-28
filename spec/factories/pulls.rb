@@ -3,9 +3,11 @@
 # Table name: pulls
 #
 #  id                :bigint(8)        not null, primary key
+#  addtions          :integer
 #  base_label        :string
 #  body              :string
 #  deleted_at        :datetime
+#  deletions         :integer
 #  head_label        :string
 #  number            :integer          not null
 #  remote_created_at :datetime         not null

@@ -54,6 +54,6 @@
                   %td
                     %span.label{ class: "label-#{pull.label}" }= pull.status_for_reviewer
                   %td= link_to pull.title, [:reviewers, pull.repo, pull]
-                  %td
-                  %td
+                  %td= pull.lines
+                  %td= pull.reward
                   %td= l pull.updated_at

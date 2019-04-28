@@ -8,6 +8,7 @@ class Reviewers::CommitsController < Reviewers::BaseController
   end
 
   def show
+    @changed_files = Pull::ChangedFileDecorator.decorate_collection @pull.changed_files
   end
 
   private

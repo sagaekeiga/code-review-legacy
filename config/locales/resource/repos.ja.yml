@@ -20,6 +20,8 @@ ja:
         status: ステータス
         title: タイトル
         created: 作成日
+        reward: 金額
+        lines: 行数
         tag: タグ
         review_status: レビューステータス
   reviewers:
