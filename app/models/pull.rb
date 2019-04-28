@@ -64,7 +64,7 @@ class Pull < ApplicationRecord
   #
   # - connected        : APIのレスポンスから作成された状態
   # - request_reviewed : レビューをリクエストした
-  # - pending          : コメントした
+  # - pending          : コメントした（審査中）
   # - reviewed         : レビューを完了した
   # - completed        : リモートのPRをMerge/Closeした
   #
@@ -120,11 +120,22 @@ class Pull < ApplicationRecord
   # }
 
   scope :open, lambda {
-    where(status: %i(request_reviewed pending reviewed)).includes(reviewers: :github_account).order(created_at: :desc)
+    where(status: %i(request_reviewed pending reviewed)).
+      includes(reviewers: :github_account).
+      order(created_at: :desc)
   }
 
   scope :closed, lambda {
-    completed.joins(:reviews).includes(reviewers: :github_account).order(created_at: :desc)
+    completed.
+      joins(:reviews).
+      includes(reviewers: :github_account).
+      order(created_at: :desc)
+  }
+
+  # 報酬が発生する予定のPRを返す
+  scope :reward_occurs, lambda {
+    where(status: %i(pending reviewed completed)).
+      completed.joins(:reviews).order(:created_at)
   }
   # -------------------------------------------------------------------------------
   # ClassMethods

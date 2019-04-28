@@ -9,10 +9,6 @@
         %i.fab.fa-hubspot
         .title
           %small Pulls
-      = link_to :reviewers_reviews, class: 'aside-item' do
-        %i.fas.fa-history
-        .title
-          %small Reviews
       = link_to '#', class: 'aside-item' do
         %i.fas.fa-cogs
         .title
@@ -67,6 +63,7 @@
                       %small
                         %i.fas.fa-code
                         Files Changed
+                        = changed_files.count
           .main-body
             .dashboard
               .review

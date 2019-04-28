@@ -1,59 +1,39 @@
-- if params[:repo_id]
-  .container
-    .row
-      .page-header{ 'repo-id': @repo.id }
-        %h3= link_to @repo.full_name, [:reviewers, @repo]
-      = render 'reviewers/shared/navbar', repo: @repo
-      .pull-requests
-        .panel.panel-default
-          %table.table
-            %thead.color
-              %th
-                .text-left
-                  = link_to t('.open'), [:reviewers, @repo, :pulls], class: params[:status] == 'closed' ? '' : 'active'
-                  = link_to t('.closed'), reviewers_repo_pulls_path(@repo, status: :closed), class: params[:status] == 'closed' ? 'active' : ''
-              %th= t('.assginee')
-            %tbody
-              = render partial: 'reviewers/pulls/pull', collection: @pulls
-- else
-  .col-xs-12.p-r-0.p-l-0
-    .container-fluid.p-r-0.p-l-0
-      %nav.aside-left-nav
-        = link_to :root, class: 'aside-item' do
-          %i.fas.fa-tachometer-alt
-          .title
-            %small Dashboard
-        = link_to :reviewers_pulls, class: 'aside-item current' do
-          %i.fab.fa-hubspot
-          .title
-            %small Pulls
-        = link_to :reviewers_reviews, class: 'aside-item' do
-          %i.fas.fa-history
-          .title
-            %small Reviews
-        = link_to '#', class: 'aside-item' do
-          %i.fas.fa-cogs
-          .title
-            %small Settings
-      %main.app-main
-        %header.main-header
-          .title
-            %span.full_name Pullrequests
-        .app-domainant
-          %table.table.table-hover
-            %thead
-              %tr.pull-list-header
-                %th{ scope: 'col' } ステータス
-                %th{ scope: 'col' } タイトル
-                %th{ scope: 'col' } 行数
-                %th{ scope: 'col' } 報酬
-                %th{ scope: 'col' } 更新日
-            %tbody
-              - @pulls.each do |pull|
-                %tr.text-left.pull-list
-                  %td
-                    %span.label{ class: "label-#{pull.label}" }= pull.status_for_reviewer
-                  %td= link_to pull.title, [:reviewers, pull.repo, pull]
-                  %td= pull.lines
-                  %td= pull.reward
-                  %td= l pull.updated_at
+.col-xs-12.p-r-0.p-l-0
+  .container-fluid.p-r-0.p-l-0
+    %nav.aside-left-nav
+      = link_to :root, class: 'aside-item' do
+        %i.fas.fa-tachometer-alt
+        .title
+          %small Dashboard
+      = link_to :reviewers_pulls, class: 'aside-item current' do
+        %i.fab.fa-hubspot
+        .title
+          %small Pulls
+      = link_to '#', class: 'aside-item' do
+        %i.fas.fa-cogs
+        .title
+          %small Settings
+    %main.app-main
+      %header.main-header
+        .title
+          %span.full_name アサインされているプルリクエスト
+      .app-domainant
+        %table.table.table-hover
+          %thead
+            %tr.pull-list-header
+              %th{ scope: 'col' } ステータス
+              %th{ scope: 'col' } タイトル
+              %th{ scope: 'col' } 行数
+              %th{ scope: 'col' } 報酬
+              %th{ scope: 'col' } レビュー回数
+              %th{ scope: 'col' } 更新日
+          %tbody
+            - @pulls.each do |pull|
+              %tr.text-left.pull-list
+                %td
+                  %span.label{ class: "label-#{pull.label}" }= pull.status_for_reviewer
+                %td= link_to pull.title, [:reviewers, pull.repo, pull]
+                %td= pull.lines
+                %td= pull.reward
+                %td= pull.reviews.count
+                %td= l pull.updated_at
