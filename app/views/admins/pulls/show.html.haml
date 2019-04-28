@@ -31,4 +31,4 @@
             = render @reviewers, resource: @pull
       .reviews-form-wrapper
         .reviews-form-card-wrapper.editor
-          = render @changed_files
+          = render partial: 'admins/pull/changed_files/changed_file', collection: @changed_files, locals: { repo: @repo, pull: @pull }

@@ -141,14 +141,15 @@ class ReviewComment < ApplicationRecord
 
   # レビューコメント対象のコードを返す
   def target_lines
+    lines = diff_hunk.lines
     if position > 3
-      diff_hunk[(position - 3)..position]
+      lines[(position - 3)..position]
     elsif position > 2
-      diff_hunk[(position - 2)..position]
+      lines[(position - 2)..position]
     elsif position > 1
-      diff_hunk[(position - 1)..position]
+      lines[(position - 1)..position]
     else
-      [] << diff_hunk[position]
+      [] << lines[position]
     end
   end
 
