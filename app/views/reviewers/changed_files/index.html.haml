@@ -33,6 +33,7 @@
                   = link_to 'アサインする', reviewers_pull_reviewer_pulls_path(@pull), method: :post, class: 'btn btn-block btn-primary'
         .main-display
           .above-main-content
+            = render 'shared/flash'
             %h1.title= @pull.title
             .menu
               %ul.list-inline.text-left

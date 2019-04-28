@@ -31,6 +31,7 @@
                 %li= link_to 'リポジトリをダウンロード', reviewers_repo_download_path(@pull.repo, pull_token: @pull.token), method: :post, class: 'btn btn-block btn-primary'
         .main-display
           .above-main-content
+            = render 'shared/flash'
             %h1.title= @pull.title
             .pull-right
               %button#reviewSubmit.btn.btn-primary{ type: 'button', 'data-backdrop': 'false' } 提出する
