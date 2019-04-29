@@ -114,6 +114,7 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   def added_rows(section_num:, line_num:)
     additional_line_count = 0
     patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
+      
       additional_line_count += 1 if line.start_with?('+')
       return additional_line_count if line_num == index
     end
