@@ -29,7 +29,7 @@
             - @pulls.each_with_index do |pull, i|
               %tr.pull-list
                 %td= link_to pull.title&.truncate(20), [:reviewers, pull], class: 'pull-title'
-                %td= link_to pull.repo.decorate.name_including_orgs, class: 'repo-path'
+                %td= link_to pull.repo.decorate.name_including_orgs, [:reviewers, pull.repo], class: 'repo-path'
                 %td= date_format(pull.remote_created_at)
                 %td
                   - pull.tags.each do |tag|

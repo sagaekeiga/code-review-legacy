@@ -29,6 +29,14 @@
           .above-main-content
           .main-body
             .dashboard
+              .languages
+                %p 使用言語
+                %table.table.table-hover
+                  %tbody
+                    - @languages.each do |language|
+                      %tr
+                        %th= language.name
+                        %td= number_to_percentage language.rate(@language_sum_lines)
               -if @readme[:content].present?
                 .panel.panel-default
                   .panel-heading= @readme[:name]
