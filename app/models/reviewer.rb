@@ -47,7 +47,6 @@ class Reviewer < ApplicationRecord
   has_many :repos, through: :reviewer_repos, source: :repo
   has_many :reviewer_pulls
   has_many :pulls, through: :reviewer_pulls, source: :pull
-  has_many :send_mails
   has_one :github_account, class_name: 'Reviewers::GithubAccount'
   has_one :profile, class_name: 'Reviewers::Profile'
   has_many :reviewer_tags, dependent: :destroy

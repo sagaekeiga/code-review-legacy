@@ -52,17 +52,19 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
 
   #
   # 追加行の行数を返す
-  # @param [String] 展開されている行
-  # @param [Integer] セクションの連番 ex. ['@@ -1,2 +1,2 @@', '@@ -3,4 +3,4 @@', ''@@ -5,6 +5,6 @@']
-  # @param [Integer] 展開されている行の連番
+  # @param [String] line 展開されている行
+  # @param [Integer] section_num セクションの連番 ex. ['@@ -1,2 +1,2 @@', '@@ -3,4 +3,4 @@', '@@ -5,6 +5,6 @@']
+  # @param [Integer] line_num 展開されている行の連番
   # @return [Integer]
   #
   def additional_line_number(line:, section_num:, line_num:)
     return '' if line.start_with?('-')
-    # Ex. [1, 2]
+    # Ex. @@ -114,6 +114,7 @@ => [114, 121]
     line_numbers = target_section(section_num).match(/\+.*? /).to_s.strip.delete('+').split(',')
 
+    # Ex. [114, 121] => 114
     start_line_number = line_numbers.first.to_i - 1
+    # Ex. [114, 121] => 121
     end_line_number = line_numbers.last.to_i + start_line_number
 
     lines_except_deleted_rows = line_num - deleted_rows(section_num: section_num, line_num: line_num)
@@ -79,7 +81,7 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   #
   def deletional_line_number(line:, section_num:, line_num:)
     return '' if line.start_with?('+')
-    # Ex. [1, 2]
+    # Ex. @@ -114,6 +114,7 @@ => [114, 120]
     line_numbers = target_section(section_num).match(/-.*? /).to_s.strip.delete('-').split(',')
 
     start_line_number = line_numbers.first.to_i - 1
@@ -98,7 +100,7 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   #
   def deleted_rows(section_num:, line_num:)
     deletional_line_count = 0
-    patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
+    patch.split(/@@.*\d+.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
       deletional_line_count += 1 if line.start_with?('-')
       return deletional_line_count if line_num - 1 == index
     end
@@ -113,9 +115,9 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   #
   def added_rows(section_num:, line_num:)
     additional_line_count = 0
-    patch.split(/@@.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
+    patch.split(/@@.*\d+.*@@.*\n/).reject(&:empty?)[section_num].each_line.with_index do |line, index|
       additional_line_count += 1 if line.start_with?('+')
-      return additional_line_count if line_num == index
+      return additional_line_count if line_num - 1 == index
     end
     0
   end
@@ -126,6 +128,6 @@ class Pull::ChangedFileDecorator < ApplicationDecorator
   # @return [String]
   #
   def target_section(section_num)
-    patch.scan(/@@.*@@/)[section_num]
+    patch.scan(/@@.*\d+.*@@.*\n/)[section_num]
   end
 end

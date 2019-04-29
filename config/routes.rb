@@ -101,7 +101,6 @@ Rails.application.routes.draw do
         resources :comments, only: %i(create update destroy)
         resources :issues, only: %i(index)
       end
-      resources :send_mails, only: %i(create)
       resources :review_comments, only: %i(create update destroy show)
       namespace :github do
         resources :review_comments, only: %i(update)
