@@ -1,0 +1,11 @@
+.registrations-new {
+  form {
+    margin-top: $base-margin * 2;
+    margin-bottom: $base-margin * 4;
+    .scroll-area {
+      height: 40vh;
+      padding: $base-padding * 5;
+      overflow: scroll;
+    }
+  }
+}
