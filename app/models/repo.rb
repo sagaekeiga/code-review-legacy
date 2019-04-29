@@ -191,4 +191,38 @@ class Repo < ApplicationRecord
   def analysis_id(static_analysis)
     repo_analyses.find_by(static_analysis_id: static_analysis.id)&.id
   end
+
+  def readme
+    Github::Request.readme repo: self
+  end
+
+  def languages
+    data = Github::Request.languages(repo: self)
+    data.map.with_index do |lang_info, index|
+      Language.new(
+        name: lang_info.first.to_s,
+        lines: lang_info.last.to_i
+      )
+    end
+  end
+
+  class Language
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+    include Draper::Decoratable
+
+    attr_accessor :name, :lines
+
+    #
+    # @param [Hash] data
+    #
+    def initialize(data = {})
+      self.name = data[:name]
+      self.lines = data[:lines]
+    end
+
+    def rate(sum)
+      (lines.to_f / sum.to_f) * 100.0
+    end
+  end
 end
