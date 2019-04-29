@@ -13,7 +13,7 @@
               %tr
                 %th{ scope: 'col' }
             %tbody
-              - changed_file.patch.split(/@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
+              - changed_file.patch.split(/@@.*\d+.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
                 %tr.code-tr{ 'data-line-number': code_line_index }
                   %td.section-rows
                   %td.section-rows

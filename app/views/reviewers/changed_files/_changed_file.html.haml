@@ -12,12 +12,12 @@
               %tr
                 %th{ scope: 'col' }
             %tbody
-              - changed_file.patch.split(/@@.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
+              - changed_file.patch.split(/@@.*\d+.*@@.*\n/).reject(&:empty?).each.with_index do |code_line, code_line_index|
                 %tr.code-tr{ 'data-line-number': code_line_index }
                   %td.section-rows
                   %td.section-rows
                   %td.markdown-highlight.bg-primary.hljs-addition.file-code
-                    %pre= changed_file.patch.scan(/@@\s.*\s@@/)[code_line_index]
+                    %pre= changed_file.patch.scan(/@@.*\d+.*@@.*\n/)[code_line_index]
                 - code_line.each_line&.with_index(1) do |line, index|
                   %tr.code-tr{ 'data-line-number': index }
                     %td.index{ class: lines_number_color(line) }= changed_file.deletional_line_number(line: line, section_num: code_line_index, line_num: index)
