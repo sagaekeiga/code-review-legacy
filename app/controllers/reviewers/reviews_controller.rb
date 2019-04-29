@@ -1,12 +1,11 @@
 class Reviewers::ReviewsController < Reviewers::BaseController
-  before_action :set_review, only: %i(show update)
-  before_action :set_pull, only: %i(new create show update)
+  before_action :set_review, only: %i(update)
+  before_action :set_pull, only: %i(new create update)
   before_action :set_repo, only: %i(new)
-  before_action :check_show, only: %i(show)
-  before_action :check_assign, only: %i(new show)
-  before_action :set_commits, only: %i(show)
-  before_action :set_changed_files, only: %i(new create show)
-  before_action :set_reviews, only: %i(new create show update)
+  before_action :check_assign, only: %i(new create update)
+  before_action :check_pr, only: %i(new create update)
+  before_action :set_changed_files, only: %i(new create)
+  before_action :set_reviews, only: %i(new create update)
 
   def new
     @review = Review.new
@@ -23,10 +22,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     @review = Review.new
     flash[:danger] = t('reviewers.reviews.messages.failed')
     render :new
-  end
-
-  def show
-    @repo = @pull.repo
   end
 
   def update
@@ -51,8 +46,8 @@ class Reviewers::ReviewsController < Reviewers::BaseController
     return redirect_to [:reviewers, @repo, @pull, :changed_files] unless current_reviewer.assigned?(@pull)
   end
 
-  def check_show
-    return redirect_to reviewers_pull_review_replies_url(@pull, review_id: @review.id) if @review.approve? || @review.comment?
+  def check_pr
+    return redirect_to [:reviewers, @repo, @pull], alert: t('reviewers.reviews.alerts.check_pr.danger') if @pull.completed?
   end
 
   def set_changed_files
@@ -61,10 +56,6 @@ class Reviewers::ReviewsController < Reviewers::BaseController
 
   def set_review
     @review = current_reviewer.reviews.find(params[:id] || params[:review_id]).decorate
-  end
-
-  def set_commits
-    @commits = Pull::CommitDecorator.decorate_collection @pull.commits
   end
 
   def review_params
