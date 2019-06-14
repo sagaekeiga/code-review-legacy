@@ -9,5 +9,16 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application'
-  %body
-    = yield
+  // --------------------------------------------------
+  // body
+  // --------------------------------------------------
+  %body{ class: "#{controller_name}-#{action_name}" }
+    // header navigation
+    = render 'navbar'
+    .container
+      - !content_for?(:flash) && flash && flash.each do |key, message|
+        .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+          %strong= message
+
+    -# @NOTE フルサイズにしたい場合
+    %main{ role: 'main' }= yield
