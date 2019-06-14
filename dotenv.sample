@@ -1,0 +1,7 @@
+# Redis
+REDIS_URL="redis://cache:6379/0"
+
+RAILS_LOG_TO_STDOUT=true
+
+# domain constraints
+WEB_DOMAIN=""
