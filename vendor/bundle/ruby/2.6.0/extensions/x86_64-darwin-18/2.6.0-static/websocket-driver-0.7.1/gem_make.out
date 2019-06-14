@@ -1,0 +1,15 @@
+current directory: /Users/sagaekeiga/Desktop/code-review/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+/Users/sagaekeiga/.rbenv/versions/2.6.0/bin/ruby -I /Users/sagaekeiga/.rbenv/versions/2.6.0/lib/ruby/2.6.0 -r ./siteconf20190614-9815-1k2rt9v.rb extconf.rb
+creating Makefile
+
+current directory: /Users/sagaekeiga/Desktop/code-review/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /Users/sagaekeiga/Desktop/code-review/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.bundle
+
+current directory: /Users/sagaekeiga/Desktop/code-review/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 websocket_mask.bundle ./.gem.20190614-9815-1v9cyzp
