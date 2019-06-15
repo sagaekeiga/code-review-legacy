@@ -17,7 +17,7 @@ class Github::EventBranchService
   #
   def call
     case @request_event.to_sym
-    when :integration_installation_repositories, :installation_repositories, :installation then repository
+    when :installation_repositories, :installation then repository
     end
   end
 

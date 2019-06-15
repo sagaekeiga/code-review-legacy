@@ -26,6 +26,7 @@ class Repo < ApplicationRecord
   # Relations
   # -------------------------------------------------------------------------------
   belongs_to :user
+  has_many :pulls, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -73,6 +74,7 @@ class Repo < ApplicationRecord
                 params
               )
             )
+            Pull.fetch!(repo)
           end
           true
         rescue => e

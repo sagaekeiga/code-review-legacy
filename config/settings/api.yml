@@ -1,0 +1,35 @@
+api:
+  version: 1.0.0
+  errors:
+    not_found:
+      status: 404
+      code: E00404
+      message: endpoint not found
+    unauthorized:
+      status: 401
+      code: E00401
+      message: You are not authorized to perform this action
+    forbidden:
+      status: 403
+      code: E00403
+      message: You are not permitted to perform this action
+    server_error:
+      status: 500
+      code: E00500
+      message: failed to process request
+  success:
+    status:
+      code: 200
+  created:
+    status:
+      code: 201
+  github:
+    web_domain: github.com
+    domain: api.github.com
+    request:
+      access_token_uri: https://api.github.com/installations/
+      header:
+        accept:
+          machine_man_preview_json: application/vnd.github.machine-man-preview+json
+          machine_man_preview: application/vnd.github.machine-man-preview
+          symmetra_preview_json: application/vnd.github.symmetra-preview+json
