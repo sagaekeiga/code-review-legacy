@@ -6,7 +6,6 @@
 #  full_name       :string
 #  name            :string
 #  private         :boolean
-#  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  installation_id :bigint(8)
@@ -23,7 +22,6 @@
 #
 
 class Repo < ApplicationRecord
-  # include GenToken, FriendlyId
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
@@ -40,4 +38,68 @@ class Repo < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :private, default: false
+  # -------------------------------------------------------------------------------
+  # ClassMethods
+  # -------------------------------------------------------------------------------
+  class << self
+    #
+    # リモートのレポジトリを保存する or リストアする
+    #
+    # @param [ActionController::Parameter] repositories_added_params addedなPOSTパラメータ
+    #
+    # @return [Boolean] 保存 or リストアに成功すればtrue、失敗すればfalseを返す
+    #
+    def fetch!(params)
+      resource_type = params[:installation][:account][:type].eql?('User') ? 'Reviewee' : 'Org'
+      return if resource_type == 'Org'
+      github_account = Users::GithubAccount.find_by(owner_id: params[:sender][:id])
+      user = github_account.user if github_account.present?
+      return true if user.nil?
+      repos =
+        if params[:repositories_added].present?
+          params[:repositories_added]
+        else
+          params[:repositories]
+        end
+      repos.each do |repository|
+        begin
+          ActiveRecord::Base.transaction do
+            repository = ActiveSupport::HashWithIndifferentAccess.new(repository)
+            repo = find_or_create_by(remote_id: repository[:id])
+            repo.update_attributes!(
+              _merge_params(
+                user,
+                repository,
+                params
+              )
+            )
+          end
+          true
+        rescue => e
+          Rails.logger.error e
+          Rails.logger.error e.backtrace.join("\n")
+          false
+        end
+      end
+    end
+
+    #
+    # Mergee内のレポジトリを削除する
+    #
+    def find_and_destroy_by(remote_id:)
+      Repo.find_by(remote_id: remote_id)&.destroy
+    end
+
+    private
+
+    def _merge_params(user, repo_params, params)
+      {
+        user_id: user.id,
+        name: repo_params[:name],
+        full_name: repo_params[:full_name],
+        private: repo_params[:private],
+        installation_id: params[:installation][:id]
+      }
+    end
+  end
 end

@@ -7,7 +7,6 @@ class CreateRepos < ActiveRecord::Migration[5.2]
       t.string :full_name
       t.boolean :private
       t.bigint :installation_id
-      t.string :token, null: false
       t.timestamps
     end
   end
