@@ -1,6 +1,16 @@
 .container
   %h3.text-center ダッシュボード
   - if current_user.has_repos?
-    sssss
+    %table.table
+      %thead
+        %tr
+          %th #
+          %th{ scope: 'col' } レポジトリ名
+          \...
+    - @repos.each do |repo|
+      %tbody
+        %tr
+          %th{ scope: 'row' }= repo.id
+          %td= repo.name
   - else
     = link_to 'GitHub Appへ', ENV['GITHUB_APP_URL'], target: '_blank'

@@ -6,6 +6,11 @@ class WebDomainConstraint
 end
 
 Rails.application.routes.draw do
+  namespace :webhooks do
+    namespace :github_apps do
+      post :handle
+    end
+  end
   #
   # webサービス用のドメイン
   #
