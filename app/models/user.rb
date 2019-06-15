@@ -62,6 +62,8 @@ class User < ApplicationRecord
   #
   # レポジトリがあるかどうかを返す
   #
+  # @return [boolean]
+  #
   def has_repos?
     repos.present?
   end
