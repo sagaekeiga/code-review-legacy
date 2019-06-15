@@ -1,2 +1,6 @@
 .container
   %h3.text-center ダッシュボード
+  - if current_user.has_repos?
+    sssss
+  - else
+    = link_to 'GitHub Appへ', ENV['GITHUB_APP_URL'], target: '_blank'
