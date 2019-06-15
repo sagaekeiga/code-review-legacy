@@ -1,7 +1,0 @@
-require 'coderay'
-
-src = <<RUBY
-@@ -124,15 +124,32 @@ def self.create_or_restore!(repo)\n \n   # pull_requestのeventで発火しリモートの変更を検知して更新する\n   def self.update_by_pull_request_event!(params)\n-    @pull = find_by(remote_id: params[:id])\n     ActiveRecord::Base.transaction do\n-      @pull.update!(\n-        state: params[:state],\n-        title: params[:title],\n-        body: params[:body]\n-      )\n-      @pull.update_status_by!(params[:state])\n-      ChangedFile.check_and_update!(@pull, params[:head][:sha])\n+      pull = find_by(remote_id: params[:id])\n+      if pull.present?\n+        pull.update!(\n+          state: params[:state],\n+          title: params[:title],\n+          body: params[:body]\n+        )\n+        pull.update_status_by!(params[:state])\n+      else\n+        repo = Repo.find_by(remote_id: params[:head][:repo][:id])\n+        pull = create!(\n+          remote_id: params['id'],\n+          number: params[:number],\n+          state: params[:state],\n+          title: params[:title],\n+          body: params[:body],\n+          repo: repo\n+        )\n+        skill = Skill.find_by(name: params[:head][:repo][:language])\n+        skilling = skill.skillings.find_or_create_by!(\n+          resource_type: 'Repo',\n+          resource_id: repo.id\n+        )\n+      end\n+      ChangedFile.check_and_update!(pull, params[:head][:sha])\n     end\n     true\n   rescue => e
-RUBY
-
-puts CodeRay.scan(src, :ruby).html

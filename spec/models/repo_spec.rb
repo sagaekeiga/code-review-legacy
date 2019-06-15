@@ -3,24 +3,19 @@
 # Table name: repos
 #
 #  id              :bigint(8)        not null, primary key
-#  deleted_at      :datetime
 #  full_name       :string
 #  name            :string
 #  private         :boolean
-#  resource_type   :string
-#  template        :boolean
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  installation_id :bigint(8)
 #  remote_id       :integer
-#  resource_id     :integer
+#  user_id         :bigint(8)
 #
 # Indexes
 #
-#  index_repos_on_deleted_at     (deleted_at)
-#  index_repos_on_resource_id    (resource_id)
-#  index_repos_on_resource_type  (resource_type)
+#  index_repos_on_user_id  (user_id)
 #
 
 require 'rails_helper'

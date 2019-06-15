@@ -16,12 +16,11 @@
 #
 
 class Org < ApplicationRecord
-  acts_as_paranoid
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
-  has_many :reviewee_orgs, dependent: :destroy
-  has_many :reviewees, through: :reviewee_orgs
+  has_many :user_orgs, dependent: :destroy
+  has_many :users, through: :user_orgs
   has_many :repos, as: :resource
   has_many :pulls, as: :resource
   # -------------------------------------------------------------------------------
@@ -30,7 +29,7 @@ class Org < ApplicationRecord
   validates :remote_id, presence: true, uniqueness: true
   validates :login, presence: true
 
-  def reviewee_org_id(reviewee_id)
-    reviewee_orgs.find_by(reviewee_id: reviewee_id).id
+  def user_org_id(user_id)
+    user_orgs.find_by(user_id: user_id).id
   end
 end

@@ -3,39 +3,31 @@
 # Table name: repos
 #
 #  id              :bigint(8)        not null, primary key
-#  deleted_at      :datetime
 #  full_name       :string
 #  name            :string
 #  private         :boolean
-#  resource_type   :string
-#  template        :boolean
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  installation_id :bigint(8)
 #  remote_id       :integer
-#  resource_id     :integer
+#  user_id         :bigint(8)
 #
 # Indexes
 #
-#  index_repos_on_deleted_at     (deleted_at)
-#  index_repos_on_resource_id    (resource_id)
-#  index_repos_on_resource_type  (resource_type)
+#  index_repos_on_user_id  (user_id)
 #
 
 class Repo < ApplicationRecord
   include GenToken, FriendlyId
-  acts_as_paranoid
   paginates_per 10
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
-  belongs_to :resource, polymorphic: true
+  belongs_to :user
   has_many :pulls, dependent: :destroy
   has_many :reviewer_repos, dependent: :destroy
   has_many :reviewers, through: :reviewer_repos, source: :reviewer
-  has_many :repo_analyses, dependent: :destroy
-  has_many :static_analyses, through: :repo_analyses, source: :static_analysis
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -48,13 +40,6 @@ class Repo < ApplicationRecord
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :private, default: false
-  attribute :template, default: false
-  attribute :analysis, default: false
-  # -------------------------------------------------------------------------------
-  # Delegations
-  # -------------------------------------------------------------------------------
-  delegate :resource_type, to: :repo, prefix: true
-  delegate :resource_id, to: :repo, prefix: true
 
   # -------------------------------------------------------------------------------
   # ClassMethods
@@ -68,7 +53,7 @@ class Repo < ApplicationRecord
     # @return [Boolean] 保存 or リストアに成功すればtrue、失敗すればfalseを返す
     #
     def fetch!(params)
-      resource_type = params[:installation][:account][:type].eql?('User') ? 'Reviewee' : 'Org'
+      resource_type = params[:installation][:account][:type].eql?('User') ? 'User' : 'Org'
       resource = _set_resource_for_repo(params, resource_type)
       return true if resource.nil?
       repos =
@@ -112,17 +97,17 @@ class Repo < ApplicationRecord
     private
 
     def _set_resource_for_repo(params, resource_type)
-      github_account = Reviewees::GithubAccount.find_by(owner_id: params[:sender][:id])
-      reviewee = github_account.reviewee if github_account.present?
+      github_account = Users::GithubAccount.find_by(owner_id: params[:sender][:id])
+      user = github_account.user if github_account.present?
       resource =
-        if resource_type.eql?('Reviewee')
-          reviewee
+        if resource_type.eql?('User')
+          user
         else
           org = Org.find_or_initialize_by(remote_id: params[:installation][:account][:id])
           org.update_attributes!(_merge_org_params(params[:installation][:account]))
-          return org if reviewee.nil?
-          reviewee_org = reviewee.reviewee_orgs.find_or_initialize_by(org: org)
-          reviewee_org.save!
+          return org if user.nil?
+          user_org = user.user_orgs.find_or_initialize_by(org: org)
+          user_org.save!
           org
         end
     end
@@ -146,50 +131,12 @@ class Repo < ApplicationRecord
     end
   end
 
-  #
-  # Rails Best Practices を導入しているかどうかを返す
-  # @return [Boolean]
-  #
-  def has_rbp?
-    repo_analyses.exists?(
-      static_analysis: StaticAnalysis.rails_best_practices.first
-    )
+  def user?(current_user)
+    resource_type.eql?('User') && resource_id.eql?(current_user.id)
   end
 
-  #
-  # RuboCop を導入しているかどうかを返す
-  # @return [Boolean]
-  #
-  def has_rubocop?
-    repo_analyses.exists?(
-      static_analysis: StaticAnalysis.rubocop.first
-    )
-  end
-
-  def reviewee?(current_reviewee)
-    resource_type.eql?('Reviewee') && resource_id.eql?(current_reviewee.id)
-  end
-
-  def reviewee_org?(current_reviewee)
-    resource_type.eql?('Org') && current_reviewee.orgs.exists?(id: resource_id)
-  end
-
-  #
-  # 該当する 静的解析が導入されているかどうかを返す
-  # @param [StaticAnalysis] static_analysis 静的解析
-  # @return [Boolean]
-  #
-  def introduced?(static_analysis)
-    repo_analyses.exists?(static_analysis_id: static_analysis.id)
-  end
-
-  #
-  # 該当する静的解析を導入していれば、その解析ツールの id を返す
-  # @param [StaticAnalysis] static_analysis 静的解析
-  # @return [Integer/NilClass]
-  #
-  def analysis_id(static_analysis)
-    repo_analyses.find_by(static_analysis_id: static_analysis.id)&.id
+  def user_org?(current_user)
+    resource_type.eql?('Org') && current_user.orgs.exists?(id: resource_id)
   end
 
   def readme

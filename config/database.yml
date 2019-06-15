@@ -8,12 +8,12 @@ default: &default
 
 development:
   <<: *default
-  database: mergee_development
+  database: code-review_development
 
 test:
   <<: *default
-  database: mergee_test
+  database: code-review_test
 
 production:
   <<: *default
-  database: mergee_production
+  database: code-review_production

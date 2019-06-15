@@ -61,11 +61,7 @@ gem 'premailer-rails'
 gem 'inky-rb', require: 'inky'
 
 # Markdown
-gem 'marked-rails'
-gem 'coderay'
 gem 'redcarpet'
-gem 'html_truncator', '~> 0.2'
-gem 'rails-highlightjs'
 
 # Auth
 gem 'devise'
@@ -76,13 +72,6 @@ gem 'foreman'
 gem 'google-analytics-rails'
 gem 'sentry-raven'
 gem 'friendly_id', '~> 5.1.0'
-gem 'rubyzip', require: 'zip'
-
-# Analysis
-gem 'rubocop', require: false
-gem 'bullet'
-gem 'rails_best_practices'
-gem 'brakeman', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -100,6 +89,10 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'webmock'
+  gem 'rubocop', require: false
+  gem 'bullet'
+  gem 'rails_best_practices'
+  gem 'brakeman', require: false
 end
 
 group :development do

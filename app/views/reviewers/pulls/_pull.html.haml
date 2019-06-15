@@ -1,9 +1,0 @@
-%tr
-  %td
-    .pullrequest
-      %h4.title
-        %strong= link_to pull.title, [:reviewers, pull.repo, pull]
-      %small.text-muted= t 'views.created', date_time: date_format(pull.remote_created_at)
-  %td.text-center
-    - pull.reviewers.each do |reviewer|
-      = image_tag reviewer.avatar_url, style: 'width: 50px;'

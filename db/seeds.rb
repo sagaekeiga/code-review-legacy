@@ -3,12 +3,3 @@ languages = YAML.load(languages_yml)
 languages.each do |language|
   Tag.create(name: language.flatten[0].to_s)
 end
-
-StaticAnalysis.create(
-  title: 'Rails Best Practices',
-  search_name: :rails_best_practices
-)
-StaticAnalysis.create(
-  title: 'RuboCop',
-  search_name: :rubocop
-)

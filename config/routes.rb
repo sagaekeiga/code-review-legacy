@@ -29,20 +29,15 @@ Rails.application.routes.draw do
 
   constraints(WebDomainConstraint) do
     root to: 'welcome#index'
-    get '/term', to: 'welcome#term'
-    get '/privacy', to: 'welcome#privacy'
     get '/auth/github/callback', to: 'connects#github'
-    get '/reviewer', to: 'welcome#profile'
 
-    devise_for :reviewees, path: 'reviewees', controllers: {
-      registrations: 'reviewees/registrations',
-      confirmations: 'reviewees/confirmations',
-      sessions: 'reviewees/sessions'
+    devise_for :users, path: 'users', controllers: {
+      registrations: 'users/registrations',
+      confirmations: 'users/confirmations',
+      sessions: 'users/sessions'
     }
 
-    resources :reviewers, only: %i(show)
-
-    namespace :reviewees do
+    namespace :users do
       get :dashboard
       get :integrations
       get 'settings/integrations'
@@ -65,56 +60,6 @@ Rails.application.routes.draw do
 
   end
 
-  constraints(ReviewerDomainConstraint) do
-    root to: 'reviewers#dashboard'
-    get '/auth/github/callback', to: 'connects#github'
-
-    resources :tags, only: [] do
-      get :autocomplete, on: :collection
-    end
-
-    devise_for :reviewers, path: 'reviewers', controllers: {
-      registrations: 'reviewers/registrations',
-      confirmations: 'reviewers/confirmations',
-      sessions: 'reviewers/sessions'
-    }
-
-    namespace :reviewers do
-      get *%i(
-        dashboard
-        integrations
-        pending
-        skill
-        check_list
-      )
-      get 'settings/integrations'
-      resources :reviewer_tags, only: %i(destroy) do
-        patch :update, on: :collection
-      end
-      resources :profiles, only: %i(new create edit update)
-      resources :pulls, only: %i(index show), param: :token do
-        resources :reviewer_pulls, only: %i(create)
-        resources :reviews, only: %i(create update) do
-          get :file, to: 'reviews#new', on: :collection
-          resources :replies, only: %i(create), shallow: true
-        end
-        resources :comments, only: %i(create update destroy)
-        resources :issues, only: %i(index)
-      end
-      resources :review_comments, only: %i(create update destroy show)
-      namespace :github do
-        resources :review_comments, only: %i(update)
-      end
-      resources :repos, only: %i(show) do
-        post :download
-        resources :pulls, only: %i(index show), param: :token do
-          resources :commits, only: %i(index show), param: :sha
-          resources :changed_files, only: %i(index show), param: :sha
-        end
-      end
-    end
-  end
-
   constraints(AdminDomainConstraint) do
     root to: 'admins#dashboard'
     #
@@ -127,24 +72,14 @@ Rails.application.routes.draw do
     }
     namespace :admins do
       resources :reviews, only: %i(index show update destroy)
-      resources :reviewers, only: %i(index show edit update)
-      resources :reviewees, only: %i(index show)
+      resources :users, only: %i(index show)
       resources :orgs, only: %i(index show) do
-        resources :reviewee_orgs, shallow: :true, only: %i(create destroy)
-      end
-      resources :repos, only: %i(index show) do
-        resources :reviewer_repos, shallow: :true, only: %i(create destroy)
-      end
-      resources :pulls, only: %i(show index) do
-        resources :reviewer_pulls, only: %i(create destroy)
+        resources :user_orgs, shallow: :true, only: %i(create destroy)
       end
     end
 
-    as :reviewer do
-      post 'reviewer/sso' => 'reviewers/sessions#sso', as: :reviewer_sso
-    end
-    as :reviewee do
-      post 'reviewee/sso' => 'reviewees/sessions#sso', as: :reviewee_sso
+    as :user do
+      post 'user/sso' => 'users/sessions#sso', as: :user_sso
     end
   end
   get '*path', to: 'application#render_404'
