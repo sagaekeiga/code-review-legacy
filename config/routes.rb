@@ -12,5 +12,14 @@ Rails.application.routes.draw do
   constraints(WebDomainConstraint) do
     # トップページ
     root 'welcome#index'
+
+    namespace :users do
+      get :dashboard
+    end
+
+    devise_for :users, path: 'users', controllers: {
+      registrations: 'users/registrations',
+      omniauth_callbacks: 'users/omniauth_callbacks'
+    }
   end
 end
