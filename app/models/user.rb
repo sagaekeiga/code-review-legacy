@@ -1,12 +1,32 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint(8)        not null, primary key
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i(github)
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+         :validatable, :omniauthable, omniauth_providers: %i(github)
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
   has_one :github_account, class_name: 'Users::GithubAccount'
+  has_many :repos, dependent: :destroy
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
@@ -37,5 +57,12 @@ class User < ApplicationRecord
     end
     user.save
     user
+  end
+
+  #
+  # レポジトリがあるかどうかを返す
+  #
+  def has_repos?
+    repos.present?
   end
 end
