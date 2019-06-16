@@ -1,0 +1,9 @@
+meta:
+  site: CODEREVIEW
+  title: CODEREVIEW
+  description: コードレビューサービス
+  keywords: キーワード1,キーワード2,キーワード3
+og:
+  title: ページタイトル
+  type: website
+  image: /og.png

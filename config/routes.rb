@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
     resources :repos, only: %i(show)
     resources :pulls, only: %i(update)
+    resources :feed, only: %i(index)
 
     devise_for :users, path: 'users', controllers: {
       registrations: 'users/registrations',
