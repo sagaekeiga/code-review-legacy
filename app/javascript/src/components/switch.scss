@@ -1,0 +1,67 @@
+.onoffswitch {
+  position: relative;
+  width: 80px;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+  display: none;
+}
+.onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: $base-letter solid $color-switch-off-gray;
+  border-radius: $base-margin + 4;
+}
+.onoffswitch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.2s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: $base-height - 20;
+  padding: 0;
+  line-height: $base-height - 20;
+  font-size: $base-font-size;
+  color: $bg-color-github-panel;
+  font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: "ON";
+  padding-left: $base-font-size - 2;
+  background-color: $color-switch-on;
+  color: $bg-color-github-panel;
+}
+.onoffswitch-inner:after {
+  content: "OFF";
+  padding-right: $base-font-size - 2;
+  background-color: $color-switch-off-gray;
+  color: $bg-color-github-panel;
+  text-align: right;
+}
+.onoffswitch-switch {
+  display: block;
+  width: $base-height - 13;
+  margin: -1.5px;
+  background: $bg-color-github-panel;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 45px;
+  border: $base-letter solid $color-switch-off-gray;
+  border-radius: $base-margin + 4;
+  transition: all 0.2s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0;
+}

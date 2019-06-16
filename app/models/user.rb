@@ -27,6 +27,7 @@ class User < ApplicationRecord
   # -------------------------------------------------------------------------------
   has_one :github_account, class_name: 'Users::GithubAccount'
   has_many :repos, dependent: :destroy
+  has_many :pulls, dependent: :destroy
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

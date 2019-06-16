@@ -6,10 +6,19 @@
         %tr
           %th #
           %th{ scope: 'col' } レポジトリ名
+          %th
       - @pulls.each do |pull|
         %tbody
           %tr
             %th{ scope: 'row' }= pull.number
             %td= link_to pull.title, pull.remote_url, target: '_blank'
+            %td
+              - unless pull.completed?
+                .onoffswitch
+                  %input.onoffswitch-checkbox.update-pull-button{ checked: pull.request_reviewed?, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "pullStatusSwitch#{pull.id}" }/
+                  %label.onoffswitch-label{ for: "pullStatusSwitch#{pull.id}" }
+                    %span.onoffswitch-inner
+                    %span.onoffswitch-switch
   - else
     プルリクエストはありません
+= javascript_pack_tag 'pull'
