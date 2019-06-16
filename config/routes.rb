@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
 
     resources :repos, only: %i(show)
+    resources :pulls, only: %i(update)
 
     devise_for :users, path: 'users', controllers: {
       registrations: 'users/registrations',
