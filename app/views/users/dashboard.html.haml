@@ -6,11 +6,10 @@
         %tr
           %th #
           %th{ scope: 'col' } レポジトリ名
-          \...
-    - @repos.each do |repo|
-      %tbody
-        %tr
-          %th{ scope: 'row' }= repo.id
-          %td= repo.name
+      - @repos.each do |repo|
+        %tbody
+          %tr
+            %th{ scope: 'row' }= repo.id
+            %td= link_to repo.name, repo
   - else
     = link_to 'GitHub Appへ', ENV['GITHUB_APP_URL'], target: '_blank'
