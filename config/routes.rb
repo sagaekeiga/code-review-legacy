@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :dashboard
     end
 
+    resources :repos, only: %i(show)
+
     devise_for :users, path: 'users', controllers: {
       registrations: 'users/registrations',
       omniauth_callbacks: 'users/omniauth_callbacks'

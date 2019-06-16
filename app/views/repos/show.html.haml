@@ -1,0 +1,15 @@
+.container
+  %h3.text-center= @repo.full_name
+  - if @pulls.present?
+    %table.table
+      %thead
+        %tr
+          %th #
+          %th{ scope: 'col' } レポジトリ名
+      - @pulls.each do |pull|
+        %tbody
+          %tr
+            %th{ scope: 'row' }= pull.number
+            %td= link_to pull.title, pull.remote_url, target: '_blank'
+  - else
+    プルリクエストはありません
