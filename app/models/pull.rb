@@ -59,7 +59,6 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
-  # deletedなpullを考慮しているかどうかがupdate_by_pull_request_event!との違い
   def self.fetch!(repo)
     ActiveRecord::Base.transaction do
       res_pulls = Github::Request.pulls(repo)
