@@ -1,0 +1,2 @@
+web:
+  url: https://<%= ENV['WEB_DOMAIN'] %>/
