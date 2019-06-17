@@ -10,7 +10,7 @@ xml.rss('version': '2.0', 'xmlns:dc': 'http://purl.org/dc/elements/1.1/') do
       xml.item do
         xml.title pull.title
         xml.description pull.body
-        xml.pubDate pull.updated_at
+        xml.pubDate pull.updated_at.rfc2822
         xml.guid pull.remote_url
         xml.link pull.remote_url
       end
