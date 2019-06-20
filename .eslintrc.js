@@ -1,5 +1,5 @@
 module.exports = {
-  "extends": ["eslint", "airbnb", "eslint:recommended", "plugin:react/recommended", "standard", "standard-react"],
+  "extends": ["standard", "standard-react"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -32,5 +32,8 @@ module.exports = {
     "Image": "readonly",
     "FileReader": "readonly",
     "StripeCheckout": "readonly"
+  },
+  "env": {
+    "jquery": true
   }
 }
