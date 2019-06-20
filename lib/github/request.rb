@@ -1,5 +1,5 @@
 module Github
-  class Request # rubocop:disable Metrics/ClassLength
+  class Request
     include HTTParty
 
     class << self

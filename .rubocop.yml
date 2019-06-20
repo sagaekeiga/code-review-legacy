@@ -8,6 +8,9 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
+Style/EmptyMethod:
+  Enabled: false
+
 # @TODO not supported with 0.28.0
 Style/FrozenStringLiteralComment:
   Enabled: false

@@ -8,6 +8,7 @@ class Webhooks::BaseController < ApplicationController
   #
   def check_user_agent
     return if request.env['HTTP_USER_AGENT'].match?(%r{GitHub-Hookshot/})
+
     logger.warn "Invalid webhook agent error: #{request.env['HTTP_USER_AGENT']}"
     head 422
   end
