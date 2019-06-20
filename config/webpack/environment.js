@@ -1,6 +1,5 @@
 const { environment } = require('@rails/webpacker')
 const webpack = require('webpack')
-const eslint = require('./loaders/eslint')
 
 environment.plugins.prepend(
   'Provide',
@@ -10,5 +9,4 @@ environment.plugins.prepend(
     jquery: 'jquery'
   })
 )
-environment.loaders.append('eslint', eslint)
 module.exports = environment
