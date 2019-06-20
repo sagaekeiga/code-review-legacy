@@ -1,6 +1,25 @@
 {
   "name": "code-review",
   "private": true,
+  "engines": {
+    "yarn": ">= 0.25.2"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@rails/webpacker": "^4.0.7",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "bootstrap": "4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15.7.2",
+    "rails-ujs": "^5.2.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "sass-loader": "^7.1.0",
+    "turbolinks": "^5.2.0",
+    "caniuse-lite": "1.0.30000974"
+  },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -57,12 +76,7 @@
     "webpack-dev-server": "^3.1.10",
     "xstream": "^11.7.0"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.2.5",
-    "google-libphonenumber": "^3.2.2",
-    "i18n-iso-countries": "^4.0.0",
-    "i18next": "^15.1.2",
-    "react-html-parser": "^2.0.2",
-    "react-select": "^2.4.3"
+  "scripts": {
+    "lint": "yarn run eslint --ext .react --ext .js app/javascript"
   }
 }
