@@ -2,8 +2,7 @@
   "name": "code-review",
   "private": true,
   "engines": {
-    "node": "10.14.1",
-    "npm": "6.4.1"
+    "yarn": ">= 0.25.2"
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
