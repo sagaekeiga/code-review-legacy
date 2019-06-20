@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+languages_yml = File.read('config/languages.yml')
+languages = YAML.load(languages_yml)
+languages.each do |language|
+  Tag.create(name: language.flatten[0].to_s)
+end
