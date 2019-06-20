@@ -1,0 +1,142 @@
+# @see https://github.com/wdb-circleci/wdb-circleci-rails/blob/master/.circleci/config.yml
+executors:
+  default:
+    docker:
+      - image: circleci/ruby:2.6.0-node-browsers-legacy
+        environment:
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 4
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+          DB_HOST: localhost
+    working_directory: ~/repo
+  with_db:
+    docker:
+      - image: circleci/ruby:2.6.0-node-browsers-legacy
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+          DB_HOST: localhost
+      - image: circleci/postgres:9.6.2-alpine
+        environment:
+          POSTGRES_DB: unplan-checkin_test
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+    working_directory: ~/repo
+
+version: 2.1
+
+# --------------------------------------------------
+# Job definitions
+# --------------------------------------------------
+jobs:
+  checkout_code:
+    executor: default
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
+
+  bundle_dependencies:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - save_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+  test_rubocop:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
+
+  test_rails_best_practices:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run Rails Best Practice
+          command: bundle exec rails_best_practices -e app/views/kaminari
+
+  test_brakeman:
+    executor: default
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run brakeman
+          command: bundle exec brakeman -4 -A -w 1 -z
+
+  test_rspec:
+    parallelism: 2
+    executor: with_db
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Waiting database launch
+          command: |
+            dockerize -wait \
+            tcp://127.0.0.1:5432 -timeout 120s
+      - run:
+          name: Setup database
+          command: bin/rails db:schema:load --trace
+      - run:
+          name: Run rspec
+          command: |
+            bundle exec rspec \
+            --format RspecJunitFormatter \
+            --out test_results/rspec.xml \
+            --format progress
+          # command: |
+          #   bundle exec rspec --profile 10 \
+          #   --format RspecJunitFormatter \
+          #   --out test_results/rspec.xml \
+          #   --format progress \
+          #   $(circleci tests glob "spec/**/*_spec.rb" | \
+          #   circleci tests split --split-by=timings)
+      - store_test_results:
+          path: test_results
+
+workflows:
+  version: 2
+  build_test:
+    jobs:
+      - checkout_code
+      - bundle_dependencies:
+          requires:
+            - checkout_code
+      - test_rubocop:
+          requires:
+            - bundle_dependencies
+      - test_rails_best_practices:
+          requires:
+            - bundle_dependencies
+      - test_brakeman:
+          requires:
+            - bundle_dependencies
+      - test_rspec:
+          requires:
+            - bundle_dependencies
