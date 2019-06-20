@@ -11,5 +11,5 @@ $('.update-pull-button').on('click', function (e) {
     success: function (data) {
       $(this.element).attr('disabled', false)
     }
-  });
-});
+  })
+})

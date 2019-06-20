@@ -1,13 +1,8 @@
-'use strict';
-
-global.$ = $;
-global.jQuery = $;
-
-import Rails from 'rails-ujs';
-Rails.start();
-
-import Turbolinks from 'turbolinks';
-Turbolinks.start();
-
+'use strict'
+import Rails from 'rails-ujs'
+import Turbolinks from 'turbolinks'
 import 'bootstrap'
 import 'src/application.scss'
+import '../code_review/index'
+Rails.start()
+Turbolinks.start()
