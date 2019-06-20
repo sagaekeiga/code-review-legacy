@@ -1,0 +1,68 @@
+require: rubocop-rails
+Style/AsciiComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+# @TODO not supported with 0.28.0
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 200
+
+Metrics/AbcSize:
+  Max: 50
+
+Metrics/CyclomaticComplexity:
+  Max: 20
+Metrics/PerceivedComplexity:
+  Max: 20
+
+AccessorMethodName:
+  Enabled: false
+
+AllCops:
+  # RunRailsCops: true
+  # @TODO not supported with 0.28.0
+  TargetRubyVersion: 2.6
+  Exclude:
+    - bin/*
+    - db/**/*
+    - Guardfile
+    - vendor/**/*
+    - config/**/*
+    - spec/**/*
+    - test/**/*
+    - node_modules/**/*
+    - Gemfile
+    - app/models/**/*
+    - lib/tasks/*
+    - samples/*
+# Metrics/AbcSize:
+MethodLength:
+  Max: 50
+
+FormatString:
+  EnforcedStyle: sprintf
+
+NumericLiterals:
+  Enabled: false
+
+# @TODO not supported with 0.28.0
+# Rails:
+#   Enabled: true
+
+# 複数の戻り値を返すことを許可する
+RedundantReturn:
+  AllowMultipleReturnValues: true
+
+Rails:
+  Enabled: true

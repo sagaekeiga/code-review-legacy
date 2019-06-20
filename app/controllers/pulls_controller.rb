@@ -1,5 +1,5 @@
 class PullsController < Users::BaseController
-  skip_before_action :verify_authenticity_token, only: %i(update)
+  skip_before_action :verify_authenticity_token, only: %i[update]
 
   def update
     @pull = current_user.pulls.find(params[:id])
