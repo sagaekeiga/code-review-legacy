@@ -87,7 +87,7 @@ class Pull < ApplicationRecord
           body:       data['body'],
           remote_created_at: data['created_at']
         )
-        pull.create_tag(language)
+        pull.create_or_update_tag!(language)
       end
     end
   rescue => e
@@ -96,16 +96,47 @@ class Pull < ApplicationRecord
     fail I18n.t('views.error.failed_create_pull')
   end
 
+  def self.update_by_pull_request_event!(params)
+    ActiveRecord::Base.transaction do
+      user = Users::GithubAccount.find_by(owner_id: params['head']['user']['id']).user
+      return true if user.nil?
+      pull = find_or_initialize_by(remote_id: params['id'])
+      repo = Repo.find_by(remote_id: params['head']['repo']['id'])
+      language = repo.language
+      pull.update_attributes!(
+        title:  params['title'],
+        body:   params['body'],
+        number: params['number'],
+        repo:   repo,
+        user: user,
+        remote_created_at: params['created_at']
+      )
+      pull.update_status!(params[:state])
+      pull.create_or_update_tag!(language)
+    end
+    true
+  rescue => e
+    Rails.logger.error e
+    Rails.logger.error e.backtrace.join("\n")
+    false
+  end
+
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
-  #
-  # プルリクエストのタグを作成する
-  #
-  def create_tag(language)
+  def create_or_update_tag!(language)
     tag = Tag.find_by(name: language.name)
     tag = Tag.find_by(name: 'HTML') if tag.nil?
-    pull_tag = pull_tags.new(tag: tag)
+    pull_tag = pull_tags.find_or_initialize_by(tag: tag)
     pull_tag.save!
+  end
+
+  def update_status!(state)
+    case state
+    when 'closed', 'merged'
+      completed!
+    else
+      connected!
+    end
   end
 end

@@ -17,6 +17,7 @@ class Github::EventBranchService
   #
   def call
     case @request_event.to_sym
+    when :pull_request then pull_request
     when :installation_repositories, :installation then repository
     end
   end
@@ -27,6 +28,16 @@ class Github::EventBranchService
     elsif remove_repository?
       DestroyRepoJob.perform_later(@params.to_json)
     end
+  end
+
+  def pull_request
+    return unless present_pull_request?
+
+    Pull.update_by_pull_request_event!(@params[:github_app][:pull_request])
+  end
+
+  def present_pull_request?
+    @params.dig(:github_app, :pull_request).present?
   end
 
   def add_repository?
