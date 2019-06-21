@@ -8,5 +8,5 @@
         %li{ class: 'nav-item dropdown' }
           %a#navbarDropdown{ 'aria-expanded': 'false', 'aria-haspopup': 'true', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', href: '#', role: 'button' }
           .dropdown-menu{ 'aria-labelledby': 'navbarDropdown' }
-            = link_to 'レビューする', Settings.slack.code_review
+            = link_to 'レビューする', Settings.slack.code_review, class: 'dropdown-item', target:  '_blank'
             = link_to 'ログアウト', :destroy_user_session, method: :delete, class: 'dropdown-item'
