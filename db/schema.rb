@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_084256) do
+ActiveRecord::Schema.define(version: 2019_06_21_034001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pull_tags", force: :cascade do |t|
+    t.bigint "pull_id"
+    t.bigint "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_pull_tags_on_pull_id"
+    t.index ["tag_id"], name: "index_pull_tags_on_tag_id"
+  end
 
   create_table "pulls", force: :cascade do |t|
     t.bigint "repo_id"

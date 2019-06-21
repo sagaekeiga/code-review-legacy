@@ -9,6 +9,17 @@ module Github
         _get sub_url_for(repo, :pull), repo.installation_id, :pull
       end
 
+      def languages(repo:)
+        headers = {
+          'User-Agent': 'Mergee',
+          'Authorization': "token #{get_access_token(repo.installation_id)}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+        url = "#{BASE_API_URI}/repos/#{repo.full_name}/languages"
+        res = get url, headers: headers
+        JSON.parse res.body, symbolize_names: true
+      end
+
       private
 
       def general_headers(installation_id:, event:)

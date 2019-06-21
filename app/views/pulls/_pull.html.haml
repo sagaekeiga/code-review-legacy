@@ -1,0 +1,13 @@
+%tbody
+  %tr
+    %th{ scope: 'row' }= pull.number
+    %td= link_to pull.title, pull.remote_url, target: '_blank'
+    %td
+      = select :tag, :name, @tags.map { |tag| [tag.name, tag.id]}, { selected: pull.pull_tags.first.tag_id }, class: 'form-control', 'pull-tag-id': pull.pull_tags.first.id
+    %td
+      - unless pull.completed?
+        .onoffswitch
+          %input.onoffswitch-checkbox.update-pull-button{ checked: pull.request_reviewed?, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "pullStatusSwitch#{pull.id}" }/
+          %label.onoffswitch-label{ for: "pullStatusSwitch#{pull.id}" }
+            %span.onoffswitch-inner
+            %span.onoffswitch-switch

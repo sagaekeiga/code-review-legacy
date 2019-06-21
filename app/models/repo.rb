@@ -104,4 +104,42 @@ class Repo < ApplicationRecord
       }
     end
   end
+
+  def language
+    data = Github::Request.languages(repo: self)
+    Language.new(
+      name: data.first.first.to_s,
+      lines: data.first.last.to_i
+    )
+  end
+
+  def languages
+    data = Github::Request.languages(repo: self)
+    data.map do |lang_info|
+      Language.new(
+        name: lang_info.first.to_s,
+        lines: lang_info.last.to_i
+      )
+    end
+  end
+
+  class Language
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+    include Draper::Decoratable
+
+    attr_accessor :name, :lines
+
+    #
+    # @param [Hash] data
+    #
+    def initialize(data = {})
+      self.name = data[:name]
+      self.lines = data[:lines]
+    end
+
+    def rate(sum)
+      (lines.to_f / sum.to_f) * 100.0
+    end
+  end
 end

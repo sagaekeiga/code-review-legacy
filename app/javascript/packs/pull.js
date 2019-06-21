@@ -13,3 +13,20 @@ $('.update-pull-button').on('click', function (e) {
     }
   })
 })
+
+$(function () {
+  $('select').change(function () {
+    $.ajax({
+      type: 'PUT',
+      url: `/pull_tags/${$(this).attr('pull-tag-id')}`,
+      dataType: 'JSON',
+      data: {
+        tag_id: $(this).val(),
+      },
+      element: $(this),
+      success: function (data) {
+        $(this.element).attr('disabled', false)
+      }
+    })
+  })
+})

@@ -11,5 +11,6 @@
           %tr
             %th{ scope: 'row' }= repo.id
             %td= link_to repo.name, repo
+    = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
   - else
-    = link_to 'GitHub Appへ', ENV['GITHUB_APP_URL'], target: '_blank'
+    = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'

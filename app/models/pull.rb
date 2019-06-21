@@ -32,6 +32,7 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   belongs_to :user
   belongs_to :repo
+  has_many :pull_tags, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -53,6 +54,16 @@ class Pull < ApplicationRecord
     completed:        3000
   }
   # -------------------------------------------------------------------------------
+  # Scopes
+  # -------------------------------------------------------------------------------
+  #
+  # リクエスト可能なプルリクエストを返す
+  #
+  scope :opened, lambda {
+    where(status: %i(connected request_reviewed)).order(remote_created_at: :desc)
+  }
+
+  # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------
   attribute :status, default: statuses[:connected]
@@ -62,6 +73,7 @@ class Pull < ApplicationRecord
   def self.fetch!(repo)
     ActiveRecord::Base.transaction do
       res_pulls = Github::Request.pulls(repo)
+      language = repo.language
       res_pulls.each do |data|
         pull = repo.pulls.find_or_initialize_by(
           remote_id: data['id'],
@@ -74,11 +86,25 @@ class Pull < ApplicationRecord
           body:       data['body'],
           remote_created_at: data['created_at']
         )
+        pull.create_tag(language)
       end
     end
   rescue => e
     Rails.logger.error e
     Rails.logger.error e.backtrace.join("\n")
     fail I18n.t('views.error.failed_create_pull')
+  end
+
+  # -------------------------------------------------------------------------------
+  # InstanceMethods
+  # -------------------------------------------------------------------------------
+  #
+  # プルリクエストのタグを作成する
+  #
+  def create_tag(language)
+    tag = Tag.find_by(name: language.name)
+    tag = Tag.find_by(name: 'HTML') if tag.nil?
+    pull_tag = pull_tags.new(tag: tag)
+    pull_tag.save!
   end
 end
