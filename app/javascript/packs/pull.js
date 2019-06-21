@@ -21,6 +21,7 @@ $(function () {
       url: `/pull_tags/${$(this).attr('pull-tag-id')}`,
       dataType: 'JSON',
       data: {
+        pull_id: $(this).attr('pull-id'),
         tag_id: $(this).val(),
       },
       element: $(this),

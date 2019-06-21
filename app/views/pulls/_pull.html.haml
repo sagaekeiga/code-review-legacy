@@ -3,7 +3,7 @@
     %th{ scope: 'row' }= pull.number
     %td= link_to pull.title, pull.remote_url, target: '_blank'
     %td
-      = select :tag, :name, @tags.map { |tag| [tag.name, tag.id]}, { selected: pull.pull_tags.first.tag_id }, class: 'form-control', 'pull-tag-id': pull.pull_tags.first.id
+      = select :tag, :name, tags.map { |tag| [tag.name, tag.id]}, { selected: pull.pull_tags.first.tag_id }, class: 'form-control', 'pull-tag-id': pull.pull_tags.first.id, 'pull-id': pull.id
     %td
       - unless pull.completed?
         .onoffswitch

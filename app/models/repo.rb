@@ -137,9 +137,5 @@ class Repo < ApplicationRecord
       self.name = data[:name]
       self.lines = data[:lines]
     end
-
-    def rate(sum)
-      (lines.to_f / sum.to_f) * 100.0
-    end
   end
 end

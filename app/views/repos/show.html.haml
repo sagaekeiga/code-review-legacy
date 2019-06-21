@@ -8,7 +8,7 @@
           %th{ scope: 'col' } レポジトリ名
           %th スキル
           %th レビュー
-      = render @pulls
+      = render @pulls, tags: @tags
   - else
     プルリクエストはありません
 = javascript_pack_tag 'pull'
