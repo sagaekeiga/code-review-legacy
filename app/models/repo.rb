@@ -107,6 +107,7 @@ class Repo < ApplicationRecord
 
   def language
     data = Github::Request.languages(repo: self)
+    return data if data.empty?
     Language.new(
       name: data.first.first.to_s,
       lines: data.first.last.to_i
