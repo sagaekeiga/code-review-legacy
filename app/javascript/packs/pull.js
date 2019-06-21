@@ -22,7 +22,7 @@ $(function () {
       dataType: 'JSON',
       data: {
         pull_id: $(this).attr('pull-id'),
-        tag_id: $(this).val(),
+        tag_id: $(this).val()
       },
       element: $(this),
       success: function (data) {
