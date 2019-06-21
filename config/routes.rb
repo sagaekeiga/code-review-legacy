@@ -18,9 +18,8 @@ Rails.application.routes.draw do
     # トップページ
     root 'welcome#index'
 
-    namespace :users do
-      get :dashboard
-    end
+
+    get :dashboard, to: 'users#dashboard'
 
     resources :repos, only: %i(show)
     resources :pulls, only: %i(update)
