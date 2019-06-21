@@ -1,5 +1,5 @@
-.container
-  %h3.text-center= @repo.full_name
+.container.main
+  %h3.text-left.repo-title= @repo.full_name
   - if @pulls.present?
     %table.table
       %thead
