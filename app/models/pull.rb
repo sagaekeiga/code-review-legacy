@@ -87,7 +87,7 @@ class Pull < ApplicationRecord
           body:       data['body'],
           remote_created_at: data['created_at']
         )
-        pull.create_tag(language)
+        pull.create_or_update_tag!(language)
       end
     end
   rescue => e
@@ -102,6 +102,7 @@ class Pull < ApplicationRecord
       return true if user.nil?
       pull = find_or_initialize_by(remote_id: params['id'])
       repo = Repo.find_by(remote_id: params['head']['repo']['id'])
+      language = repo.language
       pull.update_attributes!(
         title:  params['title'],
         body:   params['body'],
@@ -110,11 +111,8 @@ class Pull < ApplicationRecord
         user: user,
         remote_created_at: params['created_at']
       )
-      pull.closed!(params[:state])
-      # たまに同時作成されて重複が起こる。ここは最新の方を「物理」削除する
-      # dup_pulls = Pull.where(remote_id: pull.remote_id)
-      # dup_pulls.order(created_at: :desc).last.really_destroy! if dup_pulls.count > 1
-      # pull.create_or_destroy_tags
+      pull.update_status!(params[:state])
+      pull.create_or_update_tag!(language)
     end
     true
   rescue => e
@@ -129,16 +127,16 @@ class Pull < ApplicationRecord
   #
   # プルリクエストのタグを作成する
   #
-  def create_tag(language)
+  def create_or_update_tag!(language)
     tag = Tag.find_by(name: language.name)
     tag = Tag.find_by(name: 'HTML') if tag.nil?
-    pull_tag = pull_tags.new(tag: tag)
+    pull_tag = pull_tags.find_or_initialize_by(tag: tag)
     pull_tag.save!
   end
   #
-  # PRをクローズする
+  # PRのステータスを更新する
   #
-  def closed!(state)
+  def update_status!(state)
     case state
     when 'closed', 'merged'
       completed!
