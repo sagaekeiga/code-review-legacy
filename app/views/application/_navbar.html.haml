@@ -7,9 +7,5 @@
       %ul{ class: 'navbar-nav ml-auto' }
         %li{ class: 'nav-item dropdown' }
           %a#navbarDropdown{ 'aria-expanded': 'false', 'aria-haspopup': 'true', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', href: '#', role: 'button' }
-            Dropdown
-          %div{ 'aria-labelledby': 'navbarDropdown', class: 'dropdown-menu' }
-            %a{ class: 'dropdown-item', href: '#' } Another action
-            %a{ class: 'dropdown-item', href: '#' } Another action
-            %div{ class: 'dropdown-divider' }
+          .dropdown-menu{ 'aria-labelledby': 'navbarDropdown' }
             = link_to 'ログアウト', :destroy_user_session, method: :delete, class: 'dropdown-item'
