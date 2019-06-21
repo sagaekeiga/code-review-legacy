@@ -7,6 +7,6 @@ class WelcomeController < ApplicationController
   private
 
   def transition_dashboard!
-    return redirect_to :users_dashboard if user_signed_in?
+    return redirect_to :dashboard if user_signed_in?
   end
 end
