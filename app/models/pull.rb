@@ -124,18 +124,13 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
-  #
-  # プルリクエストのタグを作成する
-  #
   def create_or_update_tag!(language)
     tag = Tag.find_by(name: language.name)
     tag = Tag.find_by(name: 'HTML') if tag.nil?
     pull_tag = pull_tags.find_or_initialize_by(tag: tag)
     pull_tag.save!
   end
-  #
-  # PRのステータスを更新する
-  #
+
   def update_status!(state)
     case state
     when 'closed', 'merged'
