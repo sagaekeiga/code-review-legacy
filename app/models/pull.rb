@@ -96,6 +96,33 @@ class Pull < ApplicationRecord
     fail I18n.t('views.error.failed_create_pull')
   end
 
+  def self.update_by_pull_request_event!(params)
+    ActiveRecord::Base.transaction do
+      user = Users::GithubAccount.find_by(owner_id: params['head']['user']['id']).user
+      return true if user.nil?
+      pull = find_or_initialize_by(remote_id: params['id'])
+      repo = Repo.find_by(remote_id: params['head']['repo']['id'])
+      pull.update_attributes!(
+        title:  params['title'],
+        body:   params['body'],
+        number: params['number'],
+        repo:   repo,
+        user: user,
+        remote_created_at: params['created_at']
+      )
+      pull.closed!(params[:state])
+      # たまに同時作成されて重複が起こる。ここは最新の方を「物理」削除する
+      # dup_pulls = Pull.where(remote_id: pull.remote_id)
+      # dup_pulls.order(created_at: :desc).last.really_destroy! if dup_pulls.count > 1
+      # pull.create_or_destroy_tags
+    end
+    true
+  rescue => e
+    Rails.logger.error e
+    Rails.logger.error e.backtrace.join("\n")
+    false
+  end
+
   # -------------------------------------------------------------------------------
   # InstanceMethods
   # -------------------------------------------------------------------------------
@@ -107,5 +134,16 @@ class Pull < ApplicationRecord
     tag = Tag.find_by(name: 'HTML') if tag.nil?
     pull_tag = pull_tags.new(tag: tag)
     pull_tag.save!
+  end
+  #
+  # PRをクローズする
+  #
+  def closed!(state)
+    case state
+    when 'closed', 'merged'
+      completed!
+    else
+      connected!
+    end
   end
 end
