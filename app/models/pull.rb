@@ -33,6 +33,7 @@ class Pull < ApplicationRecord
   belongs_to :user
   belongs_to :repo
   has_many :pull_tags, dependent: :destroy
+  has_many :tags, through: :pull_tags
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
