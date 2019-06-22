@@ -37,7 +37,6 @@ class User < ApplicationRecord
   # ClassMethods
   # -------------------------------------------------------------------------------
   def self.find_for_oauth(auth, signed_in_resource=nil)
-    # @TODO 違うGithubAccountでログインするとGithubAccountが上書きされると思う。
     user = User.find_or_initialize_by(email: auth.info.email)
 
     if user.persisted?
@@ -49,10 +48,7 @@ class User < ApplicationRecord
         name: auth[:info][:name]
       )
     else
-      user = User.new(
-        email:    auth.info.email,
-        password: Devise.friendly_token[0, 20]
-      )
+      user = user.assign_attributes(password: Devise.friendly_token[0, 20])
       user.build_github_account(
         owner_id: auth[:extra][:raw_info][:id],
         avatar_url: auth[:extra][:raw_info][:avatar_url],
