@@ -64,13 +64,4 @@ class User < ApplicationRecord
     user.save
     user
   end
-
-  #
-  # レポジトリがあるかどうかを返す
-  #
-  # @return [boolean]
-  #
-  def has_repos?
-    repos.present?
-  end
 end
