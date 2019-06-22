@@ -14,7 +14,6 @@
             .tags
               - pull.tags.each do |tag|
                 %span.tag= tag.name
-            .md-wrapper
-              .card-text.body= sanitize markdown(pull.body)
+            .card-text.body= pull.body.gsub(/[\r\n]/, '').truncate(300)
       = paginate @pulls
     .col
