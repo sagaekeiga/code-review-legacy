@@ -66,3 +66,6 @@ RedundantReturn:
 
 Rails:
   Enabled: true
+
+Rails/HelperInstanceVariable:
+  Enabled: false

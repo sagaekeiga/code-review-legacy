@@ -1,13 +1,13 @@
 module MarkdownHelper
   def markdown(text)
     options = {
-      filter_html:     true,
-      hard_wrap:       true,
+      filter_html: true,
+      hard_wrap: true,
       space_after_headers: true
     }
     extensions = {
-      autolink:           true,
-      no_intra_emphasis:  true,
+      autolink: true,
+      no_intra_emphasis: true,
       fenced_code_blocks: true
     }
     unless @markdown
@@ -15,6 +15,6 @@ module MarkdownHelper
       @markdown = Redcarpet::Markdown.new(renderer, extensions)
     end
 
-    @markdown.render(text).html_safe
+    @markdown.render(text)
   end
 end

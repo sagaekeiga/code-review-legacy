@@ -15,6 +15,6 @@
               - pull.tags.each do |tag|
                 %span.tag= tag.name
             .md-wrapper
-              .card-text.body= markdown(pull.body)
+              .card-text.body= sanitize markdown(pull.body)
       = paginate @pulls
     .col
