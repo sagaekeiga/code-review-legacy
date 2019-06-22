@@ -1,7 +1,7 @@
 .container.main
   .row
     .col-6.col-md-2
-      dddddd
+      %input.some_class_name{autofocus: "", "data-blacklist" => ".NET,PHP", name: "tags", placeholder: "write some tags", value: "css, html, javascript, css"}
     .col-12.col-md-10
       - if current_user.has_repos?
         %table.table
@@ -15,3 +15,4 @@
         = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
       - else
         = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
+= javascript_pack_tag 'tagify'

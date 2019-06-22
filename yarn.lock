@@ -846,10 +846,6 @@
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
 
-"@yaireo/tagify@^2.22.3":
-  version "2.22.3"
-  resolved "https://registry.yarnpkg.com/@yaireo/tagify/-/tagify-2.22.3.tgz#45946cba7820c6d97d42d069bd5362b50c969f60"
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
