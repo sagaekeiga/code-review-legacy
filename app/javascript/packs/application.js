@@ -4,5 +4,5 @@ import Turbolinks from 'turbolinks'
 import 'bootstrap'
 import 'src/application.scss'
 import '../code_review/index'
-Rails.start()
+// Rails.start()
 Turbolinks.start()

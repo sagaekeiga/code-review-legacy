@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module CodeReview
   class Application < Rails::Application
     config.time_zone = 'Tokyo'
-    # config.i18n.default_locale = :ja
+    config.i18n.default_locale = :ja
     config.active_record.default_timezone = :local
     config.assets.paths << config.root.join('node_modules')
 

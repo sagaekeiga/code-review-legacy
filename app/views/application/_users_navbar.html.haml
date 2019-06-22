@@ -1,0 +1,19 @@
+%nav{ class: 'navbar navbar-expand-lg navbar-dark bg-dark' }
+  %div{ class: 'container' }
+    %a{class: 'navbar-brand ', href: '/' } CodeReview
+    %button{ 'aria-controls': 'navbarNavDropdown', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation', class: 'navbar-toggler', 'data-target': '#navbarNavDropdown', 'data-toggle': 'collapse', type: 'button' }
+      %span{ class: 'navbar-toggler-icon' }
+    - if user_signed_in?
+      #navbarNavDropdown{ class: 'collapse navbar-collapse' }
+        %ul{ class: 'navbar-nav' }
+          %li{ class: 'nav-item dropdown' }
+            %a#navbarDropdown{ 'aria-expanded': 'false', 'aria-haspopup': 'true', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', href: '#', role: 'button' }=  repo&.name&.presence || 'リポジトリを選択する'
+            .dropdown-menu{ 'aria-labelledby': 'navbarDropdown' }
+              - repos.each do |repo|
+                = link_to repo.name, repo, class: 'dropdown-item'
+              = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank', class: 'dropdown-item'
+        %ul{ class: 'navbar-nav ml-auto' }
+          %li{ class: 'nav-item dropdown' }
+            %a#navbarDropdown{ 'aria-expanded': 'false', 'aria-haspopup': 'true', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', href: '#', role: 'button' }
+            .dropdown-menu{ 'aria-labelledby': 'navbarDropdown' }
+              = link_to 'ログアウト', :destroy_user_session, method: :delete, class: 'dropdown-item'

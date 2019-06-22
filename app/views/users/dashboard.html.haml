@@ -1,15 +1,20 @@
 .container.main
-  - if current_user.has_repos?
-    %table.table
-      %thead
-        %tr
-          %th ID
-          %th{ scope: 'col' } レポジトリ名
-      - @repos.each do |repo|
-        %tbody
-          %tr
-            %th{ scope: 'row' }= repo.id
-            %td= link_to repo.name, repo
-    = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
-  - else
-    = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
+  .row
+    .col
+    .col-8
+      - @pulls.each do |pull|
+        .card.pull
+          .card-body.text-dark
+            %h5.card-title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
+            .user
+              .avatar= image_tag pull.user.avatar_url, alt: '', height: '', width: '40', class: 'rounded-circle'
+              .info
+                .created_at= l pull.remote_created_at
+                %b.name= pull.user.name
+            .tags
+              - pull.tags.each do |tag|
+                %span.tag= tag.name
+            .md-wrapper
+              .card-text.body= sanitize markdown(pull.body)
+      = paginate @pulls
+    .col
