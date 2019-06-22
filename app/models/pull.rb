@@ -27,6 +27,7 @@
 #
 
 class Pull < ApplicationRecord
+  paginates_per 10
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
@@ -64,6 +65,11 @@ class Pull < ApplicationRecord
     where(status: %i(connected request_reviewed)).order(remote_created_at: :desc)
   }
 
+  scope :feed, lambda {
+    request_reviewed.
+      includes(:repo, :user, :pull_tags, :tags).
+      order(created_at: :desc)
+  }
   # -------------------------------------------------------------------------------
   # Attributes
   # -------------------------------------------------------------------------------

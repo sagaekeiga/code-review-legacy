@@ -29,6 +29,11 @@ class User < ApplicationRecord
   has_many :repos, dependent: :destroy
   has_many :pulls, dependent: :destroy
   # -------------------------------------------------------------------------------
+  # Delegations
+  # -------------------------------------------------------------------------------
+  delegate :avatar_url, to: :github_account
+  delegate :name, to: :github_account
+  # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
   def self.find_for_oauth(auth, signed_in_resource=nil)

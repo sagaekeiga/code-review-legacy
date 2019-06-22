@@ -1,5 +1,38 @@
 .users-dashboard {
   .main {
     margin-top: $base-margin * 5;
+    .pull {
+      margin-bottom: $base-margin;
+      .user {
+        .avatar {
+          display: inline-block;
+          vertical-align: top;
+          padding-right: $base-padding * 2;
+        }
+        .info {
+          display: inline-block;
+          .created_at {
+            color: $color-gray;
+            font-size: 0.9rem;
+          }
+          .name {
+
+          }
+        }
+      }
+      .tags {
+        margin-top: $base-margin;
+        .tag {
+          color: $color-sumi-black;
+          background-color: $tag-color;
+          font-size: 0.7rem;
+          padding: $base-padding * 2 $base-padding * 4;
+          border-radius: $base-border-radius;
+        }
+      }
+      .body {
+        margin-top: $base-margin;
+      }
+    }
   }
 }

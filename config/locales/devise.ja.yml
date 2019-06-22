@@ -1,0 +1,149 @@
+ja:
+  errors:
+    messages:
+      not_found: "は見つかりませんでした"
+      already_confirmed: "は既に登録済みです"
+      not_locked: "は凍結されていません"
+      not_saved_html: "%{resource}を保存できませんでした。<br/>（%{count}件の入力エラーがあります）"
+
+  reviewees:
+    sessions:
+      new:
+        title: Reviewee ログイン
+        sub_titles:
+          login_with_email_and_password: メールアドレスとパスワードを利用
+        forgot_password: パスワードをお忘れの方はこちらから再設定を行ってください
+      create:
+        title: Reviewee ログイン
+
+    registrations:
+      new:
+        title: 従業員登録
+        sub_titles:
+          sign_up_with_email_and_password: 情報を入力して従業員登録する
+          already_have_account: 既にアカウントをお持ちの場合
+        sign_in_from_here_html: "<a href='%{url}'>こちら</a>からログインできます"
+        placeholders: &reviewee_registrations_new_placeholders
+          name: 例). hello
+          email: 例). hello@example.com
+          password_confirmation: 上記で入力したパスワードと同じものを入力してください
+        helpers: &reviewee_registrations_new_helpers
+          name: 半角英数字で指定してください
+          email: ログイン時に使用します。他のユーザーには開示されません
+          current_password: 現在設定中のパスワードを入力してください
+          password: 半角英数字8文字以上を指定してください
+          password_confirmation: 上で入力したパスワードを再度入力してください
+        url_is_invalid: 無効なURLです
+        redirect_profile_page: 登録後、プロフィール登録画面へ進みます
+      edit:
+        title: プロフィール編集
+        placeholders:
+          <<: *reviewee_registrations_new_placeholders
+        helpers:
+          <<: *reviewee_registrations_new_helpers
+        change_password: パスワードを変更する
+      create:
+        title: 新規アカウントの登録
+
+    passwords:
+      new:
+        title: パスワード再設定
+        description: アカウント登録時に設定したメールアドレス宛にパスワードの再設定方法を送信します。
+        sub_titles:
+          remembered_account: 登録情報がありましたか？
+        sign_in_from_here_html: "<a href='%{url}'>こちら</a>からログインできます"
+        placeholders:
+          email: 例). hello@example.com
+        helpers:
+          email: 登録したときのメールアドレスを入力してください
+      edit:
+        title: パスワード再設定
+        description: 新しいパスワードを設定することで、サービスを再び利用することができるようになります。
+        new_password: 新しいパスワード
+        new_password_confirmation: 新しいパスワード（確認）
+        sign_in_from_here_html: "<a href='%{url}'>こちら</a>からログインできます"
+        sub_titles:
+          renew_password: パスワードの再設定を行う
+          found_password: パスワードが見つかりましたか？
+        placeholders:
+          <<: *reviewee_registrations_new_placeholders
+        helpers:
+          <<: *reviewee_registrations_new_helpers
+
+    finish_signup:
+      title: 必要情報の入力
+      description: 連携したSNSからメールアドレスが取得できませんでしたので、以下のフォームに入力して「次に進む」を押してください。
+      success: アカウント登録が完了しました
+      placeholders:
+        <<: *reviewee_registrations_new_placeholders
+      helpers:
+        <<: *reviewee_registrations_new_helpers
+
+    disconnect:
+      success: アカウント連携を解除しました
+      error: アカウント連携を解除できませんでした
+
+    mailer:
+      # confirmation_instructions:
+      #   subject: 'アカウントの登録方法'
+      reset_password_instructions:
+        greeting: "こんにちは %{recipient} さん"
+        instruction: お使いのアカウントのパスワードをリセットする要求を承りました。以下のリンクからパスワードの変更を行うことができます。
+        change_my_password: パスワードを変更する
+        please_ignore: 上記要求に身に覚えがない場合にはこのメールは無視して問題ございません。
+        wont_change: 上記リンクからパスワードを変更しない限り、現在登録されているパスワードが変更されることはございません。
+      # unlock_instructions:
+      #   subject: 'アカウントの凍結解除'
+
+  devise:
+    failure:
+      already_authenticated: すでにログインしています。
+      unauthenticated: 'ログインしてください。'
+      unconfirmed: '本登録を行ってください。'
+      locked: 'あなたのアカウントは凍結されています。'
+      invalid: 'メールアドレスかパスワードが違います。'
+      invalid_token: '認証キーが不正です。'
+      timeout: 'セッションがタイムアウトしました。もう一度ログインしてください。'
+      inactive: 'アカウントがアクティベートされていません。'
+      not_found_in_database: 'メールアドレスかパスワードが間違っています'
+    sessions:
+      signed_in: 'ログインしました。'
+      signed_out: 'ログアウトしました。'
+      reviewee:
+        already_signed_out: すでにログアウトしています
+      admin:
+        already_signed_out: すでにログアウトしています
+    passwords:
+      send_instructions: 'パスワードのリセット方法を数分以内にメールでご連絡します。'
+      updated: 'パスワードを変更しました。'
+    confirmations:
+      send_instructions: '登録方法を数分以内にメールでご連絡します。'
+      confirmed: 'メール認証が完了しました、Github認証後Mergeeをご利用いただけます'
+    registrations:
+      signed_up: 'アカウント登録を受け付けました。'
+      updated: 'アカウントを更新しました。'
+      destroyed: 'アカウントを削除しました。またのご利用をお待ちしております。'
+      signed_up_but_unconfirmed: Mergeeから認証メールを送信しました。記載のURLからメール認証を完了してください。
+    unlocks:
+      send_instructions: 'アカウントの凍結解除方法を数分以内にメールでご連絡します。'
+      unlocked: 'アカウントを凍結解除しました。'
+    mailer:
+      confirmation_instructions:
+        subject: 'アカウントの登録方法'
+      reset_password_instructions:
+        subject: 'パスワードの再設定'
+      unlock_instructions:
+        subject: 'アカウントの凍結解除'
+    omniauth_callbacks:
+      reviewee:
+        success: SNSアカウントを連携しました
+  omniauth:
+    providers:
+      twitter: Twitter
+      facebook: Facebook
+      google_oauth2: Google
+      line: LINE
+      twitter_with_icon_html: "<i class='fa fa-twitter'></i> Twitter"
+      facebook_with_icon_html: "<i class='fa fa-facebook-official'></i> Facebook"
+      google_oauth2_with_icon_html: "<i class='fa fa-google'></i> Google"
+      line_with_icon_html: "<i class='fa fa-comment-o'></i> LINE"

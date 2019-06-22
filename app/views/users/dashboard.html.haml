@@ -1,18 +1,20 @@
 .container.main
   .row
-    .col-6.col-md-2
-      %input.some_class_name{autofocus: "", "data-blacklist" => ".NET,PHP", name: "tags", placeholder: "write some tags", value: "css, html, javascript, css"}
-    .col-12.col-md-10
-      - if current_user.has_repos?
-        %table.table
-          %thead
-            %tr
-              %th{ scope: 'col' } レポジトリ名
-          - @repos.each do |repo|
-            %tbody
-              %tr
-                %td= link_to repo.name, repo
-        = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
-      - else
-        = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
-= javascript_pack_tag 'tagify'
+    .col
+    .col-8
+      - @pulls.each do |pull|
+        .card.pull
+          .card-body.text-dark
+            %h5.card-title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
+            .user
+              .avatar= image_tag pull.user.avatar_url, alt: '', height: '', width: '40', class: 'rounded-circle'
+              .info
+                .created_at= l pull.remote_created_at
+                %b.name= pull.user.name
+            .tags
+              - pull.tags.each do |tag|
+                %span.tag= tag.name
+            .md-wrapper
+              .card-text.body= markdown(pull.body)
+      = paginate @pulls
+    .col
