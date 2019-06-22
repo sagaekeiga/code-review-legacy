@@ -1,15 +1,17 @@
 .container.main
-  - if current_user.has_repos?
-    %table.table
-      %thead
-        %tr
-          %th ID
-          %th{ scope: 'col' } レポジトリ名
-      - @repos.each do |repo|
-        %tbody
-          %tr
-            %th{ scope: 'row' }= repo.id
-            %td= link_to repo.name, repo
-    = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
-  - else
-    = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
+  .row
+    .col-6.col-md-2
+      dddddd
+    .col-12.col-md-10
+      - if current_user.has_repos?
+        %table.table
+          %thead
+            %tr
+              %th{ scope: 'col' } レポジトリ名
+          - @repos.each do |repo|
+            %tbody
+              %tr
+                %td= link_to repo.name, repo
+        = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
+      - else
+        = link_to 'リポジトリを追加', ENV['GITHUB_APP_URL'], target: '_blank'
