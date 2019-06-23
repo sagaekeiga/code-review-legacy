@@ -3,6 +3,11 @@
     margin-top: $base-margin * 5;
     .pull {
       margin-bottom: $base-margin;
+      .title {
+        a {
+          color: $color-brand
+        }
+      }
       .user {
         .avatar {
           display: inline-block;
@@ -34,6 +39,29 @@
         color: $color-gray;
         margin-top: $base-margin;
         font-size: 0.9rem;
+      }
+      .reviewers {
+        .title {
+          margin-top: $base-margin;
+          margin-bottom: $base-margin / 2;
+          color: $color-gray;
+          font-size: 0.7rem;
+        }
+        .reviewer {
+          display: inline-block;
+          vertical-align: top;
+        }
+      }
+      .repo {
+        .label {
+          margin-top: $base-margin / 2;
+          margin-bottom: $base-margin / 2;
+          color: $color-gray;
+          font-size: 0.7rem;
+        }
+        a {
+          color: $color-brand;
+        }
       }
     }
   }

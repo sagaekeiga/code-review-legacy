@@ -11,7 +11,7 @@ module Github
 
       def languages(repo:)
         headers = {
-          'User-Agent': 'Mergee',
+          'User-Agent': 'CodeReview',
           'Authorization': "token #{get_access_token(repo.installation_id)}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
@@ -20,11 +20,33 @@ module Github
         JSON.parse res.body, symbolize_names: true
       end
 
+      def review_comments(pull)
+        headers = {
+          'User-Agent': 'CodeReview',
+          'Authorization': "token #{get_access_token(pull.installation_id)}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+        url = "#{BASE_API_URI}/repos/#{pull.full_name}/pulls/#{pull.number}/comments"
+        res = get url, headers: headers
+        JSON.parse res.body, symbolize_names: true
+      end
+
+      def repo(repo_params, params)
+        headers = {
+          'User-Agent': 'CodeReview',
+          'Authorization': "token #{get_access_token(params[:installation][:id])}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+        url = "#{BASE_API_URI}/repos/#{repo_params[:full_name]}"
+        res = get url, headers: headers
+        JSON.parse res.body, symbolize_names: true
+      end
+
       private
 
       def general_headers(installation_id:, event:)
         {
-          'User-Agent': 'Mergee',
+          'User-Agent': 'CodeReview',
           'Authorization': "token #{get_access_token(installation_id)}",
           'Accept': set_accept(event)
         }
@@ -32,7 +54,7 @@ module Github
 
       def _get(sub_url, installation_id, event)
         headers = {
-          'User-Agent': 'Mergee',
+          'User-Agent': 'CodeReview',
           'Authorization': "token #{get_access_token(installation_id)}",
           'Accept': set_accept(event)
         }
