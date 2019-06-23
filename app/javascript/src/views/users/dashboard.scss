@@ -35,6 +35,18 @@
         margin-top: $base-margin;
         font-size: 0.9rem;
       }
+      .reviewers {
+        .title {
+          margin-top: $base-margin;
+          margin-bottom: $base-margin / 2;
+          color: $color-gray;
+          font-size: 0.7rem;
+        }
+        .reviewer {
+          display: inline-block;
+          vertical-align: top;
+        }
+      }
     }
   }
 }

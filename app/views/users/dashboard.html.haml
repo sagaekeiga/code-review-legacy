@@ -15,5 +15,10 @@
               - pull.tags.each do |tag|
                 %span.tag= tag.name
             .card-text.body= pull.body.gsub(/[\r\n]/, '').truncate(300)
+            .reviewers
+              .title レビュ-している人
+              - pull.reviewer_avatar_urls.each do |reviewer_avatar_url|
+                .reviewer= image_tag reviewer_avatar_url, alt: '', height: '', width: '30', class: 'rounded-circle'
+          %hr
       = paginate @pulls
     .col

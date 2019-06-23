@@ -75,6 +75,11 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   attribute :status, default: statuses[:connected]
   # -------------------------------------------------------------------------------
+  # Delegations
+  # -------------------------------------------------------------------------------
+  delegate :full_name, to: :repo
+  delegate :installation_id, to: :repo
+  # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
   def self.fetch!(repo)
@@ -143,6 +148,28 @@ class Pull < ApplicationRecord
       completed!
     else
       connected!
+    end
+  end
+
+  def reviewer_avatar_urls
+    data = Github::Request.review_comments(self)
+    data.map do |review_comment|
+      review_comment[:user][:avatar_url]
+    end.uniq
+  end
+
+  class ReviewComment
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+    include Draper::Decoratable
+
+    attr_accessor :user_avatar_url
+
+    #
+    # @param [Hash] data
+    #
+    def initialize(data = {})
+      self.user_avatar_url = data[:user][:avatar_url]
     end
   end
 end
