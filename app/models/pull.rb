@@ -77,8 +77,11 @@ class Pull < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
+  delegate :name, to: :repo
   delegate :full_name, to: :repo
   delegate :installation_id, to: :repo
+  delegate :homepage, to: :repo
+  delegate :description, to: :repo
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

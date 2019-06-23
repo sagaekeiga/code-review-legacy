@@ -5,7 +5,7 @@
       - @pulls.each do |pull|
         .card.pull
           .card-body.text-dark
-            %h5.card-title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
+            %h5.card-title.title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
             .user
               .avatar= image_tag pull.user.avatar_url, alt: '', height: '', width: '40', class: 'rounded-circle'
               .info
@@ -16,9 +16,21 @@
                 %span.tag= tag.name
             .card-text.body= pull.body.gsub(/[\r\n]/, '').truncate(300)
             .reviewers
+              // @TODO データで管理できるようにしたらないときはhideできるようにif文追加
               .title レビュ-している人
               - pull.reviewer_avatar_urls.each do |reviewer_avatar_url|
                 .reviewer= image_tag reviewer_avatar_url, alt: '', height: '', width: '30', class: 'rounded-circle'
-          %hr
+            .repo
+              .name
+                .label リポジトリ名
+                .column= link_to pull.name, pull.repo.decorate.remote_url, target: '_blank'
+              - if pull.description
+                .description
+                  .label サービス概要
+                  .column= pull.description
+              - if pull.homepage
+                .homepage
+                  .label サービスURL
+                  .column= link_to pull.homepage, pull.homepage, target: '_blank'
       = paginate @pulls
     .col

@@ -31,6 +31,17 @@ module Github
         JSON.parse res.body, symbolize_names: true
       end
 
+      def repo(repo_params, params)
+        headers = {
+          'User-Agent': 'CodeReview',
+          'Authorization': "token #{get_access_token(params[:installation][:id])}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
+        url = "#{BASE_API_URI}/repos/#{repo_params[:full_name]}"
+        res = get url, headers: headers
+        JSON.parse res.body, symbolize_names: true
+      end
+
       private
 
       def general_headers(installation_id:, event:)

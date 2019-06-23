@@ -7,3 +7,14 @@
 // Views
 @import 'views/users/dashboard';
 @import 'views/repos/show';
+
+
+nav.navbar {
+  background-color: $color-brand;
+  a {
+    color: $color-white;
+  }
+  .dropdown-menu {
+    background-color: $color-brand;
+  }
+}
