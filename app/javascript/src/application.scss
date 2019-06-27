@@ -1,5 +1,6 @@
 @import 'variables';
 @import '~bootstrap/scss/bootstrap';
+@import '_bootstrap-variables';
 // Layouts
 @import 'layouts/default';
 // Components
@@ -7,6 +8,7 @@
 // Views
 @import 'views/users/dashboard';
 @import 'views/repos/show';
+@import 'views/welcome/index';
 
 
 nav.navbar {

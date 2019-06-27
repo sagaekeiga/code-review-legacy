@@ -1,0 +1,18 @@
+.btn-primary {
+  background: $color-brand;
+  color: $color-white;
+  border-color: $color-brand;
+  font-size: 0.9rem;
+  padding: $base-padding * 4 $base-padding * 8;
+  &:hover {
+    background: $color-brand;
+    border-color: $color-brand;
+  }
+}
+
+.btn-primary.outline {
+  border: 3px solid $color-brand; //アウトラインのみのボタンの線の色
+  // color: 好きな色; //アウトラインのみのボタンのテキストの色
+  // background: $color-brand;
+  // color: $color-white;
+}
