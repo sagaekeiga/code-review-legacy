@@ -33,6 +33,7 @@ class User < ApplicationRecord
   # -------------------------------------------------------------------------------
   delegate :avatar_url, to: :github_account
   delegate :name, to: :github_account
+  delegate :nickname, to: :github_account
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

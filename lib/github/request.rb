@@ -6,75 +6,49 @@ module Github
       BASE_API_URI = 'https://api.github.com'.freeze
 
       def pulls(repo)
-        _get sub_url_for(repo, :pull), repo.installation_id, :pull
+        headers = set_headers(repo.installation_id)
+        url = "#{BASE_API_URI}/repos/#{repo.full_name}/pulls"
+
+        res = get url, headers: headers
+
+        JSON.parse res.body, symbolize_names: true
       end
 
       def languages(repo:)
-        headers = {
-          'User-Agent': 'CodeReview',
-          'Authorization': "token #{get_access_token(repo.installation_id)}",
-          'Accept': 'application/vnd.github.antiope-preview+json'
-        }
+        headers = set_headers(repo.installation_id)
         url = "#{BASE_API_URI}/repos/#{repo.full_name}/languages"
+
         res = get url, headers: headers
+
         JSON.parse res.body, symbolize_names: true
       end
 
       def review_comments(pull)
-        headers = {
-          'User-Agent': 'CodeReview',
-          'Authorization': "token #{get_access_token(pull.installation_id)}",
-          'Accept': 'application/vnd.github.antiope-preview+json'
-        }
+        headers = set_headers(pull.installation_id)
         url = "#{BASE_API_URI}/repos/#{pull.full_name}/pulls/#{pull.number}/comments"
+
         res = get url, headers: headers
+
         JSON.parse res.body, symbolize_names: true
       end
 
       def repo(repo_params, params)
-        headers = {
-          'User-Agent': 'CodeReview',
-          'Authorization': "token #{get_access_token(params[:installation][:id])}",
-          'Accept': 'application/vnd.github.antiope-preview+json'
-        }
+        headers = set_headers(params[:installation][:id])
         url = "#{BASE_API_URI}/repos/#{repo_params[:full_name]}"
+
         res = get url, headers: headers
+
         JSON.parse res.body, symbolize_names: true
       end
 
       private
-
-      def general_headers(installation_id:, event:)
-        {
-          'User-Agent': 'CodeReview',
-          'Authorization': "token #{get_access_token(installation_id)}",
-          'Accept': set_accept(event)
-        }
-      end
-
-      def _get(sub_url, installation_id, event)
-        headers = {
-          'User-Agent': 'CodeReview',
-          'Authorization': "token #{get_access_token(installation_id)}",
-          'Accept': set_accept(event)
-        }
-
-        res = get "#{BASE_API_URI}/#{sub_url}", headers: headers
-
-        unless res.code == success_code(event)
-          logger.error "[Github][#{event}] responseCode => #{res.code}"
-          logger.error "[Github][#{event}] responseMessage => #{res.message}"
-          logger.error "[Github][#{event}] subUrl => #{sub_url}"
-        end
-        res
-      end
 
       def get_access_token(installation_id)
         request_url = "#{BASE_API_URI}/installations/#{installation_id}/access_tokens"
         headers = {
           'User-Agent': 'CodeReview',
           'Authorization': "Bearer #{get_jwt}",
-          'Accept': set_accept(:get_access_token)
+          'Accept': Settings.api.github.request.header.accept.machine_man_preview_json
         }
 
         response = post request_url, headers: headers
@@ -101,34 +75,12 @@ module Github
         jwt
       end
 
-      # イベントに対応するacceptを返す
-      def set_accept(event)
-        case event
-        when :get_access_token then Settings.api.github.request.header.accept.machine_man_preview_json
-        when :pull then Settings.api.github.request.header.accept.symmetra_preview_json
-        end
-      end
-
-      # 成功時のレスポンスコード
-      def success_code(event)
-        case event
-        when :pull then Settings.api.created.status.code
-        end
-      end
-
-      def sub_url_for(repo, event)
-        case event
-        when :pull then "repos/#{repo.full_name}/pulls"
-        end
-      end
-
-      #
-      # ログをRailsのものを流用する
-      #
-      # @return [Logger]
-      #
-      def logger
-        Rails.logger
+      def set_headers(installation_id)
+        {
+          'User-Agent': 'CodeReview',
+          'Authorization': "token #{get_access_token(installation_id)}",
+          'Accept': 'application/vnd.github.antiope-preview+json'
+        }
       end
     end
   end

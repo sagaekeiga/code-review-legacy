@@ -1,2 +1,5 @@
 staging:
   domain: code-review-stg.herokuapp.com
+github:
+  web:
+   home: https://github.com

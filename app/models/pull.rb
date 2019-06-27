@@ -155,10 +155,10 @@ class Pull < ApplicationRecord
     end
   end
 
-  def reviewer_avatar_urls
+  def reviewers
     data = Github::Request.review_comments(self)
     data.map do |review_comment|
-      review_comment[:user][:avatar_url]
+      review_comment[:user]
     end.uniq
   end
 
