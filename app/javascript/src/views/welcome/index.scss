@@ -1,0 +1,34 @@
+.welcome-index {
+  .main {
+    letter-spacing: $base-padding;
+    margin-top: $base-margin * 10;
+    .top {
+      .title {
+        font-size: 4rem;
+      }
+      .sub-title {
+        color: $color-gray;
+        margin-bottom: - $base-padding;
+        font-size: 0.9rem;
+      }
+    }
+    .description {
+      margin-top: $base-margin * 3;
+    }
+    .repository {
+      margin-top: $base-margin * 3;
+      color: $color-gray;
+      .title {
+        display: inline-block;
+      }
+      .count  {
+        display: inline-block;
+      }
+    }
+    .login {
+      .btn {
+        margin-top: $base-margin * 7;
+      }
+    }
+  }
+}

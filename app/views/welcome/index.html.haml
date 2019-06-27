@@ -1,8 +1,22 @@
 .container
-  %h3.text-center.target あなたのコードにコメントが届きます
-  .text-center
-    - if user_signed_in?
-      = link_to 'ログアウト', destroy_user_session_path, method: :delete
-    - else
-      = link_to user_github_omniauth_authorize_path, class: 'btn btn-primary' do
-        GitHubログイン
+  .row.main
+    .col-8
+      .text-left
+        .top
+          %p.sub-title コードレビューのプラットフォーム
+          %h1.title Code Review
+        .description
+          %h4 ソーシャルコーディング
+          %p コードを通して世界中のエンジニアと議論しましょう
+      .repository
+        %h2
+          .title リポジトリ数
+          .count 1000+
+    .col-4
+      .text-center
+        .login
+          - if user_signed_in?
+            = link_to 'ログアウト', destroy_user_session_path, method: :delete
+          - else
+            = link_to user_github_omniauth_authorize_path, class: 'btn btn-primary' do
+              GitHubログイン
