@@ -7,7 +7,9 @@
           .card-body.text-dark
             %h5.card-title.title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
             .user
-              .avatar= image_tag pull.user.avatar_url, alt: '', height: '', width: '40', class: 'rounded-circle'
+              .avatar
+                = link_to pull.user.decorate.html_url, target: '_blank' do
+                  = image_tag pull.user.avatar_url, alt: '', height: '', width: '40', class: 'rounded-circle'
               .info
                 .created_at= l pull.remote_created_at
                 %b.name= pull.user.name
@@ -18,8 +20,10 @@
             .reviewers
               // @TODO データで管理できるようにしたらないときはhideできるようにif文追加
               .title レビュ-している人
-              - pull.reviewer_avatar_urls.each do |reviewer_avatar_url|
-                .reviewer= image_tag reviewer_avatar_url, alt: '', height: '', width: '30', class: 'rounded-circle'
+              - pull.reviewers.each do |reviewer|
+                .reviewer
+                  = link_to reviewer[:html_url], target: '_blank' do
+                    = image_tag reviewer[:avatar_url], alt: '', height: '', width: '30', class: 'rounded-circle'
             .repo
               .name
                 .label リポジトリ名
