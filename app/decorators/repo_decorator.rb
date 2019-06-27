@@ -4,4 +4,8 @@ class RepoDecorator < ApplicationDecorator
   def remote_url
     "https://github.com/#{full_name}"
   end
+
+  def private_message
+    'このリポジトリはプライベートです。' if private
+  end
 end
