@@ -48,7 +48,7 @@ class User < ApplicationRecord
         name: auth[:info][:name]
       )
     else
-      user = user.assign_attributes(password: Devise.friendly_token[0, 20])
+      user.assign_attributes(password: Devise.friendly_token[0, 20])
       user.build_github_account(
         owner_id: auth[:extra][:raw_info][:id],
         avatar_url: auth[:extra][:raw_info][:avatar_url],
