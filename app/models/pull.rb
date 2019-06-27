@@ -82,6 +82,7 @@ class Pull < ApplicationRecord
   delegate :installation_id, to: :repo
   delegate :homepage, to: :repo
   delegate :description, to: :repo
+  delegate :private, to: :repo
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------

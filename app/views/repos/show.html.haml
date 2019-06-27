@@ -1,5 +1,6 @@
 .container.main
   %h3.text-left.repo-title= @repo.full_name
+  %p.text-danger= @repo.private_message
   - if @pulls.present?
     %table.table
       %thead
