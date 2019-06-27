@@ -44,6 +44,7 @@ gem 'httparty'
 gem 'rails-i18n'
 gem 'draper'
 gem 'kaminari'
+gem 'google-analytics-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
