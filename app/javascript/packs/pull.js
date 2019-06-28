@@ -1,3 +1,4 @@
+import 'bootstrap'
 $('.update-pull-button').on('click', function (e) {
   $(this).attr('disabled', true)
   $.ajax({
@@ -10,9 +11,19 @@ $('.update-pull-button').on('click', function (e) {
     element: $(this),
     success: function (data) {
       $(this.element).attr('disabled', false)
+      $('#reviewSubmitModal').modal('show')
     }
   })
 })
+
+$('#repositoryDropdown').on("click", function () {
+  $('.repo-dropdown').toggle();
+});
+
+$('#settingsDropdown').on("click", function () {
+  $('.settings-dropdown').toggle();
+});
+
 
 $(function () {
   $('select').change(function () {
@@ -29,5 +40,16 @@ $(function () {
         $(this.element).attr('disabled', false)
       }
     })
+  })
+})
+
+$(function () {
+  $('label').on('click', function () {
+    var checkbox = $(this).prevAll('.custom-control-input')
+    if (checkbox.prop('checked')) {
+      checkbox.prop('checked', true)
+    } else {
+      checkbox.prop('checked', false)
+    }
   })
 })
