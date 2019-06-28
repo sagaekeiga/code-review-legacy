@@ -4,6 +4,5 @@ class ReposController < Users::BaseController
     @repo = current_user.repos.find(params[:id]).decorate
     @pulls = @repo.pulls.opened.decorate
     @tags =  Tag.all
-    @reviewers = User.all.decorate
   end
 end

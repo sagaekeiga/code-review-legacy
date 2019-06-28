@@ -9,6 +9,19 @@ class PullsController < Users::BaseController
     when 'request_reviewed'
       @pull.connected!
     end
-    render json: { status: @pull.status }
+
+    @reviewers = current_user.not_request_users(@pull).map do |user|
+      user.attributes.merge(
+        avatar_url: user.avatar_url,
+        name: user.name,
+        nickname:  user.nickname
+      )
+    end
+
+    render json: {
+      status: @pull.status,
+      reviewers: @reviewers,
+      request_reviews_count: @pull.request_reviews.count
+    }
   end
 end

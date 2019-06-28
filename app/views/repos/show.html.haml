@@ -12,22 +12,4 @@
       = render @pulls, tags: @tags
   - else
     プルリクエストはありません
-#reviewSubmitModal.modal.fade
-  .modal-dialog.modal-lg
-    .modal-content
-      .modal-header レビューリクエスト
-      .modal-body
-        %p あと 5 人までリクエストすることができます
-        %table.table
-          %tbody
-            - @reviewers.each do |reviewer|
-              %tr
-                %td.avatar= image_tag reviewer.avatar_url, width: '20', class: 'rounded-circle'
-                %td.nickname= link_to reviewer.name, reviewer.html_url, target:  '_blank'
-                %td.bio biobiobiobiobiobiobiobiobiobiobio
-                %td
-                  %form
-                    .custom-control.custom-switch
-                      %input.custom-control-input{ type: 'checkbox',  id: "switch#{reviewer.id}" }
-                      %label.custom-control-label{ for: "switch#{reviewer.id}" }
 = javascript_pack_tag 'pull'
