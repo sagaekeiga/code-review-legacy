@@ -33,7 +33,7 @@ $('.update-pull-button').on('click', function (e) {
               </a>
             </td>
             <td class='bio'>
-              biobiobiobiobiobiobiobiobiobiobio
+              ${reviewer.bio}
             </td>
             <td>
               <form>
