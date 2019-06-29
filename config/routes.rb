@@ -31,5 +31,9 @@ Rails.application.routes.draw do
       registrations: 'users/registrations',
       omniauth_callbacks: 'users/omniauth_callbacks'
     }
+
+    if !Rails.env.production? && defined?(LetterOpenerWeb)
+      mount LetterOpenerWeb::Engine, at: '/letter_opener'
+    end
   end
 end

@@ -55,6 +55,7 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rails_best_practices'
   gem 'brakeman', require: false
+  gem 'letter_opener_web'
 end
 
 group :development do
