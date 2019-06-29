@@ -27,13 +27,6 @@
       }
       .tags {
         margin-top: $base-margin;
-        .tag {
-          color: $color-sumi-black;
-          background-color: $tag-color;
-          font-size: 0.7rem;
-          padding: $base-padding * 2 $base-padding * 4;
-          border-radius: $base-border-radius;
-        }
       }
       .body {
         color: $color-gray;
