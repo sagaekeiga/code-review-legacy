@@ -35,6 +35,7 @@ class User < ApplicationRecord
   delegate :avatar_url, to: :github_account
   delegate :name, to: :github_account
   delegate :nickname, to: :github_account
+  delegate :bio, to: :github_account
   # -------------------------------------------------------------------------------
   # ClassMethods
   # -------------------------------------------------------------------------------
@@ -72,6 +73,7 @@ class User < ApplicationRecord
       {
         owner_id: auth[:extra][:raw_info][:id],
         avatar_url: auth[:extra][:raw_info][:avatar_url],
+        bio: auth[:extra][:raw_info][:bio],
         email: auth[:info][:email],
         nickname: auth[:info][:nickname],
         name: auth[:info][:name]

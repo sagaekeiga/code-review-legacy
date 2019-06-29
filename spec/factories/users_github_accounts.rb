@@ -4,6 +4,7 @@
 #
 #  id         :bigint(8)        not null, primary key
 #  avatar_url :string
+#  bio        :text
 #  email      :string
 #  name       :string
 #  nickname   :string
@@ -29,5 +30,6 @@ FactoryBot.define do
     owner_id { Faker::Number.number(5) }
     nickname { Faker::Name.name }
     name { Faker::Name.name }
+    bio { Faker::Lorem.sentence }
   end
 end

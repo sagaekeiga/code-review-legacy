@@ -9,7 +9,8 @@ class PullsController < Users::BaseController
       user.attributes.merge(
         avatar_url: user.avatar_url,
         name: user.name,
-        nickname: user.nickname
+        nickname: user.nickname,
+        bio: user.bio
       )
     end
 
