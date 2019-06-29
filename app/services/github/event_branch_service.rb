@@ -19,6 +19,7 @@ class Github::EventBranchService
     case @request_event.to_sym
     when :pull_request then pull_request
     when :installation_repositories, :installation, :repository then repository
+    when :pull_request_review then pull_request_review
     end
   end
 
@@ -32,6 +33,10 @@ class Github::EventBranchService
     return unless present_pull_request?
 
     Pull.update_by_pull_request_event!(@params[:github_app][:pull_request])
+  end
+
+  def pull_request_review
+    Review.fetch!(@params)
   end
 
   def present_pull_request?
