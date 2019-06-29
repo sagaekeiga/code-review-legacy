@@ -11,4 +11,4 @@ languages.each do |language|
   Tag.create(name: language.flatten[0].to_s)
 end
 
-FactoryBot.create_list(:user, 10)
+FactoryBot.create_list(:user, 10, :with_user_tags)

@@ -27,5 +27,10 @@ FactoryBot.define do
         user: user
       )
     end
+    trait :with_user_tags do
+      after(:create) do |user|
+        create_list(:user_tag, 1, user: user)
+      end
+    end
   end
 end

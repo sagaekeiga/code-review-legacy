@@ -25,10 +25,12 @@ class User < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
-  has_one :github_account, class_name: 'Users::GithubAccount'
+  has_one :github_account, class_name: 'Users::GithubAccount', dependent: :destroy
   has_many :repos, dependent: :destroy
   has_many :pulls, dependent: :destroy
   has_many :review_requests, dependent: :destroy
+  has_many :user_tags, dependent: :destroy
+  has_many :tags, through: :user_tags
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
@@ -48,6 +50,7 @@ class User < ApplicationRecord
       else
         user.assign_attributes(password: Devise.friendly_token[0, 20])
         user.build_github_account(_merge_params(auth))
+        user.save_tags
       end
       user.save
       user
@@ -83,6 +86,23 @@ class User < ApplicationRecord
 
   def not_request_users(pull)
     review_request = ReviewRequest.where(pull: pull)
-    User.includes(:github_account).where.not(id: review_requests.pluck(:user_id).push(id))
+    User.includes(:github_account).
+      joins(:user_tags).
+      where.not(id: review_requests.pluck(:user_id).push(id)).
+      where(user_tags: { tag_id: pull.tags.first.id })
+  end
+
+  def save_tags
+    data = Github::Request.repos(self)
+    languages = data.map do |repo|
+      repo[:language]
+    end.uniq
+    Rails.logger.debug "languages: #{languages}"
+    tags = Tag.where(name: languages)
+    Rails.logger.debug "tags: #{tags.count}"
+    tags.each do |tag|
+      user_tag = user_tags.new(tag: tag)
+      user_tag.save
+    end
   end
 end
