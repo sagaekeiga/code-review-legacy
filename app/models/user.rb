@@ -28,7 +28,7 @@ class User < ApplicationRecord
   has_one :github_account, class_name: 'Users::GithubAccount'
   has_many :repos, dependent: :destroy
   has_many :pulls, dependent: :destroy
-  has_many :request_reviews, dependent: :destroy
+  has_many :review_requests, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
@@ -55,8 +55,8 @@ class User < ApplicationRecord
     def requests(pull_id)
       ActiveRecord::Base.transaction do
         all.each do |user|
-          request_review = user.request_reviews.new(pull_id: pull_id)
-          request_review.save!
+          review_request = user.review_requests.new(pull_id: pull_id)
+          review_request.save!
         end
       end
       true
@@ -80,7 +80,7 @@ class User < ApplicationRecord
   end
 
   def not_request_users(pull)
-    request_reviews = RequestReview.where(pull: pull)
-    User.includes(:github_account).where.not(id: request_reviews.pluck(:user_id).push(id))
+    review_request = ReviewRequest.where(pull: pull)
+    User.includes(:github_account).where.not(id: review_requests.pluck(:user_id).push(id))
   end
 end

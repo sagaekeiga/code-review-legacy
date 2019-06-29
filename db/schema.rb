@@ -54,13 +54,13 @@ ActiveRecord::Schema.define(version: 2019_06_28_111937) do
     t.index ["user_id"], name: "index_repos_on_user_id"
   end
 
-  create_table "request_reviews", force: :cascade do |t|
+  create_table "review_requests", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "pull_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["pull_id"], name: "index_request_reviews_on_pull_id"
-    t.index ["user_id"], name: "index_request_reviews_on_user_id"
+    t.index ["pull_id"], name: "index_review_requests_on_pull_id"
+    t.index ["user_id"], name: "index_review_requests_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2019_06_28_111937) do
   add_foreign_key "pulls", "repos"
   add_foreign_key "pulls", "users"
   add_foreign_key "repos", "users"
-  add_foreign_key "request_reviews", "pulls"
-  add_foreign_key "request_reviews", "users"
+  add_foreign_key "review_requests", "pulls"
+  add_foreign_key "review_requests", "users"
   add_foreign_key "users_github_accounts", "users"
 end

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: request_reviews
+# Table name: review_requests
 #
 #  id         :bigint(8)        not null, primary key
 #  created_at :datetime         not null
@@ -10,8 +10,8 @@
 #
 # Indexes
 #
-#  index_request_reviews_on_pull_id  (pull_id)
-#  index_request_reviews_on_user_id  (user_id)
+#  index_review_requests_on_pull_id  (pull_id)
+#  index_review_requests_on_user_id  (user_id)
 #
 # Foreign Keys
 #
@@ -19,7 +19,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 
-class RequestReview < ApplicationRecord
+class ReviewRequest < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------

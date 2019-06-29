@@ -21,7 +21,7 @@ class PullsController < Users::BaseController
     render json: {
       status: @pull.status,
       reviewers: @reviewers,
-      request_reviews_count: @pull.request_reviews.count
+      review_requests_count: @pull.review_requests.count
     }
   end
 end

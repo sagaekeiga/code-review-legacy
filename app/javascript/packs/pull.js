@@ -12,7 +12,7 @@ $('.update-pull-button').on('click', function (e) {
     element: $(this),
     success: function (data) {
       $(this.element).attr('disabled', false)
-      if (data.status !== 'request_reviewed' || data.request_reviews_count > 0) { return }
+      if (data.status !== 'request_reviewed' || data.review_requests_count > 0) { return }
       if ($('[class=custom-control-label]:checked').length > 5) {
         $('.complete').attr('disabled', true)
         $(`.counter${pullId}`).text('これ以上選択できません')
@@ -109,7 +109,7 @@ $(function () {
 
     $.ajax({
       type: 'POST',
-      url: `/request_reviews`,
+      url: `/review_requests`,
       dataType: 'JSON',
       data: {
         authenticity_token: $('meta[name="csrf-token"]').attr('content'),
