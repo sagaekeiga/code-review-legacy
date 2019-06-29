@@ -97,9 +97,7 @@ class User < ApplicationRecord
     languages = data.map do |repo|
       repo[:language]
     end.uniq
-    Rails.logger.debug "languages: #{languages}"
     tags = Tag.where(name: languages)
-    Rails.logger.debug "tags: #{tags.count}"
     tags.each do |tag|
       user_tag = user_tags.new(tag: tag)
       user_tag.save
