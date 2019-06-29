@@ -3,12 +3,20 @@ class PullsController < Users::BaseController
 
   def update
     @pull = current_user.pulls.find(params[:id])
-    case @pull.status
-    when 'connected'
-      @pull.request_reviewed!
-    when 'request_reviewed'
-      @pull.connected!
+    @pull.switch_ststus!
+
+    @reviewers = current_user.not_request_users(@pull).map do |user|
+      user.attributes.merge(
+        avatar_url: user.avatar_url,
+        name: user.name,
+        nickname: user.nickname
+      )
     end
-    render json: { status: @pull.status }
+
+    render json: {
+      status: @pull.status,
+      reviewers: @reviewers,
+      review_requests_count: @pull.review_requests.count
+    }
   end
 end

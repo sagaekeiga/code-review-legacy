@@ -1,0 +1,6 @@
+=  "#{@reviewer.name} 様"
+\
+= "#{@pull.user.name} 様からプルリクエスト #{@pull.title} のレビュー依頼がありました。"
+以下のURLから確認を行えます。
+\
+= "https://github.com/#{@pull.full_name}/pull/#{@pull.number}"

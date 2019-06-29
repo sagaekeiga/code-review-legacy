@@ -35,6 +35,7 @@ class Pull < ApplicationRecord
   belongs_to :repo
   has_many :pull_tags, dependent: :destroy
   has_many :tags, through: :pull_tags
+  has_many :review_requests, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
@@ -92,15 +93,15 @@ class Pull < ApplicationRecord
       language = repo.language
       res_pulls.each do |data|
         pull = repo.pulls.find_or_initialize_by(
-          remote_id: data['id'],
+          remote_id: data[:id],
           user: repo.user
         )
         pull.update_attributes!(
-          remote_id:  data['id'],
-          number:     data['number'],
-          title:      data['title'],
-          body:       data['body'],
-          remote_created_at: data['created_at']
+          remote_id:  data[:id],
+          number:     data[:number],
+          title:      data[:title],
+          body:       data[:body],
+          remote_created_at: data[:created_at]
         )
         pull.create_or_update_tag!(language)
       end
@@ -152,6 +153,13 @@ class Pull < ApplicationRecord
       completed!
     else
       connected!
+    end
+  end
+
+  def switch_ststus!
+    case status
+    when 'connected' then request_reviewed!
+    when 'request_reviewed' then connected!
     end
   end
 

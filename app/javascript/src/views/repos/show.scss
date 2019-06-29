@@ -4,5 +4,19 @@
     .repo-title {
       margin-bottom: $base-margin * 3;
     }
+    .pull {
+      .title {
+        a {
+          color: $color-brand;
+        }
+      }
+      .reviewer {
+        .nickname {
+          a {
+            color: $color-brand;
+          }
+        }
+      }
+    }
   }
 }

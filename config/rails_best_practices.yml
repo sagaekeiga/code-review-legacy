@@ -34,6 +34,7 @@ RemoveUnusedMethodsInControllersCheck: { except_methods: [
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [
   'Repo#language',
+  'User#not_request_users'
 ] }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }
 ReplaceInstanceVariableWithLocalVariableCheck: { }

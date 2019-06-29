@@ -10,3 +10,5 @@ languages = YAML.load(languages_yml)
 languages.each do |language|
   Tag.create(name: language.flatten[0].to_s)
 end
+
+FactoryBot.create_list(:user, 10)

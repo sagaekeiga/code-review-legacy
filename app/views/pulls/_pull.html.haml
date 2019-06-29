@@ -1,13 +1,25 @@
-%tbody
+%tbody.pull{ 'pull-id': pull.id }
   %tr
     %th{ scope: 'row' }= pull.number
-    %td= link_to pull.title, pull.remote_url, target: '_blank'
+    %td.title= link_to pull.title, pull.remote_url, target: '_blank'
     %td
       = select :tag, :name, tags.map { |tag| [tag.name, tag.id]}, { selected: pull.pull_tags.first.tag_id }, class: 'form-control', 'pull-tag-id': pull.pull_tags.first.id, 'pull-id': pull.id
     %td
-      - unless pull.completed?
+      - unless pull.completed? || repo.private
         .onoffswitch
-          %input.onoffswitch-checkbox.update-pull-button{ checked: pull.request_reviewed?, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "pullStatusSwitch#{pull.id}", disabled: pull.private }
+          %input.onoffswitch-checkbox.update-pull-button.modal{ checked: pull.request_reviewed?, name: 'onoffswitch', type: 'checkbox', 'pull-id': pull.id, id: "pullStatusSwitch#{pull.id}", disabled: pull.private, href: '#modal' }
           %label.onoffswitch-label{ for: "pullStatusSwitch#{pull.id}" }
             %span.onoffswitch-inner
             %span.onoffswitch-switch
+        .modal{ id: "reviewSubmitModal#{pull.id}" }
+          .modal-dialog.modal-lg
+            .modal-content
+              .modal-header
+                %b レビューリクエスト
+              .modal-body
+                %p{ class: "counter#{pull.id}" }
+                %table.table{ class: "reviewers#{pull.id}" }
+                  %tbody
+              .modal-footer
+                .text-center
+                  %button.btn.btn-primary.complete 完了する

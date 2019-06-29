@@ -36,7 +36,7 @@
 .onoffswitch-inner:before {
   content: "ON";
   padding-left: $base-font-size - 2;
-  background-color: $color-switch-on;
+  background-color: $color-brand;
   color: $bg-color-github-panel;
 }
 .onoffswitch-inner:after {

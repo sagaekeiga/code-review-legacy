@@ -1,0 +1,8 @@
+%p=  "#{@reviewer.name} 様"
+
+%p
+  = "#{@pull.user.name} 様からプルリクエスト #{@pull.title} のレビュー依頼がありました。"
+  %br
+  以下のURLから確認を行えます。
+
+%p= link_to "https://github.com/#{@pull.full_name}/pull/#{@pull.number}", "https://github.com/#{@pull.full_name}/pull/#{@pull.number}", target: '_blank'

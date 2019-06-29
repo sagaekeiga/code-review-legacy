@@ -6,6 +6,6 @@ class RepoDecorator < ApplicationDecorator
   end
 
   def private_message
-    'このリポジトリはプライベートです。' if private
+    'このリポジトリはプライベートです。パブリックなリポジトリのみ公開できます。' if private
   end
 end

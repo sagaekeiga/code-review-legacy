@@ -4,7 +4,7 @@
   border-color: $color-brand;
   font-size: 0.9rem;
   padding: $base-padding * 4 $base-padding * 8;
-  &:hover {
+  &:hover, &:disabled {
     background: $color-brand;
     border-color: $color-brand;
   }
@@ -12,4 +12,17 @@
 
 .btn-primary.outline {
   border: 3px solid $color-brand;
+}
+
+.modal-content {
+  border-radius: 0px;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  background: $color-brand;
+  border-color: $color-brand;
+}
+
+.custom-switch {
+  cursor: pointer;
 }
