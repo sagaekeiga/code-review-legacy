@@ -2,7 +2,13 @@
   .main {
     margin-top: $base-margin * 5;
     .pull {
-      margin-bottom: $base-margin;
+      border-radius: 0px;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      &:hover {
+        background-color: #EEEEEE;
+      }
       .title {
         a {
           color: $color-brand
@@ -46,6 +52,7 @@
         }
       }
       .repo {
+        margin-top: $base-margin * 3;
         .label {
           margin-top: $base-margin / 2;
           margin-bottom: $base-margin / 2;

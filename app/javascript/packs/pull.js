@@ -24,20 +24,20 @@ $('.update-pull-button').on('click', function (e) {
       $.each(data.reviewers, function (index, reviewer) {
         $(`
           <tr class='reviewer'>
-            <td class='avatar'>
+            <td class='avatar align-middle'>
               <img width='20' class='rounded-circle' src='${reviewer.avatar_url}'>
             </td>
-            <td class='nickname'>
+            <td class='nickname align-middle'>
               <a target='_blank' href='https://github.com/${reviewer.nickname}'>
                 ${reviewer.name}
               </a>
             </td>
-            <td class='bio'>
+            <td class='bio align-middle'>
               ${reviewer.bio}
             </td>
-            <td class='score'>
+            <td class='score align-middle'>
               ${reviewer.score}
-            <td>
+            <td class='align-middle'>
               <form>
                 <div class='custom-control custom-switch'>
                   <input class='custom-control-input' id='switch${reviewer.id}' type='checkbox' value='${reviewer.id}' pull-id=${pullId}>

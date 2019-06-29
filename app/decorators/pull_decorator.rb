@@ -4,4 +4,8 @@ class PullDecorator < ApplicationDecorator
   def remote_url
     "https://github.com/#{full_name}/pull/#{number}"
   end
+
+  def number
+    "# #{model.number}"
+  end
 end
