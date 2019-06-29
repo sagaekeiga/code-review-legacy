@@ -21,3 +21,16 @@ nav.navbar {
     background-color: $color-brand;
   }
 }
+
+footer {
+  margin-top: $base-margin * 5;
+
+  width: 100%;
+  bottom: 0;
+  font-weight: lighter;
+  font-size: 0.9rem;
+  a {
+    color: $color-brand;
+    padding: $base-padding * 4;
+  }
+}
