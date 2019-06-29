@@ -5,15 +5,7 @@ class PullsController < Users::BaseController
     @pull = current_user.pulls.find(params[:id])
     @pull.switch_ststus!
 
-    @reviewers = current_user.not_request_users(@pull).map do |user|
-      user.attributes.merge(
-        avatar_url: user.avatar_url,
-        name: user.name,
-        nickname: user.nickname,
-        bio: user.bio || '',
-        score: user.reviews.size
-      )
-    end
+    @reviewers = current_user.not_request_users(@pull).map(&:attributes_for_request)
 
     render json: {
       status: @pull.status,
