@@ -20,7 +20,7 @@ class Review < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   belongs_to :pull
   has_many :pull_tags, dependent: :destroy
   has_many :tags, through: :pull_tags

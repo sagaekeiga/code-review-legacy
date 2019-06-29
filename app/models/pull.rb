@@ -36,6 +36,7 @@ class Pull < ApplicationRecord
   has_many :pull_tags, dependent: :destroy
   has_many :tags, through: :pull_tags
   has_many :review_requests, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------

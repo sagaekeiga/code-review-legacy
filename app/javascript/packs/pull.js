@@ -35,6 +35,8 @@ $('.update-pull-button').on('click', function (e) {
             <td class='bio'>
               ${reviewer.bio}
             </td>
+            <td class='score'>
+              ${reviewer.score}
             <td>
               <form>
                 <div class='custom-control custom-switch'>

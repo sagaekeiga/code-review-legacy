@@ -10,7 +10,8 @@ class PullsController < Users::BaseController
         avatar_url: user.avatar_url,
         name: user.name,
         nickname: user.nickname,
-        bio: user.bio
+        bio: user.bio || '',
+        score: user.reviews.size
       )
     end
 

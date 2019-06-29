@@ -8,6 +8,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  reviews_count          :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -31,6 +32,7 @@ class User < ApplicationRecord
   has_many :review_requests, dependent: :destroy
   has_many :user_tags, dependent: :destroy
   has_many :tags, through: :user_tags
+  has_many :reviews, dependent: :destroy
   # -------------------------------------------------------------------------------
   # Delegations
   # -------------------------------------------------------------------------------
@@ -89,7 +91,8 @@ class User < ApplicationRecord
     User.includes(:github_account).
       joins(:user_tags).
       where.not(id: review_requests.pluck(:user_id).push(id)).
-      where(user_tags: { tag_id: pull.tags.first.id })
+      where(user_tags: { tag_id: pull.tags.first.id }).
+      order(reviews_count: :asc)
   end
 
   def save_tags
