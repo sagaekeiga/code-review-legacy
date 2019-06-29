@@ -12,7 +12,7 @@ $('.update-pull-button').on('click', function (e) {
     element: $(this),
     success: function (data) {
       $(this.element).attr('disabled', false)
-      if (data.status !== 'request_reviewed' || data.request_reviews_count === 5) { return }
+      if (data.status !== 'request_reviewed' || data.request_reviews_count > 0) { return }
       if ($('[class=custom-control-label]:checked').length > 5) {
         $('.complete').attr('disabled', true)
         $(`.counter${pullId}`).text('これ以上選択できません')
