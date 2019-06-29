@@ -41,6 +41,14 @@ module Github
         JSON.parse res.body, symbolize_names: true
       end
 
+      def repos(user)
+        url = "#{BASE_API_URI}/users/#{user.nickname}/repos"
+
+        res = get url
+
+        JSON.parse res.body, symbolize_names: true
+      end
+
       private
 
       def get_access_token(installation_id)

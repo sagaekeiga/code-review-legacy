@@ -38,3 +38,9 @@
                   .column= link_to pull.homepage, pull.homepage, target: '_blank'
       = paginate @pulls
     .col
+      %p Myタグ
+      %ul.tags
+        - @tags.each do |tag|
+          %li
+            %a{ href: '#' }
+              %span= tag.name

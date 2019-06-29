@@ -1,23 +1,27 @@
 # == Schema Information
 #
-# Table name: tags
+# Table name: user_tags
 #
 #  id         :bigint(8)        not null, primary key
-#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  tag_id     :bigint(8)
+#  user_id    :bigint(8)
+#
+# Indexes
+#
+#  index_user_tags_on_tag_id   (tag_id)
+#  index_user_tags_on_user_id  (user_id)
 #
 
-class Tag < ApplicationRecord
+class UserTag < ApplicationRecord
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------
-  has_many :pull_tags, dependent: :destroy
-  has_many :pulls, through: :pull_tags
-  has_many :user_tags, dependent: :destroy
-  has_many :users, through: :user_tags
+  belongs_to :tag
+  belongs_to :user
   # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
-  validates :name, presence: true, uniqueness: true
+  validates :tag_id, uniqueness: { scope: :user_id }
 end
