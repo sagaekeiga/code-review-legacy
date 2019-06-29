@@ -156,6 +156,13 @@ class Pull < ApplicationRecord
     end
   end
 
+  def switch_ststus!
+    case status
+    when 'connected' then request_reviewed!
+    when 'request_reviewed' then connected!
+    end
+  end
+
   def reviewers
     data = Github::Request.review_comments(self)
     data.map do |review_comment|

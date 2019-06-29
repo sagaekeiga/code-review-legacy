@@ -3,12 +3,7 @@ class PullsController < Users::BaseController
 
   def update
     @pull = current_user.pulls.find(params[:id])
-    case @pull.status
-    when 'connected'
-      @pull.request_reviewed!
-    when 'request_reviewed'
-      @pull.connected!
-    end
+    @pull.switch_ststus!
 
     @reviewers = current_user.not_request_users(@pull).map do |user|
       user.attributes.merge(
