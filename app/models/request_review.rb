@@ -26,7 +26,15 @@ class RequestReview < ApplicationRecord
   belongs_to :user
   belongs_to :pull
   # -------------------------------------------------------------------------------
+  # Callbacks
+  # -------------------------------------------------------------------------------
+  after_commit :send_request_mail, on: %i(create)
+  # -------------------------------------------------------------------------------
   # Validations
   # -------------------------------------------------------------------------------
   validates :user_id, uniqueness: { scope: :pull_id }
+  private
+  def send_request_mail
+    UsersMailer.requests(pull_id, user_id).deliver
+  end
 end

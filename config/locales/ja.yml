@@ -151,3 +151,6 @@ ja:
     github:
       connect:
         success: GitHubとの接続に成功しました！
+  users_mailer:
+    requests:
+      subject: レビュー依頼がありました。
