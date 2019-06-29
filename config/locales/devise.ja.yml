@@ -6,16 +6,6 @@ ja:
       not_locked: "は凍結されていません"
       not_saved_html: "%{resource}を保存できませんでした。<br/>（%{count}件の入力エラーがあります）"
 
-  reviewees:
-    sessions:
-      new:
-        title: Reviewee ログイン
-        sub_titles:
-          login_with_email_and_password: メールアドレスとパスワードを利用
-        forgot_password: パスワードをお忘れの方はこちらから再設定を行ってください
-      create:
-        title: Reviewee ログイン
-
     registrations:
       new:
         title: 従業員登録
@@ -135,8 +125,7 @@ ja:
       unlock_instructions:
         subject: 'アカウントの凍結解除'
     omniauth_callbacks:
-      reviewee:
-        success: SNSアカウントを連携しました
+      success: "%{kind} で認証しました"
   omniauth:
     providers:
       twitter: Twitter

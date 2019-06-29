@@ -5,7 +5,7 @@
       - @pulls.each do |pull|
         .card.pull
           .card-body.text-dark
-            %h5.card-title.title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
+            %h3.card-title.title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
             .user
               .avatar
                 = link_to pull.user.decorate.html_url, target: '_blank' do
@@ -14,8 +14,11 @@
                 .created_at= l pull.remote_created_at
                 %b.name= pull.user.name
             .tags
-              - pull.tags.each do |tag|
-                %span.tag= tag.name
+              %ul.tags
+                - pull.tags.each do |tag|
+                  %li
+                    %a{ href: '#' }
+                      %span= tag.name
             .card-text.body= pull.body.gsub(/[\r\n]/, '').truncate(300)
             .reviewers
               // @TODO データで管理できるようにしたらないときはhideできるようにif文追加

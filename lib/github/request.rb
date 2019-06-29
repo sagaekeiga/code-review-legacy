@@ -54,7 +54,7 @@ module Github
       def get_access_token(installation_id)
         request_url = "#{BASE_API_URI}/installations/#{installation_id}/access_tokens"
         headers = {
-          'User-Agent': 'CodeReview',
+          'User-Agent': Settings.meta.title,
           'Authorization': "Bearer #{get_jwt}",
           'Accept': Settings.api.github.request.header.accept.machine_man_preview_json
         }
@@ -85,7 +85,7 @@ module Github
 
       def set_headers(installation_id)
         {
-          'User-Agent': 'CodeReview',
+          'User-Agent': Settings.meta.title,
           'Authorization': "token #{get_access_token(installation_id)}",
           'Accept': 'application/vnd.github.antiope-preview+json'
         }
