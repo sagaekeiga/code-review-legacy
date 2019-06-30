@@ -2,11 +2,13 @@
   .row
     .col
     .col-8
-      %p プルリクエストを選択してコードレビューしてください
+      %p プルリクエストを選択してコードレビューすることができます。
       - @pulls.each do |pull|
         .card.pull
           .card-body.text-dark
-            %h3.card-title.title= link_to pull.title, pull.decorate.remote_url, target: '_blank'
+            %h3.card-title.title
+              = octicon 'git-pull-request', height: 27
+              = link_to pull.title, pull.decorate.remote_url, target: '_blank'
             .user
               .avatar
                 = link_to pull.user.decorate.html_url, target: '_blank' do
@@ -30,7 +32,9 @@
                     = image_tag reviewer[:avatar_url], alt: '', height: '', width: '30', class: 'rounded-circle'
             .repo
               .name
-                .label リポジトリ名
+                .label
+                  = octicon 'repo'
+                  リポジトリ名
                 .column= link_to pull.name, pull.repo.decorate.remote_url, target: '_blank'
               - if pull.description
                 .description

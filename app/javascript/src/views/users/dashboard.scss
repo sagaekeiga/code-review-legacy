@@ -2,10 +2,12 @@
   .main {
     margin-top: $base-margin * 5;
     .pull {
+      border: 3px solid rgba(0, 0, 0, 0.125);
       border-radius: 0px;
       border-top: none;
       border-right: none;
-      border-left: none;
+      border-bottom: none;
+      margin-bottom: $base-margin * 2;
       &:hover {
         background-color: #EEEEEE;
       }
