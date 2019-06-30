@@ -29,7 +29,7 @@ $('.update-pull-button').on('click', function (e) {
             </td>
             <td class='nickname align-middle'>
               <a target='_blank' href='https://github.com/${reviewer.nickname}'>
-                ${reviewer.name}
+                @${reviewer.nickname}
               </a>
             </td>
             <td class='bio align-middle'>

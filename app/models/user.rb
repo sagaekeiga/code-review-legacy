@@ -110,7 +110,6 @@ class User < ApplicationRecord
   def attributes_for_request
     attributes.merge(
       avatar_url: avatar_url,
-      name: name,
       nickname: nickname,
       bio: bio || '',
       score: reviews.size
