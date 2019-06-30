@@ -152,7 +152,7 @@ class Pull < ApplicationRecord
     case state
     when 'closed', 'merged'
       completed!
-    else
+    when 'open'
       connected!
     end
   end
