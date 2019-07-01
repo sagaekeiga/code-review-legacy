@@ -1,10 +1,9 @@
 !!!
 %html
   %head
-    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv': 'Content-Type' }/
-    %title= Settings.meta.title
     = csrf_meta_tags
     = csp_meta_tag
+    = render 'meta'
     = javascript_pack_tag 'application'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = analytics_init if Rails.env.production?
