@@ -1,8 +1,9 @@
 meta:
-  site: CodeReview β
-  title: CodeReview β
-  description: コードレビューサービス
-  keywords: コードレビュー、エンジニア、ソーシャルコーディング
+  site:
+    name: CodeReview β
+    page_title: CodeReview β
+    page_description: 個人のためのコードレビューサービス
+    page_keywords: コードレビュー、エンジニア、ソーシャルコーディング
 og:
   title: CodeReview β
   type: website

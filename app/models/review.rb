@@ -56,6 +56,8 @@ class Review < ApplicationRecord
 
       review.save
 
+      return if ENV['SLACK_WEBHOOK_URL'].nil?
+
       notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
       attachments = {
         fallback: "This is article notifier attachment",
