@@ -46,6 +46,7 @@ gem 'draper'
 gem 'kaminari'
 gem 'google-analytics-rails'
 gem 'octicons_helper'
+gem 'slack-notifier'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
