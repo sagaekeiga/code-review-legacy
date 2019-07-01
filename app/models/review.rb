@@ -30,6 +30,14 @@ class Review < ApplicationRecord
   # -------------------------------------------------------------------------------
   validates :remote_id, presence: true, uniqueness: true, on: %i(create)
   validates :body, presence: true
+  # -------------------------------------------------------------------------------
+  # Delegations
+  # -------------------------------------------------------------------------------
+  delegate :title, to: :pull
+  delegate :number, to: :pull
+  # -------------------------------------------------------------------------------
+  # ClassMethods
+  # -------------------------------------------------------------------------------
   class << self
     def fetch!(params)
       reviewer = Users::GithubAccount.find_by(owner_id: params[:review][:user][:id]).user
@@ -47,6 +55,16 @@ class Review < ApplicationRecord
       )
 
       review.save
+
+      notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
+      attachments = {
+        fallback: "This is article notifier attachment",
+        title: review.title,
+        text: "<a href='https://github.com/#{review.pull.full_name}/pull/#{review.number}'>https://github.com/#{review.pull.full_name}/pull/#{review.number}</a>",
+        color: 'good'
+      }
+      notifier.post text: 'レビューがありました',  attachments: attachments
+
     end
   end
 end

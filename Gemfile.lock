@@ -362,6 +362,7 @@ GEM
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    slack-notifier (2.3.2)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -442,6 +443,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver
   sidekiq
+  slack-notifier
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
