@@ -1,7 +1,7 @@
 xml.instruct! :xml, version: '1.0'
 xml.rss('version': '2.0', 'xmlns:dc': 'http://purl.org/dc/elements/1.1/') do
   xml.channel do
-    xml.title Settings.meta.title
+    xml.title Settings.meta.site.name
     xml.description Settings.description
     xml.link Settings.web.url
     @pulls.each do |pull|

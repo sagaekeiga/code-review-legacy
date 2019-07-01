@@ -1,6 +1,6 @@
 %nav{ class: 'navbar navbar-expand-lg' }
   %div{ class: 'container' }
-    %a{class: 'navbar-brand ', href: '/' }= Settings.meta.title
+    %a{class: 'navbar-brand ', href: '/' }= Settings.meta.site.name
     %button{ 'aria-controls': 'navbarNavDropdown', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation', class: 'navbar-toggler', 'data-target': '#navbarNavDropdown', 'data-toggle': 'collapse', type: 'button' }
       %span{ class: 'navbar-toggler-icon' }
     - if user_signed_in?
