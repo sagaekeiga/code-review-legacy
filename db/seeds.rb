@@ -12,3 +12,5 @@ languages.each do |language|
 end
 
 FactoryBot.create_list(:user, 10, :with_user_tags)
+
+Admin.create(email: 'admin@example.com', password: 'hogehoge')

@@ -1,0 +1,14 @@
+.container
+  %p 新着のユーザー
+  %table.table
+    %thead
+      %tr
+        %th{ scope: 'col' } ID
+        %th{ scope: 'col' } ニックネーム
+        %th{ scope: 'col' } 登録日
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.id
+          %td= link_to user.nickname,  user.html_url, target: '_blank'
+          %td= l user.created_at
