@@ -1,5 +1,4 @@
 import 'jquery-ui-dist/jquery-ui'
-import { tag } from 'postcss-selector-parser';
 
 $(document).on('input', '#tagInput', function () {
   if ($(this).val() == '') {
@@ -45,7 +44,7 @@ $(document).on('click', '#addTag', function () {
         `).appendTo('ul#myTag')
         $('#tagInput').val('')
       } else {
-        $('#tagErrorMessage').text('タグを登録できませんでした')
+        $('#tagErrorMessage').text('タグを登録できませんでした').fadeOut(5000)
       }
     }
   })
