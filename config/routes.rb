@@ -31,8 +31,10 @@ Rails.application.routes.draw do
     resources :repos, only: %i(show)
     resources :pulls, only: %i(update)
     resources :pull_tags, only: %i(update)
+    resources :user_tags, only: %i(create)
     resources :review_requests, only: %i(create)
     resources :feed, only: %i(index)
+    resources :tags, only: %i(index)
 
     devise_for :users, path: 'users', controllers: {
       registrations: 'users/registrations',

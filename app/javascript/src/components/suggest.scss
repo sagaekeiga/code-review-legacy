@@ -1,0 +1,28 @@
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px $color-silver-gray;
+  width: 209px;
+  cursor: default;
+  li {
+    background-color: #FFF;
+    border-top: solid 1px #DDD;
+    margin: 0;
+    a {
+      color: $color-smoke-gray;
+      display: block;
+      padding: 3px;
+      font-size: 0.8rem;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: $color-hover;
+      text-decoration: none;
+    }
+  }
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
