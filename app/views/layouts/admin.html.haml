@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title
+    = csrf_meta_tags
+    = csp_meta_tag
+    = javascript_pack_tag 'application'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = analytics_init if Rails.env.production?
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application'
+  %body{ class: "admins-#{controller_name}-#{action_name}" }
+    = render 'users_navbar'
+    .container
+      - !content_for?(:flash) && flash && flash.each do |key, message|
+        .alert.m-b-1.m-b-0.p-t-2.r-0.b-l-0.b-r-0{ class: "alert-#{key}", role: 'alert' }
+          %strong= message
+    .admin
+      = yield
