@@ -35,7 +35,6 @@ $(document).on('click', '#addTag', function () {
     },
     element: $(this),
     success: function (data) {
-      console.log(data)
       if(data.success) {
         $(`
           <li>
