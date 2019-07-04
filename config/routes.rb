@@ -57,15 +57,6 @@ Rails.application.routes.draw do
     # トップページ
     root to: 'admins#dashboard'
 
-
-    # get :dashboard, to: 'admins#dashboard'
-
-    # resources :repos, only: %i(show)
-    # resources :pulls, only: %i(update)
-    # resources :pull_tags, only: %i(update)
-    # resources :review_requests, only: %i(create)
-    # resources :feed, only: %i(index)
-
     devise_for :admins, path: 'admins', controllers: {
       registrations: 'admins/registrations',
       sessions: 'admins/sessions',
