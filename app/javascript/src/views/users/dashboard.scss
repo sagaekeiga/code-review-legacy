@@ -9,6 +9,7 @@
       border-bottom: none;
       margin-bottom: $base-margin * 2;
       &:hover {
+        cursor: pointer;
         background-color: #EEEEEE;
       }
       .title {
@@ -64,6 +65,25 @@
         a {
           color: $color-brand;
         }
+      }
+    }
+    .side {
+      hr {
+        margin-top: 0.2rem;
+        margin-bottom: 0.2rem;
+      }
+      svg {
+        color: $color-silver-gray;
+        cursor: pointer;
+      }
+      #addTag {
+        margin-top: 0.2rem;
+        padding: 0.2rem;
+        font-size: 0.8rem;
+      }
+      #tagErrorMessage {
+        color: $color-silver-gray;
+        font-size: 0.8rem;
       }
     }
   }

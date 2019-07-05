@@ -1,14 +1,14 @@
 .container.main
   .row
     .col
-    .col-8
+    .col-7
       %p プルリクエストを選択してコードレビューすることができます。
       - @pulls.each do |pull|
         .card.pull
           .card-body.text-dark
             %h3.card-title.title
               = octicon 'git-pull-request', height: 27
-              = link_to pull.title, pull.decorate.remote_url, target: '_blank'
+              = link_to pull.title, pull.decorate.remote_url, target: '_blank', class: 'stretched-link'
             .user
               .avatar
                 = link_to pull.user.decorate.html_url, target: '_blank' do
@@ -45,10 +45,20 @@
                   .label サービスURL
                   .column= link_to pull.homepage, pull.homepage, target: '_blank'
       = paginate @pulls
-    .col
+    .col.side
       %p Myタグ
-      %ul.tags
+      %ul#myTag.tags
         - @tags.each do |tag|
           %li
             %a{ href: '#' }
               %span= tag.name
+      %hr
+      .text-right
+        %i.far.fa-edit.edit
+      #edit.d-none
+        %input{ type: 'text', id: 'tagInput', class: 'form-control form-control-sm' }
+        .text-right
+          %button#addTag.btn.btn-primary{ type: 'buttton' } 追加
+        #tagErrorMessage
+
+= javascript_pack_tag 'tags'

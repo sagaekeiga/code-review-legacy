@@ -29,7 +29,7 @@
   padding: 0;
   line-height: $base-height - 20;
   font-size: $base-font-size;
-  color: $bg-color-github-panel;
+  color: $color-hover;
   font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
   box-sizing: border-box;
 }
@@ -37,20 +37,20 @@
   content: "ON";
   padding-left: $base-font-size - 2;
   background-color: $color-brand;
-  color: $bg-color-github-panel;
+  color: $color-hover;
 }
 .onoffswitch-inner:after {
   content: "OFF";
   padding-right: $base-font-size - 2;
   background-color: $color-switch-off-gray;
-  color: $bg-color-github-panel;
+  color: $color-hover;
   text-align: right;
 }
 .onoffswitch-switch {
   display: block;
   width: $base-height - 13;
   margin: -1.5px;
-  background: $bg-color-github-panel;
+  background: $color-hover;
   position: absolute;
   top: 0;
   bottom: 0;
