@@ -73,6 +73,13 @@
         color: $color-brand;
       }
       #reviewModal, #integrationModal {
+        .intro {
+          background-color: $color-brand;
+          color: $color-white;
+          hr {
+            border-top: 1px solid $color-white;
+          }
+        }
         .space {
           margin-top:$base-margin * 2;
         }
