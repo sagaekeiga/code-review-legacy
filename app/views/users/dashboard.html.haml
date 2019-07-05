@@ -46,6 +46,78 @@
                   .column= link_to pull.homepage, pull.homepage, target: '_blank'
       = paginate @pulls
     .col.side
+      %a.review{ 'data-target': '#integrationModal', 'data-toggle': 'modal', href: '#' } レビューを受けるには？
+      #integrationModal.modal.fade{ 'aria-labelledby': 'myModalLabel', role: 'dialog', tabindex: '-1' }
+        .modal-dialog.modal-xl{ role: 'document' }
+          .modal-content
+            .modal-header
+              %h5#exampleModalLabel.modal-title レビューを受けるには？
+              %button.close{ 'aria-label': '閉じる', 'data-dismiss': 'modal', type: 'button' }
+                %span{ 'aria-hidden': 'true' } ×
+            .modal-body
+              .container-fluid
+                .row.space
+                  .col-md-8.text-left
+                    %h5.title
+                      %b GitHub Appのインストール
+                    %hr
+                    %p.description
+                      Github Appをインストールしてください。
+                      Github Appに追加されたリポジトリをCodeReviewで取り扱うことができます。
+                      = link_to 'GitHub Appをインストールする', ENV['GITHUB_APP_URL'], target:  '_blank'
+                  .col-md-4= image_tag 'https://i.imgur.com/jouKA4K.png', class: 'img-fluid'
+                .row.space
+                  .col-md-8.text-left
+                    %h5.title
+                      %b GitHub Appにアクセス権限を与える
+                    %hr
+                    %p.description
+                      CodeReviewがプルリクエストにアクセスできるように対象のリポジトリにアクセス権限を与えてください。
+                      アクセス権限を与えると、CodeReviewに同期されます。
+                  .col-md-4= image_tag 'https://i.imgur.com/mr52rab.png', class: 'img-fluid'
+                .row.space
+                  .col-md-8.text-left
+                    %h5.title
+                      %b プルリクエストを公開する
+                    %hr
+                    %p.description
+                      同期したリポジトリのプルリクエストを公開するとレビュアーからレビューをもらうことができます。
+                  .col-md-4= image_tag 'https://i.imgur.com/6ja0Tt6.png', class: 'img-fluid'
+            .modal-footer
+              %button.btn.btn-primary{ 'aria-label': '閉じる', 'data-dismiss': 'modal', type: 'button' } 閉じる
+      %br
+      %a.review{ 'data-target': '#reviewModal', 'data-toggle': 'modal', href: '#' } レビューをするには？
+      #reviewModal.modal.fade{ 'aria-labelledby': 'myModalLabel', role: 'dialog', tabindex: '-1' }
+        .modal-dialog.modal-xl{ role: 'document' }
+          .modal-content
+            .modal-header
+              %h5#exampleModalLabel.modal-title レビューをするには？
+              %button.close{ 'aria-label': '閉じる', 'data-dismiss': 'modal', type: 'button' }
+                %span{ 'aria-hidden': 'true' } ×
+            .modal-body
+              .container-fluid
+                .row.space
+                  .col-md-8.text-left
+                    %h5.title
+                      %b ダッシュボードからレビューする
+                    %hr
+                    %p.description
+                      ダッシュボードには、コードレビューすることができるプルリクエストが並んでいます。
+                      タイトルをクリックすると、GitHub上のプルリクエストに遷移しますのでコードレビューをしてください。
+                  .col-md-4= image_tag 'https://i.imgur.com/tB8F1Mm.png', class: 'img-fluid'
+                .row.space
+                  .col-md-8.text-left
+                    %h5.title
+                      %b レビューリクエストからレビューする
+                    %hr
+                    %p.description
+                      レビュイーはプルリクエストを公開する際にレビュアーにレビューリクエストを送ることができます。
+                      リクエストされたレビュアーにはメールで通知されます。
+                      送られてきたメールに書かれているプルリクエストリンク をクリックするとGitHub上のプルリクエスト上に遷移しますのでコードレビューをしてください。
+                  .col-md-4= image_tag 'https://i.imgur.com/r6LujLn.png', class: 'img-fluid'
+            .modal-footer
+              %button.btn.btn-primary{ 'aria-label': '閉じる', 'data-dismiss': 'modal', type: 'button' } 閉じる
+      %hr
       %p Myタグ
       %ul#myTag.tags
         - @tags.each do |tag|
@@ -56,7 +128,7 @@
       .text-right
         %i.far.fa-edit.edit
       #edit.d-none
-        %input{ type: 'text', id: 'tagInput', class: 'form-control form-control-sm' }
+        %input{ type: 'text', id: 'tagInput', class: 'form-control form-control-sm', placeholder: 'Ruby' }
         .text-right
           %button#addTag.btn.btn-primary{ type: 'buttton' } 追加
         #tagErrorMessage

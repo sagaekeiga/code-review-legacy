@@ -68,6 +68,26 @@
       }
     }
     .side {
+      .review {
+        font-size: 0.7rem;
+        color: $color-brand;
+      }
+      #reviewModal, #integrationModal {
+        .space {
+          margin-top:$base-margin * 2;
+        }
+        .title {
+          margin-top: $base-margin;
+        }
+        .description {
+          letter-spacing: 2px;
+          font-size: 0.9rem;
+          padding: $base-padding;
+        }
+        a {
+          color: $color-brand;
+        }
+      }
       hr {
         margin-top: 0.2rem;
         margin-bottom: 0.2rem;
