@@ -24,7 +24,7 @@
                       %span= tag.name
             .card-text.body= pull.body.gsub(/[\r\n]/, '').truncate(300)
             .reviewers
-              // @TODO データで管理できるようにしたらないときはhideできるようにif文追加
+              // @TODO データで管理できるようにしたらhideできるようにif文追加
               .title レビュ-している人
               - pull.reviewers.each do |reviewer|
                 .reviewer
@@ -34,15 +34,15 @@
               .name
                 .label
                   = octicon 'repo'
-                  リポジトリ名
+                  プロダクト名
                 .column= link_to pull.name, pull.repo.decorate.remote_url, target: '_blank'
               - if pull.description
                 .description
-                  .label サービス概要
+                  .label プロダクト概要
                   .column= pull.description
               - if pull.homepage
                 .homepage
-                  .label サービスURL
+                  .label プロダクトURL
                   .column= link_to pull.homepage, pull.homepage, target: '_blank'
       = paginate @pulls
     .col.side
@@ -65,7 +65,7 @@
                       Github Appをインストールしてください。
                       Github Appに追加されたリポジトリをCodeReviewで取り扱うことができます。
                       = link_to 'GitHub Appをインストールする', ENV['GITHUB_APP_URL'], target:  '_blank'
-                  .col-md-7= image_tag 'https://i.imgur.com/oKY4Bir.png', class: 'img-fluid img-thumbnail'
+                  .col-md-7= image_tag 'https://i.imgur.com/mnKcpU2.png', class: 'img-fluid img-thumbnail'
                 .row.space
                   .col-md-5.text-left
                     %h5.title
@@ -74,7 +74,7 @@
                     %p.description
                       CodeReviewがプルリクエストにアクセスできるように対象のリポジトリにアクセス権限を与えてください。
                       アクセス権限を与えると、CodeReviewに同期されます。
-                  .col-md-7= image_tag 'https://i.imgur.com/mr52rab.png', class: 'img-fluid img-thumbnail'
+                  .col-md-7= image_tag 'https://i.imgur.com/iHKyOWx.png', class: 'img-fluid img-thumbnail'
                 .row.space
                   .col-md-5.text-left
                     %h5.title
@@ -82,7 +82,7 @@
                     %hr
                     %p.description
                       同期したリポジトリのプルリクエストを公開するとレビュアーからレビューをもらうことができます。
-                  .col-md-7= image_tag 'https://i.imgur.com/6ja0Tt6.png', class: 'img-fluid img-thumbnail'
+                  .col-md-7= image_tag 'https://i.imgur.com/IXDVohS.png', class: 'img-fluid img-thumbnail'
             .modal-footer
               %button.btn.btn-primary{ 'aria-label': '閉じる', 'data-dismiss': 'modal', type: 'button' } 閉じる
       %br
@@ -107,27 +107,26 @@
                 .row.space
                   .col-md-5.text-left
                     %h5.title
-                      %b レビューリクエストからレビューする
+                      %b レビューリクエスト(メール)からレビューする
                     %hr
                     %p.description
                       レビューのリクエストメールに書かれているプルリクエストリンク をクリックすると、GitHub上のプルリクエスト上に遷移しますのでコードレビューをしてください。
-                  .col-md-7= image_tag 'https://i.imgur.com/r6LujLn.png', class: 'img-fluid img-thumbnail'
+                  .col-md-7= image_tag 'https://i.imgur.com/xZPIK52.png', class: 'img-fluid img-thumbnail'
                 .row.space
                   .col-md-5.text-left
                     %h5.title
-                      %b 気になったコードにコメントを残す
+                      %b 気になったコードにレビューする
                     %hr
                     %p.description
-                      プルリクエストにレビュアーとしてアサインされることはありません。Files changed から差分コードを確認します。
-                      差分コードに対してコメントを残します。
+                      差分コードを確認して気になったコードにレビューします。
                   .col-md-7= image_tag 'https://i.imgur.com/42Vqdz7.png', class: 'img-fluid img-thumbnail'
                 .row.space
                   .col-md-5.text-left
                     %h5.title
-                      %b まとめコメントは Comment に
+                      %b まとめのレビューは Comment に
                     %hr
                     %p.description
-                      差分コード全体に対するまとめコメントは Comment で投稿しましょう。
+                      差分コード全体に対するまとめのレビューは Comment で投稿しましょう。
                   .col-md-7= image_tag 'https://i.imgur.com/GN1gN10.png', class: 'img-fluid img-thumbnail'
                 .row.space
                   .col-md-5.text-left
@@ -136,6 +135,7 @@
                     %hr
                     %p.description
                       以上でレビューは完了します。レビュイーや他のエンジニアからの反応があるかもしれません。
+                      レビューはあなたのポートフォリオにもなります。
                   .col-md-7= image_tag 'https://i.imgur.com/3gqJkHj.png', class: 'img-fluid img-thumbnail'
             .modal-footer
               %button.btn.btn-primary{ 'aria-label': '閉じる', 'data-dismiss': 'modal', type: 'button' } 閉じる
