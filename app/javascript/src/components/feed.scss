@@ -1,0 +1,68 @@
+.feed {
+  .pull {
+    border: 3px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0px;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    margin-bottom: $base-margin * 2;
+    &:hover {
+      cursor: pointer;
+      background-color: #EEEEEE;
+    }
+    .title {
+      a {
+        color: $color-brand
+      }
+    }
+    .user {
+      .avatar {
+        display: inline-block;
+        vertical-align: top;
+        padding-right: $base-padding * 2;
+      }
+      .info {
+        display: inline-block;
+        .created_at {
+          color: $color-gray;
+          font-size: 0.9rem;
+        }
+        .name {
+
+        }
+      }
+    }
+    .tags {
+      margin-top: $base-margin;
+    }
+    .body {
+      color: $color-gray;
+      margin-top: $base-margin;
+      font-size: 0.9rem;
+    }
+    .reviewers {
+      .title {
+        margin-top: $base-margin;
+        margin-bottom: $base-margin / 2;
+        color: $color-gray;
+        font-size: 0.7rem;
+      }
+      .reviewer {
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+    .repo {
+      margin-top: $base-margin * 3;
+      .label {
+        margin-top: $base-margin / 2;
+        margin-bottom: $base-margin / 2;
+        color: $color-gray;
+        font-size: 0.7rem;
+      }
+      a {
+        color: $color-brand;
+      }
+    }
+  }
+}

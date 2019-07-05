@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    = csrf_meta_tags
+    = csp_meta_tag
+    = render 'meta'
+    = javascript_pack_tag 'application'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = analytics_init if Rails.env.production?
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application'
+  // --------------------------------------------------
+  // body
+  // --------------------------------------------------
+  %body{ class: "#{controller_name}-#{action_name}" }
+    -# #root
+    // header navigation
+    = render 'navbar'
+    -# @NOTE フルサイズにしたい場合
+    %main{ role: 'main' }= yield
+    = render 'footer'

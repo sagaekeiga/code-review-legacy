@@ -1,8 +1,13 @@
 .welcome-index {
   .main {
     letter-spacing: $base-padding;
-    margin-top: $base-margin * 10;
+    margin-top: 0;
+    height: 600px;
+    background-color: $color-brand;
+    color: $color-white;
+    margin-bottom: $base-margin * 5;
     .top {
+      margin-top: $base-margin * 10;
       .title {
         font-size: 4rem;
       }
@@ -27,7 +32,9 @@
     }
     .login {
       .btn {
-        margin-top: $base-margin * 7;
+        margin-top: $base-margin *  15;
+        background-color: $color-white;
+        color: $color-brand;
       }
     }
   }

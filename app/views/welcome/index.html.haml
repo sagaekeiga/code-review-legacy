@@ -1,18 +1,69 @@
-.container
-  .row.main
-    .col-8
-      .text-left
-        .top
-          %p.sub-title コードレビューのプラットフォーム
-          %h1.title Code Review
-        .description
-          %h4 ソーシャルコーディング
-          %p コードを通して世界中のエンジニアと議論ができる
-    .col-4
-      .text-center
-        .login
-          - if user_signed_in?
-            = link_to 'ログアウト', destroy_user_session_path, method: :delete
-          - else
-            = link_to user_github_omniauth_authorize_path, class: 'btn btn-primary' do
-              GitHubログイン
+.container-fulid.bg-color-brand
+  .container
+    .row.main
+      .col-8
+        .text-left
+          .top
+            %p.sub-title コードレビューのプラットフォーム
+            %h1.title Code Review
+          .description
+            %h4 ソーシャルコーディング
+            %p コードを通して世界中のエンジニアと議論ができる
+      .col-4
+        .text-center
+          .login
+            - if user_signed_in?
+              = link_to 'ログアウト', destroy_user_session_path, method: :delete
+            - else
+              = link_to user_github_omniauth_authorize_path, class: 'btn btn-primary' do
+                GitHubログイン
+.container-fulid
+  .container
+    .row
+      .col
+      .col-7
+        %p プルリクエストを選択してコードレビューすることができます。
+        .feed
+          - @pulls.each do |pull|
+            .card.pull
+              .card-body.text-dark
+                %h3.card-title.title
+                  = octicon 'git-pull-request', height: 27
+                  = link_to pull.title, :dashboard, class: 'stretched-link'
+                .user
+                  .avatar
+                    = link_to :dashboard do
+                      = image_tag pull.user.avatar_url, alt: '', height: '', width: '40', class: 'rounded-circle'
+                  .info
+                    .created_at= l pull.remote_created_at
+                    %b.name= pull.user.name
+                .tags
+                  %ul.tags
+                    - pull.tags.each do |tag|
+                      %li
+                        %a{ href: '#' }
+                          %span= tag.name
+                .card-text.body= pull.body.gsub(/[\r\n]/, '').truncate(300)
+                .reviewers
+                  // @TODO データで管理できるようにしたらhideできるようにif文追加
+                  .title レビュ-している人
+                  - pull.reviewers.each do |reviewer|
+                    .reviewer
+                      = link_to reviewer[:html_url] do
+                        = image_tag reviewer[:avatar_url], alt: '', height: '', width: '30', class: 'rounded-circle'
+                .repo
+                  .name
+                    .label
+                      = octicon 'repo'
+                      プロダクト名
+                    .column= link_to pull.name, :dashboard
+                  - if pull.description
+                    .description
+                      .label プロダクト概要
+                      .column= pull.description
+                  - if pull.homepage
+                    .homepage
+                      .label プロダクトURL
+                      .column= link_to pull.homepage, pull.homepage
+        = paginate @pulls
+      .col
