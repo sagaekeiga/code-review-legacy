@@ -9,6 +9,7 @@
 @import 'components/switch';
 @import 'components/tag';
 @import 'components/suggest';
+@import 'components/feed';
 // Views
 @import 'views/users/dashboard';
 @import 'views/users/sessions/new';
@@ -37,4 +38,8 @@ footer {
     color: $color-brand;
     padding: $base-padding * 4;
   }
+}
+
+.bg-color-brand {
+  background-color: $color-brand;
 }
