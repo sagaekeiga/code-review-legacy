@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
     get :dashboard, to: 'users#dashboard'
 
-    resources :repos, only: %i(show)
+    resources :repos, only: %i(show update)
     resources :pulls, only: %i(update)
     resources :pull_tags, only: %i(update)
     resources :user_tags, only: %i(create)

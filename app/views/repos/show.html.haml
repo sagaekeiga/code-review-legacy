@@ -6,27 +6,42 @@
         = octicon 'repo', height: 25
         = @repo.full_name
       %p.text-danger= @repo.private_message
-      %table.table
-        %thead
-          %tr
-            %td Homepage
-            %td= @repo.homepage
-          %tr
-            %td Description
-            %td= @repo.description
-          %tr
-            %td 説明
-            %td= @repo.body
-      - if @pulls.present?
-        %table.table.pulls
+      .table-responsive
+        %table.table.info
           %thead
             %tr
-              %th 番号
-              %th{ scope: 'col' } タイトル
-              %th スキル
-              %th レビュー
-          = render @pulls, tags: @tags, repo: @repo
+              %td
+                .saved= @repo.homepage
+                %a.empty{ href: '#' }= @repo.homepage.presence ? '編集' : 'プロダクトのURLを入力してください'
+                .message
+                .form.d-none
+                  %input.homepage.target-form.form-control{ value: @repo.homepage }
+                  .message
+                  .buttons.text-right
+                    %a.cancel{ href: '#' } キャンセル
+                    %button.btn.btn-primary.update{ 'repo-id': @repo.id } 更新
+            %tr
+              %td
+                .saved= @repo.description
+                %a.empty{ href: '#' }= @repo.description.presence ? '編集' : 'プロダクトの説明を入力してください'
+                .message
+                .form.d-none
+                  %textarea.description.target-form.form-control= @repo.description
+                  .buttons.text-right
+                    %a.cancel{ href: '#' } キャンセル
+                    %button.btn.btn-primary.update{ 'repo-id': @repo.id } 更新
+      - if @pulls.present?
+        .table-responsive
+          %table.table.pulls
+            %thead
+              %tr
+                %th{ scope: 'col' }  番号
+                %th{ scope: 'col' } タイトル
+                %th スキル
+                %th レビュー
+            = render @pulls, tags: @tags, repo: @repo
       - else
         プルリクエストはありません
     .col
 = javascript_pack_tag 'pull'
+= javascript_pack_tag 'repos'
