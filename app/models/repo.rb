@@ -6,6 +6,7 @@
 #  description     :string
 #  full_name       :string
 #  homepage        :string
+#  image           :string
 #  name            :string
 #  private         :boolean
 #  created_at      :datetime         not null
@@ -69,13 +70,11 @@ class Repo < ApplicationRecord
           ActiveRecord::Base.transaction do
             repository = ActiveSupport::HashWithIndifferentAccess.new(repository)
             repo = find_or_create_by(remote_id: repository[:id])
-            data = Github::Request.repo(repository, params)
             repo.update_attributes!(
               _merge_params(
                 user,
                 repository,
-                params,
-                data
+                params
               )
             )
             Pull.fetch!(repo)
@@ -90,27 +89,6 @@ class Repo < ApplicationRecord
     end
 
     #
-    # リモートのレポジトリを更新する
-    #
-    def update!(params)
-      github_account = Users::GithubAccount.find_by(owner_id: params[:repository][:owner][:id])
-      user = github_account.user if github_account.present?
-      return true if user.nil?
-      repo = find_by(remote_id: params[:repository][:id])
-      ActiveRecord::Base.transaction do
-        repo.update_attributes!(
-          description: params[:repository][:description],
-          homepage: params[:repository][:homepage]
-        )
-      end
-      true
-    rescue => e
-      Rails.logger.error e
-      Rails.logger.error e.backtrace.join("\n")
-      false
-    end
-
-    #
     # Mergee内のレポジトリを削除する
     #
     def find_and_destroy_by(remote_id:)
@@ -119,15 +97,13 @@ class Repo < ApplicationRecord
 
     private
 
-    def _merge_params(user, repo_params, params, data)
+    def _merge_params(user, repo_params, params)
       {
         user_id: user.id,
         name: repo_params[:name],
         full_name: repo_params[:full_name],
         private: repo_params[:private],
-        installation_id: params[:installation][:id],
-        description: data[:description],
-        homepage: data[:homepage]
+        installation_id: params[:installation][:id]
       }
     end
   end

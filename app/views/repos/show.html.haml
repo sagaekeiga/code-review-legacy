@@ -1,17 +1,32 @@
 .container.main
-  %h3.text-left.repo-title
-    = octicon 'repo', height: 25
-    = @repo.full_name
-  %p.text-danger= @repo.private_message
-  - if @pulls.present?
-    %table.table
-      %thead
-        %tr
-          %th 番号
-          %th{ scope: 'col' } タイトル
-          %th スキル
-          %th レビュー
-      = render @pulls, tags: @tags, repo: @repo
-  - else
-    プルリクエストはありません
+  .row
+    .col
+    .col-10
+      %h3.text-left.repo-title
+        = octicon 'repo', height: 25
+        = @repo.full_name
+      %p.text-danger= @repo.private_message
+      %table.table
+        %thead
+          %tr
+            %td Homepage
+            %td= @repo.homepage
+          %tr
+            %td Description
+            %td= @repo.description
+          %tr
+            %td 説明
+            %td= @repo.body
+      - if @pulls.present?
+        %table.table.pulls
+          %thead
+            %tr
+              %th 番号
+              %th{ scope: 'col' } タイトル
+              %th スキル
+              %th レビュー
+          = render @pulls, tags: @tags, repo: @repo
+      - else
+        プルリクエストはありません
+    .col
 = javascript_pack_tag 'pull'

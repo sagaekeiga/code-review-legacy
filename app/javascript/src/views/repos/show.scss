@@ -4,28 +4,31 @@
     .repo-title {
       margin-bottom: $base-margin * 3;
     }
-    .pull {
-      .number {
-        color: $color-gray;
-      }
-      .title {
-        a {
-          color: $color-brand;
+    .pulls {
+      font-size: 0.9rem;
+      .pull {
+        .number {
+          color: $color-gray;
         }
-      }
-      .reviewer {
-        .nickname {
+        .title {
           a {
             color: $color-brand;
           }
         }
-        .bio {
-          color: $color-gray;
-          font-size: 0.9rem;
-        }
-        .score {
-          font-weight: bold;
-          color: $color-gray;
+        .reviewer {
+          .nickname {
+            a {
+              color: $color-brand;
+            }
+          }
+          .bio {
+            color: $color-gray;
+            font-size: 0.9rem;
+          }
+          .score {
+            font-weight: bold;
+            color: $color-gray;
+          }
         }
       }
     }
