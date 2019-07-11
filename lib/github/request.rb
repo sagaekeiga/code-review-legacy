@@ -32,15 +32,6 @@ module Github
         JSON.parse res.body, symbolize_names: true
       end
 
-      def repo(repo_params, params)
-        headers = set_headers(params[:installation][:id])
-        url = "#{BASE_API_URI}/repos/#{repo_params[:full_name]}"
-
-        res = get url, headers: headers
-
-        JSON.parse res.body, symbolize_names: true
-      end
-
       def repos(user)
         url = "#{BASE_API_URI}/users/#{user.nickname}/repos"
 

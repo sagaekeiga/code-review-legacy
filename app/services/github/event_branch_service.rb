@@ -26,7 +26,6 @@ class Github::EventBranchService
   def repository
     CreateRepoJob.perform_later(@params.to_json) if add_repository?
     DestroyRepoJob.perform_later(@params.to_json) if remove_repository?
-    UpdateRepoJob.perform_later(@params.to_json) if update_repository?
   end
 
   def pull_request
@@ -49,9 +48,5 @@ class Github::EventBranchService
 
   def remove_repository?
     @params[:github_app][:repositories_removed].present?
-  end
-
-  def update_repository?
-    @params[:changes].present?
   end
 end
