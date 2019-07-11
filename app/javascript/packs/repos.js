@@ -14,7 +14,7 @@ $(function () {
     $(this).attr('disabled', true)
     $.ajax({
       type: 'PUT',
-      url: `/repos/${$(this).attr('repo-id')}`,
+      url: `/repos/${$('.main').attr('repo-id')}`,
       dataType: 'JSON',
       data: {
         authenticity_token: $('meta[name="csrf-token"]').attr('content'),
@@ -46,6 +46,46 @@ $(function () {
 $(function () {
   $('.cancel').on('click', function (e) {
     cancel(e, $(this))
+  })
+})
+
+$(function () {
+  $('#preview').on('click', function (e) {
+    $('#fileField').click()
+  })
+})
+
+$(function () {
+  $('#fileField').on('change', function (e) {
+    const file = this.files[0]
+    let formdata = new FormData()
+    formdata.append('image', file)
+    formdata.append('authenticity_token', $('meta[name="csrf-token"]').attr('content'))
+    $.ajax({
+      type: 'PUT',
+      url: `/repos/${ $('.main').attr('repo-id') }`,
+      data: formdata,
+      processData: false,
+      contentType: false,
+      element: this,
+    }).done(function (response) {
+      reader = new FileReader(),
+        $preview = $('#preview')
+
+      reader.onload = (function (file) {
+        return function (e) {
+          $preview.empty();
+          $preview.attr({
+            src: e.target.result,
+            title: file.name
+          })
+        };
+      })(file);
+      reader.readAsDataURL(file)
+    }).fail(function () {
+      window.alert('ファイルは5MB以下のサイズにしてください')
+    });
+    return false;
   })
 })
 

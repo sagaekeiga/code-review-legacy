@@ -1,4 +1,4 @@
-.container.main
+.container.main{ 'repo-id': @repo.id  }
   .row
     .col
     .col-10
@@ -6,30 +6,35 @@
         = octicon 'repo', height: 25
         = @repo.full_name
       %p.text-danger= @repo.private_message
-      .table-responsive
-        %table.table.info
-          %thead
-            %tr
-              %td
-                .saved= @repo.homepage
-                %a.empty{ href: '#' }= @repo.homepage.presence ? '編集' : 'プロダクトのURLを入力してください'
-                .message
-                .form.d-none
-                  %input.homepage.target-form.form-control{ value: @repo.homepage }
-                  .message
-                  .buttons.text-right
-                    %a.cancel{ href: '#' } キャンセル
-                    %button.btn.btn-primary.update{ 'repo-id': @repo.id } 更新
-            %tr
-              %td
-                .saved= @repo.description
-                %a.empty{ href: '#' }= @repo.description.presence ? '編集' : 'プロダクトの説明を入力してください'
-                .message
-                .form.d-none
-                  %textarea.description.target-form.form-control= @repo.description
-                  .buttons.text-right
-                    %a.cancel{ href: '#' } キャンセル
-                    %button.btn.btn-primary.update{ 'repo-id': @repo.id } 更新
+      .row
+        .col-6.text-center
+          = image_tag @repo.image.url, id: 'preview', class: 'img-fluid img-thumbnail rounded w-100'
+          %input{ type: 'file', id: 'fileField', class: 'd-none' }
+        .col-6
+          .table-responsive
+            %table.table.info
+              %thead
+                %tr
+                  %td
+                    .saved= @repo.homepage
+                    %a.empty{ href: '#' }= @repo.homepage.presence ? '編集' : 'プロダクトのURLを入力してください'
+                    .message
+                    .form.d-none
+                      %input.homepage.target-form.form-control{ value: @repo.homepage }
+                      .message
+                      .buttons.text-right
+                        %a.cancel{ href: '#' } キャンセル
+                        %button.btn.btn-primary.update 更新
+                %tr
+                  %td
+                    .saved= @repo.description
+                    %a.empty{ href: '#' }= @repo.description.presence ? '編集' : 'プロダクトの説明を入力してください'
+                    .message
+                    .form.d-none
+                      %textarea.description.target-form.form-control= @repo.description
+                      .buttons.text-right
+                        %a.cancel{ href: '#' } キャンセル
+                        %button.btn.btn-primary.update 更新
       - if @pulls.present?
         .table-responsive
           %table.table.pulls

@@ -6,6 +6,7 @@
 #  description     :string
 #  full_name       :string
 #  homepage        :string
+#  image           :string
 #  name            :string
 #  private         :boolean
 #  created_at      :datetime         not null
@@ -24,6 +25,7 @@
 #
 
 class Repo < ApplicationRecord
+  mount_uploader :image, RepoUploader
   # -------------------------------------------------------------------------------
   # Relations
   # -------------------------------------------------------------------------------

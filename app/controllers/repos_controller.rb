@@ -10,8 +10,9 @@ class ReposController < Users::BaseController
     repo = current_user.repos.find(params[:id])
     repo.assign_attributes(
       description: params[:description],
-      homepage: params[:homepage]
+      homepage: params[:homepage],
+      image: params[:image]
     )
-    render json: { success: repo.save, repo: repo }
+    render json: { success: repo.save!, repo: repo }
   end
 end
