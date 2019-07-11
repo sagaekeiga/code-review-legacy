@@ -40,6 +40,7 @@ ja:
       already_confirmed: "は既に登録済みです"
       not_locked: "は凍結されていません"
       not_saved: "%{resource}を保存できませんでした（%{count}件の入力エラーがあります）"
+      max_size_error: は5MB以下のサイズにしてください
 
   date:
     order:
